@@ -12,6 +12,13 @@ Before writing any code always read documentation in this order:
 4. docs/03-design
 5. docs/04-delivery
 
+## Canonical Prompt Library
+
+The canonical prompt library for repository documentation generation is in:
+- `docs/05-prompts`
+
+When generating or updating documentation, use prompts from this library to ensure reproducibility, workflow compliance, and consistent markdown + HTML outputs.
+
 ## Documentation Format Rule (Required)
 
 For every major documentation section, maintain two synchronized layers:
