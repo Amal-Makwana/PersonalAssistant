@@ -3,165 +3,98 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>UI/UX Summary | Email-Driven Reminder Assistant</title>
+  <title>UI/UX Summary | Canonical Screen Catalogue</title>
   <style>
-    :root {
-      --bg:#f3f5f9; --panel:#fff; --ink:#111827; --muted:#4b5563; --line:#d7dce5;
-      --brand:#2c4cb8; --hero:#0f1a3a; --subhero:#2b3270; --shadow:0 20px 45px rgba(17,24,39,.12);
-      --wire:#f8fafc; --wire-line:#9aa4b2;
-    }
-    *{box-sizing:border-box} body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
-    .wrap{max-width:1240px;margin:0 auto;padding:28px}
-    .hero{background:linear-gradient(130deg,var(--hero),var(--subhero));color:#fff;padding:34px;border-radius:24px;box-shadow:var(--shadow)}
-    .hero h1{margin:0 0 8px;font-size:2rem}.hero p{margin:0;max-width:900px;opacity:.92}
-    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.chip{padding:6px 10px;border:1px solid rgba(255,255,255,.28);border-radius:999px;font-size:.78rem;background:rgba(255,255,255,.1)}
-    .toc,.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 24px rgba(12,22,44,.06)}
-    .toc{margin:20px 0;padding:18px}.toc ul{margin:8px 0 0;padding-left:20px;columns:2}.toc a{text-decoration:none;color:var(--brand)}
-    .grid{display:grid;gap:16px}.card{padding:22px}.card h2{margin:0 0 8px}.muted{color:var(--muted)}
-    table{width:100%;border-collapse:collapse;font-size:.93rem}th,td{border:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}th{background:#f8fafc}
-    .source{font-size:.83rem;color:var(--muted);margin-top:12px}
-
-    .kpi{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:10px}
-    .kpi div{border:1px solid var(--line);background:#f8fbff;border-radius:12px;padding:10px}
-
-    .wire-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:10px}
-    .wire-card{background:var(--wire);border:1px solid #c7d0dd;border-radius:14px;padding:10px}
-    .wire-title{font-weight:700;font-size:.92rem;margin-bottom:8px}
-    .wf{border:1px solid var(--wire-line);border-radius:10px;background:#fff;padding:8px;font-size:.73rem;color:#374151}
-    .row{display:flex;gap:6px;margin-bottom:6px}.b{border:1px dashed #96a2b3;border-radius:6px;padding:5px;background:#f9fbfd}
-    .grow{flex:1}.w20{width:20%}.w25{width:25%}.w30{width:30%}.w40{width:40%}.w50{width:50%}.w60{width:60%}.w70{width:70%}
-    .h40{height:40px}.h60{height:60px}.h90{height:90px}.h130{height:130px}
-    .legend{font-size:.75rem;color:#6b7280;margin-top:6px}
-    @media(max-width:980px){.toc ul{columns:1}.wire-grid{grid-template-columns:1fr}.kpi{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    body { font-family: Inter, Arial, sans-serif; margin: 0; background: #f4f6fb; color: #111827; }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 24px; }
+    .card { background: #fff; border: 1px solid #dbe1ea; border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+    h1, h2, h3 { margin-top: 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { border: 1px solid #dbe1ea; padding: 8px; text-align: left; vertical-align: top; }
+    th { background: #f9fbff; }
+    .muted { color: #4b5563; }
+    .toc a { color: #1d4ed8; text-decoration: none; }
+    .wireframe-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .wireframe { border: 1px solid #dbe1ea; border-radius: 10px; padding: 12px; background: #f8fbff; }
+    @media (max-width: 900px) { .wireframe-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <header class="hero">
-      <h1>UI/UX Screen Specification Summary</h1>
-      <p>Consolidated, Figma-ready blueprint for the Email-Driven Reminder Assistant. Markdown remains the source of truth; this HTML presents stakeholder-ready screen architecture, flow coverage, and realistic low-fidelity wireframes.</p>
-      <div class="chips">
-        <span class="chip">Source: docs/02-ui-ux/*.md</span><span class="chip">Coverage: S01-S09 · F1-F5</span><span class="chip">Focus: Wireframes -> Mockups -> Components -> Handoff</span>
-      </div>
-    </header>
+    <section class="card">
+      <h1>UI/UX Canonical Screen Summary</h1>
+      <p class="muted">This summary synchronizes screen IDs, names, and scope across the UI/UX docs. Source of truth: <code>screen-inventory.md</code>.</p>
+      <p><strong>Coverage:</strong> S01-S09 | F1-F5</p>
+    </section>
 
-    <nav class="toc" aria-label="Table of contents">
-      <strong>Table of Contents</strong>
+    <section class="card toc">
+      <h2>Contents</h2>
       <ul>
-        <li><a href="#overview">UI/UX Overview</a></li><li><a href="#ia">Information Architecture</a></li>
-        <li><a href="#flows">User Flows</a></li><li><a href="#screens">Screen Inventory</a></li>
-        <li><a href="#principles">Design Principles</a></li><li><a href="#mockups">Mockup Intent</a></li>
-        <li><a href="#wireframes">Wireframe Previews</a></li><li><a href="#components">Component System</a></li>
-        <li><a href="#readiness">Figma Readiness Summary</a></li><li><a href="#coverage">Screen Coverage Summary</a></li>
+        <li><a href="#inventory">Canonical Screen Inventory</a></li>
+        <li><a href="#flows">Flow Coverage</a></li>
+        <li><a href="#ia">Information Architecture Alignment</a></li>
+        <li><a href="#wireframes">Wireframe References</a></li>
       </ul>
-    </nav>
+    </section>
 
-    <main class="grid">
-      <section class="card" id="overview"><h2>UI/UX Overview</h2><p class="muted">This update resolves prior abstraction gaps by defining concrete screen layouts, region hierarchy, states, and Figma build instructions with shared IDs (S01-S09, F1-F5).</p>
-        <div class="kpi"><div><strong>9</strong><br/>Major Screens</div><div><strong>5</strong><br/>Primary Flows</div><div><strong>21</strong><br/>Component Specs</div><div><strong>3</strong><br/>Breakpoints per screen</div></div>
-        <p class="source">Source markdown: <code>ui-overview.md</code></p>
-      </section>
+    <section class="card" id="inventory">
+      <h2>Canonical Screen Inventory</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Screen ID</th><th>Screen Name</th><th>Purpose</th><th>Core States</th><th>Wireframe</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr id="inv-s01"><td>S01</td><td>Login &amp; Consent</td><td>Authentication and permissions.</td><td>Default, Loading, Error, Permission</td><td><a href="#wf-s01">Go to wireframe</a></td></tr>
+          <tr id="inv-s02"><td>S02</td><td>Onboarding Wizard</td><td>Initial defaults and channel setup.</td><td>Default, Validation, Loading, Error, Success</td><td><a href="#wf-s02">Go to wireframe</a></td></tr>
+          <tr id="inv-s03"><td>S03</td><td>Dashboard</td><td>Operational overview and triage entry.</td><td>Default, Loading, Empty, Error</td><td><a href="#wf-s03">Go to wireframe</a></td></tr>
+          <tr id="inv-s04"><td>S04</td><td>Events List</td><td>Bulk filtering and sorting of events.</td><td>Default, Loading, Empty, Error, Permission</td><td><a href="#wf-s04">Go to wireframe</a></td></tr>
+          <tr id="inv-s05"><td>S05</td><td>Event Detail</td><td>Event-level reminder confirmation/editing.</td><td>Default, Loading, Validation, Error, Success, Permission</td><td><a href="#wf-s05">Go to wireframe</a></td></tr>
+          <tr id="inv-s06"><td>S06</td><td>Preferences</td><td>Global reminder defaults.</td><td>Default, Loading, Validation, Error, Success</td><td><a href="#wf-s06">Go to wireframe</a></td></tr>
+          <tr id="inv-s07"><td>S07</td><td>Integrations</td><td>Provider/channel health management.</td><td>Default, Loading, Error, Success, Permission</td><td><a href="#wf-s07">Go to wireframe</a></td></tr>
+          <tr id="inv-s08"><td>S08</td><td>Activity &amp; Diagnostics</td><td>Delivery audit and retry operations.</td><td>Default, Loading, Empty, Error, Success</td><td><a href="#wf-s08">Go to wireframe</a></td></tr>
+          <tr id="inv-s09"><td>S09</td><td>Account &amp; Session Settings</td><td>Profile/session control and sign-out.</td><td>Default, Loading, Error, Success</td><td><a href="#wf-s09">Go to wireframe</a></td></tr>
+        </tbody>
+      </table>
+      <p class="muted">Source: <code>screen-inventory.md</code></p>
+    </section>
 
-      <section class="card" id="ia"><h2>Information Architecture</h2><p class="muted">Global nav is task-oriented: Dashboard, Events, Preferences, Integrations, Activity, Account. Relationship mapping defines deterministic movement between setup, operations, configuration, and diagnostics.</p>
-        <table><thead><tr><th>Layer</th><th>Screens</th><th>Primary intent</th></tr></thead><tbody>
-          <tr><td>Access</td><td>S01</td><td>Authenticate and authorize</td></tr>
-          <tr><td>Setup</td><td>S02</td><td>Collect defaults and activate channels</td></tr>
-          <tr><td>Operations</td><td>S03, S04, S05</td><td>Triage and manage reminders</td></tr>
-          <tr><td>Configuration</td><td>S06, S07</td><td>Behavior and integration settings</td></tr>
-          <tr><td>Diagnostics</td><td>S08, S09</td><td>Failures, retries, account controls</td></tr>
-        </tbody></table>
-        <p class="source">Source markdown: <code>information-architecture.md</code></p>
-      </section>
+    <section class="card" id="flows">
+      <h2>Flow Coverage</h2>
+      <table>
+        <thead><tr><th>Flow</th><th>Primary Path</th><th>Supporting Screens</th></tr></thead>
+        <tbody>
+          <tr><td>F1</td><td>S01 -> S02 -> S03</td><td>S07</td></tr>
+          <tr><td>F2</td><td>S03 -> S05 -> S03/S04</td><td>S08</td></tr>
+          <tr><td>F3</td><td>S03 -> S06 -> S03</td><td>S09</td></tr>
+          <tr><td>F4</td><td>S03/S04 -> S05 -> S04</td><td>S08</td></tr>
+          <tr><td>F5</td><td>S03/S08 -> S07 -> S08 -> S03</td><td>S05</td></tr>
+        </tbody>
+      </table>
+      <p class="muted">Source: <code>user-flows.md</code></p>
+    </section>
 
-      <section class="card" id="flows"><h2>User Flows</h2><p class="muted">Flows are screen-anchored and state-aware for direct prototyping.</p>
-        <table><thead><tr><th>Flow</th><th>Path</th><th>Outcome</th></tr></thead><tbody>
-          <tr><td>F1</td><td>S01 -> S02 -> S03</td><td>First-time setup complete</td></tr>
-          <tr><td>F2</td><td>S03 -> S05 -> S03/S04</td><td>Event reminder confirmed</td></tr>
-          <tr><td>F3</td><td>S03 -> S06 -> S03</td><td>Global defaults updated</td></tr>
-          <tr><td>F4</td><td>S04 -> S05 -> S04</td><td>Ambiguous extraction resolved</td></tr>
-          <tr><td>F5</td><td>S08 -> S07 -> S08</td><td>Delivery failure recovered</td></tr>
-        </tbody></table>
-        <p class="source">Source markdown: <code>user-flows.md</code></p>
-      </section>
+    <section class="card" id="ia">
+      <h2>Information Architecture Alignment</h2>
+      <p class="muted">Authenticated navigation uses the same canonical naming and IDs: Dashboard (S03), Events List (S04), Preferences (S06), Integrations (S07), Activity &amp; Diagnostics (S08), Account &amp; Session Settings (S09).</p>
+      <p class="muted">Source: <code>information-architecture.md</code></p>
+    </section>
 
-      <section class="card" id="screens"><h2>Screen Inventory</h2><p class="muted">Every screen includes entry/exit conditions, key components, and required state coverage.</p>
-        <table><thead><tr><th>Screen</th><th>Purpose</th><th>Core states</th></tr></thead><tbody>
-          <tr><td>S01 Login</td><td>Auth and consent</td><td>Default, Loading, Error, Permission</td></tr>
-          <tr><td>S03 Dashboard</td><td>Operational triage</td><td>Default, Loading, Empty, Error</td></tr>
-          <tr><td>S05 Event Detail</td><td>Per-event confirmation/editing</td><td>Default, Validation, Success, Permission</td></tr>
-          <tr><td>S08 Activity</td><td>Diagnostics and retry</td><td>Default, Empty, Error, Success</td></tr>
-        </tbody></table>
-        <p class="source">Source markdown: <code>screen-inventory.md</code></p>
-      </section>
-
-      <section class="card" id="principles"><h2>Design Principles</h2><p class="muted">Foundation rules include 12/8/4 grid system, 4px spacing scale, accessibility baseline, table readability patterns, and formal Figma naming/token conventions.</p><p class="source">Source markdown: <code>design-principles.md</code></p></section>
-
-      <section class="card" id="mockups"><h2>Mockup Intent</h2><p class="muted">High-fidelity guidance now maps each screen to visual hierarchy, component mix, CTA placement, and state treatments across desktop/tablet/mobile.</p><p class="source">Source markdown: <code>ui-mockups.md</code></p></section>
-
-      <section class="card" id="wireframes">
-        <h2>Wireframe Previews (Realistic Low-Fidelity Screens)</h2>
-        <p class="muted">Rendered as structured UI compositions for direct recreation in Figma frames and auto layout.</p>
-        <div class="wire-grid">
-          <article class="wire-card"><div class="wire-title">S03 Dashboard</div><div class="wf">
-            <div class="row"><div class="b w25 h40">Top Nav</div><div class="b grow h40">Page Header + CTA</div></div>
-            <div class="row"><div class="b w20 h130">Side Nav</div><div class="grow">
-              <div class="row"><div class="b grow h40">KPI Card</div><div class="b grow h40">KPI Card</div><div class="b grow h40">KPI Card</div></div>
-              <div class="row"><div class="b w70 h90">Attention Queue</div><div class="b w30 h90">Health Rail</div></div>
-              <div class="row"><div class="b grow h90">Upcoming Reminders Table</div></div>
-            </div></div></div><div class="legend">Header · Sidebar · Summary cards · Queue · Table · Right rail</div></article>
-
-          <article class="wire-card"><div class="wire-title">S04 Events List</div><div class="wf">
-            <div class="row"><div class="b grow h40">Page Header + Result Count + CTA</div></div>
-            <div class="row"><div class="b grow h40">Filter Toolbar (Search + Status + Date + Reset)</div></div>
-            <div class="row"><div class="b grow h130">Events Data Table (sortable columns + row actions)</div></div>
-            <div class="row"><div class="b grow h40">Pagination</div></div>
-          </div><div class="legend">Header · Filters · Table/List · Pagination</div></article>
-
-          <article class="wire-card"><div class="wire-title">S05 Event Detail</div><div class="wf">
-            <div class="row"><div class="b grow h40">Context Header + Status + Diagnostics CTA</div></div>
-            <div class="row"><div class="b w60 h130">Event Metadata Panel + Confidence Callout</div><div class="b w40 h130">Reminder Settings Form</div></div>
-            <div class="row"><div class="b grow h90">Delivery History Tabs + Attempt List</div></div>
-            <div class="row"><div class="b grow h40">Sticky Action Bar (Dismiss / Confirm)</div></div>
-          </div><div class="legend">Split layout · Tabs · Form · Sticky actions</div></article>
-
-          <article class="wire-card"><div class="wire-title">S08 Activity & Diagnostics</div><div class="wf">
-            <div class="row"><div class="b grow h40">Header + Time Scope</div></div>
-            <div class="row"><div class="b grow h40">Filter Strip (Search/Status/Channel/Date)</div></div>
-            <div class="row"><div class="b w70 h130">Timeline/Table of Attempts</div><div class="b w30 h130">Detail Drawer</div></div>
-            <div class="row"><div class="b grow h40">Retry Actions</div></div>
-          </div><div class="legend">Filters · Timeline rows · Detail panel · Retry controls</div></article>
-        </div>
-        <p class="source">Source markdown: <code>wireframes.md</code></p>
-      </section>
-
-      <section class="card" id="components"><h2>Component System</h2><p class="muted">Components are now specified with anatomy, variants, properties, interaction states, accessibility, and screen mapping for Figma library execution.</p>
-        <table><thead><tr><th>Examples</th><th>Spec depth included</th></tr></thead><tbody>
-          <tr><td>C02 Button</td><td>State/size/emphasis/icon properties + accessibility + usage rules</td></tr>
-          <tr><td>C10 Data Table/Card List</td><td>Desktop/mobile variant strategy + semantic behavior</td></tr>
-          <tr><td>C20 Modal/Drawer</td><td>Overlay variants + focus trap and dismissal rules</td></tr>
-        </tbody></table>
-        <p class="source">Source markdown: <code>components.md</code></p>
-      </section>
-
-      <section class="card" id="readiness"><h2>Figma Readiness Summary</h2>
-        <ul>
-          <li>Unified naming conventions for frames, components, and variants.</li>
-          <li>Breakpoint-ready frame expectations (Desktop/Tablet/Mobile per screen).</li>
-          <li>Auto layout and layout guide rules included across docs.</li>
-          <li>Screen, flow, and component IDs cross-linked for handoff traceability.</li>
-        </ul>
-      </section>
-
-      <section class="card" id="coverage"><h2>Screen Coverage Summary</h2>
-        <table><thead><tr><th>Coverage Area</th><th>Status</th></tr></thead><tbody>
-          <tr><td>Concrete wireframe structures</td><td>Complete for S01-S08</td></tr>
-          <tr><td>Flow-to-screen mapping</td><td>Complete for F1-F5</td></tr>
-          <tr><td>Component-to-screen mapping</td><td>Complete via C01-C21 matrix</td></tr>
-          <tr><td>Responsive behavior per major screen</td><td>Documented desktop/tablet/mobile</td></tr>
-          <tr><td>State coverage (loading/empty/error/success/permission)</td><td>Defined in inventory + wireframes</td></tr>
-        </tbody></table>
-      </section>
-    </main>
+    <section class="card" id="wireframes">
+      <h2>Wireframe References</h2>
+      <div class="wireframe-grid">
+        <div class="wireframe" id="wf-s01"><h3>S01 — Login &amp; Consent</h3><p><a href="#inv-s01">Inventory entry</a> · Source: <code>wireframes.md</code></p></div>
+        <div class="wireframe" id="wf-s02"><h3>S02 — Onboarding Wizard</h3><p><a href="#inv-s02">Inventory entry</a> · Source: <code>wireframes.md</code></p></div>
+        <div class="wireframe" id="wf-s03"><h3>S03 — Dashboard</h3><p><a href="#inv-s03">Inventory entry</a> · Source: <code>wireframes.md</code></p></div>
+        <div class="wireframe" id="wf-s04"><h3>S04 — Events List</h3><p><a href="#inv-s04">Inventory entry</a> · Source: <code>wireframes.md</code></p></div>
+        <div class="wireframe" id="wf-s05"><h3>S05 — Event Detail</h3><p><a href="#inv-s05">Inventory entry</a> · Source: <code>wireframes.md</code></p></div>
+        <div class="wireframe" id="wf-s06"><h3>S06 — Preferences</h3><p><a href="#inv-s06">Inventory entry</a> · Source: <code>wireframes.md</code></p></div>
+        <div class="wireframe" id="wf-s07"><h3>S07 — Integrations</h3><p><a href="#inv-s07">Inventory entry</a> · Source: <code>wireframes.md</code></p></div>
+        <div class="wireframe" id="wf-s08"><h3>S08 — Activity &amp; Diagnostics</h3><p><a href="#inv-s08">Inventory entry</a> · Source: <code>wireframes.md</code></p></div>
+        <div class="wireframe" id="wf-s09"><h3>S09 — Account &amp; Session Settings</h3><p><a href="#inv-s09">Inventory entry</a> · Source: <code>wireframes.md</code></p></div>
+      </div>
+    </section>
   </div>
 </body>
 </html>

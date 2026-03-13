@@ -1,14 +1,27 @@
 # User Flows
 
 ## 1. Purpose
-Provide step-level user journeys that map directly to concrete screens, states, and component patterns so designs can be recreated in Figma and validated in development.
+Provide step-level journeys mapped to the canonical screen catalogue in `screen-inventory.md` so flows, wireframes, and mockups stay synchronized.
 
-## 2. Flow Legend
+## 2. Canonical Screen References
+| Screen ID | Canonical Screen Name |
+|---|---|
+| S01 | Login & Consent |
+| S02 | Onboarding Wizard |
+| S03 | Dashboard |
+| S04 | Events List |
+| S05 | Event Detail |
+| S06 | Preferences |
+| S07 | Integrations |
+| S08 | Activity & Diagnostics |
+| S09 | Account & Session Settings |
+
+## 3. Flow Legend
 - **Sxx:** Screen ID from `screen-inventory.md`
 - **Cxx:** Component IDs from `components.md`
 - **State tags:** Default, Loading, Empty, Error, Success, Permission
 
-## 3. Flow Catalog
+## 4. Flow Catalog
 
 ## F1 — First-Time Setup and Account Connection
 **Goal:** user reaches an operational dashboard with at least one active reminder channel.
@@ -66,20 +79,20 @@ Provide step-level user journeys that map directly to concrete screens, states, 
 | 4 | S07 | Reconnect channel and test | Mark integration healthy | C06 Toggle, C02 Button, C19 Toast | Loading/Success/Error |
 | 5 | S08 | Retry failed delivery | Update attempt status | C02 Button, C15 Badge | Success |
 
-## 4. Flow-to-Screen Quick Map
-| Screen | Flows touching screen |
-|---|---|
-| S01 | F1 |
-| S02 | F1 |
-| S03 | F1, F2, F3, F5 |
-| S04 | F2, F4 |
-| S05 | F2, F4, F5 |
-| S06 | F3 |
-| S07 | F1, F5 |
-| S08 | F2, F4, F5 |
-| S09 | F3 (optional security checks) |
+## 5. Flow-to-Screen Quick Map
+| Screen ID | Screen Name | Flows touching screen |
+|---|---|---|
+| S01 | Login & Consent | F1 |
+| S02 | Onboarding Wizard | F1 |
+| S03 | Dashboard | F1, F2, F3, F5 |
+| S04 | Events List | F2, F4 |
+| S05 | Event Detail | F2, F4, F5 |
+| S06 | Preferences | F3 |
+| S07 | Integrations | F1, F5 |
+| S08 | Activity & Diagnostics | F2, F4, F5 |
+| S09 | Account & Session Settings | F3 (optional security checks) |
 
-## 5. Figma Flow Construction Notes
+## 6. Figma Flow Construction Notes
 - In Figma, place each flow in a horizontal sequence with desktop frames first, then tablet/mobile variants below.
 - Use connector labels: `Trigger`, `Decision`, `System Response`, `Outcome`.
 - Link each decision node to at least one non-happy-path state frame (Error, Empty, Permission).
