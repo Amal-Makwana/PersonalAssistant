@@ -15,9 +15,11 @@ Implement backend work from approved documentation with layered architecture.
 - Keep data access in repositories only.
 - Add tests for core business flows and error paths.
 - Validate request/response contracts against `api-spec.md`.
+- When backend-related markdown sections are updated, refresh the corresponding section summary HTML (`tech-spec-summary.html`, `design-summary.html`, and/or `delivery-summary.html`).
 
 ## Output Format
 - Plan
 - Endpoint/layer impact summary
 - Traceability mapping
 - Test evidence
+- Documentation sync note (markdown + section HTML summary)

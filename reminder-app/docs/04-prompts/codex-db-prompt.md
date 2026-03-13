@@ -14,9 +14,11 @@ Design and evolve persistence schema based on documented requirements.
 - Include migration and rollback strategy.
 - Document indexes, constraints, and data retention implications.
 - Consider privacy, PII handling, and least privilege access.
+- If DB-related docs change, refresh section summaries (typically `docs/01-tech-spec/tech-spec-summary.html` and `docs/03-design/design-summary.html`) in the same update.
 
 ## Output Format
 - Schema proposal
 - Migration plan
 - Risk assessment
 - Traceability mapping
+- Documentation sync note (markdown + section HTML summary)

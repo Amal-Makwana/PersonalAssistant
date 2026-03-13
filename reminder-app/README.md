@@ -17,6 +17,23 @@ No implementation should begin until each upstream documentation layer is comple
 5. `docs/04-delivery` — Plan implementation phases, testing, and rollout.
 6. Implementation in `apps/`, `packages/`, and `infra/`.
 
+## Dual-Layer Documentation Standard (Required)
+
+For each major section (`00-product` through `04-delivery`), maintain both:
+
+- **Detailed markdown source files** (authoritative working docs)
+- **One polished consolidated HTML summary** (stakeholder-facing presentation layer)
+
+Required section summaries:
+
+- `docs/00-product/product-summary.html`
+- `docs/01-tech-spec/tech-spec-summary.html`
+- `docs/02-ui-ux/ui-ux-summary.html`
+- `docs/03-design/design-summary.html`
+- `docs/04-delivery/delivery-summary.html`
+
+Whenever markdown files in a section are created or updated, refresh the matching HTML summary in the same change.
+
 ## Repository Layout
 
 - `docs/` — Source of truth for requirements, technical specifications, UX artifacts, system design, and delivery planning.
