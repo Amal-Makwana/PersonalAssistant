@@ -1,0 +1,13 @@
+name: Lint and Test
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  placeholder-quality-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Placeholder gate
+        run: echo "Add lint and test commands once implementation begins."

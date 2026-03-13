@@ -1,0 +1,20 @@
+# Node
+node_modules/
+
+# Build outputs
+.next/
+dist/
+build/
+coverage/
+
+# Environment
+.env
+.env.local
+
+# Logs
+*.log
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
