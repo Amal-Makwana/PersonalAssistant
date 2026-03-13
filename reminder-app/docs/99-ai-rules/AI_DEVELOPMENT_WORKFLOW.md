@@ -9,6 +9,21 @@ All AI contributors must follow a documentation-first workflow.
 4. `docs/03-design`
 5. `docs/04-delivery`
 
+## Dual-Layer Documentation Rule (Mandatory)
+For every major documentation section, maintain both:
+
+- **Markdown files** as the source of truth for detailed working documentation.
+- **One premium consolidated HTML summary** as the stakeholder-facing presentation layer.
+
+Required HTML summaries:
+- `docs/00-product/product-summary.html`
+- `docs/01-tech-spec/tech-spec-summary.html`
+- `docs/02-ui-ux/ui-ux-summary.html`
+- `docs/03-design/design-summary.html`
+- `docs/04-delivery/delivery-summary.html`
+
+When markdown files in a section are created, changed, or reorganized, the corresponding HTML summary must be created or refreshed in the same change set.
+
 ## Required Process Before Code
 1. Review all required documentation layers in order.
 2. Produce a gap analysis for ambiguities and missing details.

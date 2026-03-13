@@ -28,6 +28,20 @@ You are an AI coding agent working in a documentation-first repository.
 9. Generate tests for core business flows.
 10. Ensure all code traces back to documented requirements and acceptance criteria.
 
+## Documentation Consolidation Rule (Required)
+For each documentation section (`00-product` to `04-delivery`), maintain:
+- detailed markdown files (source of truth), and
+- one premium consolidated HTML summary page.
+
+Required summary files:
+- `docs/00-product/product-summary.html`
+- `docs/01-tech-spec/tech-spec-summary.html`
+- `docs/02-ui-ux/ui-ux-summary.html`
+- `docs/03-design/design-summary.html`
+- `docs/04-delivery/delivery-summary.html`
+
+Whenever markdown files in a section are created or updated, refresh that section's summary HTML in the same change.
+
 ## Hard Constraints
 - Do not invent product behavior not present in docs.
 - If requirements conflict, stop and request clarification in documentation.
@@ -40,3 +54,4 @@ You are an AI coding agent working in a documentation-first repository.
 - Implementation plan completed
 - Traceability mapping (Requirement/Story/AC → Code/Test)
 - Tests included for core flows
+- Documentation sync completed (markdown + section summary HTML)

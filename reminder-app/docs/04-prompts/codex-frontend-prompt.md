@@ -16,9 +16,11 @@ Implement frontend changes strictly from approved docs.
 - UI generation must prioritize `docs/02-ui-ux` as the source of screens, flows, wireframes, and components.
 - Map each UI behavior to requirements + acceptance criteria.
 - Add/update tests for user-critical flows.
+- Maintain section documentation sync: when UI/UX markdown changes, refresh `docs/02-ui-ux/ui-ux-summary.html`.
 
 ## Output Format
 - Plan
 - Files changed
 - Traceability mapping
 - Test evidence
+- Documentation sync note (markdown + section HTML summary)
