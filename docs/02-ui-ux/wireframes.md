@@ -1,6 +1,7 @@
 # Wireframes (Figma-Ready Screen Specifications)
 
 ## S01 — Login & Consent
+**Reference:** `screen-inventory.md`
 ### 1. Screen Purpose
 Authenticate user and request required permissions.
 ### 2. Primary User
@@ -41,6 +42,7 @@ Desktop centered card; tablet wider card; mobile full-width sheet with sticky CT
 Frame: `S01_Login/{Desktop|Tablet|Mobile}/{State}`; auto layout vertical; 12/8/4 guides; reusable button + alert variants.
 
 ## S02 — Onboarding Wizard
+**Reference:** `screen-inventory.md`
 ### 1. Screen Purpose
 Collect defaults and activate reminder channels.
 ### 2. Primary User
@@ -80,6 +82,7 @@ Desktop 2-column; tablet tips panel below form; mobile single column + sticky bo
 Use nested auto layout sections; footer pinned component; variants for stepper and test status.
 
 ## S03 — Dashboard
+**Reference:** `screen-inventory.md`
 ### 1. Screen Purpose
 Give operational snapshot and prioritize event actions.
 ### 2. Primary User
@@ -107,7 +110,7 @@ Top app bar; left sidebar; page header; KPI cards; attention queue; upcoming rem
 | Events   +---------------------------------------------------------------+
 | Prefs    | Attention Queue                                           (>) |
 | Intg.    | [Event Card #1] [Review]                                     |
-| Activity | [Event Card #2] [Review]                                     |
+| Activity/Diag | [Event Card #2] [Review]                                     |
 | Account  +---------------------------------------------------------------+
 |          | Upcoming Reminders Table                                     |
 |          | | Time | Event | Channel | Status | Action |                 |
@@ -125,6 +128,7 @@ Tablet icon rail + stacked right panel; mobile top summary cards then queue list
 Create AppShell component instance; 12-col grid desktop; queue cards auto layout vertical; table/card responsive variant.
 
 ## S04 — Events List
+**Reference:** `screen-inventory.md`
 ### 1. Screen Purpose
 Support bulk triage of extracted events with filters and sorting.
 ### 2. Primary User
@@ -161,6 +165,7 @@ Desktop table; tablet reduced columns; mobile stacked event cards with inline ac
 Use table component with density variant; mobile card-list variant shares same data fields.
 
 ## S05 — Event Detail
+**Reference:** `screen-inventory.md`
 ### 1. Screen Purpose
 Review extracted event context and finalize reminder settings.
 ### 2. Primary User
@@ -203,6 +208,7 @@ Desktop split view; tablet stacked panels; mobile accordion sections + fixed bot
 Separate frame variants for `Editable` and `ReadOnly`; use tabs component with active-state variant; sticky action as reusable instance.
 
 ## S06 — Preferences
+**Reference:** `screen-inventory.md`
 ### 1. Screen Purpose
 Configure default reminder behavior for new events.
 ### 2. Primary User
@@ -245,6 +251,7 @@ Desktop two-column cards; tablet mixed; mobile single-column stack with sticky s
 Use card + form-field components only; consistent label widths desktop; one-column auto layout mobile.
 
 ## S07 — Integrations
+**Reference:** `screen-inventory.md`
 ### 1. Screen Purpose
 Show provider health and allow reconnect/test actions.
 ### 2. Primary User
@@ -282,6 +289,7 @@ Desktop table + modal; tablet compact table; mobile list cards with bottom-sheet
 Table/list dual component; modal and bottom-sheet variants share same form content.
 
 ## S08 — Activity & Diagnostics
+**Reference:** `screen-inventory.md`
 ### 1. Screen Purpose
 Trace reminder attempts, identify failures, and trigger retries.
 ### 2. Primary User
@@ -318,3 +326,43 @@ Default, loading timeline, empty period, error fetching logs, retry success/erro
 Desktop split with drawer; tablet drawer collapses below list; mobile full-screen detail route.
 ### 11. Figma Build Notes
 Build row states as variants (`Sent`, `Failed`, `Retried`); keep drawer as reusable component with open/closed states.
+
+## S09 — Account & Session Settings
+**Reference:** `screen-inventory.md`
+### 1. Screen Purpose
+Manage profile, timezone/account preferences, active sessions, and sign-out/security actions.
+### 2. Primary User
+Authenticated user managing account and session posture.
+### 3. Entry Points
+Profile menu from S03-S08.
+### 4. Exit Paths
+S03 dashboard, S01 after sign-out.
+### 5. Screen Layout
+Header with account identity; preferences form; active session list; security action zone.
+### 6. Regions
+- **R1 Header**: avatar, account email, last activity.
+- **R2 Profile & Locale**: editable profile/timezone settings.
+- **R3 Active Sessions**: device/session table with revoke actions.
+- **R4 Security Actions**: sign-out all, password/account security controls.
+### 7. Actual Wireframe Representation
+```text
+[Account & Session Settings]                           [Save Changes]
++--------------------------------------------------------------------+
+| Profile: Name [........]   Email [readonly]   Timezone [UTC+05:30] |
++--------------------------------------------------------------------+
+| Active Sessions                                                      |
+| Device              | Location     | Last Active | Action           |
+| Chrome / MacBook    | Bengaluru    | now         | [Revoke]         |
+| Mobile App / iPhone | Bengaluru    | 2h ago      | [Revoke]         |
++--------------------------------------------------------------------+
+| [Sign out all sessions]                               [Sign out]    |
++--------------------------------------------------------------------+
+```
+### 8. Interaction Zones
+Profile fields, save action, session revoke controls, sign-out/sign-out-all controls.
+### 9. States
+Default, loading profile/sessions, validation error, revoke success/error, sign-out success.
+### 10. Responsive Behaviour
+Desktop table + form cards; tablet compact table; mobile stacked session cards with inline actions.
+### 11. Figma Build Notes
+Reuse settings-card and table/list components; keep security actions visually separated and high-emphasis.

@@ -6,6 +6,7 @@ Translate wireframe structures into high-fidelity guidance that a product design
 ## 2. Mockup Specs by Screen
 
 ## S01 — Login & Consent
+**Reference:** `screen-inventory.md`
 - **Visual intent:** calm, trustworthy entry screen with single dominant CTA.
 - **Information hierarchy:** app identity -> value proposition -> sign-in CTA -> legal/support links.
 - **Visible regions:** minimal top bar, auth card, helper text footer.
@@ -16,6 +17,7 @@ Translate wireframe structures into high-fidelity guidance that a product design
 - **Figma notes:** keep this screen intentionally sparse; one reusable auth-card component.
 
 ## S02 — Onboarding Wizard
+**Reference:** `screen-inventory.md`
 - **Visual intent:** guided setup with strong progress clarity.
 - **Hierarchy:** progress stepper -> section title -> form groups -> sticky actions.
 - **Visible regions:** step header, form column, contextual guidance panel, sticky footer.
@@ -26,6 +28,7 @@ Translate wireframe structures into high-fidelity guidance that a product design
 - **Figma notes:** design each step as variant of same frame shell.
 
 ## S03 — Dashboard
+**Reference:** `screen-inventory.md`
 - **Visual intent:** high-confidence command center; immediate visibility into actions needed.
 - **Hierarchy:** page title/primary CTA -> KPI cards -> attention queue -> upcoming reminders -> integration health.
 - **Visible regions:** app shell, KPI row, queue cards, table block, right health rail.
@@ -36,6 +39,7 @@ Translate wireframe structures into high-fidelity guidance that a product design
 - **Figma notes:** build dashboard with reusable region frames to support future widgets.
 
 ## S04 — Events List
+**Reference:** `screen-inventory.md`
 - **Visual intent:** efficient triage workspace.
 - **Hierarchy:** title + result count -> filter/search toolbar -> sortable dataset -> pagination.
 - **Visible regions:** header, toolbar, table/list body, pagination.
@@ -46,6 +50,7 @@ Translate wireframe structures into high-fidelity guidance that a product design
 - **Figma notes:** desktop and mobile should share one content schema.
 
 ## S05 — Event Detail
+**Reference:** `screen-inventory.md`
 - **Visual intent:** focused decision screen balancing context and action.
 - **Hierarchy:** event context header -> details/reminder split -> history tab content -> sticky action.
 - **Visible regions:** header with status, metadata panel, editor panel, tabbed history, sticky footer.
@@ -56,6 +61,7 @@ Translate wireframe structures into high-fidelity guidance that a product design
 - **Figma notes:** include read-only variant for permission-limited mode.
 
 ## S06 — Preferences
+**Reference:** `screen-inventory.md`
 - **Visual intent:** structured configuration panel emphasizing safe edits.
 - **Hierarchy:** title/metadata -> grouped setting cards -> sticky save.
 - **Visible regions:** timing rules, channel defaults, notification settings.
@@ -65,6 +71,7 @@ Translate wireframe structures into high-fidelity guidance that a product design
 - **Figma notes:** all fields should map to reusable form component instances.
 
 ## S07 — Integrations
+**Reference:** `screen-inventory.md`
 - **Visual intent:** clear operational health board.
 - **Hierarchy:** health summary -> provider list -> contextual action modal/drawer.
 - **Visible regions:** status chips, integrations table/cards, reconnect/test surface.
@@ -74,6 +81,7 @@ Translate wireframe structures into high-fidelity guidance that a product design
 - **Figma notes:** status indicators should use same tokens as dashboard/activity.
 
 ## S08 — Activity & Diagnostics
+**Reference:** `screen-inventory.md`
 - **Visual intent:** audit-centric timeline with actionable recovery.
 - **Hierarchy:** scope controls -> event attempts list -> selected-attempt detail -> retry actions.
 - **Visible regions:** header, filters, timeline/table, detail drawer, footer actions.
@@ -82,6 +90,17 @@ Translate wireframe structures into high-fidelity guidance that a product design
 - **State treatments:** empty time range panel, log-fetch error alert, retry outcome toasts.
 - **Responsive:** detail drawer becomes dedicated route/sheet on mobile.
 - **Figma notes:** build reusable timeline row component with explicit state variants.
+
+## S09 — Account & Session Settings
+**Reference:** `screen-inventory.md`
+- **Visual intent:** trustworthy account control surface with clear session risk visibility.
+- **Hierarchy:** account identity -> editable profile/preferences -> active sessions -> security actions.
+- **Visible regions:** profile card, locale/timezone form fields, sessions table/list, security action strip.
+- **Component mix:** form inputs, table/list rows, badges, destructive and neutral action buttons, confirmation modal.
+- **CTA placement:** primary save in header; sign-out actions separated at bottom.
+- **State treatments:** session revoke success/error, save success toast, destructive confirm modal for sign-out-all.
+- **Responsive:** sessions table becomes card list with device and last-active metadata prioritized.
+- **Figma notes:** align typography and spacing with S06 settings patterns for consistency.
 
 ## 3. Cross-Screen Visual Consistency Rules
 - Keep page header structure consistent on S03-S08.
