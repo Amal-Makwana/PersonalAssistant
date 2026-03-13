@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Summary — Email-Driven Reminder Assistant</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #1e2a3a;
+      --muted: #5e6e82;
+      --accent: #2459ff;
+      --accent-soft: #eaf0ff;
+      --success: #0f766e;
+      --border: #dbe3ef;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
+    }
+    nav {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: #0f1a2b;
+      color: #d9e4ff;
+      padding: 24px 18px;
+    }
+    nav h1 { font-size: 1rem; margin: 0 0 6px; }
+    nav p { font-size: 0.85rem; opacity: 0.8; margin-top: 0; }
+    nav a {
+      display: block;
+      color: #d9e4ff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin-bottom: 4px;
+    }
+    nav a:hover { background: rgba(255,255,255,0.1); }
+    main { padding: 28px; }
+    .hero {
+      background: linear-gradient(135deg, #1a3da8, #2459ff);
+      color: white;
+      padding: 28px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(36, 89, 255, 0.25);
+    }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 14px; margin: 14px 0 24px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 4px 16px rgba(21, 40, 82, 0.06);
+    }
+    .callout {
+      border-left: 4px solid var(--accent);
+      background: var(--accent-soft);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin: 10px 0 18px;
+    }
+    h2 { margin-top: 28px; }
+    .tag {
+      display: inline-block;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      margin-right: 6px;
+    }
+    table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; }
+    th, td { border: 1px solid var(--border); padding: 10px; text-align: left; }
+    th { background: #eef3fb; }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <nav>
+      <h1>Product Summary</h1>
+      <p>Email-Driven Reminder Assistant</p>
+      <a href="#overview">Overview</a>
+      <a href="#business-context">Business Context</a>
+      <a href="#goals-kpis">Goals & KPIs</a>
+      <a href="#users">Users & Personas</a>
+      <a href="#requirements">Functional Requirements</a>
+      <a href="#nonfunctional">Non-Functional + Operations</a>
+      <a href="#scope">V1 Scope</a>
+      <a href="#traceability">Traceability</a>
+      <a href="#risks">Risks & Dependencies</a>
+    </nav>
+    <main>
+      <section class="hero" id="overview">
+        <h1>Email-Driven Reminder Assistant</h1>
+        <p>Executive product summary aligned to the enterprise PRD in <strong>requirements.md</strong>. This document is designed for sponsor briefings and cross-functional planning.</p>
+        <span class="tag">MVP: V1</span>
+        <span class="tag">Source of truth: Markdown docs</span>
+      </section>
+
+      <section class="card">
+        <h2>Product Positioning</h2>
+        <p>The product closes the workflow gap between receiving an event email and actually being reminded in time. It transforms inbox signals into structured events and policy-driven reminders, beginning with Gmail + WhatsApp and extending via optional SMS and Calendar sync.</p>
+        <div class="callout"><strong>Mission:</strong> Help users consistently act on email-based commitments by automating event capture and reminder delivery.</div>
+      </section>
+
+      <section id="business-context">
+        <h2>Business Context</h2>
+        <div class="grid">
+          <article class="card"><h3>Business Driver</h3><p>Missed commitments create stress, churn risk, and trust erosion.</p></article>
+          <article class="card"><h3>Market Need</h3><p>Users receive event information via email but fail to convert it into reliable reminders.</p></article>
+          <article class="card"><h3>Strategic Intent</h3><p>Build a dependable “email received → reminder guaranteed” experience.</p></article>
+        </div>
+      </section>
+
+      <section id="goals-kpis" class="card">
+        <h2>Goals and Success Metrics</h2>
+        <ul>
+          <li>Reduce missed events among active users.</li>
+          <li>Increase onboarding completion for Gmail connection.</li>
+          <li>Maintain high extraction, scheduling, and delivery reliability.</li>
+        </ul>
+        <table>
+          <thead><tr><th>Metric Group</th><th>Examples</th></tr></thead>
+          <tbody>
+            <tr><td>Business</td><td>WAU, retention, reduction in self-reported missed events</td></tr>
+            <tr><td>Adoption</td><td>Gmail connect completion, WhatsApp opt-in, SMS enablement</td></tr>
+            <tr><td>Operational</td><td>Extraction success, scheduling success, delivery success by channel</td></tr>
+            <tr><td>Technical</td><td>Ingestion-to-event latency, P95 dispatch latency, duplicate prevention accuracy</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="users">
+        <h2>Target Users</h2>
+        <div class="grid">
+          <article class="card"><h3>Primary</h3><p>Busy professionals, parent coordinators, freelancers/consultants.</p></article>
+          <article class="card"><h3>Secondary</h3><p>University students and small business operators.</p></article>
+          <article class="card"><h3>Core User Need</h3><p>Reliable reminders without manual event transcription from email.</p></article>
+        </div>
+      </section>
+
+      <section id="requirements" class="card">
+        <h2>Functional Requirements (PRD FR-01..FR-11)</h2>
+        <p>Core capabilities include Google sign-in, Gmail authorization, event detection and extraction, event persistence, policy-based reminder scheduling, WhatsApp delivery, optional SMS, optional Calendar sync, duplicate prevention, and preference management.</p>
+      </section>
+
+      <section id="nonfunctional" class="card">
+        <h2>Non-Functional and Operational Expectations</h2>
+        <ul>
+          <li>Secure OAuth-based access and privacy-safe data handling.</li>
+          <li>Scalable processing for growing mailbox and reminder volumes.</li>
+          <li>Observability via monitoring dashboards and structured logs.</li>
+          <li>Support readiness with failure triage and incident ownership.</li>
+        </ul>
+      </section>
+
+      <section id="scope" class="card">
+        <h2>V1 Scope Boundaries</h2>
+        <p><strong>In Scope:</strong> Gmail-based automation loop, fixed reminder timings, WhatsApp delivery, optional SMS/Calendar, duplicate prevention.</p>
+        <p><strong>Out of Scope:</strong> Non-Gmail providers, recurring rule engines, enterprise admin/team workflows, conversational AI features.</p>
+      </section>
+
+      <section id="traceability" class="card">
+        <h2>Traceability Chain</h2>
+        <p>Vision → Goals → Requirements (FR IDs) → User Stories (US IDs) → Acceptance Criteria (testable outcomes).</p>
+        <div class="callout">This alignment ensures business intent remains testable and measurable throughout delivery.</div>
+      </section>
+
+      <section id="risks" class="card">
+        <h2>Key Risks and Dependencies</h2>
+        <ul>
+          <li>Email parsing ambiguity may affect extraction quality.</li>
+          <li>Messaging provider outages can impact notification SLAs.</li>
+          <li>External API changes (Google or messaging providers) may affect delivery timelines.</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
