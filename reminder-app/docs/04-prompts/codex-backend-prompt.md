@@ -4,10 +4,10 @@
 Implement backend work from approved documentation with layered architecture.
 
 ## Inputs Required
-- API spec
-- Backend spec
-- DB schema
-- Acceptance criteria
+- Technical overview, backend spec, API spec, DB schema, integration spec (`docs/01-tech-spec`)
+- Architecture and flow design docs (`docs/03-design`)
+- Acceptance criteria (`docs/00-product/acceptance-criteria.md`)
+- Delivery constraints (`docs/04-delivery`)
 
 ## Rules
 - Maintain layer order: routes → controllers → services → repositories → models.

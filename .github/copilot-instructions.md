@@ -8,8 +8,9 @@ Before writing any code always read documentation in this order:
 
 1. docs/00-product
 2. docs/01-tech-spec
-3. docs/02-design
-4. docs/03-delivery
+3. docs/02-ui-ux
+4. docs/03-design
+5. docs/04-delivery
 
 ## Required Process
 

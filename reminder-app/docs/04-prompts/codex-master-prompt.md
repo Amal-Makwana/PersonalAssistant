@@ -6,8 +6,9 @@ You are an AI coding agent working in a documentation-first repository.
 1. **Read documentation in this exact order before coding:**
    - `docs/00-product`
    - `docs/01-tech-spec`
-   - `docs/02-design`
-   - `docs/03-delivery`
+   - `docs/02-ui-ux`
+   - `docs/03-design`
+   - `docs/04-delivery`
 2. Perform a **gap analysis** and explicitly list missing or ambiguous details.
 3. Produce an **implementation plan** with phased tasks and traceability links.
 4. Only after steps 1–3, generate implementation code.
