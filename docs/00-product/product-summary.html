@@ -3,193 +3,474 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Product Summary — Email-Driven Reminder Assistant</title>
+  <title>Product Summary | Email-Driven Reminder Assistant</title>
   <style>
     :root {
-      --bg: #f4f7fb;
-      --card: #ffffff;
-      --text: #1e2a3a;
-      --muted: #5e6e82;
-      --accent: #2459ff;
-      --accent-soft: #eaf0ff;
-      --success: #0f766e;
-      --border: #dbe3ef;
+      color-scheme: light;
+      --bg: #f4f6fb;
+      --panel: #ffffff;
+      --ink: #172033;
+      --muted: #58627a;
+      --line: #dbe3f1;
+      --brand: #305dff;
+      --brand-2: #4f8bff;
+      --brand-soft: #e8efff;
+      --ok: #0b7a63;
+      --warn: #9a6700;
+      --radius: 16px;
+      --shadow: 0 14px 40px rgba(21, 37, 86, 0.08);
+      --max: 1160px;
     }
+
     * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
-      font-family: "Inter", "Segoe UI", Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 15% -10%, #dbe6ff 0%, rgba(219, 230, 255, 0) 38%),
+        radial-gradient(circle at 85% -10%, #e3eeff 0%, rgba(227, 238, 255, 0) 35%),
+        var(--bg);
+      color: var(--ink);
       line-height: 1.55;
     }
-    .layout {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      min-height: 100vh;
+
+    .hero-wrap {
+      background: linear-gradient(135deg, #102856 0%, #1d4194 40%, #2f5dff 100%);
+      color: #f7faff;
+      padding: 2.5rem 1.25rem 3rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
     }
-    nav {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      overflow-y: auto;
-      background: #0f1a2b;
-      color: #d9e4ff;
-      padding: 24px 18px;
-    }
-    nav h1 { font-size: 1rem; margin: 0 0 6px; }
-    nav p { font-size: 0.85rem; opacity: 0.8; margin-top: 0; }
-    nav a {
-      display: block;
-      color: #d9e4ff;
-      text-decoration: none;
-      font-size: 0.9rem;
-      padding: 8px 10px;
-      border-radius: 8px;
-      margin-bottom: 4px;
-    }
-    nav a:hover { background: rgba(255,255,255,0.1); }
-    main { padding: 28px; }
+
     .hero {
-      background: linear-gradient(135deg, #1a3da8, #2459ff);
-      color: white;
-      padding: 28px;
-      border-radius: 16px;
-      margin-bottom: 20px;
-      box-shadow: 0 10px 30px rgba(36, 89, 255, 0.25);
+      max-width: var(--max);
+      margin: 0 auto;
+      display: grid;
+      gap: 1.4rem;
     }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 14px; margin: 14px 0 24px; }
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px;
-      box-shadow: 0 4px 16px rgba(21, 40, 82, 0.06);
-    }
-    .callout {
-      border-left: 4px solid var(--accent);
-      background: var(--accent-soft);
-      padding: 12px 14px;
-      border-radius: 10px;
-      margin: 10px 0 18px;
-    }
-    h2 { margin-top: 28px; }
-    .tag {
-      display: inline-block;
-      background: #eff6ff;
-      color: #1d4ed8;
-      border: 1px solid #bfdbfe;
-      padding: 3px 8px;
-      border-radius: 999px;
+
+    .eyebrow {
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
       font-size: 0.78rem;
-      margin-right: 6px;
+      opacity: 0.9;
+      font-weight: 700;
     }
-    table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; }
-    th, td { border: 1px solid var(--border); padding: 10px; text-align: left; }
-    th { background: #eef3fb; }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      line-height: 1.15;
+      max-width: 18ch;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 72ch;
+      color: #dbe8ff;
+      font-size: 1.03rem;
+    }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+
+    .chip {
+      border: 1px solid rgba(255, 255, 255, 0.33);
+      color: #eff5ff;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      padding: 0.35rem 0.7rem;
+      background: rgba(255, 255, 255, 0.09);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    .stat {
+      border: 1px solid rgba(255, 255, 255, 0.23);
+      border-radius: 12px;
+      padding: 0.8rem;
+      background: rgba(8, 20, 48, 0.26);
+    }
+
+    .stat strong { display: block; font-size: 1.3rem; }
+    .stat span { font-size: 0.82rem; color: #d6e4ff; }
+
+    main {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 1.2rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.65rem;
+      margin-top: 0.8rem;
+    }
+
+    .toc-grid a {
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0.65rem 0.75rem;
+      background: #fbfcff;
+      font-size: 0.94rem;
+    }
+
+    .toc-grid a:hover { border-color: #b8c8f2; background: #f3f7ff; }
+
+    h2, h3 { margin: 0 0 0.65rem; line-height: 1.25; }
+    h2 { font-size: 1.35rem; }
+    h3 { font-size: 1.03rem; }
+
+    p { margin: 0.45rem 0 0; color: var(--muted); }
+
+    .source {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-radius: 999px;
+      background: var(--brand-soft);
+      color: #123baf;
+      border: 1px solid #cddcff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.28rem 0.62rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 0.75rem; }
+
+    .mini {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0.85rem;
+      background: #fcfdff;
+    }
+
+    ul { margin: 0.55rem 0 0; padding-left: 1.1rem; color: var(--muted); }
+    li { margin: 0.23rem 0; }
+
+    .trace {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.7rem;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      font-size: 0.92rem;
+    }
+
+    .trace th,
+    .trace td { padding: 0.65rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    .trace th { background: #f3f7ff; color: #233a72; }
+
+    .callout {
+      margin-top: 0.9rem;
+      border-radius: 12px;
+      border: 1px solid #c5d7ff;
+      background: linear-gradient(180deg, #f4f8ff 0%, #eef4ff 100%);
+      padding: 0.85rem;
+    }
+
+    .gaps {
+      border-color: #f2d5a5;
+      background: linear-gradient(180deg, #fff9ef 0%, #fff4df 100%);
+    }
+
+    .legend {
+      display: flex;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+      margin-top: 0.7rem;
+      font-size: 0.82rem;
+    }
+
+    .legend span {
+      border-radius: 999px;
+      padding: 0.26rem 0.6rem;
+      border: 1px solid;
+    }
+
+    .must { color: #084f43; border-color: #95d8ca; background: #ecfaf7; }
+    .should { color: #7a4f00; border-color: #f0cf8c; background: #fff8ea; }
+    .could { color: #2740a0; border-color: #c8d5ff; background: #eff3ff; }
+
+    footer {
+      margin: 0.5rem 0 1rem;
+      text-align: center;
+      color: #6a748c;
+      font-size: 0.82rem;
+    }
+
+    @media (max-width: 720px) {
+      .hero-wrap { padding-top: 1.9rem; }
+      .card { padding: 0.95rem; }
+    }
   </style>
 </head>
 <body>
-  <div class="layout">
-    <nav>
-      <h1>Product Summary</h1>
-      <p>Email-Driven Reminder Assistant</p>
-      <a href="#overview">Overview</a>
-      <a href="#business-context">Business Context</a>
-      <a href="#goals-kpis">Goals & KPIs</a>
-      <a href="#users">Users & Personas</a>
-      <a href="#requirements">Functional Requirements</a>
-      <a href="#nonfunctional">Non-Functional + Operations</a>
-      <a href="#scope">V1 Scope</a>
-      <a href="#traceability">Traceability</a>
-      <a href="#risks">Risks & Dependencies</a>
-    </nav>
-    <main>
-      <section class="hero" id="overview">
-        <h1>Email-Driven Reminder Assistant</h1>
-        <p>Executive product summary aligned to the enterprise PRD in <strong>requirements.md</strong>. This document is designed for sponsor briefings and cross-functional planning.</p>
-        <span class="tag">MVP: V1</span>
-        <span class="tag">Source of truth: Markdown docs</span>
-      </section>
+  <header class="hero-wrap">
+    <div class="hero">
+      <div class="eyebrow">Product Documentation • Executive Consolidated View</div>
+      <h1>Email-Driven Reminder Assistant — Product Summary</h1>
+      <p>This stakeholder-ready page consolidates the Product section markdown into a single narrative: strategy, requirements, personas, stories, acceptance evidence, and V1 scope boundaries. Markdown files remain the source of truth.</p>
+      <div class="chips">
+        <span class="chip">V1 / MVP Focus</span>
+        <span class="chip">Gmail-Ingested Events</span>
+        <span class="chip">WhatsApp-First Reminders</span>
+        <span class="chip">Traceability: Vision → FR → US → AC</span>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong>11</strong><span>Functional Requirements (FR-01..FR-11)</span></div>
+        <div class="stat"><strong>11</strong><span>User Stories with acceptance mappings</span></div>
+        <div class="stat"><strong>3</strong><span>Default reminder windows (4h, 1h, 15m)</span></div>
+        <div class="stat"><strong>6</strong><span>Product markdown sources consolidated</span></div>
+      </div>
+    </div>
+  </header>
 
-      <section class="card">
-        <h2>Product Positioning</h2>
-        <p>The product closes the workflow gap between receiving an event email and actually being reminded in time. It transforms inbox signals into structured events and policy-driven reminders, beginning with Gmail + WhatsApp and extending via optional SMS and Calendar sync.</p>
-        <div class="callout"><strong>Mission:</strong> Help users consistently act on email-based commitments by automating event capture and reminder delivery.</div>
-      </section>
+  <main>
+    <section class="card" id="toc">
+      <h2>Table of Contents</h2>
+      <p>Each section explicitly maps to a markdown source file for traceability.</p>
+      <nav class="toc-grid" aria-label="Table of contents">
+        <a href="#vision">1) Product Vision (<code>vision.md</code>)</a>
+        <a href="#requirements">2) Product Requirements (<code>requirements.md</code>)</a>
+        <a href="#personas">3) User Personas (<code>user-personas.md</code>)</a>
+        <a href="#stories">4) User Stories (<code>user-stories.md</code>)</a>
+        <a href="#criteria">5) Acceptance Criteria (<code>acceptance-criteria.md</code>)</a>
+        <a href="#scope">6) Scope Definition V1 (<code>scope-v1.md</code>)</a>
+        <a href="#gaps">Open Questions / Gaps</a>
+      </nav>
+    </section>
 
-      <section id="business-context">
-        <h2>Business Context</h2>
-        <div class="grid">
-          <article class="card"><h3>Business Driver</h3><p>Missed commitments create stress, churn risk, and trust erosion.</p></article>
-          <article class="card"><h3>Market Need</h3><p>Users receive event information via email but fail to convert it into reliable reminders.</p></article>
-          <article class="card"><h3>Strategic Intent</h3><p>Build a dependable “email received → reminder guaranteed” experience.</p></article>
+    <section class="card" id="vision">
+      <span class="source">Source: docs/00-product/vision.md</span>
+      <h2>1) Vision, Mission, and Strategic Horizon</h2>
+      <div class="columns">
+        <article class="mini">
+          <h3>Strategic Narrative</h3>
+          <p>The product closes the fragile step between receiving event emails and setting reminders. It turns inbox receipt into reliable follow-through.</p>
+        </article>
+        <article class="mini">
+          <h3>Mission</h3>
+          <p>Transform email-based commitments into dependable reminders with minimal user effort and high trust.</p>
+        </article>
+        <article class="mini">
+          <h3>Long-Term Vision</h3>
+          <p>Evolve from reminders into broader email-to-action assistance while preserving privacy, control, and reliability.</p>
+        </article>
+      </div>
+      <div class="callout">
+        <strong>Strategic Goals:</strong>
+        <ul>
+          <li>Deliver dependable detect → extract → schedule → notify workflow.</li>
+          <li>Build trust through transparency and preference control.</li>
+          <li>Establish an extensible foundation for future assistant capabilities.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card" id="requirements">
+      <span class="source">Source: docs/00-product/requirements.md</span>
+      <h2>2) Product Requirements (Enterprise PRD Synthesis)</h2>
+      <div class="columns">
+        <article class="mini">
+          <h3>Problem to Solve</h3>
+          <ul>
+            <li>Users miss commitments due to manual email parsing and setup friction.</li>
+            <li>Important details are buried in threads, causing inconsistent reminder setup.</li>
+            <li>Passive notification channels reduce action reliability.</li>
+          </ul>
+        </article>
+        <article class="mini">
+          <h3>Business & Product Outcomes</h3>
+          <ul>
+            <li>Reduce missed-event incidents.</li>
+            <li>Lower user effort to convert event emails into reminders.</li>
+            <li>Increase confidence through predictable, high-attention delivery.</li>
+          </ul>
+        </article>
+        <article class="mini">
+          <h3>Success Metrics</h3>
+          <ul>
+            <li>Business: WAU, retention, missed-event reduction.</li>
+            <li>Adoption: Gmail completion, WhatsApp opt-in, SMS enablement.</li>
+            <li>Operational/Technical: extraction & delivery success, latency, dedupe accuracy.</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="callout">
+        <strong>Functional Requirements Coverage (FR-01..FR-11):</strong>
+        <p>Google sign-in, Gmail authorization, event detection/extraction/persistence, default reminder schedule, WhatsApp delivery, optional SMS, optional Calendar sync, duplicate prevention, and preference management.</p>
+        <div class="legend">
+          <span class="must">Must: FR-01,02,03,04,05,06,07,10</span>
+          <span class="should">Should: FR-08, FR-09</span>
+          <span class="could">Could: FR-11</span>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section id="goals-kpis" class="card">
-        <h2>Goals and Success Metrics</h2>
+    <section class="card" id="personas">
+      <span class="source">Source: docs/00-product/user-personas.md</span>
+      <h2>3) User Personas and Behavioral Drivers</h2>
+      <div class="columns">
+        <article class="mini">
+          <h3>Primary Personas</h3>
+          <ul>
+            <li><strong>Busy Professional:</strong> needs high confidence under heavy context switching.</li>
+            <li><strong>Parent Coordinator:</strong> manages multi-source family commitments.</li>
+            <li><strong>Freelancer / Consultant:</strong> balances client, billing, and schedule signals.</li>
+          </ul>
+        </article>
+        <article class="mini">
+          <h3>Secondary Personas</h3>
+          <ul>
+            <li><strong>University Student:</strong> event details scattered across institutions.</li>
+            <li><strong>Small Business Operator:</strong> high inbox operational load with frequent deadlines.</li>
+          </ul>
+        </article>
+        <article class="mini">
+          <h3>Shared User Need</h3>
+          <p>“If it arrives in email, I should be reminded in time without manually rebuilding the event.”</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="card" id="stories">
+      <span class="source">Source: docs/00-product/user-stories.md</span>
+      <h2>4) User Stories by Product Epic</h2>
+      <div class="columns">
+        <article class="mini">
+          <h3>E1: Onboarding & Trust</h3>
+          <ul>
+            <li>US-01 Google sign-in (FR-01)</li>
+            <li>US-02 Permission clarity (FR-02)</li>
+            <li>US-03 Preference setup (FR-11)</li>
+          </ul>
+        </article>
+        <article class="mini">
+          <h3>E2: Email-to-Event Automation</h3>
+          <ul>
+            <li>US-04 Detection (FR-03)</li>
+            <li>US-05 Extraction (FR-04)</li>
+            <li>US-06 Persistence (FR-05)</li>
+            <li>US-07 Duplicate prevention (FR-10)</li>
+          </ul>
+        </article>
+        <article class="mini">
+          <h3>E3/E4: Delivery & Ecosystem</h3>
+          <ul>
+            <li>US-08 Scheduling defaults (FR-06)</li>
+            <li>US-09 WhatsApp delivery (FR-07)</li>
+            <li>US-10 Optional SMS (FR-08)</li>
+            <li>US-11 Optional Calendar sync (FR-09)</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="card" id="criteria">
+      <span class="source">Source: docs/00-product/acceptance-criteria.md</span>
+      <h2>5) Acceptance Validation Snapshot</h2>
+      <p>Acceptance criteria define implementation-ready “Given / When / Then” outcomes and maintain one-to-one mapping with US-01 through US-11.</p>
+      <table class="trace" aria-label="Traceability table">
+        <thead>
+          <tr>
+            <th>Lifecycle Stage</th>
+            <th>Representative Acceptance Coverage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Onboarding</td>
+            <td>Successful Google sign-in, explicit consent transparency, and preference persistence behavior.</td>
+          </tr>
+          <tr>
+            <td>Automation Core</td>
+            <td>Event email classification, extraction of title/date/time/location, persistence, and dedupe enforcement.</td>
+          </tr>
+          <tr>
+            <td>Reminder Delivery</td>
+            <td>Default schedule generation and channel-specific dispatch with status/failure logging semantics.</td>
+          </tr>
+          <tr>
+            <td>Ecosystem Sync</td>
+            <td>Optional Google Calendar synchronization for enabled users with update consistency expectations.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" id="scope">
+      <span class="source">Source: docs/00-product/scope-v1.md</span>
+      <h2>6) V1 Scope Boundaries and Release Readiness</h2>
+      <div class="columns">
+        <article class="mini">
+          <h3>In Scope (V1)</h3>
+          <ul>
+            <li>Google auth + Gmail processing</li>
+            <li>Event extraction/persistence</li>
+            <li>4h/1h/15m reminder policy</li>
+            <li>WhatsApp + optional SMS</li>
+            <li>Optional Calendar sync</li>
+            <li>Duplicate prevention + preferences</li>
+          </ul>
+        </article>
+        <article class="mini">
+          <h3>Out of Scope (V1)</h3>
+          <ul>
+            <li>Non-Gmail providers</li>
+            <li>Recurring rule engines</li>
+            <li>Team/admin collaboration workflows</li>
+            <li>Voice/conversational assistant features</li>
+            <li>Advanced automation chains</li>
+          </ul>
+        </article>
+        <article class="mini">
+          <h3>Readiness Rule</h3>
+          <p>V1 is scope-complete when FR-01 through FR-11 are implemented, story-mapped, and acceptance-validated.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="card" id="gaps">
+      <h2>Open Questions / Gaps</h2>
+      <p>The following gaps are explicitly called out across product markdown and should be resolved before full production hardening.</p>
+      <div class="callout gaps">
         <ul>
-          <li>Reduce missed events among active users.</li>
-          <li>Increase onboarding completion for Gmail connection.</li>
-          <li>Maintain high extraction, scheduling, and delivery reliability.</li>
+          <li><strong>Extraction confidence threshold:</strong> no numeric policy for auto-schedule vs manual confirmation gate.</li>
+          <li><strong>Reminder SLA targets:</strong> channel-level timing commitments are not quantified.</li>
+          <li><strong>Jurisdiction-specific consent artifacts:</strong> privacy disclosure scope is identified but not finalized.</li>
+          <li><strong>Fallback policy ambiguity:</strong> WhatsApp failure → SMS fallback in V1 is undecided.</li>
+          <li><strong>Operational ownership depth:</strong> escalation windows/runbooks are referenced but not detailed in this product set.</li>
+          <li><strong>KPI targets:</strong> KPIs are defined, but threshold targets and launch guardrails are not yet quantified.</li>
         </ul>
-        <table>
-          <thead><tr><th>Metric Group</th><th>Examples</th></tr></thead>
-          <tbody>
-            <tr><td>Business</td><td>WAU, retention, reduction in self-reported missed events</td></tr>
-            <tr><td>Adoption</td><td>Gmail connect completion, WhatsApp opt-in, SMS enablement</td></tr>
-            <tr><td>Operational</td><td>Extraction success, scheduling success, delivery success by channel</td></tr>
-            <tr><td>Technical</td><td>Ingestion-to-event latency, P95 dispatch latency, duplicate prevention accuracy</td></tr>
-          </tbody>
-        </table>
-      </section>
+      </div>
+    </section>
 
-      <section id="users">
-        <h2>Target Users</h2>
-        <div class="grid">
-          <article class="card"><h3>Primary</h3><p>Busy professionals, parent coordinators, freelancers/consultants.</p></article>
-          <article class="card"><h3>Secondary</h3><p>University students and small business operators.</p></article>
-          <article class="card"><h3>Core User Need</h3><p>Reliable reminders without manual event transcription from email.</p></article>
-        </div>
-      </section>
-
-      <section id="requirements" class="card">
-        <h2>Functional Requirements (PRD FR-01..FR-11)</h2>
-        <p>Core capabilities include Google sign-in, Gmail authorization, event detection and extraction, event persistence, policy-based reminder scheduling, WhatsApp delivery, optional SMS, optional Calendar sync, duplicate prevention, and preference management.</p>
-      </section>
-
-      <section id="nonfunctional" class="card">
-        <h2>Non-Functional and Operational Expectations</h2>
-        <ul>
-          <li>Secure OAuth-based access and privacy-safe data handling.</li>
-          <li>Scalable processing for growing mailbox and reminder volumes.</li>
-          <li>Observability via monitoring dashboards and structured logs.</li>
-          <li>Support readiness with failure triage and incident ownership.</li>
-        </ul>
-      </section>
-
-      <section id="scope" class="card">
-        <h2>V1 Scope Boundaries</h2>
-        <p><strong>In Scope:</strong> Gmail-based automation loop, fixed reminder timings, WhatsApp delivery, optional SMS/Calendar, duplicate prevention.</p>
-        <p><strong>Out of Scope:</strong> Non-Gmail providers, recurring rule engines, enterprise admin/team workflows, conversational AI features.</p>
-      </section>
-
-      <section id="traceability" class="card">
-        <h2>Traceability Chain</h2>
-        <p>Vision → Goals → Requirements (FR IDs) → User Stories (US IDs) → Acceptance Criteria (testable outcomes).</p>
-        <div class="callout">This alignment ensures business intent remains testable and measurable throughout delivery.</div>
-      </section>
-
-      <section id="risks" class="card">
-        <h2>Key Risks and Dependencies</h2>
-        <ul>
-          <li>Email parsing ambiguity may affect extraction quality.</li>
-          <li>Messaging provider outages can impact notification SLAs.</li>
-          <li>External API changes (Google or messaging providers) may affect delivery timelines.</li>
-        </ul>
-      </section>
-    </main>
-  </div>
+    <footer>
+      Consolidated from: <code>vision.md</code>, <code>requirements.md</code>, <code>user-personas.md</code>, <code>user-stories.md</code>, <code>acceptance-criteria.md</code>, and <code>scope-v1.md</code>.
+    </footer>
+  </main>
 </body>
 </html>
