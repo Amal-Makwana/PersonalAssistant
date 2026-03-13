@@ -4,10 +4,10 @@
 Design and evolve persistence schema based on documented requirements.
 
 ## Inputs Required
-- Product requirements
-- API contracts
-- DB schema doc
-- Security/NFR requirements
+- Product requirements and acceptance criteria (`docs/00-product`)
+- API contracts and DB schema doc (`docs/01-tech-spec`)
+- Integration and deployment considerations (`docs/01-tech-spec`, `docs/03-design`)
+- Security/NFR requirements (`docs/01-tech-spec/security-nfr.md`)
 
 ## Rules
 - Every schema change must map to a requirement and acceptance criterion.

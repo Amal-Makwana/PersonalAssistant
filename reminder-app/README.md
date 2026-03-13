@@ -4,21 +4,22 @@
 
 This repository enforces a strict development lifecycle:
 
-**Product → Tech Spec → Design → Delivery → Code**
+**Product → Tech Spec → UI/UX → Design → Delivery → Code**
 
 No implementation should begin until each upstream documentation layer is complete, reviewed, and approved.
 
 ## Required Execution Order
 
 1. `docs/00-product` — Define business intent and user outcomes.
-2. `docs/01-tech-spec` — Translate product intent into technical specifications.
-3. `docs/02-design` — Define architecture, flows, and architectural decisions.
-4. `docs/03-delivery` — Plan implementation phases, testing, and rollout.
-5. Implementation in `apps/`, `packages/`, and `infra/`.
+2. `docs/01-tech-spec` — Define implementation-oriented technical specifications and system constraints.
+3. `docs/02-ui-ux` — Define UI/UX structure, screens, flows, and component behavior.
+4. `docs/03-design` — Define architecture, data/sequence flows, and ADR decisions.
+5. `docs/04-delivery` — Plan implementation phases, testing, and rollout.
+6. Implementation in `apps/`, `packages/`, and `infra/`.
 
 ## Repository Layout
 
-- `docs/` — Source of truth for requirements, system design, and delivery planning.
+- `docs/` — Source of truth for requirements, technical specifications, UX artifacts, system design, and delivery planning.
 - `apps/web` — Frontend application (feature-based structure).
 - `apps/api` — Backend application (layered architecture).
 - `packages/` — Shared UI, types, utilities, and config.

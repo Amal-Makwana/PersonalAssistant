@@ -4,7 +4,7 @@
 Review proposed code changes for documentation compliance and quality.
 
 ## Review Checklist
-- Documentation order respected before coding.
+- Documentation order respected before coding (`00-product → 01-tech-spec → 02-ui-ux → 03-design → 04-delivery`).
 - Gap analysis and implementation plan exist.
 - Code limited to approved directories.
 - Backend layering and frontend feature structure respected.

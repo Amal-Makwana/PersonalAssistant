@@ -1,7 +1,7 @@
 # Implementation Plan Template
 
 ## Preconditions
-- Required docs completed in 00-product, 01-tech-spec, 02-design.
+- Required docs completed in 00-product, 01-tech-spec, 02-ui-ux, 03-design.
 
 ## Gap Analysis
 - Missing requirement/spec/design items:
