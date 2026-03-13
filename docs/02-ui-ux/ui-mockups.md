@@ -1,125 +1,90 @@
-# UI Mockups
+# UI Mockups (High-Fidelity Intent Companion)
 
 ## 1. Purpose
-Provide text-based mockup definitions that describe intended visual structure and interactions for each core screen until high-fidelity design assets are finalized.
+Translate wireframe structures into high-fidelity guidance that a product designer can execute in Figma with clear hierarchy, component choices, and behavior expectations.
 
-## 2. Mockup Coverage
-Included: Login, Onboarding Wizard, Dashboard, Events List, Event Detail, Preferences, Integrations Overview, Activity.
+## 2. Mockup Specs by Screen
 
-## 3. Screen-by-Screen Mockup Definitions
+## S01 — Login & Consent
+- **Visual intent:** calm, trustworthy entry screen with single dominant CTA.
+- **Information hierarchy:** app identity -> value proposition -> sign-in CTA -> legal/support links.
+- **Visible regions:** minimal top bar, auth card, helper text footer.
+- **Component mix:** button primary, text links, inline alert, optional loading spinner.
+- **Headline/CTA placement:** centered card; CTA directly below consent copy.
+- **State treatments:** disabled CTA during OAuth, inline permission error, success redirect indicator.
+- **Responsive:** mobile card fills width with 16px gutters.
+- **Figma notes:** keep this screen intentionally sparse; one reusable auth-card component.
 
-### Mockup: Login
-- **Screen title:** Secure Sign-In
-- **Purpose:** Authenticate quickly and communicate trust.
-- **Layout structure:** Centered auth panel over lightweight branded background.
-- **Primary regions:** Header/value statement, primary sign-in CTA, legal/support links.
-- **Controls:** Google sign-in button, help link.
-- **Key actions:** Start authentication.
-- **State variations:** Idle, sign-in in-progress, auth error.
-- **Desktop/mobile considerations:** Maintain readable margins and full-width CTA on mobile.
+## S02 — Onboarding Wizard
+- **Visual intent:** guided setup with strong progress clarity.
+- **Hierarchy:** progress stepper -> section title -> form groups -> sticky actions.
+- **Visible regions:** step header, form column, contextual guidance panel, sticky footer.
+- **Component mix:** steppers, text/select inputs, toggles, inline helper, test action buttons.
+- **Filter/search/sort:** not applicable.
+- **State treatments:** field validation, channel test success/error chips, completion toast.
+- **Responsive:** right guidance panel collapses below form on tablet/mobile.
+- **Figma notes:** design each step as variant of same frame shell.
 
-### Mockup: Onboarding Wizard
-- **Screen title:** Get Started
-- **Purpose:** Configure minimum viable setup for reminders.
-- **Layout structure:** Stepper header + form body + persistent action footer.
-- **Primary regions:** Step indicator, config form, integration cards, summary confirmation.
-- **Controls:** Toggles, selectors, connect buttons, continue/back controls.
-- **Key actions:** Save step, connect channels, finish setup.
-- **State variations:** Incomplete step, validation error, connected success state.
-- **Desktop/mobile considerations:** Single-column steps on mobile; side contextual help on desktop.
+## S03 — Dashboard
+- **Visual intent:** high-confidence command center; immediate visibility into actions needed.
+- **Hierarchy:** page title/primary CTA -> KPI cards -> attention queue -> upcoming reminders -> integration health.
+- **Visible regions:** app shell, KPI row, queue cards, table block, right health rail.
+- **Component mix:** nav shell, metric cards, event cards, badges, alerts, table rows.
+- **Headline/CTA placement:** top-right CTA "View All Events" or "Review Queue".
+- **State treatments:** skeleton cards/table, empty queue panel, outage banner.
+- **Responsive:** right rail moves beneath main content; table becomes card list on mobile.
+- **Figma notes:** build dashboard with reusable region frames to support future widgets.
 
-### Mockup: Dashboard
-- **Screen title:** Reminder Operations Overview
-- **Purpose:** Prioritize user action based on urgency and risk.
-- **Layout structure:** Top KPI row, middle attention queue, lower upcoming timeline.
-- **Primary regions:** Metrics cards, action queue, integration health panel.
-- **Controls:** Filters, quick actions, deep-link buttons.
-- **Key actions:** Review event, reconnect provider, open activity detail.
-- **State variations:** Healthy state, attention required state, partial load failure.
-- **Desktop/mobile considerations:** KPI cards wrap into carousel/stack on mobile.
+## S04 — Events List
+- **Visual intent:** efficient triage workspace.
+- **Hierarchy:** title + result count -> filter/search toolbar -> sortable dataset -> pagination.
+- **Visible regions:** header, toolbar, table/list body, pagination.
+- **Component mix:** search bar, filter chips, tabs, table, badges, inline row actions.
+- **Filter/search/sort placement:** persistent directly beneath header.
+- **State treatments:** no results with clear reset action, API error row block.
+- **Responsive:** mobile uses card list with status and primary action pinned per card.
+- **Figma notes:** desktop and mobile should share one content schema.
 
-### Mockup: Events List
-- **Screen title:** Events
-- **Purpose:** Triage and manage event reminders.
-- **Layout structure:** Sticky search/filter row + table/list results.
-- **Primary regions:** Search, filters, list rows/cards, pagination.
-- **Controls:** Search input, status/date filters, row action menu.
-- **Key actions:** Open detail, bulk confirm.
-- **State variations:** No results, loading skeleton, filter error.
-- **Desktop/mobile considerations:** Table on desktop, card list with condensed metadata on mobile.
+## S05 — Event Detail
+- **Visual intent:** focused decision screen balancing context and action.
+- **Hierarchy:** event context header -> details/reminder split -> history tab content -> sticky action.
+- **Visible regions:** header with status, metadata panel, editor panel, tabbed history, sticky footer.
+- **Component mix:** tabs, key-value lists, form controls, alerts, callout cards, confirmation modal.
+- **CTA placement:** confirm/dismiss in persistent lower action zone.
+- **State treatments:** low-confidence warning callout, edit validation, save success toast.
+- **Responsive:** split view collapses to sequential sections with sticky bottom CTA.
+- **Figma notes:** include read-only variant for permission-limited mode.
 
-### Mockup: Event Detail
-- **Screen title:** Event Detail
-- **Purpose:** Validate extraction and adjust reminder plan.
-- **Layout structure:** Two-column (summary left, actions right) desktop; stacked mobile.
-- **Primary regions:** Event metadata, confidence card, reminder schedule editor, source snippet.
-- **Controls:** Date/time controls, channel selector, save/confirm CTA.
-- **Key actions:** Confirm, edit, retry.
-- **State variations:** High-confidence auto-suggest, low-confidence warning, save conflict.
-- **Desktop/mobile considerations:** Sticky action panel desktop; sticky footer CTA mobile.
+## S06 — Preferences
+- **Visual intent:** structured configuration panel emphasizing safe edits.
+- **Hierarchy:** title/metadata -> grouped setting cards -> sticky save.
+- **Visible regions:** timing rules, channel defaults, notification settings.
+- **Component mix:** inputs, toggles, grouped cards, alerts, sticky actions.
+- **State treatments:** dirty indicator, inline validation, save success confirmation.
+- **Responsive:** settings cards stack to single column with clear section dividers.
+- **Figma notes:** all fields should map to reusable form component instances.
 
-### Mockup: Preferences
-- **Screen title:** Reminder Preferences
-- **Purpose:** Set defaults and global communication behavior.
-- **Layout structure:** Sectioned settings cards with save bar.
-- **Primary regions:** Timing defaults, channel toggles, quiet hours, timezone.
-- **Controls:** Switches, selects, time inputs.
-- **Key actions:** Save changes, reset section.
-- **State variations:** Unsaved changes, validation errors, save success.
-- **Desktop/mobile considerations:** Maintain grouped cards; collapse hints and help text on mobile.
+## S07 — Integrations
+- **Visual intent:** clear operational health board.
+- **Hierarchy:** health summary -> provider list -> contextual action modal/drawer.
+- **Visible regions:** status chips, integrations table/cards, reconnect/test surface.
+- **Component mix:** status badges, table rows, secondary action buttons, modal/drawer forms.
+- **State treatments:** reconnect loading, invalid auth error, connection restored success.
+- **Responsive:** action modal becomes bottom sheet on mobile.
+- **Figma notes:** status indicators should use same tokens as dashboard/activity.
 
-### Mockup: Integrations Overview
-- **Screen title:** Integrations
-- **Purpose:** Display connection health and remediation actions.
-- **Layout structure:** Provider card grid with health statuses.
-- **Primary regions:** Provider status card, token/sync metadata, action controls.
-- **Controls:** Connect/reconnect/disconnect buttons.
-- **Key actions:** Reconnect provider.
-- **State variations:** Connected, degraded, disconnected, reconnect in-progress.
-- **Desktop/mobile considerations:** Single-column cards on mobile.
+## S08 — Activity & Diagnostics
+- **Visual intent:** audit-centric timeline with actionable recovery.
+- **Hierarchy:** scope controls -> event attempts list -> selected-attempt detail -> retry actions.
+- **Visible regions:** header, filters, timeline/table, detail drawer, footer actions.
+- **Component mix:** filters, badges, table/timeline entries, drawer, retry CTA buttons.
+- **Filter/search/sort placement:** always visible at top of dataset region.
+- **State treatments:** empty time range panel, log-fetch error alert, retry outcome toasts.
+- **Responsive:** detail drawer becomes dedicated route/sheet on mobile.
+- **Figma notes:** build reusable timeline row component with explicit state variants.
 
-### Mockup: Activity & Diagnostics
-- **Screen title:** Delivery Activity
-- **Purpose:** Audit reminder outcomes and support recovery.
-- **Layout structure:** Filter bar + timeline/list + detail drawer.
-- **Primary regions:** Filters, activity rows, attempt detail panel.
-- **Controls:** Channel filter, status filter, retry action.
-- **Key actions:** Inspect and retry failed attempts.
-- **State variations:** Empty range, all healthy, repeated failures.
-- **Desktop/mobile considerations:** Inline drawer on desktop; full-screen detail on mobile.
-
-## 4. Key Layout Regions
-- Global navigation shell
-- Page header with title and context actions
-- Primary content region
-- Supporting side panel/drawer where applicable
-- Feedback layer (toasts, banners, modal dialogs)
-
-## 5. Major UI States
-- Loading (skeleton + progress indicators)
-- Ready/default
-- Empty (with guidance CTA)
-- Validation error
-- System error/retry
-- Success confirmation
-
-## 6. Interaction Notes
-- Use optimistic UI only where rollback is low risk and clear.
-- Disable duplicate-submit actions during async operations.
-- Focus management: move focus to page heading on route changes.
-- Preserve filter and scroll context when returning from detail to list.
-
-## 7. Priority Screens
-- Highest implementation priority: Onboarding Wizard, Dashboard, Events List, Event Detail, Preferences.
-- Secondary priority: Integrations Overview, Activity, Account Settings.
-
-## 8. MVP vs Future Screens
-- **MVP:** All listed except advanced provider drill-down and support analytics export.
-- **Future:** Saved views manager, admin role dashboards, advanced notification center.
-
-## 9. Open Questions / Gaps
-1. Are high-fidelity visual assets required before development kickoff for all MVP screens?
-2. Should Activity detail support inline screenshot/log attachments for support workflows?
-3. Is a dedicated “Needs Review” screen preferable to dashboard cards for high-volume users?
-
-**References:** `wireframes.md`, `screen-inventory.md`, `design-principles.md`.
+## 3. Cross-Screen Visual Consistency Rules
+- Keep page header structure consistent on S03-S08.
+- Keep status badge color/text taxonomy identical across cards, tables, and timeline.
+- Keep sticky save/retry patterns consistent for trust and muscle memory.
+- Keep spacing rhythm (24/16/8) consistent across all major frames.
