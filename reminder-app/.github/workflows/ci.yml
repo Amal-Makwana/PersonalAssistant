@@ -1,0 +1,18 @@
+name: CI
+
+on:
+  push:
+    branches: ["main", "develop"]
+  pull_request:
+
+jobs:
+  docs-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify docs structure exists
+        run: |
+          test -d docs/00-product
+          test -d docs/01-tech-spec
+          test -d docs/02-design
+          test -d docs/03-delivery
