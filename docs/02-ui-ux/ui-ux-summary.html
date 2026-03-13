@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UI/UX Summary | Email-Driven Reminder Assistant</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --ink: #13203a;
+      --muted: #52607a;
+      --brand: #2f6df6;
+      --accent: #8b5cf6;
+      --line: #dbe3f0;
+      --ok: #127a4f;
+      --warn: #9a6700;
+      --risk: #b42318;
+      --shadow: 0 16px 38px rgba(12, 28, 61, 0.08);
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at 20% 0%, #eef3ff 0%, #f7f9fd 45%, #f5f7fb 100%);
+      line-height: 1.55;
+    }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 28px; }
+    .hero {
+      background: linear-gradient(130deg, #0f1f45, #2247a3 55%, #4933ab);
+      color: #fff;
+      border-radius: 24px;
+      padding: 36px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+    .hero h1 { margin: 0 0 8px; font-size: 2rem; }
+    .hero p { margin: 0; opacity: .92; max-width: 900px; }
+    .chipset { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .chip { background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.22); padding: 6px 12px; border-radius: 999px; font-size: .82rem; }
+
+    .toc, .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .toc { padding: 20px; margin-bottom: 20px; }
+    .toc h2 { margin: 0 0 10px; font-size: 1.15rem; }
+    .toc a { color: var(--brand); text-decoration: none; }
+    .toc ul { margin: 0; padding-left: 20px; columns: 2; }
+
+    .grid { display: grid; gap: 16px; }
+    .card { padding: 22px; }
+    .card h2 { margin: 0 0 12px; font-size: 1.25rem; }
+    .card h3 { margin: 14px 0 8px; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .callout {
+      border-left: 4px solid var(--brand);
+      background: #f2f6ff;
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin: 12px 0;
+    }
+    .callout.warn { border-color: var(--warn); background: #fff8e8; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: .95rem; }
+    th, td { border: 1px solid var(--line); padding: 10px; vertical-align: top; }
+    th { text-align: left; background: #f8faff; }
+    .source { margin-top: 12px; color: var(--muted); font-size: .86rem; }
+    .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: .75rem; font-weight: 600; }
+    .mvp { background: #eafaf2; color: var(--ok); }
+    .future { background: #f2f0ff; color: #5a3cbc; }
+
+    @media (max-width: 900px) {
+      .toc ul { columns: 1; }
+      .hero { padding: 28px; }
+      .hero h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <h1>UI/UX Consolidated Summary</h1>
+      <p>Enterprise-grade experience blueprint for the Email-Driven Reminder Assistant V1. This page consolidates UI/UX source markdown into a stakeholder-ready view while preserving traceability to implementation guidance and product intent.</p>
+      <div class="chipset">
+        <span class="chip">Source of Truth: docs/02-ui-ux/*.md</span>
+        <span class="chip">Audience: Product · Design · Frontend · QA · Stakeholders</span>
+        <span class="chip">Aligned to docs/00-product and docs/01-tech-spec</span>
+      </div>
+    </header>
+
+    <nav class="toc" aria-label="Table of contents">
+      <h2>Table of Contents</h2>
+      <ul>
+        <li><a href="#overview">UI/UX Overview</a></li>
+        <li><a href="#ia">Information Architecture</a></li>
+        <li><a href="#flows">User Flows</a></li>
+        <li><a href="#screens">Screen Inventory</a></li>
+        <li><a href="#principles">Design Principles</a></li>
+        <li><a href="#mockups">UI Mockups</a></li>
+        <li><a href="#wireframes">Wireframes</a></li>
+        <li><a href="#components">UI Components</a></li>
+        <li><a href="#gaps">UX Gaps & Open Questions</a></li>
+      </ul>
+    </nav>
+
+    <main class="grid">
+      <section class="card" id="overview">
+        <h2>UI/UX Overview</h2>
+        <p class="muted">Defines UX goals, usability expectations, accessibility outcomes, and primary user journeys for V1.</p>
+        <div class="callout"><strong>Experience intent:</strong> reduce time and uncertainty between event-bearing email receipt and trusted reminder delivery.</div>
+        <table>
+          <thead><tr><th>Dimension</th><th>Guidance</th></tr></thead>
+          <tbody>
+            <tr><td>UX Goals</td><td>Minimize setup effort, increase confidence, and keep automation status transparent.</td></tr>
+            <tr><td>Usability Targets</td><td>Onboarding in &lt;5 minutes; reminder modification in ≤3 interactions for returning users.</td></tr>
+            <tr><td>Accessibility</td><td>WCAG 2.1 AA baseline with keyboard parity and non-color-only status communication.</td></tr>
+            <tr><td>Responsive</td><td>Critical workflows preserved on mobile with sticky primary actions and table-to-card adaptation.</td></tr>
+          </tbody>
+        </table>
+        <p class="source">Source: <code>ui-overview.md</code></p>
+      </section>
+
+      <section class="card" id="ia">
+        <h2>Information Architecture</h2>
+        <p class="muted">Defines global navigation, hierarchy, and movement between major product sections.</p>
+        <h3>Global Navigation</h3>
+        <p>Dashboard · Events · Preferences · Integrations · Activity & Diagnostics · Account/Settings.</p>
+        <h3>Hierarchy</h3>
+        <p>Level 0 (auth) → Level 1 (global modules) → Level 2 (entity details) with modal surfaces for quick edits and confirmations.</p>
+        <p class="source">Source: <code>information-architecture.md</code></p>
+      </section>
+
+      <section class="card" id="flows">
+        <h2>User Flows</h2>
+        <p class="muted">Primary and secondary flows include trigger, preconditions, main path, alternates, failure handling, and completion state.</p>
+        <table>
+          <thead><tr><th>Flow</th><th>Actor</th><th>Outcome</th><th>Key Failure Recovery</th></tr></thead>
+          <tbody>
+            <tr><td>Onboarding & Channel Setup</td><td>New user</td><td>Monitoring activated with at least one delivery channel</td><td>Reconnect/retry provider linking with explicit error guidance</td></tr>
+            <tr><td>Review Detected Event</td><td>Returning user</td><td>Event transitions to scheduled</td><td>Conflict resolution and data reload options</td></tr>
+            <tr><td>Adjust Global Preferences</td><td>Authenticated user</td><td>New defaults applied with audit trace</td><td>Validation messaging and stale-write handling</td></tr>
+            <tr><td>Delivery Diagnostics</td><td>User/support persona</td><td>Delivery confidence or remediation action initiated</td><td>Retry controls and channel-health redirection</td></tr>
+          </tbody>
+        </table>
+        <p class="source">Source: <code>user-flows.md</code></p>
+      </section>
+
+      <section class="card" id="screens">
+        <h2>Screen Inventory</h2>
+        <p class="muted">Catalogues purpose, actions, key states, and permissions/visibility for each UI surface.</p>
+        <table>
+          <thead><tr><th>Screen</th><th>Purpose</th><th>Priority</th><th>Related Flows</th></tr></thead>
+          <tbody>
+            <tr><td>Login</td><td>Secure authentication and entry point into setup</td><td><span class="pill mvp">MVP</span></td><td>A</td></tr>
+            <tr><td>Onboarding Wizard</td><td>Configure timezone, defaults, and channels</td><td><span class="pill mvp">MVP</span></td><td>A</td></tr>
+            <tr><td>Dashboard</td><td>Operational summary and triage</td><td><span class="pill mvp">MVP</span></td><td>B, D</td></tr>
+            <tr><td>Events List / Detail</td><td>Review and control event reminder lifecycle</td><td><span class="pill mvp">MVP</span></td><td>B</td></tr>
+            <tr><td>Preferences</td><td>Manage global reminder behavior</td><td><span class="pill mvp">MVP</span></td><td>C</td></tr>
+            <tr><td>Integrations</td><td>Provider health and reconnection actions</td><td><span class="pill mvp">MVP</span></td><td>A, D</td></tr>
+            <tr><td>Activity & Diagnostics</td><td>Delivery attempt traceability and retry</td><td><span class="pill mvp">MVP</span></td><td>E</td></tr>
+            <tr><td>Advanced Provider Drilldown / Export</td><td>Support-heavy analytics workflows</td><td><span class="pill future">Future</span></td><td>E</td></tr>
+          </tbody>
+        </table>
+        <p class="source">Source: <code>screen-inventory.md</code></p>
+      </section>
+
+      <section class="card" id="principles">
+        <h2>Design Principles</h2>
+        <p class="muted">Principles govern clarity, consistency, efficiency, responsiveness, trust, and microcopy quality.</p>
+        <ul>
+          <li>Outcome-oriented design with transparent system behavior.</li>
+          <li>Consistent action placement and status taxonomy.</li>
+          <li>Accessibility by default: semantic structure, contrast, keyboard parity.</li>
+          <li>Feedback-rich interactions with clear success/error signaling.</li>
+        </ul>
+        <p class="source">Source: <code>design-principles.md</code></p>
+      </section>
+
+      <section class="card" id="mockups">
+        <h2>UI Mockups (Text Definitions)</h2>
+        <p class="muted">Defines intended structure and state variants for each key screen until high-fidelity assets are finalized.</p>
+        <div class="callout">Includes screen-level definitions for login, onboarding, dashboard, events, detail, preferences, integrations, and diagnostics with desktop/mobile considerations.</div>
+        <p class="source">Source: <code>ui-mockups.md</code></p>
+      </section>
+
+      <section class="card" id="wireframes">
+        <h2>Wireframes</h2>
+        <p class="muted">Low-fidelity layout intent documents content zones, interaction emphasis, and implementation notes.</p>
+        <ul>
+          <li>Dashboard prioritizes attention queue and operational status.</li>
+          <li>Events and Activity optimize list triage and detail drill-down.</li>
+          <li>Event Detail and Preferences emphasize form safety and save confidence.</li>
+          <li>Responsive notes describe breakpoint behavior and mobile action persistence.</li>
+        </ul>
+        <p class="source">Source: <code>wireframes.md</code></p>
+      </section>
+
+      <section class="card" id="components">
+        <h2>UI Components</h2>
+        <p class="muted">Component inventory includes global shell components, feature components, feedback surfaces, and implementation mapping.</p>
+        <table>
+          <thead><tr><th>Component</th><th>Purpose</th><th>Core States</th><th>Implementation Mapping</th></tr></thead>
+          <tbody>
+            <tr><td>AppShell</td><td>Global layout and orientation</td><td>Default, compact nav, loading</td><td>Shared layout across authenticated routes</td></tr>
+            <tr><td>PageHeader</td><td>Page title, context, primary actions</td><td>Default, with banner, loading</td><td>Standard route-level header pattern</td></tr>
+            <tr><td>EventStatusCard</td><td>Event snapshot and status cues</td><td>Normal, attention, failed, selected</td><td>Dashboard + events listing</td></tr>
+            <tr><td>ReminderEditorPanel</td><td>Per-event schedule editing</td><td>Pristine, dirty, saving, error, saved</td><td>Event detail and quick edit interactions</td></tr>
+          </tbody>
+        </table>
+        <p class="source">Source: <code>components.md</code></p>
+      </section>
+
+      <section class="card" id="gaps">
+        <h2>UX Gaps & Open Questions (Consolidated)</h2>
+        <div class="callout warn"><strong>Decision focus:</strong> confirm MVP boundaries around low-confidence review policy, fallback channel visibility, and support-grade diagnostics depth.</div>
+        <table>
+          <thead><tr><th>Theme</th><th>Open Question</th><th>Primary Sources</th></tr></thead>
+          <tbody>
+            <tr><td>Automation Trust</td><td>Should high-confidence extraction bypass manual review by default?</td><td>ui-overview.md, user-flows.md</td></tr>
+            <tr><td>Navigation Scope</td><td>Should Activity and Integrations remain top-level in MVP navigation?</td><td>information-architecture.md, screen-inventory.md</td></tr>
+            <tr><td>Design System Readiness</td><td>Is design-token and iconography guidance required before implementation freeze?</td><td>design-principles.md, components.md</td></tr>
+            <tr><td>Support Workflow Depth</td><td>Do we need export/share capabilities in Activity for support operations in V1?</td><td>screen-inventory.md, ui-mockups.md</td></tr>
+          </tbody>
+        </table>
+        <p class="source">Traceability: each section above links back to markdown source files in <code>docs/02-ui-ux</code> and aligns with <code>docs/01-tech-spec/frontend-spec.md</code>.</p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
