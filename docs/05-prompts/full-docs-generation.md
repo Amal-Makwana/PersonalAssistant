@@ -10,6 +10,7 @@ Generate a single governed, rich HTML artifact consolidating ALL markdown docume
 
 ## Primary Output Artifact
 - `docs/full-docs.html`
+- if a file exists already delete it and replace with newly generated one
 
 If `docs/full-docs.html` exists:
 - delete it
@@ -126,7 +127,7 @@ Always generate the exact structure below.
 2. Overall Executive Summary
 3. Repository Documentation Overview
 4. Table of Contents
-5. Section-by-Section Consolidated Documentation
+5. Section-by-section full output
 
 For each section:
 
