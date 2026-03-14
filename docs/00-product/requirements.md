@@ -11,9 +11,6 @@ This Product Requirements Document (PRD) defines the business intent, user outco
 - Engineering and architecture teams use this document to derive technical specifications and delivery plans.
 - QA and operations use this document to validate acceptance, observability, support readiness, and production reliability.
 
-> [!NOTE]
-> **Legacy gap analysis (pre-rewrite):** Prior documentation described core features but lacked enterprise-grade structure, explicit KPI definitions, stakeholder accountability, operational requirements, risk management, and traceability between vision, requirements, stories, and acceptance criteria. Functional requirements were brief, with weak business rationale and limited prioritization detail. Non-functional constraints, compliance assumptions, integration boundaries, and open questions were underdeveloped.
-
 ## 2. Product Overview
 The Email-Driven Reminder Assistant is a workflow automation product that converts event-bearing emails into trusted reminders without requiring users to manually re-enter event details or configure reminder timing each time.
 
