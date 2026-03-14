@@ -86,6 +86,22 @@ Implementation readiness
 Location:
 docs/05-prompts/repository-documentation-audit.md
 
+## Repository Commands
+
+Run full audit  
+Runs repository-wide documentation governance audit and saves report to `docs/06-governance`.
+
+Run audit - phase  
+Runs documentation review for a specific phase.
+
+Examples:
+
+Run audit - product  
+Run audit - tech-spec  
+Run audit - ui-ux  
+Run audit - design  
+Run audit - delivery
+
 ## Mapping Between Prompts and Documentation Sections
 
 | Documentation Section | Prompt Source | Primary Outputs |
