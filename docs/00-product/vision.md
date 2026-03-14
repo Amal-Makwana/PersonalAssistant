@@ -23,9 +23,20 @@ Become the default personal commitment assurance layer for inbox-driven lives, e
 3. Establish a scalable architecture for future expansion beyond reminders.
 
 ## Success Horizon
-- **Near term (V1):** Reliable Gmail-based event detection and WhatsApp-first reminder delivery.
+- **Near term (V1):** Reliable Gmail-based event detection, event extraction, reminder schedule generation, and Google Calendar synchronization.
 - **Mid term:** Custom reminder rules, additional provider support, and stronger context intelligence.
 - **Long term:** Multi-action assistant experiences built on inbox intent and lifecycle automation.
+
+## V1 Delivery Scope Clarification
+
+For V1, the committed delivery scope includes:
+- Gmail email ingestion
+- Event detection and extraction
+- Reminder schedule generation
+- Google Calendar synchronization
+
+Notification channels such as WhatsApp and SMS are intentionally deferred to post-MVP phases to ensure the reliability and accuracy of the core email-to-calendar workflow before expanding into messaging channels.
+
 
 ## Alignment and Traceability
 - This vision informs PRD goals in [requirements.md](./requirements.md) Section 5.

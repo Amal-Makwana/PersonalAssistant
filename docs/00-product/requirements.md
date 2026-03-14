@@ -165,7 +165,7 @@ See the expanded persona definitions in [user-personas.md](./user-personas.md).
 - **Affected user types:** All personas
 
 ### FR-04 Event Extraction and Structuring
-- **Description:** System shall extract title, date, time, and optional location into structured event records.
+- **Description:** System shall extract title, date, time, and optional location into structured event records, and apply confidence-based handling for low-certainty outputs before scheduling.
 - **Business reason:** Structured data is required for scheduling and delivery reliability.
 - **Priority:** Must
 - **Affected user types:** All personas
@@ -211,6 +211,51 @@ See the expanded persona definitions in [user-personas.md](./user-personas.md).
 - **Business reason:** User control improves adoption and reduces churn risk.
 - **Priority:** Must
 - **Affected user types:** Users with channel-specific preferences
+
+
+## Functional Requirement Validation Governance
+
+To ensure implementation readiness and auditability, each Functional Requirement (FR) must include measurable success conditions and a validation method.
+
+| FR | Validation Method | Primary KPI | Target Threshold |
+|----|----|----|----|
+| FR-03 Event Detection | Integration Test | Detection Accuracy | ≥ 95% |
+| FR-04 Event Extraction | Integration + Observability | Extraction Completeness | ≥ 95% structured fields captured |
+| FR-05 Event Persistence | Functional Test | Persistence Reliability | ≥ 99% successful writes |
+| FR-06 Reminder Schedule | Functional Test | Schedule Generation Success | ≥ 99% |
+| FR-09 Calendar Sync | Integration Test | Sync Success Rate | ≥ 98% |
+| FR-10 Duplicate Prevention | Functional Test | Duplicate Prevention Accuracy | ≥ 99% |
+
+These thresholds define the minimum Definition of Done for production readiness.
+
+## Operational Reliability Targets
+
+| Capability | Target |
+|---|---|
+| Calendar sync latency | ≤ 10 seconds from event persistence |
+| Reminder scheduling success | ≥ 99% successful schedule creation |
+| Event extraction processing latency | ≤ 5 seconds |
+| System retry resolution window | ≤ 60 seconds |
+
+These targets guide monitoring dashboards and operational alerts.
+
+## Retry Policy for External Integrations
+
+| Integration | Retry Strategy | Maximum Retries | Backoff |
+|---|---|---|---|
+| Gmail ingestion | exponential retry | 3 | 2s / 5s / 10s |
+| Calendar sync | exponential retry | 5 | 5s / 10s / 30s |
+| Reminder scheduler | immediate retry | 3 | 2s |
+
+Failures after maximum retries are logged and surfaced to monitoring dashboards.
+
+## Event Extraction Confidence Policy
+
+| Confidence Level | Action |
+|---|---|
+| ≥ 95% | Event automatically scheduled |
+| 80–95% | Event scheduled but flagged for review |
+| < 80% | User confirmation required before scheduling |
 
 ## KPI Governance
 
@@ -328,10 +373,9 @@ Deliver FR-01, FR-02, FR-03, FR-04, FR-05, FR-06, FR-09, FR-10, and FR-11 with a
 Evolve from event capture/reminders to a broader “email-to-action” assistant while maintaining privacy and trust as core differentiators.
 
 ## 21. Open Questions
-1. What minimum extraction confidence threshold is acceptable for automatic scheduling vs. manual confirmation?
-2. What target SLA should be committed for reminder delivery by channel?
-3. Which privacy disclosures and consent artifacts are required at onboarding for each jurisdiction?
-4. Should channel fallback logic for future delivery channels (e.g., WhatsApp failure → SMS fallback) be included when FR-07/FR-08 launch?
+1. What target SLA should be committed for reminder delivery by channel in post-MVP channel rollout?
+2. Which privacy disclosures and consent artifacts are required at onboarding for each jurisdiction?
+3. Should channel fallback logic for future delivery channels (e.g., WhatsApp failure → SMS fallback) be included when FR-07/FR-08 launch?
 
 ---
 

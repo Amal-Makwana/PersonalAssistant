@@ -287,6 +287,13 @@
           <li>Establish an extensible foundation for future assistant capabilities.</li>
         </ul>
       </div>
+      <div class="callout">
+        <strong>V1 Delivery Scope Clarification:</strong>
+        <ul>
+          <li>Committed V1 scope: Gmail ingestion, event detection/extraction, reminder schedule generation, and Google Calendar synchronization.</li>
+          <li>WhatsApp and SMS reminders are explicitly post-MVP to protect reliability of the core email-to-calendar workflow.</li>
+        </ul>
+      </div>
     </section>
 
     <section class="card" id="requirements">
@@ -332,8 +339,11 @@
       <div class="callout">
         <strong>Governance Additions:</strong>
         <ul>
-          <li>KPI Governance defines owners, sources, cadence, and thresholds for extraction accuracy, calendar sync, reminder generation, and onboarding completion.</li>
-          <li>Risk-Decision Threshold Matrix defines trigger-based launch/operational responses with explicit owners and SLAs.</li>
+          <li>FR Validation Governance now defines validation methods and Definition-of-Done thresholds for FR-03/04/05/06/09/10.</li>
+          <li>Operational reliability targets now set limits for extraction latency (≤5s), sync latency (≤10s), scheduler success (≥99%), and retry resolution window (≤60s).</li>
+          <li>Retry policy for Gmail ingestion, calendar sync, and reminder scheduler is explicitly defined with maximum retries and backoff schedules.</li>
+          <li>Event extraction confidence policy defines auto-schedule (≥95%), flagged review (80–95%), and user-confirmation path (&lt;80%).</li>
+          <li>KPI governance and risk-decision thresholds remain in place for ongoing accountability.</li>
         </ul>
       </div>
     </section>
@@ -341,6 +351,7 @@
     <section class="card" id="personas">
       <span class="source">Source: docs/00-product/user-personas.md</span>
       <h2>3) User Personas and Behavioral Drivers</h2>
+      <p>Persona-to-feature sensitivity mapping now identifies the most critical FR dependencies per persona to prioritize reliability work by user impact.</p>
       <div class="columns">
         <article class="mini">
           <h3>Primary Personas</h3>
@@ -367,6 +378,7 @@
     <section class="card" id="stories">
       <span class="source">Source: docs/00-product/user-stories.md</span>
       <h2>4) User Stories by Product Epic</h2>
+      <p>High-impact story risk annotations (US-04 through US-09) are documented for QA prioritization and incident triage.</p>
       <div class="columns">
         <article class="mini">
           <h3>E1: Onboarding & Trust</h3>
@@ -401,7 +413,7 @@
       <span class="source">Source: docs/00-product/acceptance-criteria.md</span>
       <h2>5) Acceptance Validation Snapshot</h2>
       <p>Acceptance criteria define implementation-ready “Given / When / Then” outcomes and maintain one-to-one mapping with US-01 through US-11.</p>
-      <p>High-risk journey mapping is explicitly documented for extraction accuracy, calendar sync timeliness, duplicate prevention, and 4h/1h/15m reminder scheduling.</p>
+      <p>High-risk flow reliability criteria now include extraction confidence thresholds, explicit duplicate-key prevention behavior, and sync retry/failure-path validation.</p>
       <table class="trace" aria-label="Traceability table">
         <thead>
           <tr>
@@ -424,7 +436,7 @@
           </tr>
           <tr>
             <td>Calendar Sync</td>
-            <td>Google Calendar synchronization with event visibility within 10 seconds and update consistency expectations.</td>
+            <td>Google Calendar synchronization with event visibility within 10 seconds, retry-policy execution, and terminal failure reason capture.</td>
           </tr>
         </tbody>
       </table>
@@ -435,7 +447,7 @@
       <h2>6) V1 Scope Boundaries and Release Readiness</h2>
       <div class="columns">
         <article class="mini">
-          <h3>In Scope (V1)</h3>
+          <h3>In Scope (MVP)</h3>
           <ul>
             <li>Google auth + Gmail processing</li>
             <li>Event extraction/persistence</li>
@@ -445,7 +457,7 @@
           </ul>
         </article>
         <article class="mini">
-          <h3>Out of Scope (V1)</h3>
+          <h3>Out of Scope (MVP)</h3>
           <ul>
             <li>WhatsApp reminders (future phase)</li>
             <li>SMS reminders (future phase)</li>
@@ -468,8 +480,7 @@
       <p>The following gaps are explicitly called out across product markdown and should be resolved before full production hardening.</p>
       <div class="callout gaps">
         <ul>
-          <li><strong>Extraction confidence threshold:</strong> no numeric policy for auto-schedule vs manual confirmation gate.</li>
-          <li><strong>Reminder SLA targets:</strong> channel-level timing commitments are not quantified.</li>
+                    <li><strong>Reminder delivery SLA targets:</strong> channel-level commitments for post-MVP notification channels still require final definition.</li>
           <li><strong>Jurisdiction-specific consent artifacts:</strong> privacy disclosure scope is identified but not finalized.</li>
           <li><strong>Future channel fallback policy:</strong> WhatsApp failure → SMS fallback remains a post-MVP decision.</li>
           <li><strong>Operational ownership depth:</strong> escalation windows/runbooks are referenced but not detailed in this product set.</li>

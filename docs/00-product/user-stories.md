@@ -38,6 +38,20 @@ As a user, I want reminders sent to WhatsApp so that I notice alerts in a high-a
 ### US-11 (FR-08)
 As a user who prefers text messages, I want optional SMS reminders so that I can choose my preferred channel.
 
+
+## Risk Annotation for High-Impact Stories
+
+| Story | Risk if Unmet |
+|---|---|
+| US-04 Detect event emails | Events not identified, resulting in missed commitments |
+| US-05 Extract event details | Incorrect date/time extraction leads to inaccurate reminders |
+| US-06 Persist events | Data loss results in reminder scheduling failure |
+| US-07 Prevent duplicates | Users receive duplicate reminders causing trust erosion |
+| US-08 Generate reminder schedule | Reminders not created in time for events |
+| US-09 Sync event to Google Calendar | Users cannot see events in their calendar ecosystem |
+
+These annotations assist prioritization during QA and production incident triage.
+
 ## Traceability
 - Requirement mapping is indicated via FR references per story.
 - Acceptance mappings are defined in [acceptance-criteria.md](./acceptance-criteria.md) using US IDs.
