@@ -17,7 +17,7 @@ This Product Requirements Document (PRD) defines the business intent, user outco
 ## 2. Product Overview
 The Email-Driven Reminder Assistant is a workflow automation product that converts event-bearing emails into trusted reminders without requiring users to manually re-enter event details or configure reminder timing each time.
 
-At launch, the product focuses on Gmail as the source channel and WhatsApp as the default reminder channel, with optional SMS and optional Google Calendar sync. The product operates as an intelligent “event capture and follow-through layer” between inbox activity and real-world commitments.
+At launch, the product focuses on Gmail as the source channel and Google Calendar synchronization as an MVP continuity feature, while WhatsApp and SMS reminder delivery are deferred to later phases. The product operates as an intelligent “event capture and follow-through layer” between inbox activity and real-world commitments.
 
 **Strategic intent:** Remove failure points between receiving event information and acting on it.
 
@@ -25,7 +25,7 @@ At launch, the product focuses on Gmail as the source channel and WhatsApp as th
 - Automatic event recognition from incoming email.
 - Event normalization into structured records.
 - Policy-based reminder scheduling.
-- Multi-channel reminder delivery for high-attention notification reach.
+- Reliable event capture, persistence, scheduling, and calendar continuity in MVP.
 
 ## 3. Business Context
 ### Business drivers
@@ -71,8 +71,8 @@ Users receive time-sensitive event emails but must manually detect, parse, and c
 
 ### Secondary goals
 1. Improve confidence in email parsing reliability.
-2. Support lightweight preference control for delivery channels.
-3. Provide optional calendar continuity for users who rely on Google Calendar.
+2. Support lightweight preference control for automation behavior and future channel delivery options.
+3. Provide Google Calendar continuity as an MVP capability for calendar-dependent users.
 
 ### Success outcomes
 - Users report higher confidence in commitment follow-through.
@@ -86,8 +86,8 @@ Users receive time-sensitive event emails but must manually detect, parse, and c
 
 ### User adoption metrics
 - Gmail connection completion rate.
-- Opt-in rate for WhatsApp reminders.
-- Optional SMS enablement rate.
+- Google Calendar sync enablement rate.
+- Onboarding completion rate.
 
 ### Operational metrics
 - Event extraction success rate from eligible event emails.
@@ -140,6 +140,12 @@ See the expanded persona definitions in [user-personas.md](./user-personas.md).
 4. **Travel commitment flow:** A traveler receives booking confirmation and gets timely pre-departure reminders.
 
 ## 10. Functional Requirements
+### MVP Functional Prioritization
+
+**Must (MVP):** FR-01 Google Sign-in, FR-02 Gmail Authorization, FR-03 Event Detection, FR-04 Event Extraction, FR-05 Event Persistence, FR-06 Default Reminder Schedule (4h / 1h / 15m), FR-09 Google Calendar Sync, FR-10 Duplicate Prevention, FR-11 Preference Management.
+
+**Later Phase:** FR-07 WhatsApp Reminder Delivery, FR-08 SMS Reminder Delivery.
+
 ### FR-01 Authentication and Account Access
 - **Description:** Users shall authenticate using Google Sign-In.
 - **Business reason:** Reduce onboarding friction and leverage trusted identity.
@@ -177,21 +183,21 @@ See the expanded persona definitions in [user-personas.md](./user-personas.md).
 - **Affected user types:** All personas
 
 ### FR-07 WhatsApp Reminder Delivery
-- **Description:** System shall deliver reminders via WhatsApp for enabled users.
-- **Business reason:** High-attention channel improves reminder effectiveness.
-- **Priority:** Must
+- **Description:** System shall deliver reminders via WhatsApp for enabled users in a later phase.
+- **Business reason:** Adds high-attention channel coverage after MVP stabilization.
+- **Priority:** Later Phase
 - **Affected user types:** All personas
 
 ### FR-08 Optional SMS Reminder Delivery
-- **Description:** System shall support optional SMS reminder delivery.
-- **Business reason:** Channel redundancy improves reach for users with different preferences.
-- **Priority:** Should
+- **Description:** System shall support optional SMS reminder delivery in a later phase.
+- **Business reason:** Adds channel redundancy for users with different preferences after MVP readiness.
+- **Priority:** Later Phase
 - **Affected user types:** Preference-driven segments
 
-### FR-09 Optional Google Calendar Sync
-- **Description:** System shall support optional event sync to Google Calendar.
-- **Business reason:** Increases ecosystem compatibility for calendar-dependent users.
-- **Priority:** Should
+### FR-09 Google Calendar Sync
+- **Description:** System shall support event synchronization to Google Calendar.
+- **Business reason:** Increases ecosystem compatibility for calendar-dependent users and closes the MVP commitment loop.
+- **Priority:** Must
 - **Affected user types:** Calendar-centric users
 
 ### FR-10 Duplicate Detection and Prevention
@@ -201,10 +207,32 @@ See the expanded persona definitions in [user-personas.md](./user-personas.md).
 - **Affected user types:** All personas
 
 ### FR-11 Preference Management
-- **Description:** Users shall manage channel preferences (e.g., enable/disable SMS).
+- **Description:** Users shall manage reminder and integration preferences (including calendar sync behavior and future channels).
 - **Business reason:** User control improves adoption and reduces churn risk.
-- **Priority:** Could
+- **Priority:** Must
 - **Affected user types:** Users with channel-specific preferences
+
+## KPI Governance
+
+| KPI | Owner | Source | Cadence | Threshold |
+|----|----|----|----|----|
+| Event extraction accuracy | Product + AI | event-processing logs | Weekly | ≥95% |
+| Calendar sync success rate | Platform | integration metrics | Weekly | ≥98% |
+| Reminder generation success | Backend | scheduler logs | Weekly | ≥99% |
+| User onboarding completion | Product | analytics | Weekly | ≥80% |
+
+This governance model increases measurability and accountability of product outcomes by assigning owners, data sources, review cadence, and explicit thresholds.
+
+## Risk-Decision Threshold Matrix
+
+| Trigger | Response | Owner | SLA |
+|-------|-------|-------|-------|
+| Extraction accuracy < 90% | Disable auto scheduling | Product | 24h |
+| Calendar sync failure > 5% | Suspend sync feature | Platform | 12h |
+| Gmail authorization failures spike | Pause ingestion | Engineering | 6h |
+| Reminder scheduling failures | Switch to backup scheduler | SRE | 2h |
+
+This matrix reduces ambiguity in launch and operational decisions by predefining trigger-based responses, ownership, and response SLAs.
 
 ## 11. Non Functional Requirements
 - **Performance:** Event ingestion-to-record creation should be near-real-time for user confidence.
@@ -221,7 +249,7 @@ See the expanded persona definitions in [user-personas.md](./user-personas.md).
 - **Maintenance expectations:** Versioned release practices with incident response ownership and recovery playbooks.
 
 ## 13. Integration Expectations
-- **External systems:** Gmail API, Google OAuth, WhatsApp messaging provider, optional SMS provider, optional Google Calendar API.
+- **External systems:** Gmail API, Google OAuth, Google Calendar API, future WhatsApp messaging provider, future SMS provider.
 - **Third-party services:** Messaging gateways must expose delivery status and error responses.
 - **APIs:** Internal interfaces must support event ingestion, preference management, scheduling, and delivery state tracking.
 
@@ -229,13 +257,13 @@ See the expanded persona definitions in [user-personas.md](./user-personas.md).
 1. Reminder policy defaults to exactly three pre-event windows in MVP (4h, 1h, 15m).
 2. Only authorized user mailboxes are processed.
 3. Duplicate source events must not generate duplicate active reminders.
-4. Optional channels (SMS, Calendar sync) require explicit user enablement.
+4. Calendar sync behavior and future reminder channels require explicit user enablement.
 
 ## 15. Assumptions
 - Users are willing to authorize Gmail for automation value.
 - A sufficient share of event emails include parseable temporal details.
-- WhatsApp is a high-attention channel for the primary user base.
 - Users value automation over manual reminder setup.
+- Calendar continuity is a core trust expectation for MVP adoption.
 
 ## 16. Constraints
 ### Technical constraints
@@ -264,19 +292,20 @@ See the expanded persona definitions in [user-personas.md](./user-personas.md).
 
 ### External dependencies
 - Google APIs (OAuth, Gmail, Calendar).
-- WhatsApp and SMS provider service availability and throughput.
+- Google Calendar API reliability and quota stability.
+- Future WhatsApp and SMS provider service availability and throughput.
 
 ## 19. Scope Definition
 ### In Scope
 - Gmail authorization and event email processing.
 - Event extraction and persistence.
 - Default reminder scheduling policy.
-- WhatsApp reminders.
-- Optional SMS reminders.
-- Optional Google Calendar sync.
+- Google Calendar synchronization.
 - Duplicate prevention and preference management.
 
 ### Out of Scope
+- WhatsApp reminders (deferred to later phase).
+- SMS reminders (deferred to later phase).
 - Non-Gmail providers.
 - Recurring reminder rule engines.
 - Team/enterprise administration workflows.
@@ -285,9 +314,11 @@ See the expanded persona definitions in [user-personas.md](./user-personas.md).
 
 ## 20. Phase Planning
 ### MVP capabilities (V1)
-Deliver FR-01 through FR-11 with a focus on reliability and traceability across the core reminder lifecycle.
+Deliver FR-01, FR-02, FR-03, FR-04, FR-05, FR-06, FR-09, FR-10, and FR-11 with a focus on reliability and traceability across the core reminder lifecycle.
 
 ### Future phases
+- WhatsApp reminder delivery (FR-07).
+- SMS reminder delivery (FR-08).
 - Custom reminder timing profiles.
 - Additional mail providers.
 - Broader messaging channel strategy.
@@ -300,12 +331,12 @@ Evolve from event capture/reminders to a broader “email-to-action” assistant
 1. What minimum extraction confidence threshold is acceptable for automatic scheduling vs. manual confirmation?
 2. What target SLA should be committed for reminder delivery by channel?
 3. Which privacy disclosures and consent artifacts are required at onboarding for each jurisdiction?
-4. Should channel fallback logic (e.g., WhatsApp failure → SMS fallback) be included in V1 or deferred?
+4. Should channel fallback logic for future delivery channels (e.g., WhatsApp failure → SMS fallback) be included when FR-07/FR-08 launch?
 
 ---
 
 ## Traceability Matrix
 - **Vision → Goals:** See [vision.md](./vision.md), sections “Strategic Goals” and “Success Horizon.”
-- **Goals → Requirements:** Goals in Section 5 map primarily to FR-01..FR-11 in Section 10.
+- **Goals → Requirements:** Goals in Section 5 map primarily to MVP FR-01, FR-02, FR-03, FR-04, FR-05, FR-06, FR-09, FR-10, FR-11 and later-phase FR-07, FR-08 in Section 10.
 - **Requirements → User Stories:** FR IDs are referenced in [user-stories.md](./user-stories.md).
 - **User Stories → Acceptance Criteria:** Story IDs are mapped in [acceptance-criteria.md](./acceptance-criteria.md).

@@ -2,7 +2,7 @@
 
 ## Purpose of Prompt Library
 
-This folder stores the canonical, reusable prompts used to generate and improve this repository's documentation set. The prompts are written so future AI agents can reliably reproduce the current documentation quality and structure across Product, Tech Spec, UI/UX, Design, and HTML summary outputs.
+This folder stores the canonical, reusable prompts used to generate and improve this repository's documentation set. The prompts are written so future AI agents can reliably reproduce the current documentation quality and structure across Product, Tech Spec, UI/UX, Design, Delivery, and HTML summary outputs.
 
 These prompts are documentation prompts only. They are not for generating application features or production code.
 
@@ -19,77 +19,26 @@ These prompts are documentation prompts only. They are not for generating applic
 - `html-generation-prompts.md`
   - Section-specific prompts used to regenerate premium HTML presentation layers from markdown source-of-truth files.
 
-## Documentation Governance Prompts
-
-- `repository-documentation-audit.md`
-  - Orchestrates a full repository documentation governance audit across Product, Tech Spec, UI/UX, Design, and Delivery phases, using `critical-persona-review.md` as the canonical review prompt.
-
-## Review & Quality Prompts
+## Governance & Review Prompts
 
 ### Critical Persona Review by Documentation Phase
 
 - **Purpose:** Run deterministic, documentation-only critical reviews using a phase-appropriate expert persona to improve clarity, completeness, traceability, and readiness.
 - **Supported phases:** Product, Tech Spec, UI/UX, Design, Delivery.
-- **Output structure:** Persona Used, Executive Critique, Section-by-Section Findings, Priority Fix List, Proposed Edits, Traceability Validation, Risks, Open Questions, Dual-Layer Documentation Reminder.
-- **Usage example:** `Phase: Tech Spec` with target files such as `docs/01-tech-spec/api-spec.md` and `docs/01-tech-spec/db-schema.md`, plus optional context for recent architecture changes.
-- **Governance notes:** Documentation-focused only; no application code generation; deterministic sectioned output; markdown-first review workflow; if markdown is updated, regenerate corresponding HTML summary to preserve dual-layer sync.
-- **Source file:** `critical-persona-review.md`
-
-
-## Governance & Review Prompts
-
-### Critical Persona Review by Documentation Phase
-
-Purpose:
-Phase-aware expert review of documentation.
-
-Phases Supported:
-Product  
-Tech Spec  
-UI/UX  
-Design  
-Delivery
-
-Output:
-Persona justification  
-Executive critique  
-Findings table  
-Priority fixes  
-Rewrite suggestions  
-Traceability validation  
-Risk analysis
-
-Location:
-docs/05-prompts/critical-persona-review.md
-
+- **Output structure:** Persona justification, executive critique, findings table, priority fixes, rewrite suggestions, traceability validation, risk analysis.
+- **Governance notes:** Markdown-first workflow; no application code generation; regenerate the corresponding HTML summary whenever markdown sources are changed.
+- **Location:** `docs/05-prompts/critical-persona-review.md`
 
 ### Repository Documentation Audit
 
-Purpose:
-Full governance audit of repository documentation.
-
-Reviews phases:
-
-Product  
-Tech Spec  
-UI/UX  
-Design  
-Delivery
-
-Output:
-Repository health score  
-Phase critiques  
-Cross-phase inconsistencies  
-Risk analysis  
-Implementation readiness
-
-Location:
-docs/05-prompts/repository-documentation-audit.md
+- **Purpose:** Run a full repository documentation governance audit across Product, Tech Spec, UI/UX, Design, and Delivery.
+- **Output:** Repository health score, phase critiques, cross-phase inconsistencies, risk analysis, implementation readiness.
+- **Location:** `docs/05-prompts/repository-documentation-audit.md`
 
 ## Repository Commands
 
 Run full audit  
-Runs repository-wide documentation governance audit and saves report to `docs/06-governance`.
+Runs repository-wide documentation governance audit and saves output to `docs/06-governance`.
 
 Run audit - phase  
 Runs documentation review for a specific phase.

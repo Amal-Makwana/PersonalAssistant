@@ -4,31 +4,29 @@
 V1 focuses on delivering a reliable, trust-building automation loop for inbox-derived events. Scope prioritizes consistency and operational confidence over feature breadth.
 
 ## In Scope (V1)
-1. Google account authentication.
-2. Gmail authorization and event email processing.
-3. Structured extraction of title, date, time, and optional location.
-4. Event persistence associated with user identity.
-5. Default reminder schedule at 4 hours, 1 hour, and 15 minutes pre-event.
-6. WhatsApp reminder delivery.
-7. Optional SMS reminder delivery.
-8. Optional Google Calendar sync.
-9. Duplicate prevention for events/reminders.
-10. User preference management for channel enablement.
+1. Google authentication.
+2. Gmail event ingestion.
+3. Event extraction.
+4. Event persistence.
+5. Duplicate prevention.
+6. Default reminder scheduling.
+7. Google Calendar synchronization.
 
 ## Explicit Exclusions (V1)
-1. Non-Gmail mail providers.
-2. Recurring event rule engines.
-3. Team collaboration, shared inbox, or enterprise admin workflows.
-4. Voice interfaces and conversational assistant features.
-5. Advanced automation chains beyond event-to-reminder lifecycle.
+1. WhatsApp reminders.
+2. SMS reminders.
+3. Non-Gmail providers.
+4. Recurring event rule engines.
+5. Team collaboration, shared inbox, or enterprise admin workflows.
+6. Voice assistant features.
 
 ## Boundary Decisions
 - Preference depth is intentionally minimal in V1 to reduce complexity.
 - Reminder timing is fixed to validate baseline behavior before introducing custom rules.
-- Channel strategy is WhatsApp-first with optional SMS, prioritizing high-attention reach.
+- Calendar sync is included in MVP to ensure continuity in users' existing scheduling workflows.
 
 ## Release Readiness Conditions
-V1 is considered scope-complete when all mapped V1 requirements (FR-01 through FR-11) have corresponding implemented stories and accepted criteria validation.
+V1 is considered scope-complete when all mapped MVP requirements (FR-01, FR-02, FR-03, FR-04, FR-05, FR-06, FR-09, FR-10, FR-11) have corresponding implemented stories and accepted criteria validation.
 
 ## Traceability
 - Requirements baseline: [requirements.md](./requirements.md), Sections 10 and 19.
