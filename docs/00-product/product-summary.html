@@ -21,11 +21,8 @@
       --shadow: 0 14px 40px rgba(21, 37, 86, 0.08);
       --max: 1160px;
     }
-
     * { box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
-
     body {
       margin: 0;
       font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -36,45 +33,17 @@
       color: var(--ink);
       line-height: 1.55;
     }
-
     .hero-wrap {
       background: linear-gradient(135deg, #102856 0%, #1d4194 40%, #2f5dff 100%);
       color: #f7faff;
       padding: 2.5rem 1.25rem 3rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.18);
     }
-
-    .hero {
-      max-width: var(--max);
-      margin: 0 auto;
-      display: grid;
-      gap: 1.4rem;
-    }
-
-    .eyebrow {
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-size: 0.78rem;
-      opacity: 0.9;
-      font-weight: 700;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(1.9rem, 4vw, 3rem);
-      line-height: 1.15;
-      max-width: 18ch;
-    }
-
-    .hero p {
-      margin: 0;
-      max-width: 72ch;
-      color: #dbe8ff;
-      font-size: 1.03rem;
-    }
-
+    .hero { max-width: var(--max); margin: 0 auto; display: grid; gap: 1.3rem; }
+    .eyebrow { letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.78rem; opacity: 0.9; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(1.9rem, 4vw, 3rem); line-height: 1.15; max-width: 20ch; }
+    .hero p { margin: 0; max-width: 74ch; color: #dbe8ff; font-size: 1.03rem; }
     .chips { display: flex; flex-wrap: wrap; gap: 0.55rem; }
-
     .chip {
       border: 1px solid rgba(255, 255, 255, 0.33);
       color: #eff5ff;
@@ -83,65 +52,22 @@
       padding: 0.35rem 0.7rem;
       background: rgba(255, 255, 255, 0.09);
     }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 0.75rem;
-      margin-top: 0.5rem;
-    }
-
-    .stat {
-      border: 1px solid rgba(255, 255, 255, 0.23);
-      border-radius: 12px;
-      padding: 0.8rem;
-      background: rgba(8, 20, 48, 0.26);
-    }
-
-    .stat strong { display: block; font-size: 1.3rem; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.75rem; }
+    .stat { border: 1px solid rgba(255, 255, 255, 0.23); border-radius: 12px; padding: 0.8rem; background: rgba(8, 20, 48, 0.26); }
+    .stat strong { display: block; font-size: 1.28rem; }
     .stat span { font-size: 0.82rem; color: #d6e4ff; }
-
-    main {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 1.2rem;
-      display: grid;
-      gap: 1rem;
-    }
-
-    .card {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 1.1rem;
-      box-shadow: var(--shadow);
-    }
-
-    .toc-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 0.65rem;
-      margin-top: 0.8rem;
-    }
-
-    .toc-grid a {
-      text-decoration: none;
-      color: var(--ink);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 0.65rem 0.75rem;
-      background: #fbfcff;
-      font-size: 0.94rem;
-    }
-
+    main { max-width: var(--max); margin: 0 auto; padding: 1.2rem; display: grid; gap: 1rem; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.1rem; box-shadow: var(--shadow); }
+    .toc-grid, .columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 0.65rem; margin-top: 0.75rem; }
+    .toc-grid a { text-decoration: none; color: var(--ink); border: 1px solid var(--line); border-radius: 12px; padding: 0.65rem 0.75rem; background: #fbfcff; font-size: 0.94rem; }
     .toc-grid a:hover { border-color: #b8c8f2; background: #f3f7ff; }
-
     h2, h3 { margin: 0 0 0.65rem; line-height: 1.25; }
     h2 { font-size: 1.35rem; }
     h3 { font-size: 1.03rem; }
-
     p { margin: 0.45rem 0 0; color: var(--muted); }
-
+    ul { margin: 0.5rem 0 0; padding-left: 1.1rem; color: var(--muted); }
+    li { margin: 0.22rem 0; }
+    .mini { border: 1px solid var(--line); border-radius: 12px; padding: 0.85rem; background: #fcfdff; }
     .source {
       display: inline-flex;
       align-items: center;
@@ -155,75 +81,14 @@
       padding: 0.28rem 0.62rem;
       margin-bottom: 0.8rem;
     }
-
-    .columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 0.75rem; }
-
-    .mini {
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 0.85rem;
-      background: #fcfdff;
-    }
-
-    ul { margin: 0.55rem 0 0; padding-left: 1.1rem; color: var(--muted); }
-    li { margin: 0.23rem 0; }
-
-    .trace {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 0.7rem;
-      overflow: hidden;
-      border-radius: 12px;
-      border: 1px solid var(--line);
-      font-size: 0.92rem;
-    }
-
-    .trace th,
-    .trace td { padding: 0.65rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    .trace { width: 100%; border-collapse: collapse; margin-top: 0.7rem; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; font-size: 0.92rem; }
+    .trace th, .trace td { padding: 0.65rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
     .trace th { background: #f3f7ff; color: #233a72; }
-
-    .callout {
-      margin-top: 0.9rem;
-      border-radius: 12px;
-      border: 1px solid #c5d7ff;
-      background: linear-gradient(180deg, #f4f8ff 0%, #eef4ff 100%);
-      padding: 0.85rem;
-    }
-
-    .gaps {
-      border-color: #f2d5a5;
-      background: linear-gradient(180deg, #fff9ef 0%, #fff4df 100%);
-    }
-
-    .legend {
-      display: flex;
-      gap: 0.55rem;
-      flex-wrap: wrap;
-      margin-top: 0.7rem;
-      font-size: 0.82rem;
-    }
-
-    .legend span {
-      border-radius: 999px;
-      padding: 0.26rem 0.6rem;
-      border: 1px solid;
-    }
-
-    .must { color: #084f43; border-color: #95d8ca; background: #ecfaf7; }
-    .should { color: #7a4f00; border-color: #f0cf8c; background: #fff8ea; }
-    .could { color: #2740a0; border-color: #c8d5ff; background: #eff3ff; }
-
-    footer {
-      margin: 0.5rem 0 1rem;
-      text-align: center;
-      color: #6a748c;
-      font-size: 0.82rem;
-    }
-
-    @media (max-width: 720px) {
-      .hero-wrap { padding-top: 1.9rem; }
-      .card { padding: 0.95rem; }
-    }
+    .callout { margin-top: 0.85rem; border-radius: 12px; border: 1px solid #c5d7ff; background: linear-gradient(180deg, #f4f8ff 0%, #eef4ff 100%); padding: 0.85rem; }
+    .gaps { border-color: #f2d5a5; background: linear-gradient(180deg, #fff9ef 0%, #fff4df 100%); }
+    code { background: #f5f7fd; border: 1px solid #e0e7f8; border-radius: 6px; padding: 0.02rem 0.3rem; }
+    footer { margin: 0.5rem 0 1rem; text-align: center; color: #6a748c; font-size: 0.82rem; }
+    @media (max-width: 720px) { .hero-wrap { padding-top: 1.9rem; } .card { padding: 0.95rem; } }
   </style>
 </head>
 <body>
@@ -231,18 +96,17 @@
     <div class="hero">
       <div class="eyebrow">Product Documentation • Executive Consolidated View</div>
       <h1>Email-Driven Reminder Assistant — Product Summary</h1>
-      <p>This stakeholder-ready page consolidates the Product section markdown into a single narrative: strategy, requirements, personas, stories, acceptance evidence, and V1 scope boundaries. Markdown files remain the source of truth.</p>
+      <p>This summary consolidates all Product markdown files into one stakeholder-friendly narrative covering business intent, full requirement baselines, user outcomes, acceptance evidence, and MVP scope guardrails. Markdown remains source of truth.</p>
       <div class="chips">
-        <span class="chip">V1 / MVP Focus</span>
-        <span class="chip">Gmail-Ingested Events</span>
-        <span class="chip">Calendar Sync in MVP</span>
-        <span class="chip">Traceability: Vision → FR → US → AC</span>
+        <span class="chip">MVP: Gmail → Extraction → Reminders → Calendar Sync</span>
+        <span class="chip">Future phase: WhatsApp / SMS notifications</span>
+        <span class="chip">Traceability: Vision → FR → US → AC → Scope</span>
       </div>
       <div class="stats">
-        <div class="stat"><strong>11</strong><span>Functional Requirements (FR-01..FR-11)</span></div>
-        <div class="stat"><strong>11</strong><span>User Stories with acceptance mappings</span></div>
+        <div class="stat"><strong>11</strong><span>Functional requirements (FR-01..FR-11)</span></div>
+        <div class="stat"><strong>11</strong><span>User stories (US-01..US-11)</span></div>
+        <div class="stat"><strong>8</strong><span>Product markdown sources consolidated</span></div>
         <div class="stat"><strong>3</strong><span>Default reminder windows (4h, 1h, 15m)</span></div>
-        <div class="stat"><strong>6</strong><span>Product markdown sources consolidated</span></div>
       </div>
     </div>
   </header>
@@ -250,269 +114,224 @@
   <main>
     <section class="card" id="toc">
       <h2>Table of Contents</h2>
-      <p>Each section explicitly maps to a markdown source file for traceability.</p>
+      <p>Each section calls out its source file(s) to preserve auditability and documentation contract discipline.</p>
       <nav class="toc-grid" aria-label="Table of contents">
-        <a href="#vision">1) Product Vision (<code>vision.md</code>)</a>
-        <a href="#requirements">2) Product Requirements (<code>requirements.md</code>)</a>
-        <a href="#personas">3) User Personas (<code>user-personas.md</code>)</a>
-        <a href="#stories">4) User Stories (<code>user-stories.md</code>)</a>
-        <a href="#criteria">5) Acceptance Criteria (<code>acceptance-criteria.md</code>)</a>
-        <a href="#scope">6) Scope Definition V1 (<code>scope-v1.md</code>)</a>
-        <a href="#coverage">7) Coverage Map</a>
-        <a href="#gaps">Open Questions / Gaps</a>
+        <a href="#vision">1) Vision, mission, and strategic outcomes</a>
+        <a href="#prd">2) Product requirements baseline (PRD)</a>
+        <a href="#scope">3) MVP scope and boundary decisions</a>
+        <a href="#personas">4) User personas and impact mapping</a>
+        <a href="#stories">5) Epic + user story catalog</a>
+        <a href="#acceptance">6) Acceptance criteria and reliability gates</a>
+        <a href="#traceability">7) End-to-end traceability matrix view</a>
+        <a href="#risks">8) Risks, constraints, assumptions, and open items</a>
+        <a href="#coverage">9) Source coverage and authority notes</a>
       </nav>
     </section>
 
     <section class="card" id="vision">
-      <span class="source">Source: docs/00-product/vision.md</span>
-      <h2>1) Vision, Mission, and Strategic Horizon</h2>
+      <div class="source">Source: vision.md</div>
+      <h2>1) Vision, Mission, and Strategic Outcomes</h2>
+      <p>The product vision is trust-centric automation: convert event-oriented inbox signals into dependable reminders so users no longer fail between “email received” and “reminder configured.”</p>
       <div class="columns">
         <article class="mini">
-          <h3>Strategic Narrative</h3>
-          <p>The product closes the fragile step between receiving event emails and setting reminders. It turns inbox receipt into reliable follow-through.</p>
+          <h3>Strategic Narrative + Mission</h3>
+          <ul>
+            <li>Close the fragile manual gap between inbox events and reminder setup.</li>
+            <li>Deliver consistent outcomes through authorized inbox ingestion and controlled automation.</li>
+            <li>Mission: enable users to act on commitments by automatically transforming event emails into reminders.</li>
+          </ul>
         </article>
         <article class="mini">
-          <h3>Mission</h3>
-          <p>Transform email-based commitments into dependable reminders with minimal user effort and high trust.</p>
-        </article>
-        <article class="mini">
-          <h3>Long-Term Vision</h3>
-          <p>Evolve from reminders into broader email-to-action assistance while preserving privacy, control, and reliability.</p>
+          <h3>Horizon Planning</h3>
+          <ul>
+            <li><strong>Near term (V1):</strong> Gmail ingestion, extraction, scheduling, and Google Calendar sync.</li>
+            <li><strong>Mid term:</strong> richer reminder logic, broader providers, more context intelligence.</li>
+            <li><strong>Long term:</strong> broader inbox-to-action assistant capabilities.</li>
+          </ul>
         </article>
       </div>
       <div class="callout">
-        <strong>Strategic Goals:</strong>
-        <ul>
-          <li>Deliver dependable detect → extract → schedule → notify workflow.</li>
-          <li>Build trust through transparency and preference control.</li>
-          <li>Establish an extensible foundation for future assistant capabilities.</li>
-        </ul>
-      </div>
-      <div class="callout">
-        <strong>V1 Delivery Scope Clarification:</strong>
-        <ul>
-          <li>Committed V1 scope: Gmail ingestion, event detection/extraction, reminder schedule generation, and Google Calendar synchronization.</li>
-          <li>WhatsApp and SMS reminders are explicitly post-MVP to protect reliability of the core email-to-calendar workflow.</li>
-        </ul>
+        <strong>MVP boundary from vision:</strong> WhatsApp and SMS are explicitly deferred to post-MVP while core email-to-calendar reliability is established.
       </div>
     </section>
 
-    <section class="card" id="requirements">
-      <span class="source">Source: docs/00-product/requirements.md</span>
-      <h2>2) Product Requirements (Enterprise PRD Synthesis)</h2>
+    <section class="card" id="prd">
+      <div class="source">Sources: requirements.md, business-requirements.md</div>
+      <h2>2) Product Requirements Baseline (PRD)</h2>
+      <p><code>requirements.md</code> is the authoritative PRD and consolidates business requirements, functional and non-functional expectations, delivery governance, and risk/compliance constraints. <code>business-requirements.md</code> now serves as a consolidation notice pointing back to that single baseline.</p>
       <div class="columns">
         <article class="mini">
-          <h3>Problem to Solve</h3>
+          <h3>Functional Contract (FR)</h3>
           <ul>
-            <li>Users miss commitments due to manual email parsing and setup friction.</li>
-            <li>Important details are buried in threads, causing inconsistent reminder setup.</li>
-            <li>Passive notification channels reduce action reliability.</li>
+            <li>FR-01..FR-03: secure onboarding, consent clarity, and event email detection.</li>
+            <li>FR-04..FR-06: extraction quality, event persistence, and reminder schedule generation.</li>
+            <li>FR-09 + FR-10: Google Calendar sync and duplicate prevention are MVP critical.</li>
+            <li>FR-07/FR-08 are defined as future-phase messaging channels.</li>
+            <li>FR-11 captures preference setup and configuration behavior.</li>
           </ul>
         </article>
         <article class="mini">
-          <h3>Business & Product Outcomes</h3>
+          <h3>Quality + Operational Expectations</h3>
           <ul>
-            <li>Reduce missed-event incidents.</li>
-            <li>Lower user effort to convert event emails into reminders.</li>
-            <li>Increase confidence through predictable, high-attention delivery.</li>
-          </ul>
-        </article>
-        <article class="mini">
-          <h3>Success Metrics</h3>
-          <ul>
-            <li>Business: WAU, retention, missed-event reduction.</li>
-            <li>Adoption: Gmail completion, calendar sync enablement, onboarding completion.</li>
-            <li>Operational/Technical: extraction & delivery success, latency, dedupe accuracy.</li>
+            <li>Extraction quality threshold and low-confidence handling rules are part of product quality gates.</li>
+            <li>Calendar sync includes performance and reliability expectations with explicit failure handling.</li>
+            <li>Reliability, observability, security/privacy, and supportability are treated as first-class requirements.</li>
+            <li>Delivery readiness depends on measurable criteria, not feature completion alone.</li>
           </ul>
         </article>
       </div>
-
-      <div class="callout">
-        <strong>Functional Requirements Coverage (FR-01..FR-11):</strong>
-        <p>Google sign-in, Gmail authorization, event detection/extraction/persistence, default reminder schedule, Google Calendar sync, duplicate prevention, and preference management are MVP; WhatsApp and SMS reminder delivery are future phase.</p>
-        <div class="legend">
-          <span class="must">Must: FR-01,02,03,04,05,06,09,10,11</span>
-          <span class="should">Later Phase: FR-07, FR-08</span>
-          <span class="could">Governance: KPI + Risk decision thresholds</span>
-        </div>
-      </div>
-
-      <div class="callout">
-        <strong>Governance Additions:</strong>
-        <ul>
-          <li>FR Validation Governance now defines validation methods and Definition-of-Done thresholds for FR-03/04/05/06/09/10.</li>
-          <li>Operational reliability targets now set limits for extraction latency (≤5s), sync latency (≤10s), scheduler success (≥99%), and retry resolution window (≤60s).</li>
-          <li>Retry policy for Gmail ingestion, calendar sync, and reminder scheduler is explicitly defined with maximum retries and backoff schedules.</li>
-          <li>Event extraction confidence policy defines auto-schedule (≥95%), flagged review (80–95%), and user-confirmation path (&lt;80%).</li>
-          <li>KPI governance and risk-decision thresholds remain in place for ongoing accountability.</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="card" id="personas">
-      <span class="source">Source: docs/00-product/user-personas.md</span>
-      <h2>3) User Personas and Behavioral Drivers</h2>
-      <p>Persona-to-feature sensitivity mapping now identifies the most critical FR dependencies per persona to prioritize reliability work by user impact.</p>
-      <div class="columns">
-        <article class="mini">
-          <h3>Primary Personas</h3>
-          <ul>
-            <li><strong>Busy Professional:</strong> needs high confidence under heavy context switching.</li>
-            <li><strong>Parent Coordinator:</strong> manages multi-source family commitments.</li>
-            <li><strong>Freelancer / Consultant:</strong> balances client, billing, and schedule signals.</li>
-          </ul>
-        </article>
-        <article class="mini">
-          <h3>Secondary Personas</h3>
-          <ul>
-            <li><strong>University Student:</strong> event details scattered across institutions.</li>
-            <li><strong>Small Business Operator:</strong> high inbox operational load with frequent deadlines.</li>
-          </ul>
-        </article>
-        <article class="mini">
-          <h3>Shared User Need</h3>
-          <p>“If it arrives in email, I should be reminded in time without manually rebuilding the event.”</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="card" id="stories">
-      <span class="source">Source: docs/00-product/user-stories.md</span>
-      <h2>4) User Stories by Product Epic</h2>
-      <p>High-impact story risk annotations (US-04 through US-09) are documented for QA prioritization and incident triage.</p>
-      <div class="columns">
-        <article class="mini">
-          <h3>E1: Onboarding & Trust</h3>
-          <ul>
-            <li>US-01 Google sign-in (FR-01)</li>
-            <li>US-02 Permission clarity (FR-02)</li>
-            <li>US-03 Preference setup (FR-11)</li>
-          </ul>
-        </article>
-        <article class="mini">
-          <h3>E2: Email-to-Event Automation</h3>
-          <ul>
-            <li>US-04 Detection (FR-03)</li>
-            <li>US-05 Extraction (FR-04)</li>
-            <li>US-06 Persistence (FR-05)</li>
-            <li>US-07 Duplicate prevention (FR-10)</li>
-          </ul>
-        </article>
-        <article class="mini">
-          <h3>E3/E4/E5: Scheduling, Calendar, Future Channels</h3>
-          <ul>
-            <li>US-08 Scheduling defaults (FR-06)</li>
-            <li>US-09 Calendar sync (FR-09)</li>
-            <li>US-10 WhatsApp delivery (FR-07, future)</li>
-            <li>US-11 Optional SMS (FR-08, future)</li>
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <section class="card" id="criteria">
-      <span class="source">Source: docs/00-product/acceptance-criteria.md</span>
-      <h2>5) Acceptance Validation Snapshot</h2>
-      <p>Acceptance criteria define implementation-ready “Given / When / Then” outcomes and maintain one-to-one mapping with US-01 through US-11.</p>
-      <p>High-risk flow reliability criteria now include extraction confidence thresholds, explicit duplicate-key prevention behavior, and sync retry/failure-path validation.</p>
-      <table class="trace" aria-label="Traceability table">
-        <thead>
-          <tr>
-            <th>Lifecycle Stage</th>
-            <th>Representative Acceptance Coverage</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Onboarding</td>
-            <td>Successful Google sign-in, explicit consent transparency, and preference persistence behavior.</td>
-          </tr>
-          <tr>
-            <td>Automation Core</td>
-            <td>Event email classification, extraction of title/date/time/location, persistence, and dedupe enforcement.</td>
-          </tr>
-          <tr>
-            <td>Reminder Scheduling</td>
-            <td>Default schedule generation at 4h/1h/15m with scheduler reliability tracking.</td>
-          </tr>
-          <tr>
-            <td>Calendar Sync</td>
-            <td>Google Calendar synchronization with event visibility within 10 seconds, retry-policy execution, and terminal failure reason capture.</td>
-          </tr>
-        </tbody>
-      </table>
     </section>
 
     <section class="card" id="scope">
-      <span class="source">Source: docs/00-product/scope-v1.md</span>
-      <h2>6) V1 Scope Boundaries and Release Readiness</h2>
+      <div class="source">Source: scope-v1.md</div>
+      <h2>3) MVP Scope and Boundary Decisions</h2>
       <div class="columns">
         <article class="mini">
           <h3>In Scope (MVP)</h3>
           <ul>
-            <li>Google auth + Gmail processing</li>
-            <li>Event extraction/persistence</li>
-            <li>4h/1h/15m reminder policy</li>
-            <li>Google Calendar synchronization</li>
-            <li>Duplicate prevention + preferences</li>
+            <li>Google authentication and Gmail permissioned connection.</li>
+            <li>Event email detection, detail extraction, persistence, and deduplication controls.</li>
+            <li>Automatic default reminder schedule generation.</li>
+            <li>Google Calendar synchronization as a committed MVP feature.</li>
           </ul>
         </article>
         <article class="mini">
           <h3>Out of Scope (MVP)</h3>
           <ul>
-            <li>WhatsApp reminders (future phase)</li>
-            <li>SMS reminders (future phase)</li>
-            <li>Non-Gmail providers</li>
-            <li>Recurring rule engines</li>
-            <li>Team/admin collaboration workflows</li>
-            <li>Voice/conversational assistant features</li>
-            <li>Advanced automation chains</li>
+            <li>WhatsApp and SMS delivery channels remain post-MVP.</li>
+            <li>Advanced multi-provider integrations outside MVP baseline.</li>
+            <li>Non-essential expansion features that dilute core reliability outcomes.</li>
           </ul>
         </article>
-        <article class="mini">
-          <h3>Readiness Rule</h3>
-          <p>V1 is scope-complete when FR-01, FR-02, FR-03, FR-04, FR-05, FR-06, FR-09, FR-10, and FR-11 are implemented, story-mapped, and acceptance-validated.</p>
-        </article>
+      </div>
+      <div class="callout">
+        <strong>Release readiness condition:</strong> MVP release gates require reliable end-to-end execution from ingestion through calendar sync, with duplicates prevented and expected reminders generated.
       </div>
     </section>
 
-
-    <section class="card" id="coverage">
-      <h2>7) Source Coverage and Mapping</h2>
-      <p>This summary intentionally consolidates all product markdown files into one executive flow while preserving source traceability. Markdown files listed here are consolidated for stakeholder readability; markdown remains the source of truth.</p>
-      <table class="trace" aria-label="Product coverage matrix">
+    <section class="card" id="personas">
+      <div class="source">Source: user-personas.md</div>
+      <h2>4) User Personas and Impact Mapping</h2>
+      <p>Five personas define primary/secondary usage contexts: busy professionals, parent coordinators, freelancers/consultants, university students, and small business operators. Persona sensitivity mapping ties missed outcomes directly to FR reliability priorities.</p>
+      <table class="trace" aria-label="Persona sensitivity mapping">
         <thead>
-          <tr><th>Summary area</th><th>Primary markdown source</th><th>Coverage intent</th></tr>
+          <tr><th>Persona</th><th>Most Sensitive Requirements</th><th>Failure Impact</th></tr>
         </thead>
         <tbody>
-          <tr><td>Strategy and mission</td><td><code>vision.md</code></td><td>Purpose, goals, and long-term direction.</td></tr>
-          <tr><td>Requirements and metrics</td><td><code>requirements.md</code></td><td>FR set, outcomes, governance, and measurable targets.</td></tr>
-          <tr><td>User needs and behaviors</td><td><code>user-personas.md</code></td><td>Persona priorities and feature sensitivity.</td></tr>
-          <tr><td>Epic flow and story mapping</td><td><code>user-stories.md</code></td><td>US sequencing and requirement alignment.</td></tr>
-          <tr><td>Acceptance readiness</td><td><code>acceptance-criteria.md</code></td><td>Given/When/Then validation across lifecycle stages.</td></tr>
-          <tr><td>Release boundaries</td><td><code>scope-v1.md</code></td><td>MVP in-scope commitment and post-MVP exclusions.</td></tr>
+          <tr><td>Busy Professional</td><td>FR-03, FR-04, FR-09</td><td>Missed meetings and trust loss in automation.</td></tr>
+          <tr><td>Parent Coordinator</td><td>FR-03, FR-06, FR-10</td><td>Missed or duplicated family reminders.</td></tr>
+          <tr><td>Freelancer / Consultant</td><td>FR-04, FR-09</td><td>Client appointment and schedule inconsistency risk.</td></tr>
+          <tr><td>University Student</td><td>FR-03, FR-06</td><td>Missed academic deadlines and calendar conflicts.</td></tr>
+          <tr><td>Small Business Operator</td><td>FR-04, FR-05, FR-09</td><td>Operational disruptions and missed commitments.</td></tr>
         </tbody>
       </table>
     </section>
 
-    <section class="card" id="gaps">
-      <h2>Open Questions / Gaps</h2>
-      <p>The following gaps are explicitly called out across product markdown and should be resolved before full production hardening.</p>
-      <div class="callout gaps">
-        <ul>
-                    <li><strong>Reminder delivery SLA targets:</strong> channel-level commitments for post-MVP notification channels still require final definition.</li>
-          <li><strong>Jurisdiction-specific consent artifacts:</strong> privacy disclosure scope is identified but not finalized.</li>
-          <li><strong>Future channel fallback policy:</strong> WhatsApp failure → SMS fallback remains a post-MVP decision.</li>
-          <li><strong>Operational ownership depth:</strong> escalation windows/runbooks are referenced but not detailed in this product set.</li>
-          <li><strong>KPI governance:</strong> KPI ownership, cadence, and thresholds are now defined in requirements.</li>
-          <li><strong>Risk decisions:</strong> Trigger-based responses and SLAs are defined via the risk-decision matrix.</li>
-        </ul>
+    <section class="card" id="stories">
+      <div class="source">Source: user-stories.md</div>
+      <h2>5) Epic and User Story Catalog</h2>
+      <div class="columns">
+        <article class="mini">
+          <h3>Epic E1–E4 (MVP Stories)</h3>
+          <ul>
+            <li>E1 Onboarding &amp; Trust: US-01, US-02, US-03.</li>
+            <li>E2 Automation pipeline: US-04, US-05, US-06, US-07.</li>
+            <li>E3 Scheduling: US-08 with default intervals.</li>
+            <li>E4 Calendar integration: US-09 to keep tool consistency.</li>
+          </ul>
+        </article>
+        <article class="mini">
+          <h3>Epic E5 (Future Phase)</h3>
+          <ul>
+            <li>US-10 WhatsApp delivery and US-11 optional SMS are explicitly deferred.</li>
+            <li>Stories are documented now for roadmap continuity, not MVP runtime dependency.</li>
+          </ul>
+        </article>
+      </div>
+      <div class="callout">
+        <strong>Risk annotation coverage:</strong> high-impact stories emphasize detection, extraction accuracy, persistence integrity, duplicate prevention, timely scheduling, and calendar sync reliability.
       </div>
     </section>
 
-    <footer>
-      Consolidated from: <code>vision.md</code>, <code>requirements.md</code>, <code>user-personas.md</code>, <code>user-stories.md</code>, <code>acceptance-criteria.md</code>, and <code>scope-v1.md</code>.
-    </footer>
+    <section class="card" id="acceptance">
+      <div class="source">Source: acceptance-criteria.md</div>
+      <h2>6) Acceptance Criteria and Reliability Gates</h2>
+      <p>Acceptance criteria are defined per story (US-01..US-11) and include additional reliability requirements for high-risk journeys. The criteria enforce both correctness and operational behavior under failure conditions.</p>
+      <table class="trace" aria-label="High-risk journey acceptance map">
+        <thead>
+          <tr><th>Journey</th><th>Acceptance Requirement</th><th>Primary IDs</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Email → Event Extraction</td><td>Title/date/time extraction with quality threshold and low-confidence handling.</td><td>US-05 / FR-04</td></tr>
+          <tr><td>Duplicate Detection</td><td>Repeated or equivalent event emails must not produce duplicate active schedules.</td><td>US-07 / FR-10</td></tr>
+          <tr><td>Event → Calendar Sync</td><td>Calendar entry appears rapidly; retries follow policy; terminal failures are recorded with explicit reasons.</td><td>US-09 / FR-09</td></tr>
+          <tr><td>Reminder Scheduling</td><td>Default reminders created at 4h, 1h, and 15m before start.</td><td>US-08 / FR-06</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" id="traceability">
+      <div class="source">Source: traceability-matrix.md (+ linked product artifacts)</div>
+      <h2>7) End-to-End Traceability View</h2>
+      <p>The canonical matrix governs cross-phase mapping and ensures every requirement can be validated through stories, acceptance criteria, and downstream implementation/testing artifacts.</p>
+      <table class="trace" aria-label="Condensed product traceability view">
+        <thead>
+          <tr><th>Requirement Focus</th><th>Story Link</th><th>Acceptance / Validation</th><th>Scope Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Google Calendar sync (FR-09)</td><td>US-09</td><td>Calendar presence and reliability behavior criteria</td><td>MVP committed</td></tr>
+          <tr><td>Duplicate prevention (FR-10)</td><td>US-07</td><td>No duplicate active events/reminders for equivalent inputs</td><td>MVP committed</td></tr>
+          <tr><td>Extraction accuracy (FR-04)</td><td>US-05</td><td>Field extraction thresholds and review handling</td><td>MVP committed</td></tr>
+          <tr><td>WhatsApp notifications (FR-07)</td><td>US-10</td><td>Future-phase acceptance definition</td><td>Post-MVP</td></tr>
+          <tr><td>Optional SMS (FR-08)</td><td>US-11</td><td>Future-phase acceptance definition</td><td>Post-MVP</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" id="risks">
+      <div class="source">Sources: requirements.md, user-stories.md, acceptance-criteria.md, scope-v1.md</div>
+      <h2>8) Risks, Constraints, Assumptions, and Open Items</h2>
+      <div class="columns">
+        <article class="mini">
+          <h3>Top Delivery Risks</h3>
+          <ul>
+            <li>Extraction quality degradation causing incorrect reminder timing.</li>
+            <li>Calendar provider transient/terminal failure paths reducing trust if not observable/remediable.</li>
+            <li>Duplicate normalization misses causing repeated reminders.</li>
+          </ul>
+        </article>
+        <article class="mini">
+          <h3>Constraints and Assumptions</h3>
+          <ul>
+            <li>MVP channel boundary is strict: no active WhatsApp/SMS runtime path.</li>
+            <li>Google ecosystem integration is the MVP identity + calendar backbone.</li>
+            <li>Release confidence depends on acceptance evidence and traceability completeness.</li>
+          </ul>
+        </article>
+      </div>
+      <div class="callout gaps">
+        <strong>Open-item handling:</strong> Any unresolved requirement interpretation, risk owner assignment, or readiness ambiguity must be closed in the markdown source set before release sign-off; this HTML intentionally mirrors source status rather than redefining authority.
+      </div>
+    </section>
+
+    <section class="card" id="coverage">
+      <h2>9) Source Coverage</h2>
+      <p><strong>Markdown source-of-truth note:</strong> Product markdown files are authoritative; this HTML is a consolidated presentation artifact regenerated from those sources.</p>
+      <ul>
+        <li><code>docs/00-product/vision.md</code></li>
+        <li><code>docs/00-product/requirements.md</code></li>
+        <li><code>docs/00-product/business-requirements.md</code></li>
+        <li><code>docs/00-product/user-personas.md</code></li>
+        <li><code>docs/00-product/user-stories.md</code></li>
+        <li><code>docs/00-product/acceptance-criteria.md</code></li>
+        <li><code>docs/00-product/scope-v1.md</code></li>
+        <li><code>docs/00-product/traceability-matrix.md</code></li>
+      </ul>
+    </section>
   </main>
+
+  <footer>
+    Product summary regenerated from <code>docs/00-product</code> markdown sources. Preserve markdown as source of truth.
+  </footer>
 </body>
 </html>

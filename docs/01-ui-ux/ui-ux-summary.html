@@ -13,10 +13,7 @@
       --muted: #58627a;
       --line: #dbe3f1;
       --brand: #305dff;
-      --brand-2: #4f8bff;
       --brand-soft: #e8efff;
-      --ok: #0b7a63;
-      --warn: #9a6700;
       --radius: 16px;
       --shadow: 0 14px 40px rgba(21, 37, 86, 0.08);
       --max: 1160px;
@@ -33,55 +30,54 @@
       color: var(--ink);
       line-height: 1.55;
     }
-    .hero-wrap { background: linear-gradient(135deg, #102856 0%, #1d4194 40%, #2f5dff 100%); color: #f7faff; padding: 2.5rem 1.25rem 3rem; border-bottom: 1px solid rgba(255,255,255,.18); }
-    .hero { max-width: var(--max); margin: 0 auto; display: grid; gap: 1.4rem; }
-    .eyebrow { letter-spacing: .12em; text-transform: uppercase; font-size: .78rem; opacity: .9; font-weight: 700; }
+    .hero-wrap { background: linear-gradient(135deg, #102856 0%, #1d4194 40%, #2f5dff 100%); color: #f7faff; padding: 2.5rem 1.25rem 3rem; }
+    .hero { max-width: var(--max); margin: 0 auto; display: grid; gap: 1.2rem; }
+    .eyebrow { letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.78rem; opacity: 0.92; font-weight: 700; }
     h1 { margin: 0; font-size: clamp(1.9rem, 4vw, 3rem); line-height: 1.15; max-width: 20ch; }
-    .hero p { margin: 0; max-width: 74ch; color: #dbe8ff; font-size: 1.03rem; }
-    .chips { display:flex; flex-wrap: wrap; gap:.55rem; }
-    .chip { border:1px solid rgba(255,255,255,.33); color:#eff5ff; border-radius:999px; font-size:.8rem; padding:.35rem .7rem; background:rgba(255,255,255,.09); }
-    .stats { display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:.75rem; margin-top:.5rem; }
-    .stat { border:1px solid rgba(255,255,255,.23); border-radius:12px; padding:.8rem; background:rgba(8,20,48,.26); }
-    .stat strong { display:block; font-size:1.3rem; }
-    .stat span { font-size:.82rem; color:#d6e4ff; }
-    main { max-width: var(--max); margin:0 auto; padding:1.2rem; display:grid; gap:1rem; }
-    .card { background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:1.1rem; box-shadow: var(--shadow); }
-    .toc-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:.65rem; margin-top:.8rem; }
-    .toc-grid a { text-decoration:none; color:var(--ink); border:1px solid var(--line); border-radius:12px; padding:.65rem .75rem; background:#fbfcff; font-size:.94rem; }
-    h2, h3 { margin:0 0 .65rem; line-height:1.25; }
-    h2 { font-size:1.35rem; }
-    h3 { font-size:1.03rem; }
-    p { margin:.45rem 0 0; color:var(--muted); }
-    ul { margin:.55rem 0 0; padding-left:1.1rem; color:var(--muted); }
-    li { margin:.23rem 0; }
-    .source { display:inline-flex; align-items:center; gap:.4rem; border-radius:999px; background:var(--brand-soft); color:#123baf; border:1px solid #cddcff; font-size:.75rem; font-weight:700; padding:.28rem .62rem; margin-bottom:.8rem; }
-    .columns { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:.75rem; }
-    .mini { border:1px solid var(--line); border-radius:12px; padding:.85rem; background:#fcfdff; }
-    .trace { width:100%; border-collapse:collapse; margin-top:.7rem; overflow:hidden; border-radius:12px; border:1px solid var(--line); font-size:.92rem; }
-    .trace th,.trace td { padding:.65rem; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
-    .trace th { background:#f3f7ff; color:#233a72; }
-    .callout { margin-top:.9rem; border-radius:12px; border:1px solid #c5d7ff; background:linear-gradient(180deg,#f4f8ff 0%,#eef4ff 100%); padding:.85rem; }
-    .warn { border-color:#f2d5a5; background:linear-gradient(180deg,#fff9ef 0%,#fff4df 100%); }
-    footer { margin:.5rem 0 1rem; text-align:center; color:#6a748c; font-size:.82rem; }
+    .hero p { margin: 0; max-width: 78ch; color: #dbe8ff; }
+    .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .chip { border: 1px solid rgba(255,255,255,.33); border-radius: 999px; font-size: .8rem; padding: .35rem .7rem; background: rgba(255,255,255,.09); }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit,minmax(170px,1fr)); gap: .7rem; }
+    .stat { border: 1px solid rgba(255,255,255,.23); border-radius: 12px; padding: .8rem; background: rgba(8,20,48,.26); }
+    .stat strong { display: block; font-size: 1.28rem; }
+    .stat span { font-size: .82rem; color: #d6e4ff; }
+    main { max-width: var(--max); margin: 0 auto; padding: 1.2rem; display: grid; gap: 1rem; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.1rem; box-shadow: var(--shadow); }
+    .source { display: inline-flex; border-radius: 999px; background: var(--brand-soft); color: #123baf; border: 1px solid #cddcff; font-size: .75rem; font-weight: 700; padding: .28rem .62rem; margin-bottom: .8rem; }
+    .toc-grid,.columns { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: .65rem; }
+    .toc-grid a { text-decoration: none; color: var(--ink); border: 1px solid var(--line); border-radius: 12px; padding: .65rem .75rem; background: #fbfcff; font-size: .94rem; }
+    h2,h3 { margin: 0 0 .6rem; line-height: 1.25; }
+    h2 { font-size: 1.35rem; }
+    h3 { font-size: 1.03rem; }
+    p { margin: .4rem 0 0; color: var(--muted); }
+    ul { margin: .45rem 0 0; padding-left: 1.1rem; color: var(--muted); }
+    li { margin: .2rem 0; }
+    .mini { border: 1px solid var(--line); border-radius: 12px; padding: .85rem; background: #fcfdff; }
+    .trace { width: 100%; border-collapse: collapse; margin-top: .7rem; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; font-size: .92rem; }
+    .trace th,.trace td { padding: .65rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    .trace th { background: #f3f7ff; color: #233a72; }
+    .callout { margin-top: .85rem; border-radius: 12px; border: 1px solid #c5d7ff; background: linear-gradient(180deg, #f4f8ff 0%, #eef4ff 100%); padding: .85rem; }
+    .warn { border-color: #f2d5a5; background: linear-gradient(180deg, #fff9ef 0%, #fff4df 100%); }
+    code { background: #f5f7fd; border: 1px solid #e0e7f8; border-radius: 6px; padding: 0 .3rem; }
+    footer { margin: .5rem 0 1rem; text-align: center; color: #6a748c; font-size: .82rem; }
   </style>
 </head>
 <body>
   <header class="hero-wrap">
     <div class="hero">
-      <div class="eyebrow">Documentation Summary · UI/UX (02)</div>
-      <h1>Email-Driven Reminder Assistant UI/UX Summary</h1>
-      <p>Consolidated UI/UX view across overview, IA, flows, screen inventory, wireframes, components, design principles, and mockup intent. Markdown remains the source of truth; this HTML is a synchronized stakeholder artifact.</p>
+      <div class="eyebrow">UI/UX Documentation • Executive Consolidated View</div>
+      <h1>Email-Driven Reminder Assistant — UI/UX Summary</h1>
+      <p>This document consolidates all UI/UX markdown sources into one implementation-ready narrative covering screen architecture, flow logic, wireframes, component contracts, design system rules, and mockup intent. Markdown remains the source of truth.</p>
       <div class="chips">
-        <span class="chip">MVP: Gmail + Google Calendar Sync</span>
-        <span class="chip">Post-MVP: WhatsApp / SMS</span>
-        <span class="chip">Screens S01-S09</span>
-        <span class="chip">Flows F1-F5</span>
+        <span class="chip">MVP active: Gmail ingestion + Google Calendar sync</span>
+        <span class="chip">Future phase only: WhatsApp / SMS delivery</span>
+        <span class="chip">Traceability: FR ↔ US ↔ Flows ↔ Screens ↔ Components</span>
       </div>
       <div class="stats">
-        <div class="stat"><strong>8</strong><span>UI/UX markdown source files</span></div>
-        <div class="stat"><strong>9</strong><span>Canonical screens</span></div>
-        <div class="stat"><strong>5</strong><span>Primary user flows</span></div>
-        <div class="stat"><strong>21</strong><span>Reusable component IDs</span></div>
+        <div class="stat"><strong>9</strong><span>Canonical screens (S01-S09)</span></div>
+        <div class="stat"><strong>8</strong><span>Primary user flows (F1-F8)</span></div>
+        <div class="stat"><strong>21</strong><span>Core components (C01-C21)</span></div>
+        <div class="stat"><strong>8</strong><span>UI/UX markdown sources consolidated</span></div>
       </div>
     </div>
   </header>
@@ -89,237 +85,205 @@
   <main>
     <section class="card" id="toc">
       <h2>Table of Contents</h2>
-      <div class="toc-grid">
-        <a href="#executive">Executive Summary & MVP Boundaries</a>
-        <a href="#overview">UI/UX Overview Consolidation</a>
-        <a href="#ia">Information Architecture</a>
-        <a href="#flows">Flow Consolidation (F1-F5)</a>
-        <a href="#screens">Screen Inventory & State Coverage</a>
-        <a href="#wireframes">Wireframe Coverage Summary</a>
-        <a href="#components">Component System Summary</a>
-        <a href="#principles">Design Principles + Mockup Guidance</a>
-        <a href="#traceability">Product/Tech Traceability Matrix</a>
-        <a href="#gaps">Assumptions, Gaps, Open Questions</a>
-        <a href="#coverage">Source Coverage Manifest</a>
-      </div>
-    </section>
-
-    <section class="card" id="executive">
-      <span class="source">Source: ui-overview.md + screen-inventory.md</span>
-      <h2>Executive Summary & MVP Boundaries</h2>
-      <ul>
-        <li>UI/UX is centered on Gmail ingestion, extraction confidence review, scheduling, duplicate prevention, and Google Calendar sync confirmation/recovery.</li>
-        <li>MVP interaction surfaces include Google integrations only (OAuth, Gmail, Calendar).</li>
-        <li>WhatsApp and SMS are explicitly post-MVP roadmap items and must not appear as active controls.</li>
-        <li>Primary outcomes: fast onboarding, low-friction event confirmation, explicit state messaging, and auditable failure/retry paths.</li>
-      </ul>
-      <div class="callout warn">
-        <strong>MVP guardrail:</strong> Future channels may appear only as disabled/non-interactive roadmap labels with clear “Post-MVP” annotation.
-      </div>
+      <p>Each section includes source labels to preserve documentation traceability.</p>
+      <nav class="toc-grid" aria-label="Table of contents">
+        <a href="#overview">1) UX overview, scope, and outcomes</a>
+        <a href="#ia">2) Information architecture and navigation</a>
+        <a href="#flows">3) Flow catalog and state-handling model</a>
+        <a href="#screens">4) Screen inventory and state coverage</a>
+        <a href="#wireframes">5) Wireframe specification summary</a>
+        <a href="#components">6) Component system contract</a>
+        <a href="#principles">7) Design principles + mockup intent</a>
+        <a href="#traceability">8) UI/UX traceability matrix</a>
+        <a href="#gaps">9) Assumptions, gaps, and open questions</a>
+        <a href="#coverage">10) Source coverage</a>
+      </nav>
     </section>
 
     <section class="card" id="overview">
-      <span class="source">Source: ui-overview.md</span>
-      <h2>UI/UX Overview Consolidation</h2>
+      <div class="source">Sources: ui-overview.md + screen-inventory.md</div>
+      <h2>1) UX Overview, Scope, and Outcomes</h2>
+      <p>The UI/UX layer operationalizes the product contract into a reliable review-and-confirm journey: detect candidate events, review extraction confidence, prevent duplicates, schedule reminders, and synchronize with Google Calendar in MVP.</p>
       <div class="columns">
-        <div class="mini">
-          <h3>Scope Covered</h3>
+        <article class="mini">
+          <h3>Committed MVP UX Outcomes</h3>
           <ul>
-            <li>Navigation and screen architecture</li>
-            <li>User flows and state behavior</li>
-            <li>Wireframe and mockup intent</li>
-            <li>Component behavior + accessibility baseline</li>
-            <li>Figma-ready handoff conventions</li>
+            <li>Trust-first onboarding with explicit Google auth and Gmail permission clarity.</li>
+            <li>Low-friction review for extracted event details and confidence visibility.</li>
+            <li>Predictable reminder setup defaults and change management.</li>
+            <li>Observable Google Calendar sync status with retry/recovery paths.</li>
           </ul>
-        </div>
-        <div class="mini">
-          <h3>UX Outcomes</h3>
+        </article>
+        <article class="mini">
+          <h3>Scope Guardrails</h3>
           <ul>
-            <li>Setup completion target: &lt;5 minutes</li>
-            <li>Event confirmation/edit: ≤3 interactions</li>
-            <li>Lifecycle visibility: detected → review → scheduled → synced/failed</li>
-            <li>Corrective paths for extraction ambiguity, duplicates, and sync failures</li>
+            <li>Active MVP capability includes Gmail ingestion and Google Calendar sync.</li>
+            <li>WhatsApp/SMS appear only as future-phase references, not active UI runtime dependency.</li>
+            <li>System prioritizes extraction quality and duplicate suppression before channel expansion.</li>
           </ul>
-        </div>
-        <div class="mini">
-          <h3>Traceability Anchors</h3>
-          <ul>
-            <li>Calendar sync UX. Trace: FR-09, US-09</li>
-            <li>Duplicate prevention messaging. Trace: FR-10, US-07</li>
-            <li>Extraction review UX. Trace: FR-04, US-05</li>
-            <li>Scheduling confirmation UX. Trace: FR-06, US-08</li>
-          </ul>
-        </div>
+        </article>
       </div>
     </section>
 
     <section class="card" id="ia">
-      <span class="source">Source: information-architecture.md</span>
-      <h2>Information Architecture</h2>
-      <table class="trace">
-        <thead><tr><th>Layer</th><th>Definition</th><th>Operational Meaning</th></tr></thead>
+      <div class="source">Source: information-architecture.md</div>
+      <h2>2) Information Architecture and Navigation Model</h2>
+      <p>IA defines authenticated app-shell navigation for dashboard, events, preferences, integrations, diagnostics, and account controls, plus a clear unauthenticated onboarding path.</p>
+      <table class="trace" aria-label="IA hierarchy summary">
+        <thead><tr><th>Layer</th><th>Key Structure</th><th>Intent</th></tr></thead>
         <tbody>
-          <tr><td>Level 0-1</td><td>S01 Access → S02 Setup</td><td>Google auth + onboarding defaults + calendar sync readiness</td></tr>
-          <tr><td>Level 2</td><td>S03/S04/S05 Core operations</td><td>Triage, event review, scheduling, sync confirmation</td></tr>
-          <tr><td>Level 3</td><td>S06/S07 Configuration</td><td>Defaults and Google integration health repair</td></tr>
-          <tr><td>Level 4</td><td>S08/S09 Diagnostics and account controls</td><td>Retry/failure investigation and account/session governance</td></tr>
+          <tr><td>Global navigation</td><td>Dashboard, Events, Preferences, Integrations, Diagnostics, Account</td><td>Stable top-level orientation and workflow continuity.</td></tr>
+          <tr><td>Secondary navigation</td><td>Tabs/filter zones inside detail and diagnostics contexts</td><td>Scoped navigation without losing task context.</td></tr>
+          <tr><td>Unauthenticated path</td><td>Login/consent → onboarding setup</td><td>Trust and permission clarity before automation begins.</td></tr>
         </tbody>
       </table>
-      <p>Secondary navigation emphasizes status, sync state, and duplicate-suppression visibility. IA-to-flow mappings explicitly include FR/US trace tags for auditable phase alignment.</p>
     </section>
 
     <section class="card" id="flows">
-      <span class="source">Source: user-flows.md</span>
-      <h2>Flow Consolidation (F1-F5)</h2>
-      <table class="trace">
-        <thead><tr><th>Flow</th><th>Goal</th><th>Path</th><th>Critical States</th><th>Trace</th></tr></thead>
-        <tbody>
-          <tr><td>F1</td><td>Onboard with Google + Calendar sync</td><td>S01 → S02 → S03</td><td>OAuth error, connectivity test pass/fail, setup success</td><td>FR-01, FR-02, FR-09, FR-11 · US-01, US-02, US-03, US-09</td></tr>
-          <tr><td>F2</td><td>Review extraction and confirm reminder</td><td>S03 → S05 → S03/S04</td><td>Confidence review, validation, scheduled/syncing/synced</td><td>FR-04, FR-06, FR-09 · US-05, US-08, US-09</td></tr>
-          <tr><td>F3</td><td>Change global defaults</td><td>S03 → S06 → S03</td><td>Dirty, save pending, save success/error</td><td>FR-09, FR-11 · US-03, US-09</td></tr>
-          <tr><td>F4</td><td>Resolve low confidence + duplicate risk</td><td>S03/S04 → S05 → S04</td><td>Needs Review/Duplicate Suppressed, edit/confirm/dismiss</td><td>FR-04, FR-10 · US-05, US-07</td></tr>
-          <tr><td>F5</td><td>Recover from calendar sync failure</td><td>S03/S08 → S07 → S08 → S03</td><td>Error diagnosis, reconnect, retry, outcome update</td><td>FR-09, FR-10 · US-07, US-09</td></tr>
-        </tbody>
-      </table>
+      <div class="source">Source: user-flows.md</div>
+      <h2>3) User Flow Catalog and Interaction-State Logic</h2>
+      <div class="columns">
+        <article class="mini">
+          <h3>Core Flow Set (F1-F8)</h3>
+          <ul>
+            <li>F1 first-time setup and account connection.</li>
+            <li>F2 extracted event review and confirm reminder.</li>
+            <li>F3 global reminder defaults update.</li>
+            <li>F4 diagnostics review and recovery flow.</li>
+            <li>F5-F8 support duplicate management, sync validation, and account/session controls.</li>
+          </ul>
+        </article>
+        <article class="mini">
+          <h3>Flow States + Failure Paths</h3>
+          <ul>
+            <li>All primary flows include loading, empty, validation, success, and error pathways.</li>
+            <li>Calendar sync failure and retry visibility is treated as first-class UX requirement.</li>
+            <li>Permission-denied and integration-disconnected paths require explicit user guidance.</li>
+          </ul>
+        </article>
+      </div>
+      <div class="callout"><strong>Flow governance:</strong> operationally risky transitions (extraction ambiguity, duplicate suppression, sync retry) are intentionally surfaced rather than hidden to preserve trust.</div>
     </section>
 
     <section class="card" id="screens">
-      <span class="source">Source: screen-inventory.md</span>
-      <h2>Screen Inventory & State Coverage</h2>
-      <table class="trace">
-        <thead><tr><th>Screen</th><th>Purpose Snapshot</th><th>Core State Focus</th><th>Traceability</th></tr></thead>
+      <div class="source">Source: screen-inventory.md</div>
+      <h2>4) Screen Inventory and States/Flows/Screens Coverage</h2>
+      <p>Canonical screen set S01-S09 aligns navigation, flows, and state checklists. Coverage includes onboarding, operational triage, detail review, preferences, integration health, diagnostics, and account management.</p>
+      <table class="trace" aria-label="Screen-state-flow coverage">
+        <thead><tr><th>Screen</th><th>Purpose</th><th>State Emphasis</th><th>Flow Link</th></tr></thead>
         <tbody>
-          <tr><td>S01</td><td>Google sign-in and consent</td><td>Loading, permission, redirect</td><td>FR-01/02 · US-01/02</td></tr>
-          <tr><td>S02</td><td>Onboarding defaults + calendar sync enablement</td><td>Validation, connectivity error, success</td><td>FR-06/09/11 · US-03/08/09</td></tr>
-          <tr><td>S03</td><td>Dashboard triage and sync visibility</td><td>Empty, error, sync feedback</td><td>FR-04/09/10 · US-05/07/09</td></tr>
-          <tr><td>S04</td><td>Bulk event review with sync + duplicate filters</td><td>Loading, empty, permission</td><td>FR-04/10 · US-05/07</td></tr>
-          <tr><td>S05</td><td>Event detail, reminder confirmation, sync history</td><td>Validation, success, permission</td><td>FR-04/06/09/10 · US-05/07/08/09</td></tr>
-          <tr><td>S06</td><td>Global defaults and calendar sync preferences</td><td>Dirty, validation, save states</td><td>FR-09/11 · US-03/09</td></tr>
-          <tr><td>S07</td><td>Google integrations health and repair</td><td>Loading, error, success</td><td>FR-02/09 · US-02/09</td></tr>
-          <tr><td>S08</td><td>Audit/retry extraction and sync operations</td><td>Empty, error, retry success/error</td><td>FR-04/09/10 · US-05/07/09</td></tr>
-          <tr><td>S09</td><td>Account and session controls</td><td>Loading, error, success</td><td>FR-01/11 · US-01/03</td></tr>
+          <tr><td>S01 Login &amp; Consent</td><td>Auth + Gmail permission trust</td><td>Loading, denied, retry</td><td>F1</td></tr>
+          <tr><td>S02 Onboarding Setup</td><td>Defaults + calendar sync enable/test</td><td>Validation, test error/success</td><td>F1, F3</td></tr>
+          <tr><td>S03 Dashboard</td><td>Attention queue + sync visibility</td><td>Empty queue, error banner, toast</td><td>F2, F4</td></tr>
+          <tr><td>S04 Events List</td><td>Bulk triage with filters/sort</td><td>Loading rows, empty, API retry</td><td>F2, F5</td></tr>
+          <tr><td>S05 Event Detail</td><td>Extraction review + reminder finalization</td><td>Validation, confidence alerts</td><td>F2, F6</td></tr>
+          <tr><td>S06 Preferences</td><td>Default reminder and sync settings</td><td>Dirty form, validation, saved</td><td>F3</td></tr>
+          <tr><td>S07 Integrations</td><td>Google health/repair actions</td><td>Connected/degraded/disconnected</td><td>F4, F7</td></tr>
+          <tr><td>S08 Diagnostics</td><td>Audit timeline + retry operations</td><td>Retry success/fail, empty logs</td><td>F4, F8</td></tr>
+          <tr><td>S09 Account</td><td>Session/profile safety controls</td><td>Loading, confirmation, success</td><td>F7, F8</td></tr>
         </tbody>
       </table>
-      <div class="callout"><strong>State coverage emphasis:</strong> Calendar sync-specific states are explicitly expected on S03, S05, S07, and S08; duplicate suppression is visible on S03, S04, S05, and S08.</div>
     </section>
 
     <section class="card" id="wireframes">
-      <span class="source">Source: wireframes.md</span>
-      <h2>Wireframe Coverage Summary</h2>
+      <div class="source">Source: wireframes.md</div>
+      <h2>5) Wireframe Specification Summary</h2>
       <div class="columns">
-        <div class="mini"><h3>S01-S02 Onboarding</h3><p>S01 provides trust-first OAuth entry. S02 captures timezone/reminder defaults and calendar sync test/enablement with sticky actions and validation/error feedback.</p></div>
-        <div class="mini"><h3>S03-S05 Core Operations</h3><p>Dashboard queue + events list triage into event detail where confidence, schedule preview, sync state, and confirm/dismiss actions are clearly partitioned.</p></div>
-        <div class="mini"><h3>S06-S08 Configuration + Recovery</h3><p>Preferences capture defaults and retry policy; Integrations focuses on Google OAuth/Gmail/Calendar health; Diagnostics supports timeline investigation and sync retries.</p></div>
-        <div class="mini"><h3>S09 Account Controls</h3><p>Session and profile controls remain separate from reminder operations, preserving safety for account-level actions.</p></div>
+        <article class="mini"><h3>S01-S02 Onboarding</h3><p>Trust-forward OAuth and step-based setup with sticky actions, sync testing, and contextual guidance blocks.</p></article>
+        <article class="mini"><h3>S03-S05 Core Workflow</h3><p>Dashboard triage to events list and event detail with confidence indicators, duplicate context, and confirm reminder actions.</p></article>
+        <article class="mini"><h3>S06-S08 Control + Recovery</h3><p>Preferences manage defaults, integrations expose provider health, diagnostics supports timeline-level retry and incident review.</p></article>
+        <article class="mini"><h3>S09 Account</h3><p>Account/session controls separated from reminder operations to reduce accidental high-impact actions.</p></article>
       </div>
-      <p>Wireframes include desktop/tablet/mobile behaviors, explicit interaction zones, and state variants (loading, empty, error, success, permission) per screen.</p>
+      <p>Wireframes include explicit regions, entry/exit paths, interaction zones, responsive behavior notes, and Figma build instructions.</p>
     </section>
 
     <section class="card" id="components">
-      <span class="source">Source: components.md</span>
-      <h2>Component System Summary</h2>
-      <p>Component catalogue C01-C21 defines reusable controls, states, anatomy, accessibility, and screen mappings. Key implementation-critical groups:</p>
+      <div class="source">Source: components.md</div>
+      <h2>6) Component System Contract</h2>
+      <p>Component index C01-C21 defines anatomy, variants, state behavior, accessibility, responsive behavior, and screen mappings.</p>
       <div class="columns">
-        <div class="mini">
-          <h3>Navigation + Layout</h3>
-          <ul><li>C01 Top Navigation</li><li>C07 Side Navigation</li><li>C08 Page Header</li><li>C17 Sticky Action Bar</li></ul>
-        </div>
-        <div class="mini">
-          <h3>Data + Decisioning</h3>
-          <ul><li>C09 Event Card</li><li>C10 Data Table/Card List</li><li>C15 Status Badge</li><li>C21 Empty State Panel</li></ul>
-        </div>
-        <div class="mini">
-          <h3>Form + Feedback</h3>
-          <ul><li>C04 Input + C05 Select + C06 Toggle</li><li>C18 Alert banners</li><li>C19 Toast feedback</li><li>C20 Modal/Drawer confirmations</li></ul>
-        </div>
+        <article class="mini">
+          <h3>Navigation/Layout</h3>
+          <ul><li>C01 Top Nav</li><li>C07 Side Nav</li><li>C08 Page Header</li><li>C17 Sticky Action Bar</li></ul>
+        </article>
+        <article class="mini">
+          <h3>Data/Workflow</h3>
+          <ul><li>C09 Event Card</li><li>C10 Data Table/Card List</li><li>C13 Tabs</li><li>C14 Filter Bar</li><li>C15 Status Badge</li><li>C16 Pagination</li></ul>
+        </article>
+        <article class="mini">
+          <h3>Input/Feedback</h3>
+          <ul><li>C02 Button, C03 Link</li><li>C04 Input, C05 Select, C06 Toggle/Checkbox/Radio</li><li>C18 Alert, C19 Toast, C20 Modal/Drawer</li><li>C21 Empty State Panel</li></ul>
+        </article>
       </div>
     </section>
 
     <section class="card" id="principles">
-      <span class="source">Source: design-principles.md + ui-mockups.md</span>
-      <h2>Design Principles + Mockup Guidance</h2>
+      <div class="source">Sources: design-principles.md + ui-mockups.md</div>
+      <h2>7) Design Principles and Mockup Intent</h2>
       <ul>
-        <li>Design principles set typography/color/spacing/focus/contrast baselines and WCAG-oriented interaction quality.</li>
-        <li>Mockup intent preserves visual hierarchy and region consistency across S01-S09, including responsive collapse behaviors.</li>
-        <li>Cross-screen consistency rules: stable headers, status taxonomy consistency, predictable sticky action patterns, and shared spacing rhythm.</li>
-        <li>Calendar sync and duplicate prevention cues are required in visual treatments for operational trust.</li>
+        <li>Design principles define spacing, typography hierarchy, color role guidance, elevation, borders/radius, and interaction-state consistency.</li>
+        <li>Accessibility baseline includes focus visibility, touch target minimums, keyboard navigation, semantic landmarks, and clear status messaging.</li>
+        <li>Mockup intent provides high-fidelity hierarchy targets for S01-S09 while preserving responsive behavior and component consistency.</li>
+        <li>Visual taxonomy emphasizes extraction confidence, sync health, and duplicate status legibility in high-attention areas.</li>
       </ul>
     </section>
 
     <section class="card" id="traceability">
-      <span class="source">Source: ui-overview.md + information-architecture.md + user-flows.md + screen-inventory.md</span>
-      <h2>Product/Tech Traceability Matrix</h2>
-      <table class="trace">
-        <thead><tr><th>UX Concern</th><th>UI/UX Representation</th><th>Trace</th></tr></thead>
+      <div class="source">Sources: ui-overview.md, user-flows.md, screen-inventory.md, wireframes.md</div>
+      <h2>8) UI/UX Traceability Matrix</h2>
+      <table class="trace" aria-label="UI/UX traceability matrix">
+        <thead><tr><th>Requirement/Story</th><th>UX Representation</th><th>Primary Screens/Flows</th></tr></thead>
         <tbody>
-          <tr><td>Calendar sync UX</td><td>Onboarding enable/test, detail status visibility, diagnostics retry, integrations repair</td><td>FR-09, US-09</td></tr>
-          <tr><td>Duplicate prevention</td><td>Duplicate-suppressed filter/state, event detail context, dashboard status badges</td><td>FR-10, US-07</td></tr>
-          <tr><td>Extraction confidence</td><td>Needs Review workflows, confidence callouts, editable detail panel, ambiguity resolution</td><td>FR-04, US-05</td></tr>
-          <tr><td>Scheduling confirmation</td><td>Confirm reminder actions, default timing preferences, success/error feedback loops</td><td>FR-06, US-08</td></tr>
-          <tr><td>Accessibility-critical interactions</td><td>Keyboard/focus patterns, explicit state messaging, ARIA/live-region expectations in component/system guidance</td><td>FR-11 support + UX accessibility baseline</td></tr>
+          <tr><td>FR-09 / US-09 (Calendar sync)</td><td>Onboarding sync enablement/test, in-context sync status, diagnostics retry, integration repair patterns</td><td>S02, S03, S05, S07, S08 · F1/F2/F4</td></tr>
+          <tr><td>FR-10 / US-07 (Duplicate prevention)</td><td>Duplicate-aware queue/list states, suppression filters, event-detail conflict cues</td><td>S03, S04, S05, S08 · F2/F5</td></tr>
+          <tr><td>FR-04 / US-05 (Extraction review)</td><td>Confidence visibility, needs-review workflow, editable detail confirmation and alerting</td><td>S03, S05, S08 · F2/F4</td></tr>
+          <tr><td>FR-06 / US-08 (Reminder scheduling)</td><td>Default reminder controls, confirmation actions, success/error feedback loop</td><td>S02, S05, S06 · F2/F3</td></tr>
         </tbody>
       </table>
     </section>
 
     <section class="card" id="gaps">
-      <span class="source">Source: ui-overview.md + user-flows.md + wireframes.md</span>
-      <h2>Assumptions, Gaps, Open Questions</h2>
+      <div class="source">Sources: ui-overview.md + user-flows.md + wireframes.md</div>
+      <h2>9) Assumptions, Gaps, and Open Questions</h2>
       <div class="columns">
-        <div class="mini">
+        <article class="mini">
           <h3>Assumptions</h3>
           <ul>
-            <li>Single-user workspace per authenticated account for MVP.</li>
-            <li>Google integrations are the only active provider surfaces in MVP.</li>
-            <li>Support triage occurs primarily through Activity & Diagnostics in product UI.</li>
+            <li>Google OAuth and Gmail/Calendar connectivity remain available and healthy for MVP flow completion.</li>
+            <li>Confidence scoring thresholds are provided by backend contracts and rendered consistently in UI states.</li>
+            <li>Role/permission complexity remains limited to MVP user/operator paths documented in current flow set.</li>
           </ul>
-        </div>
-        <div class="mini">
-          <h3>Known Constraints</h3>
+        </article>
+        <article class="mini">
+          <h3>Gaps / Open Questions</h3>
           <ul>
-            <li>Flow and screen IDs are canonical and stable across all UI/UX artifacts.</li>
-            <li>Post-MVP channels remain non-interactive in MVP visual states.</li>
-            <li>HTML remains derivative; markdown is authoritative.</li>
+            <li>Potential future expansion for messaging-channel UI is intentionally deferred and must not alter MVP IA.</li>
+            <li>Any unresolved copy/empty-state language for failure remediation should be finalized in markdown sources before implementation freeze.</li>
+            <li>Additional accessibility audit evidence (screen-reader walkthrough artifacts) should be attached during delivery validation.</li>
           </ul>
-        </div>
-        <div class="mini">
-          <h3>Open Questions</h3>
-          <ul>
-            <li>No new unresolved questions were added in this UI/UX update set.</li>
-            <li>Future-phase channel expansion (WhatsApp/SMS) should be revisited after MVP reliability milestones.</li>
-          </ul>
-        </div>
+        </article>
       </div>
+      <div class="callout warn"><strong>Scope control reminder:</strong> WhatsApp/SMS remain post-MVP roadmap items and should not appear as active controls in MVP screens beyond future-state references.</div>
     </section>
 
     <section class="card" id="coverage">
-      <span class="source">Source Coverage Manifest</span>
-      <h2>Source Coverage Manifest</h2>
-      <p>Markdown remains the source of truth. This summary consolidates the following files:</p>
+      <h2>10) Source Coverage</h2>
+      <p><strong>Markdown source-of-truth note:</strong> UI/UX markdown files are authoritative; this HTML is a regenerated consolidated presentation layer.</p>
       <ul>
-        <li>docs/01-ui-ux/ui-overview.md</li>
-        <li>docs/01-ui-ux/information-architecture.md</li>
-        <li>docs/01-ui-ux/user-flows.md</li>
-        <li>docs/01-ui-ux/screen-inventory.md</li>
-        <li>docs/01-ui-ux/wireframes.md</li>
-        <li>docs/01-ui-ux/components.md</li>
-        <li>docs/01-ui-ux/design-principles.md</li>
-        <li>docs/01-ui-ux/ui-mockups.md</li>
+        <li><code>docs/01-ui-ux/ui-overview.md</code></li>
+        <li><code>docs/01-ui-ux/information-architecture.md</code></li>
+        <li><code>docs/01-ui-ux/user-flows.md</code></li>
+        <li><code>docs/01-ui-ux/screen-inventory.md</code></li>
+        <li><code>docs/01-ui-ux/wireframes.md</code></li>
+        <li><code>docs/01-ui-ux/components.md</code></li>
+        <li><code>docs/01-ui-ux/design-principles.md</code></li>
+        <li><code>docs/01-ui-ux/ui-mockups.md</code></li>
       </ul>
-      <table class="trace">
-        <thead><tr><th>Completeness Check</th><th>Status</th></tr></thead>
-        <tbody>
-          <tr><td>All UI/UX markdown files reviewed</td><td>Pass</td></tr>
-          <tr><td>Major headings/topics represented</td><td>Pass</td></tr>
-          <tr><td>Tables/lists/traceability content represented</td><td>Pass</td></tr>
-          <tr><td>Assumptions/gaps/open questions represented</td><td>Pass</td></tr>
-          <tr><td>Product summary visual baseline followed</td><td>Pass</td></tr>
-        </tbody>
-      </table>
     </section>
   </main>
 
   <footer>
-    UI/UX summary synchronized with docs/01-ui-ux markdown sources · Product summary style baseline applied.
+    UI/UX summary regenerated from <code>docs/01-ui-ux</code> markdown sources. Preserve markdown as source of truth.
   </footer>
 </body>
 </html>
