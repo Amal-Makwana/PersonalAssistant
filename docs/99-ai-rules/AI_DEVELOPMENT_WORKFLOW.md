@@ -17,11 +17,10 @@ Before implementation begins:
 1. `docs/00-product`
 2. `docs/01-ui-ux`
 3. `docs/02-design`
-4. `docs/03-task-planning`
-5. `docs/04-delivery`
+4. `docs/03-execution-planning`
 
 Progression:
-**Business Intent -> Experience Definition -> System Design -> Task Planning -> Delivery Execution**
+**Business Intent -> Experience Definition -> System Design -> Execution Planning**
 
 ## 3. Documentation Layer Responsibilities
 | Layer | Path | Purpose |
@@ -29,9 +28,11 @@ Progression:
 | Product | docs/00-product | Vision, personas, requirements, stories, acceptance criteria |
 | UI / UX | docs/01-ui-ux | Flows, IA, screens, wireframes, components, UX principles |
 | Design | docs/02-design | Merged technical + architecture design contracts |
-| Task Planning | docs/03-task-planning | Implementation decomposition and incremental plans |
-| Delivery | docs/04-delivery | Execution readiness, test strategy, rollout planning |
+| Execution Planning | docs/03-execution-planning | Build decomposition, backlog/dependencies, quality gates, rollout/rollback, and execution readiness planning |
 | Prompt Library | docs/05-prompts | Canonical prompts for documentation generation |
+
+
+> Consolidation note: the former Delivery phase has been retired as a separate planning phase and absorbed into Execution Planning (`docs/03-execution-planning`).
 
 ## 4. Canonical Contract Artifacts
 - Runtime flow authority: `docs/02-design/runtime-flow.md`
@@ -54,8 +55,7 @@ Required HTML summaries:
 - `docs/00-product/product-summary.html`
 - `docs/01-ui-ux/ui-ux-summary.html`
 - `docs/02-design/design-summary.html`
-- `docs/03-task-planning/task-planning-summary.html`
-- `docs/04-delivery/delivery-summary.html`
+- `docs/03-execution-planning/execution-planning-summary.html`
 
 When markdown files in a section change, regenerate that section HTML summary in the same change set.
 

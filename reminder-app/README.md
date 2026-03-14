@@ -4,7 +4,7 @@
 
 This repository enforces a strict development lifecycle:
 
-**Product → UI/UX → Design → Task Planning → Delivery → Code**
+**Product → UI/UX → Design → Execution Planning → Code**
 
 No implementation should begin until each upstream documentation layer is complete, reviewed, and approved.
 
@@ -13,13 +13,12 @@ No implementation should begin until each upstream documentation layer is comple
 1. `docs/00-product` — Define business intent and user outcomes.
 2. `docs/01-ui-ux` — Define UI/UX structure, screens, flows, and component behavior.
 3. `docs/02-design` — Define merged technical + architecture design contracts.
-4. `docs/03-task-planning` — Convert design into implementation tasks and increments.
-5. `docs/04-delivery` — Plan implementation phases, testing, and rollout.
-6. Implementation in `apps/`, `packages/`, and `infra/`.
+4. `docs/03-execution-planning` — Plan build strategy, backlog/dependencies, quality gates, and rollout readiness.
+5. Implementation in `apps/`, `packages/`, and `infra/`.
 
 ## Dual-Layer Documentation Standard (Required)
 
-For each major section (`00-product` through `04-delivery`), maintain both:
+For each major section, maintain both:
 
 - **Detailed markdown source files** (authoritative working docs)
 - **One polished consolidated HTML summary** (stakeholder-facing presentation layer)
@@ -29,14 +28,13 @@ Required section summaries:
 - `docs/00-product/product-summary.html`
 - `docs/01-ui-ux/ui-ux-summary.html`
 - `docs/02-design/design-summary.html`
-- `docs/03-task-planning/task-planning-summary.html`
-- `docs/04-delivery/delivery-summary.html`
+- `docs/03-execution-planning/execution-planning-summary.html`
 
 Whenever markdown files in a section are created or updated, refresh the matching HTML summary in the same change.
 
 ## Repository Layout
 
-- `docs/` — Source of truth for requirements, UX artifacts, merged design contracts, planning, and delivery docs.
+- `docs/` — Source of truth for requirements, UX artifacts, design contracts, and execution planning docs.
 - `apps/web` — Frontend application (feature-based structure).
 - `apps/api` — Backend application (layered architecture).
 - `packages/` — Shared UI, types, utilities, and config.

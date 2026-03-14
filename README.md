@@ -9,8 +9,7 @@ For implementation work in `reminder-app`, follow documentation in this order:
 1. `docs/00-product`
 2. `docs/01-ui-ux`
 3. `docs/02-design`
-4. `docs/03-task-planning`
-5. `docs/04-delivery`
+4. `docs/03-execution-planning`
 
 ## Documentation Output Standard (Markdown + HTML)
 
@@ -24,8 +23,7 @@ Required summary files:
 - `docs/00-product/product-summary.html`
 - `docs/01-ui-ux/ui-ux-summary.html`
 - `docs/02-design/design-summary.html`
-- `docs/03-task-planning/task-planning-summary.html`
-- `docs/04-delivery/delivery-summary.html`
+- `docs/03-execution-planning/execution-planning-summary.html`
 
 Whenever markdown files in a section are created or updated, refresh that section's HTML summary in the same change set.
 
@@ -35,4 +33,4 @@ The canonical prompt library for generating and maintaining repository documenta
 
 - `docs/05-prompts`
 
-Use these prompt files to reproduce or update documentation for Product, UI/UX, Design, Task Planning, and Delivery in a consistent, workflow-compliant way.
+Use these prompt files to reproduce or update documentation for Product, UI/UX, Design, and Execution Planning in a consistent, workflow-compliant way.

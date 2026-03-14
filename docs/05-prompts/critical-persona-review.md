@@ -7,22 +7,19 @@ Supported phases:
 - product
 - ui-ux
 - design
-- task-planning
-- delivery
+- execution-planning
 
 Phase mapping:
 - product -> `docs/00-product/*`
 - ui-ux -> `docs/01-ui-ux/*`
 - design -> `docs/02-design/*`
-- task-planning -> `docs/03-task-planning/*`
-- delivery -> `docs/04-delivery/*`
+- execution-planning -> `docs/03-execution-planning/*`
 
 Persona mapping:
 - Product -> Head of Product / Business Analyst
 - UI/UX -> UX Lead / Accessibility Specialist
 - Design -> Principal Architect / Principal Engineer
-- Task Planning -> Engineering Manager / Technical Program Manager
-- Delivery -> Program Manager / Release Manager
+- Execution Planning -> Engineering Manager / Technical Program Manager
 
 ## Mandatory Review Checks
 Apply all checks relevant to the selected phase:
@@ -31,14 +28,14 @@ Apply all checks relevant to the selected phase:
 - Scope integrity (MVP vs future-phase boundaries)
 - Documentation-first workflow compliance
 
-### Task Planning-specific checks
-When phase is `task-planning`, explicitly score:
-- traceability clarity to Product/UI/UX/Design
+### Execution Planning-specific checks
+When phase is `execution-planning`, explicitly score:
+- decomposition quality and canonical backlog clarity
 - sequencing quality and dependency ordering
-- milestone clarity (entry/exit criteria and boundaries)
-- increment quality (thin-slice demonstrability + risk reduction)
-- execution readiness (test/observability/doc-sync tasks)
-- dependency and critical-path clarity
+- milestone and increment logic
+- test strategy and quality gate clarity
+- rollout/rollback planning quality
+- execution readiness completeness
 
 ### HTML summary checks (when summary exists)
 - HTML Coverage Status
