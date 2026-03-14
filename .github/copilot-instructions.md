@@ -9,8 +9,13 @@ Before writing any code always read documentation in this order:
 1. docs/00-product
 2. docs/01-ui-ux
 3. docs/02-design
-4. docs/03-task-planning
-5. docs/04-delivery
+4. docs/03-execution-planning
+
+
+## Phase Consolidation Rule
+
+The former Delivery documentation phase has been absorbed into Execution Planning.
+Execution Planning in `docs/03-execution-planning` now owns backlog/dependencies, quality gates, rollout/rollback planning, and execution readiness planning.
 
 ## Canonical Documentation Contracts (Required)
 
@@ -38,8 +43,7 @@ Required consolidated HTML files:
 - `docs/00-product/product-summary.html`
 - `docs/01-ui-ux/ui-ux-summary.html`
 - `docs/02-design/design-summary.html`
-- `docs/03-task-planning/task-planning-summary.html`
-- `docs/04-delivery/delivery-summary.html`
+- `docs/03-execution-planning/execution-planning-summary.html`
 
 Whenever markdown docs in a section change, the section summary HTML must be regenerated in the same PR/commit.
 

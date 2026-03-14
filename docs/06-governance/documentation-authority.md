@@ -11,4 +11,4 @@ The single authoritative documentation tree for this repository is `docs/`.
 - Cross-phase traceability authority: `docs/00-product/traceability-matrix.md`
 
 ## Phase Order
-Product -> UI/UX -> Design -> Task Planning -> Delivery
+Product -> UI/UX -> Design -> Execution Planning

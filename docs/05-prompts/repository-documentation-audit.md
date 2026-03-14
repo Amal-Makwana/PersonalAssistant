@@ -10,8 +10,7 @@ Phases reviewed in order:
 1. Product (`docs/00-product`)
 2. UI/UX (`docs/01-ui-ux`)
 3. Design (`docs/02-design`)
-4. Task Planning (`docs/03-task-planning`)
-5. Delivery (`docs/04-delivery`)
+4. Execution Planning (`docs/03-execution-planning`)
 
 Required output:
 - Per-phase score (`X/5`)
@@ -29,14 +28,14 @@ Audit must validate canonical contracts:
 - Reliability policy: `docs/02-design/reliability-policy.md`
 - Traceability matrix: `docs/00-product/traceability-matrix.md`
 
-## Task Planning Governance Checks (Mandatory)
-For `docs/03-task-planning`, audit must explicitly evaluate:
-- traceability to Product/UI/UX/Design artifacts
-- sequencing quality and dependency ordering
-- milestone clarity (outcomes + entry/exit criteria)
-- delivery increment quality (thin slices + demoability)
-- execution readiness (test/reliability/doc-sync planning)
-- critical-path articulation and scope discipline (MVP vs future-phase)
+## Execution Planning Governance Checks (Mandatory)
+For `docs/03-execution-planning`, audit must explicitly evaluate:
+- decomposition quality and backlog clarity
+- dependency clarity and critical-path articulation
+- milestone and increment logic
+- quality gate clarity and test strategy planning
+- rollout/rollback planning quality
+- execution readiness completeness and ownership clarity
 
 ## HTML Summary Governance Checks (Mandatory when summary exists)
 For each phase summary HTML, include:

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Execution Planning Summary | Email-Driven Reminder Assistant</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f6fb;
+      --panel: #ffffff;
+      --ink: #172033;
+      --muted: #58627a;
+      --line: #dbe3f1;
+      --brand: #305dff;
+      --brand-2: #4f8bff;
+      --brand-soft: #e8efff;
+      --warn: #9a6700;
+      --radius: 16px;
+      --shadow: 0 14px 40px rgba(21, 37, 86, 0.08);
+      --max: 1160px;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.55; }
+    .hero-wrap { background: linear-gradient(135deg, #102856 0%, #1d4194 40%, #2f5dff 100%); color: #f7faff; padding: 2.5rem 1.25rem 3rem; }
+    .hero { max-width: var(--max); margin: 0 auto; display: grid; gap: 1.1rem; }
+    .eyebrow { letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.78rem; opacity: 0.9; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(1.9rem, 4vw, 3rem); line-height: 1.15; max-width: 24ch; }
+    .hero p { margin: 0; max-width: 78ch; color: #dbe8ff; }
+    .chips { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+    .chip { border: 1px solid rgba(255,255,255,.33); border-radius: 999px; font-size: .8rem; padding: .35rem .7rem; background: rgba(255,255,255,.1); }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.75rem; }
+    .stat { border: 1px solid rgba(255,255,255,.25); border-radius: 12px; padding: .8rem; background: rgba(8,20,48,.26); }
+    .stat strong { display:block; font-size:1.2rem; }
+    main { max-width: var(--max); margin: 0 auto; padding: 1.2rem; display:grid; gap:1rem; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.1rem; box-shadow: var(--shadow); }
+    .toc-grid,.columns { display:grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr)); gap:.65rem; margin-top:.75rem; }
+    .toc-grid a { text-decoration:none; color:var(--ink); border:1px solid var(--line); border-radius:12px; padding:.65rem .75rem; background:#fbfcff; }
+    h2,h3 { margin:0 0 .65rem; }
+    p { margin:.45rem 0 0; color:var(--muted); }
+    ul { margin:.5rem 0 0; color:var(--muted); }
+    .mini { border:1px solid var(--line); border-radius:12px; padding:.85rem; background:#fcfdff; }
+    .source { display:inline-flex; border-radius:999px; background:var(--brand-soft); color:#123baf; border:1px solid #cddcff; font-size:.75rem; font-weight:700; padding:.28rem .62rem; margin-bottom:.8rem; }
+    table { width:100%; border-collapse: collapse; margin-top:.7rem; border:1px solid var(--line); font-size:.92rem; }
+    th,td { padding:.65rem; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { background:#f3f7ff; color:#233a72; }
+    .callout { margin-top:.85rem; border-radius:12px; border:1px solid #c5d7ff; background:#eef4ff; padding:.85rem; }
+    .warn { border-color:#f2d5a5; background:#fff4df; }
+  </style>
+</head>
+<body>
+  <header class="hero-wrap">
+    <div class="hero">
+      <div class="eyebrow">Execution Planning • Consolidated Summary</div>
+      <h1>Email-Driven Reminder Assistant — Execution Planning Summary</h1>
+      <p>This summary consolidates all markdown files in <code>docs/03-execution-planning</code> into one execution-planning view that covers build strategy, canonical backlog/dependencies, quality gates, and rollout/rollback readiness.</p>
+      <div class="chips">
+        <span class="chip">Phase order: Product → UI/UX → Design → Execution Planning</span>
+        <span class="chip">Canonical backlog owner: backlog-and-dependencies.md</span>
+        <span class="chip">Traceability source: docs/00-product/traceability-matrix.md</span>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong>4</strong><span>Execution planning markdown sources</span></div>
+        <div class="stat"><strong>6</strong><span>Canonical backlog work items (EP-BL-001..006)</span></div>
+        <div class="stat"><strong>5</strong><span>Quality gates (QG-01..QG-05)</span></div>
+        <div class="stat"><strong>3</strong><span>Milestones in build strategy</span></div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="card" id="toc">
+      <h2>Table of Contents</h2>
+      <div class="toc-grid">
+        <a href="#scope">1) Execution Planning Scope and Ownership</a>
+        <a href="#build">2) Build Plan: Milestones and Increments</a>
+        <a href="#backlog">3) Canonical Backlog and Dependency Register</a>
+        <a href="#quality">4) Test Strategy and Quality Gates</a>
+        <a href="#rollout">5) Rollout, Rollback, and Readiness Sign-off</a>
+        <a href="#coverage">6) Source Coverage and Governance Notes</a>
+      </div>
+    </section>
+
+    <section class="card" id="scope">
+      <div class="source">Sources: build-plan.md, backlog-and-dependencies.md</div>
+      <h2>1) Execution Planning Scope and Ownership</h2>
+      <p>Execution Planning is now the canonical pre-development planning phase. It owns decomposition, sequencing, backlog/dependencies, quality gating, rollout planning, and readiness criteria. Design remains canonical for architecture, runtime contracts, and reliability semantics.</p>
+      <div class="callout"><strong>Scope boundary:</strong> MVP execution targets Gmail ingestion, extraction, persistence, dedupe, reminder scheduling, and Google Calendar sync continuity. WhatsApp/SMS remain post-MVP roadmap items.</div>
+    </section>
+
+    <section class="card" id="build">
+      <div class="source">Source: build-plan.md</div>
+      <h2>2) Build Plan: Milestones and Increment Logic</h2>
+      <div class="columns">
+        <article class="mini"><h3>Milestone 1</h3><p>Intake and canonical event baseline, including ingestion path and persistence foundations with traceability updates.</p></article>
+        <article class="mini"><h3>Milestone 2</h3><p>Reminder orchestration and operator visibility with confidence handling and diagnostics-readiness checks.</p></article>
+        <article class="mini"><h3>Milestone 3</h3><p>Calendar sync reliability completion and release hardening with rollback readiness sign-off.</p></article>
+      </div>
+      <div class="callout">Increment model uses thin vertical slices: A) intake to persistence, B) schedule orchestration, C) sync + remediation.</div>
+    </section>
+
+    <section class="card" id="backlog">
+      <div class="source">Source: backlog-and-dependencies.md</div>
+      <h2>3) Canonical Backlog and Dependency Register</h2>
+      <p><code>backlog-and-dependencies.md</code> is the single source of truth for work-item IDs, estimates, dependency mapping, acceptance links, and critical-path sequencing.</p>
+      <table aria-label="Execution planning backlog">
+        <thead><tr><th>Task ID</th><th>Workstream</th><th>Dependencies</th><th>Traceability Link</th><th>Sequence Notes</th></tr></thead>
+        <tbody>
+          <tr><td>EP-BL-001</td><td>Intake</td><td>OAuth + mailbox contracts</td><td>FR-02/FR-03, US-01/US-02</td><td>Critical path start</td></tr>
+          <tr><td>EP-BL-002</td><td>Extraction</td><td>EP-BL-001</td><td>FR-04, US-05</td><td>Parallelizable after interfaces freeze</td></tr>
+          <tr><td>EP-BL-003</td><td>Persistence</td><td>EP-BL-001</td><td>FR-05, US-03/US-06</td><td>Enables dedupe + scheduling</td></tr>
+          <tr><td>EP-BL-004</td><td>Dedupe</td><td>EP-BL-003</td><td>FR-10, US-07</td><td>Precondition for sync rollout</td></tr>
+          <tr><td>EP-BL-005</td><td>Scheduling</td><td>EP-BL-002, EP-BL-003</td><td>FR-06, US-04/US-06</td><td>Increment B demo target</td></tr>
+          <tr><td>EP-BL-006</td><td>Sync</td><td>EP-BL-004, EP-BL-005</td><td>FR-09/FR-11, US-09/US-11</td><td>MVP critical-path completion</td></tr>
+        </tbody>
+      </table>
+      <div class="callout warn"><strong>Dependency risk:</strong> extraction confidence quality can block downstream schedule trust and release gating if not stabilized early.</div>
+    </section>
+
+    <section class="card" id="quality">
+      <div class="source">Source: test-and-quality-gates.md</div>
+      <h2>4) Test Strategy and Quality Gates</h2>
+      <div class="columns">
+        <article class="mini"><h3>Test Pyramid Coverage</h3><ul><li>Unit planning for parsing, scheduling, dedupe, retry logic.</li><li>Integration planning for intake-to-schedule and sync reliability.</li><li>E2E planning for MVP and failure remediation paths.</li></ul></article>
+        <article class="mini"><h3>Release-blocking Gates</h3><ul><li>QG-01 Lint/static analysis.</li><li>QG-02 Core integration pass.</li><li>QG-03 Reliability behavior pass.</li><li>QG-04 Traceability synchronization.</li><li>QG-05 Rollback rehearsal completion.</li></ul></article>
+      </div>
+    </section>
+
+    <section class="card" id="rollout">
+      <div class="source">Source: rollout-and-rollback.md</div>
+      <h2>5) Rollout, Rollback, and Execution Readiness</h2>
+      <p>Release planning uses progressive rollout (internal -> pilot -> broad) with promotion tied to quality gates and reliability thresholds.</p>
+      <div class="columns">
+        <article class="mini"><h3>Operational Readiness</h3><ul><li>Dashboards: throughput, confidence, scheduling, sync outcomes.</li><li>Alerting by severity aligned to reliability policy.</li><li>Runbook co-ownership across engineering and operations.</li></ul></article>
+        <article class="mini"><h3>Rollback Controls</h3><ul><li>Triggers: sustained sync failures, persistence integrity risks, scheduler SLA breach.</li><li>Actions: cohort pinning, deployment revert, data consistency checks, recovery validation.</li><li>Approvers: Engineering Manager, QA Lead, Product Owner.</li></ul></article>
+      </div>
+    </section>
+
+    <section class="card" id="coverage">
+      <h2>6) Source Coverage and Governance Notes</h2>
+      <p><strong>Source Coverage:</strong> this summary covers all markdown files in <code>docs/03-execution-planning</code>.</p>
+      <ul>
+        <li><code>build-plan.md</code></li>
+        <li><code>backlog-and-dependencies.md</code></li>
+        <li><code>test-and-quality-gates.md</code></li>
+        <li><code>rollout-and-rollback.md</code></li>
+      </ul>
+      <p><strong>Governance note:</strong> markdown remains source of truth. This HTML is a synchronized stakeholder artifact with Product summary styling baseline.</p>
+
+      <div class="callout">
+        <strong>Major heading coverage map:</strong> Purpose; Canonical Upstream Inputs; Planning Preconditions; Milestone Strategy; Increment Model (Thin Vertical Slices); Assumptions, Constraints, and Open Questions; Prioritization and Sequencing Rules; Canonical Backlog Table; Readiness Ownership; Test Coverage Strategy; Quality Gates (Release Blocking); Readiness Checklist; Risks and Mitigations; Rollout Strategy; Operational Readiness Planning; Rollback Plan; Release Readiness Sign-off; Assumptions and Open Questions.
+      </div>
+    </section>
+  </main>
+</body>
+</html>
