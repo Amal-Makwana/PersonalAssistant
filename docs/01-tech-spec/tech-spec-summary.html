@@ -91,7 +91,8 @@
         <a href="#frontend">6) Frontend Technical Constraints</a>
         <a href="#security">7) Security, NFR, and Operations</a>
         <a href="#traceability">8) Traceability & Coverage Matrix</a>
-        <a href="#gaps">9) Open Questions / Risks</a>
+        <a href="#source-coverage">9) Source Coverage</a>
+        <a href="#gaps">10) Open Questions / Risks</a>
       </nav>
     </section>
 
@@ -192,8 +193,32 @@
       </table>
     </section>
 
+    <section class="card" id="source-coverage">
+      <h2>9) Source Coverage</h2>
+      <p>The following markdown files were consolidated into this summary. Markdown remains the source of truth.</p>
+      <table class="trace" aria-label="Tech spec source coverage">
+        <thead><tr><th>Source File</th><th>Coverage Focus</th></tr></thead>
+        <tbody>
+          <tr><td><code>tech-overview.md</code></td><td>System purpose, lifecycle, boundaries, traceability overview.</td></tr>
+          <tr><td><code>backend-spec.md</code></td><td>Workflow ownership, idempotency, retry model, reliability controls.</td></tr>
+          <tr><td><code>frontend-spec.md</code></td><td>Frontend constraints, capability guardrails, UX/tech interfaces.</td></tr>
+          <tr><td><code>api-spec.md</code></td><td>API contracts, capability exposure, error model, endpoint coverage.</td></tr>
+          <tr><td><code>db-schema.md</code></td><td>Entity model, integrity rules, retention/audit, channel guardrails.</td></tr>
+          <tr><td><code>integration-spec.md</code></td><td>MVP integrations, execution boundary, failure handling.</td></tr>
+          <tr><td><code>security-nfr.md</code></td><td>Security controls, SLO/NFR requirements, compliance and observability.</td></tr>
+          <tr><td><code>diagrams/system-context.md</code></td><td>External boundary and actor/system context.</td></tr>
+          <tr><td><code>diagrams/container-diagram.md</code></td><td>Runtime container/deployment communication model.</td></tr>
+          <tr><td><code>diagrams/component-diagram.md</code></td><td>Component boundaries and internal dependencies.</td></tr>
+          <tr><td><code>diagrams/deployment-diagram.md</code></td><td>Environment topology and placement assumptions.</td></tr>
+          <tr><td><code>diagrams/data-model-diagram.md</code></td><td>Entity relationship visualization support.</td></tr>
+          <tr><td><code>diagrams/sequence-diagram-placeholders.md</code></td><td>Critical flow and failure-path sequence coverage.</td></tr>
+          <tr><td><code>diagrams/diagram-index.md</code></td><td>Diagram purpose/index governance and update triggers.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
     <section class="card" id="gaps">
-      <h2>9) Open Questions / Risks</h2>
+      <h2>10) Open Questions / Risks</h2>
       <div class="callout gaps">
         <ul>
           <li>Post-MVP provider callback contracts and operational runbooks need finalization before channel expansion.</li>

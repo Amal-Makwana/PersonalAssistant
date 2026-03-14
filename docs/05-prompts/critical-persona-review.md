@@ -86,7 +86,8 @@ architecture ↔ components ↔ reliability model
 7. Scoring is mandatory for every phase audit.
 8. Always provide a numeric `X/5` score using the allowed 0.5-step increment scale.
 9. Do not skip scoring for incomplete docs; assign score and explain.
-10. Validate section HTML summary quality (if present): coverage completeness, markdown consistency, source traceability, flow readability, style alignment to Product summary, and synchronization status.
+10. Validate section HTML summary quality (if present): markdown-to-HTML completeness, source coverage, synchronization with markdown, flow readability, and style alignment to Product summary.
+11. Mark incomplete/shallow HTML summary coverage as a documentation defect.
 
 Output Format:
 
@@ -148,6 +149,13 @@ P2 Improvement
 Proposed Edits
 
 Traceability Validation
+
+## HTML Summary Compliance (Mandatory when section HTML exists)
+
+- HTML Coverage Status: Complete / Partial / Missing
+- Missing Coverage Items
+- Synchronization Issues
+- Style Consistency Status (Aligned / Partially Aligned / Not Aligned)
 
 Risks
 

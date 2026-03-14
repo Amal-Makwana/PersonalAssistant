@@ -169,6 +169,18 @@ Include a table:
 | Architecture (Design) | Pass/Gap | Pass/Gap | Pass/Gap | Pass/Gap | Pass/Gap | Pass/Gap |
 | Delivery | Pass/Gap | Pass/Gap | Pass/Gap | Pass/Gap | Pass/Gap | Pass/Gap |
 
+Also include a mandatory enforcement table:
+
+| Phase | HTML Coverage Status | Missing Coverage Items | Synchronization Issues | Style Consistency Status |
+|---|---|---|---|---|
+| Product | Complete/Partial/Missing | ... | ... | Aligned/Partial/Not aligned |
+| Tech Spec | Complete/Partial/Missing | ... | ... | Aligned/Partial/Not aligned |
+| UI/UX | Complete/Partial/Missing | ... | ... | Aligned/Partial/Not aligned |
+| Architecture (Design) | Complete/Partial/Missing | ... | ... | Aligned/Partial/Not aligned |
+| Delivery | Complete/Partial/Missing | ... | ... | Aligned/Partial/Not aligned |
+
+Audit rule: Any `Partial` or `Missing` HTML coverage is a documentation defect requiring remediation.
+
 ## Top Repository Improvements
 
 List the 10 most important improvements across all phases.
@@ -221,4 +233,4 @@ Rules:
 Include a short explanation of how the overall score was determined.
 
 Dual-Layer Documentation Reminder:
-If markdown is updated, regenerate HTML summaries.
+If markdown is updated, regenerate HTML summaries in the same change set, run HTML Coverage Check, and treat incomplete coverage as a documentation defect.

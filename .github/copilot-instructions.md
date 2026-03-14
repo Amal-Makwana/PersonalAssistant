@@ -42,6 +42,36 @@ Mandatory HTML summary standard for every section:
 
 Whenever markdown docs in a section change, the section summary HTML must be regenerated in the same PR/commit.
 
+Mandatory HTML completeness enforcement (required before finalizing any section HTML summary):
+- Generator must read all markdown files in the section.
+- HTML summary must represent all major headings/topics, decisions, requirements, tables/lists, traceability content, scope statements, assumptions, risks, gaps, and open questions where present in markdown.
+- Important markdown content must never be omitted merely for brevity.
+- Consolidation/restructure is allowed for readability, but completeness is mandatory.
+
+HTML Coverage Check (required):
+- Verify every markdown source file in the section is represented.
+- Verify every major markdown heading/topic is represented in HTML narrative or structured components.
+- Verify major tables/lists/traceability content are represented.
+- Verify risks/gaps/assumptions/open questions are represented where present.
+- Verify no major markdown topic is missing.
+- If any check fails, treat as a documentation defect and revise before completion.
+
+Source Coverage Manifest requirement (required in HTML):
+- Include a visible “Source Coverage” (or equivalent) section in each section summary HTML.
+- List all markdown source files consolidated for that section.
+- Include optional subsection-to-source mapping where helpful.
+- Include an explicit note that markdown remains the source of truth.
+
+Mandatory HTML Completeness Checklist (apply on every HTML regeneration):
+- [ ] All markdown files in the section were reviewed.
+- [ ] All major headings/topics are represented.
+- [ ] Requirements/stories/criteria/decisions are represented where applicable.
+- [ ] Tables and traceability content are represented where applicable.
+- [ ] Risks/assumptions/gaps/open questions are represented where applicable.
+- [ ] HTML uses Product summary visual style baseline.
+- [ ] HTML remains synchronized with markdown.
+
+
 ## Required Process
 
 Before generating code the agent must:

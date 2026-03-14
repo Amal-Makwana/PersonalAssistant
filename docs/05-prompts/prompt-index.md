@@ -16,8 +16,8 @@ These prompts are documentation prompts only. They are not for generating applic
   - Prompts used to generate and improve `docs/02-ui-ux` markdown and UI/UX summary HTML.
 - `design-prompts.md`
   - Prompts used to generate and improve `docs/03-design` architecture/system-design documentation and summary HTML.
-- `html-generation-prompts.md`
-  - Section-specific prompts used to regenerate premium HTML presentation layers from markdown source-of-truth files.
+- `html-summary-generation.md`
+  - Coverage-enforced prompt for regenerating section HTML summaries as complete, stakeholder-facing consolidated views from markdown source-of-truth files.
 
 ## Governance & Review Prompts
 
@@ -50,6 +50,7 @@ When updating only Tech Spec and/or Design documentation:
 - Start with `critical-persona-review.md` for the target phase (`tech-spec` or `design`) to drive focused quality and traceability edits.
 - Use `repository-documentation-audit.md` when you need a full cross-phase governance validation across Product -> Tech Spec -> UI/UX -> Design -> Delivery.
 - Keep markdown as source of truth and regenerate the corresponding section HTML summary in the same change set as a rich consolidated executive view (not a lightweight overview).
+- Run the HTML Coverage Check; HTML summaries that fail coverage are documentation defects.
 
 ## Repository Commands
 
@@ -76,7 +77,7 @@ Run audit - delivery
 | `docs/02-ui-ux` | `ui-ux-prompts.md` | `ui-overview.md`, `information-architecture.md`, `user-flows.md`, `screen-inventory.md`, `wireframes.md`, `components.md`, `design-principles.md`, `ui-mockups.md`, `ui-ux-summary.html` |
 | `docs/03-design` | `design-prompts.md` | architecture/system-design markdown, ADR documentation, design diagrams, `design-summary.html` |
 | Repository-wide documentation audit | `repository-documentation-audit.md` | consolidated repository health scoring, cross-phase findings, critical risks, readiness rating, and top-priority fix list |
-| HTML summaries | `html-generation-prompts.md` | `product-summary.html`, `tech-spec-summary.html`, `ui-ux-summary.html`, `design-summary.html` |
+| HTML summaries | `html-summary-generation.md` | `product-summary.html`, `tech-spec-summary.html`, `ui-ux-summary.html`, `design-summary.html`, `delivery-summary.html` |
 
 ## Prompt Usage Workflow
 
@@ -85,11 +86,12 @@ Run audit - delivery
    - `docs/99-ai-rules/AI_DEVELOPMENT_WORKFLOW.md`
 2. Select the prompt file matching the documentation section you are updating.
 3. Run the markdown-generation prompt first and update markdown source-of-truth artifacts.
-4. Run the corresponding HTML-generation prompt to refresh the section summary page.
+4. Run `html-summary-generation.md` to refresh the section summary page.
 5. Ensure HTML summary quality: comprehensive section coverage, explicit markdown source mapping, logical narrative flow, traceability/coverage view, and risks/gaps where relevant.
 6. Ensure HTML summary style follows `docs/00-product/product-summary.html` as canonical baseline unless a shared template is introduced.
-7. Validate consistency across linked files (requirements ↔ stories ↔ acceptance criteria; specs ↔ diagrams; flows ↔ screens ↔ components).
-8. Keep only documentation changes in the resulting update.
+7. Ensure HTML Coverage Check passes (Complete coverage, no missing major topics).
+8. Validate consistency across linked files (requirements ↔ stories ↔ acceptance criteria; specs ↔ diagrams; flows ↔ screens ↔ components).
+9. Keep only documentation changes in the resulting update.
 
 ## Prompt Governance
 
@@ -111,3 +113,5 @@ Every section-level summary HTML must satisfy all of the following:
 - Flow: reads as a coherent executive narrative with a clear table of contents.
 - Style: uses the same design language as `docs/00-product/product-summary.html`.
 - Synchronization: regenerated in the same change set when markdown changes.
+- Coverage Check: explicitly reported as Complete/Partial with missing topics list.
+- Defect policy: incomplete or shallow HTML summaries are documentation defects.
