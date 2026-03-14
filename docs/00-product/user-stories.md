@@ -1,6 +1,6 @@
 # User Stories
 
-## Epic E1: Onboarding and Trust Setup
+## Epic E1: Onboarding & Trust
 ### US-01 (FR-01)
 As a new user, I want to sign in with my Google account so that I can start quickly without creating another password.
 
@@ -8,9 +8,9 @@ As a new user, I want to sign in with my Google account so that I can start quic
 As a privacy-conscious user, I want clear Gmail permission prompts so that I understand and trust the scope of access.
 
 ### US-03 (FR-11)
-As a user, I want to configure notification preferences during setup so that delivery behavior matches my needs.
+As a user, I want to configure reminder preferences during setup so that automation behavior matches my needs.
 
-## Epic E2: Email-to-Event Automation
+## Epic E2: Email → Event Automation
 ### US-04 (FR-03)
 As a busy professional, I want relevant event emails to be detected automatically so that key commitments are not overlooked.
 
@@ -23,19 +23,20 @@ As a user, I want extracted events saved in my account so that reminder scheduli
 ### US-07 (FR-10)
 As a user, I want duplicate events prevented so that I do not receive repeated reminders for the same commitment.
 
-## Epic E3: Reminder Scheduling and Delivery
+## Epic E3: Reminder Scheduling
 ### US-08 (FR-06)
 As a user, I want reminders scheduled automatically at default intervals so that I receive adequate preparation time.
 
-### US-09 (FR-07)
+## Epic E4: Calendar Integration (MVP)
+### US-09 (FR-09)
+As a calendar-dependent user, I want events synced to Google Calendar so that my schedule remains consistent across tools.
+
+## Epic E5: Notification Channels (Future Phase)
+### US-10 (FR-07)
 As a user, I want reminders sent to WhatsApp so that I notice alerts in a high-attention channel.
 
-### US-10 (FR-08)
+### US-11 (FR-08)
 As a user who prefers text messages, I want optional SMS reminders so that I can choose my preferred channel.
-
-## Epic E4: Ecosystem Alignment
-### US-11 (FR-09)
-As a calendar-dependent user, I want optional Google Calendar sync so that my schedule remains consistent across tools.
 
 ## Traceability
 - Requirement mapping is indicated via FR references per story.

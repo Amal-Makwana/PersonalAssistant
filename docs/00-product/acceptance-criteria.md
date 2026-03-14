@@ -9,7 +9,7 @@
 - Given a user denies consent, when onboarding continues, then the product explains what functionality is unavailable.
 
 ## US-03: Preference Setup (FR-11)
-- Given onboarding is in progress, when the user sets channel preferences, then preferences are saved and reflected in reminder behavior.
+- Given onboarding is in progress, when the user sets reminder and integration preferences, then preferences are saved and reflected in system behavior.
 
 ## US-04: Event Email Detection (FR-03)
 - Given a connected Gmail account receives an event-related email, when processing runs, then the email is classified as an event candidate.
@@ -26,15 +26,25 @@
 ## US-08: Default Reminder Scheduling (FR-06)
 - Given a valid stored event, when scheduling executes, then reminders are created for 4h, 1h, and 15m before event start.
 
-## US-09: WhatsApp Delivery (FR-07)
-- Given a reminder trigger time is reached and WhatsApp is enabled, when dispatch executes, then a reminder is sent with successful status or logged failure details.
+## US-09: Google Calendar Sync (FR-09)
+- Given calendar sync is enabled and event creation succeeds, when sync executes, then an equivalent calendar entry is created or updated.
+- Given sync executes successfully, when the operation completes, then the event appears in Google Calendar within 10 seconds.
 
-## US-10: Optional SMS Delivery (FR-08)
-- Given SMS is enabled and trigger time is reached, when dispatch executes, then an SMS reminder is sent with status captured.
+## US-10: WhatsApp Delivery (FR-07)
+- Given the future-phase WhatsApp channel is enabled and a reminder trigger time is reached, when dispatch executes, then a reminder is sent with successful status or logged failure details.
+
+## US-11: Optional SMS Delivery (FR-08)
+- Given the future-phase SMS channel is enabled and trigger time is reached, when dispatch executes, then an SMS reminder is sent with status captured.
 - Given SMS is disabled, when trigger time is reached, then no SMS reminder is sent.
 
-## US-11: Optional Calendar Sync (FR-09)
-- Given Calendar sync is enabled and event creation succeeds, when sync executes, then an equivalent calendar entry is created or updated.
+## High-Risk Journey Acceptance Mapping
+
+| Journey | Acceptance Requirement |
+|------|------|
+| Email → Event Extraction | Title/date/time parsed correctly |
+| Event → Calendar Sync | Event appears in calendar within 10 seconds |
+| Duplicate Detection | System prevents duplicate creation |
+| Reminder Scheduling | Reminders generated at 4h / 1h / 15m |
 
 ## Traceability
 Each acceptance block maps directly to [user-stories.md](./user-stories.md) by US ID and indirectly to FR requirements in [requirements.md](./requirements.md).

@@ -235,7 +235,7 @@
       <div class="chips">
         <span class="chip">V1 / MVP Focus</span>
         <span class="chip">Gmail-Ingested Events</span>
-        <span class="chip">WhatsApp-First Reminders</span>
+        <span class="chip">Calendar Sync in MVP</span>
         <span class="chip">Traceability: Vision → FR → US → AC</span>
       </div>
       <div class="stats">
@@ -313,7 +313,7 @@
           <h3>Success Metrics</h3>
           <ul>
             <li>Business: WAU, retention, missed-event reduction.</li>
-            <li>Adoption: Gmail completion, WhatsApp opt-in, SMS enablement.</li>
+            <li>Adoption: Gmail completion, calendar sync enablement, onboarding completion.</li>
             <li>Operational/Technical: extraction & delivery success, latency, dedupe accuracy.</li>
           </ul>
         </article>
@@ -321,12 +321,20 @@
 
       <div class="callout">
         <strong>Functional Requirements Coverage (FR-01..FR-11):</strong>
-        <p>Google sign-in, Gmail authorization, event detection/extraction/persistence, default reminder schedule, WhatsApp delivery, optional SMS, optional Calendar sync, duplicate prevention, and preference management.</p>
+        <p>Google sign-in, Gmail authorization, event detection/extraction/persistence, default reminder schedule, Google Calendar sync, duplicate prevention, and preference management are MVP; WhatsApp and SMS reminder delivery are future phase.</p>
         <div class="legend">
-          <span class="must">Must: FR-01,02,03,04,05,06,07,10</span>
-          <span class="should">Should: FR-08, FR-09</span>
-          <span class="could">Could: FR-11</span>
+          <span class="must">Must: FR-01,02,03,04,05,06,09,10,11</span>
+          <span class="should">Later Phase: FR-07, FR-08</span>
+          <span class="could">Governance: KPI + Risk decision thresholds</span>
         </div>
+      </div>
+
+      <div class="callout">
+        <strong>Governance Additions:</strong>
+        <ul>
+          <li>KPI Governance defines owners, sources, cadence, and thresholds for extraction accuracy, calendar sync, reminder generation, and onboarding completion.</li>
+          <li>Risk-Decision Threshold Matrix defines trigger-based launch/operational responses with explicit owners and SLAs.</li>
+        </ul>
       </div>
     </section>
 
@@ -378,12 +386,12 @@
           </ul>
         </article>
         <article class="mini">
-          <h3>E3/E4: Delivery & Ecosystem</h3>
+          <h3>E3/E4/E5: Scheduling, Calendar, Future Channels</h3>
           <ul>
             <li>US-08 Scheduling defaults (FR-06)</li>
-            <li>US-09 WhatsApp delivery (FR-07)</li>
-            <li>US-10 Optional SMS (FR-08)</li>
-            <li>US-11 Optional Calendar sync (FR-09)</li>
+            <li>US-09 Calendar sync (FR-09)</li>
+            <li>US-10 WhatsApp delivery (FR-07, future)</li>
+            <li>US-11 Optional SMS (FR-08, future)</li>
           </ul>
         </article>
       </div>
@@ -393,6 +401,7 @@
       <span class="source">Source: docs/00-product/acceptance-criteria.md</span>
       <h2>5) Acceptance Validation Snapshot</h2>
       <p>Acceptance criteria define implementation-ready “Given / When / Then” outcomes and maintain one-to-one mapping with US-01 through US-11.</p>
+      <p>High-risk journey mapping is explicitly documented for extraction accuracy, calendar sync timeliness, duplicate prevention, and 4h/1h/15m reminder scheduling.</p>
       <table class="trace" aria-label="Traceability table">
         <thead>
           <tr>
@@ -410,12 +419,12 @@
             <td>Event email classification, extraction of title/date/time/location, persistence, and dedupe enforcement.</td>
           </tr>
           <tr>
-            <td>Reminder Delivery</td>
-            <td>Default schedule generation and channel-specific dispatch with status/failure logging semantics.</td>
+            <td>Reminder Scheduling</td>
+            <td>Default schedule generation at 4h/1h/15m with scheduler reliability tracking.</td>
           </tr>
           <tr>
-            <td>Ecosystem Sync</td>
-            <td>Optional Google Calendar synchronization for enabled users with update consistency expectations.</td>
+            <td>Calendar Sync</td>
+            <td>Google Calendar synchronization with event visibility within 10 seconds and update consistency expectations.</td>
           </tr>
         </tbody>
       </table>
@@ -431,14 +440,15 @@
             <li>Google auth + Gmail processing</li>
             <li>Event extraction/persistence</li>
             <li>4h/1h/15m reminder policy</li>
-            <li>WhatsApp + optional SMS</li>
-            <li>Optional Calendar sync</li>
+            <li>Google Calendar synchronization</li>
             <li>Duplicate prevention + preferences</li>
           </ul>
         </article>
         <article class="mini">
           <h3>Out of Scope (V1)</h3>
           <ul>
+            <li>WhatsApp reminders (future phase)</li>
+            <li>SMS reminders (future phase)</li>
             <li>Non-Gmail providers</li>
             <li>Recurring rule engines</li>
             <li>Team/admin collaboration workflows</li>
@@ -448,7 +458,7 @@
         </article>
         <article class="mini">
           <h3>Readiness Rule</h3>
-          <p>V1 is scope-complete when FR-01 through FR-11 are implemented, story-mapped, and acceptance-validated.</p>
+          <p>V1 is scope-complete when FR-01, FR-02, FR-03, FR-04, FR-05, FR-06, FR-09, FR-10, and FR-11 are implemented, story-mapped, and acceptance-validated.</p>
         </article>
       </div>
     </section>
@@ -461,9 +471,10 @@
           <li><strong>Extraction confidence threshold:</strong> no numeric policy for auto-schedule vs manual confirmation gate.</li>
           <li><strong>Reminder SLA targets:</strong> channel-level timing commitments are not quantified.</li>
           <li><strong>Jurisdiction-specific consent artifacts:</strong> privacy disclosure scope is identified but not finalized.</li>
-          <li><strong>Fallback policy ambiguity:</strong> WhatsApp failure → SMS fallback in V1 is undecided.</li>
+          <li><strong>Future channel fallback policy:</strong> WhatsApp failure → SMS fallback remains a post-MVP decision.</li>
           <li><strong>Operational ownership depth:</strong> escalation windows/runbooks are referenced but not detailed in this product set.</li>
-          <li><strong>KPI targets:</strong> KPIs are defined, but threshold targets and launch guardrails are not yet quantified.</li>
+          <li><strong>KPI governance:</strong> KPI ownership, cadence, and thresholds are now defined in requirements.</li>
+          <li><strong>Risk decisions:</strong> Trigger-based responses and SLAs are defined via the risk-decision matrix.</li>
         </ul>
       </div>
     </section>
