@@ -15,26 +15,25 @@ This section covers:
 - Figma execution and Dev Mode handoff conventions
 
 ## 3. Product Context
-Users connect Google account(s), allow event extraction from email, and manage reminder delivery through dashboard triage, event review, preferences, integrations, and activity diagnostics.
+Users connect a Google account, authorize Gmail ingestion, and manage reminder outcomes through dashboard triage, event review, Google Calendar synchronization, preferences, integrations, and activity diagnostics.
 
 ## 4. UX Outcomes
 1. New user setup completion in under 5 minutes.
 2. Returning user can confirm or edit an extracted reminder in <= 3 interactions.
-3. High visibility into reminder lifecycle states (Detected -> Review Needed -> Scheduled -> Sent/Failed).
-4. Clear corrective paths for extraction ambiguity and delivery failure.
+3. High visibility into reminder lifecycle states (Detected -> Review Needed -> Scheduled -> Calendar Synced / Sync Failed).
+4. Clear corrective paths for extraction ambiguity, duplicate suppression, and calendar sync failures.
 
 ## 5. UX Gap Analysis (Current -> Resolved by this update)
 | Gap area | Previous issue | Resolution in this documentation set |
 |---|---|---|
-| Screen specificity | Wireframes were conceptual and not screen-realistic | `wireframes.md` now defines concrete screen regions, ASCII layouts, zones, and states per screen |
-| Flow-to-screen traceability | Flows did not reliably map to entry/exit screens | `user-flows.md`, `screen-inventory.md`, and `information-architecture.md` now share Flow IDs and Screen IDs |
-| Component-to-screen mapping | Components listed without systematic usage mapping | `components.md` now maps each component to screen IDs and interaction states |
-| Responsive guidance | Generic notes without structural fallback patterns | Every screen includes desktop/tablet/mobile behavior and collapse rules |
-| Figma execution detail | No clear naming/auto layout/variant guidance | `design-principles.md`, `wireframes.md`, and `ui-mockups.md` include Figma build rules |
+| MVP scope alignment | Calendar sync was not modeled as first-class MVP behavior | Flows, screen states, and wireframes now include calendar sync visibility and confirmations |
+| Channel boundary clarity | Generic channel language implied non-MVP messaging controls | WhatsApp/SMS references are constrained to explicit post-MVP roadmap notes only |
+| Flow-to-screen traceability | Flows did not reliably map to Product + Tech Spec contracts | UI/UX flows now include FR/US trace tags for auditable mapping |
+| State specificity | Failure messaging under-specified for extraction/sync/duplicate cases | Screen docs now include explicit empty/loading/error/success states for critical transitions |
 
 ## 6. Core Users
 - **Primary:** Busy professionals relying on email-based commitments.
-- **Secondary:** Operations-minded users who monitor failures and retry deliveries.
+- **Secondary:** Operations-minded users who monitor extraction and sync failures.
 - **Internal stakeholders:** Product, design, frontend, QA, and support.
 
 ## 7. Core Screen Set
@@ -52,8 +51,8 @@ Users connect Google account(s), allow event extraction from email, and manage r
 - **F1** First-time setup and account connection
 - **F2** Review extracted event and confirm reminder
 - **F3** Modify global reminder defaults
-- **F4** Resolve extraction ambiguity
-- **F5** Recover from delivery failure
+- **F4** Resolve extraction ambiguity and duplicate risk
+- **F5** Recover from Google Calendar sync failure
 
 Detailed definitions are in `user-flows.md`, with screen mapping in `screen-inventory.md`.
 
@@ -62,8 +61,15 @@ Detailed definitions are in `user-flows.md`, with screen mapping in `screen-inve
 - Keep primary CTA in predictable top-right page header location (mobile: sticky bottom action for form-heavy screens).
 - Always show explicit state messaging: loading, empty, error, success, permission-restricted.
 - Ensure keyboard accessibility and semantic heading structure for each screen.
+- Display calendar sync outcome states wherever scheduling confirmation is shown.
 
-## 10. Figma-Readiness Baseline
+## 10. Traceability Anchors
+- Calendar sync UX and retry states. Trace: FR-09, US-09.
+- Duplicate prevention messaging and suppression outcomes. Trace: FR-10, US-07.
+- Extraction confidence review path. Trace: FR-04, US-05.
+- Scheduling and confirmation path. Trace: FR-06, US-08.
+
+## 11. Figma-Readiness Baseline
 The markdown files in this folder are the source of truth and specify:
 - frame names and recommended sizes
 - auto layout direction and nesting
@@ -72,7 +78,7 @@ The markdown files in this folder are the source of truth and specify:
 - state coverage expectations
 - Dev Mode annotation priorities
 
-## 11. Cross-Reference Index
+## 12. Cross-Reference Index
 - IA and nav model: `information-architecture.md`
 - Step-by-step journeys: `user-flows.md`
 - Screen catalog: `screen-inventory.md`
@@ -81,7 +87,8 @@ The markdown files in this folder are the source of truth and specify:
 - Component library contract: `components.md`
 - Styling and system rules: `design-principles.md`
 
-## 12. Assumptions
+## 13. Assumptions
 1. MVP supports one authenticated user workspace with connected Google account.
-2. Reminder channels include in-app + at least one external delivery channel.
-3. Support workflows rely on Activity timeline plus retry tools, not external analytics exports.
+2. Gmail ingestion and Google Calendar sync are active MVP integrations.
+3. WhatsApp/SMS are post-MVP only and must not render as active controls in MVP screens.
+4. Support workflows rely on Activity timeline plus retry tools, not external analytics exports.

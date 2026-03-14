@@ -34,6 +34,14 @@ Use for:
 6. Include traceability views (tables/matrices) where relevant.
 7. Keep narrative summary-first, but comprehensive (not shallow).
 
+
+## UI/UX-Specific Enforcement (When target is docs/02-ui-ux)
+- Preserve MVP scope language: Gmail ingestion + Google Calendar sync are active MVP capabilities.
+- Ensure WhatsApp/SMS are described only as post-MVP/future-phase if mentioned.
+- Include consolidated coverage for screen inventory, IA, flow catalog, wireframes, components, design principles, and mockup intent.
+- Include at least one traceability matrix row for calendar sync (FR-09/US-09), duplicate prevention (FR-10/US-07), and extraction review (FR-04/US-05).
+- Include a states/flows/screens coverage section plus assumptions/gaps/open questions if present in markdown.
+
 ## HTML Coverage Check (Required Before Finalizing)
 Run this check and fail generation if any item is not satisfied:
 - Every markdown source file in the section is represented in HTML.

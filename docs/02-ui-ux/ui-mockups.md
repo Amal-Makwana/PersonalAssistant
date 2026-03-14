@@ -23,14 +23,14 @@ Translate wireframe structures into high-fidelity guidance that a product design
 - **Visible regions:** step header, form column, contextual guidance panel, sticky footer.
 - **Component mix:** steppers, text/select inputs, toggles, inline helper, test action buttons.
 - **Filter/search/sort:** not applicable.
-- **State treatments:** field validation, channel test success/error chips, completion toast.
+- **State treatments:** field validation, calendar connectivity test success/error chips, completion toast.
 - **Responsive:** right guidance panel collapses below form on tablet/mobile.
 - **Figma notes:** design each step as variant of same frame shell.
 
 ## S03 — Dashboard
 **Reference:** `screen-inventory.md`
 - **Visual intent:** high-confidence command center; immediate visibility into actions needed.
-- **Hierarchy:** page title/primary CTA -> KPI cards -> attention queue -> upcoming reminders -> integration health.
+- **Hierarchy:** page title/primary CTA -> KPI cards -> attention queue -> upcoming reminders -> Google integration health.
 - **Visible regions:** app shell, KPI row, queue cards, table block, right health rail.
 - **Component mix:** nav shell, metric cards, event cards, badges, alerts, table rows.
 - **Headline/CTA placement:** top-right CTA "View All Events" or "Review Queue".
@@ -64,7 +64,7 @@ Translate wireframe structures into high-fidelity guidance that a product design
 **Reference:** `screen-inventory.md`
 - **Visual intent:** structured configuration panel emphasizing safe edits.
 - **Hierarchy:** title/metadata -> grouped setting cards -> sticky save.
-- **Visible regions:** timing rules, channel defaults, notification settings.
+- **Visible regions:** timing rules, calendar sync defaults, notification settings.
 - **Component mix:** inputs, toggles, grouped cards, alerts, sticky actions.
 - **State treatments:** dirty indicator, inline validation, save success confirmation.
 - **Responsive:** settings cards stack to single column with clear section dividers.
@@ -72,9 +72,9 @@ Translate wireframe structures into high-fidelity guidance that a product design
 
 ## S07 — Integrations
 **Reference:** `screen-inventory.md`
-- **Visual intent:** clear operational health board.
-- **Hierarchy:** health summary -> provider list -> contextual action modal/drawer.
-- **Visible regions:** status chips, integrations table/cards, reconnect/test surface.
+- **Visual intent:** clear Google integration health board.
+- **Hierarchy:** health summary -> Google provider list -> contextual action modal/drawer.
+- **Visible regions:** status chips, integrations table/cards, reconnect/test surface for Google OAuth, Gmail, Calendar.
 - **Component mix:** status badges, table rows, secondary action buttons, modal/drawer forms.
 - **State treatments:** reconnect loading, invalid auth error, connection restored success.
 - **Responsive:** action modal becomes bottom sheet on mobile.
@@ -102,7 +102,13 @@ Translate wireframe structures into high-fidelity guidance that a product design
 - **Responsive:** sessions table becomes card list with device and last-active metadata prioritized.
 - **Figma notes:** align typography and spacing with S06 settings patterns for consistency.
 
-## 3. Cross-Screen Visual Consistency Rules
+## 3. Traceability and MVP Scope Notes
+- Calendar sync-focused UX states should be visible on S03, S05, S07, and S08. Trace: FR-09, US-09.
+- Duplicate prevention context should be visually obvious in list/detail states. Trace: FR-10, US-07.
+- Extraction confidence treatments remain explicit in detail/review surfaces. Trace: FR-04, US-05.
+- WhatsApp/SMS mention is permitted only as disabled roadmap copy labeled Post-MVP.
+
+## 4. Cross-Screen Visual Consistency Rules
 - Keep page header structure consistent on S03-S08.
 - Keep status badge color/text taxonomy identical across cards, tables, and timeline.
 - Keep sticky save/retry patterns consistent for trust and muscle memory.

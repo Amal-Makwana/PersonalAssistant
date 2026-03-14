@@ -51,6 +51,7 @@ When updating only Tech Spec and/or Design documentation:
 - Use `repository-documentation-audit.md` when you need a full cross-phase governance validation across Product -> Tech Spec -> UI/UX -> Design -> Delivery.
 - Keep markdown as source of truth and regenerate the corresponding section HTML summary in the same change set as a rich consolidated executive view (not a lightweight overview).
 - Run the HTML Coverage Check; HTML summaries that fail coverage are documentation defects.
+- For UI/UX updates, explicitly preserve MVP boundaries (Gmail + Google Calendar sync in MVP; WhatsApp/SMS post-MVP only) and include Product/Tech traceability tags (for example FR-09/US-09, FR-10/US-07) in markdown and HTML artifacts.
 
 ## Repository Commands
 
