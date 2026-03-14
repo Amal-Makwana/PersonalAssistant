@@ -1,6 +1,8 @@
 # Backend Technical Specification
 
 ## 1. Purpose
+Canonical reliability policy and sync-state vocabulary are defined in `reliability-policy.md`. This file implements those contracts for its scope.
+
 Define backend responsibilities and runtime behavior for the MVP workflow: Gmail ingestion through event persistence, scheduling, and Google Calendar sync.
 
 ## 2. Scope
@@ -77,7 +79,7 @@ Trace: FR-04, FR-10, US-05, US-07, US-09
 | --- | --- |
 | FR-04, US-05 | extraction pipeline with confidence metrics and low-confidence logging |
 | FR-10, US-07 | dedupe key, unique constraints, suppression-before-sync |
-| FR-09, US-09 | post-persistence sync enqueue, canonical states, 10s latency target, bounded retry, terminal metadata persistence |
+| FR-09, US-09 | post-persistence sync enqueue and reliability behavior per `reliability-policy.md` |
 
 ## 11. Open Questions (Non-blocking)
 1. Should low-confidence extraction remain auto-persist with flag, or gate through review queue in a future increment?

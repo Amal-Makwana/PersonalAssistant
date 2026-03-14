@@ -18,7 +18,7 @@ This document defines the implementation-guiding architecture for the MVP Email-
 ### 2.2 MVP system boundary statement
 The MVP system boundary ends at a successfully persisted event plus synchronization outcome state to Google Calendar. Notification-channel execution outside Gmail and Calendar continuity is intentionally deferred.
 
-Trace: FR-01, FR-02, FR-03, FR-09, FR-10; US-01, US-02, US-07, US-09.
+Trace reference: `docs/00-product/traceability-matrix.md`.
 
 ## 3. Container and Component Architecture
 ### 3.1 Core components
@@ -54,45 +54,25 @@ Trace: FR-01, FR-02, FR-03, FR-09, FR-10; US-01, US-02, US-07, US-09.
 | Calendar Sync Service | Google Calendar write orchestration and outcome states | Source email parsing |
 | Observability + Operator Support Plane | Monitoring, alerting, runbook-linked remediation | Business rule decisions |
 
-Trace: FR-04, FR-05, FR-06, FR-09, FR-10; US-05, US-06, US-07, US-09.
+Trace reference: `docs/00-product/traceability-matrix.md`.
 
 ## 4. Data and Event Flow Architecture
-### 4.1 Canonical flow (MVP)
-1. Gmail message arrives and is normalized by Ingestion Adapter.
-2. Extraction Service emits structured event candidate with confidence metadata.
-3. Event Service performs duplicate/idempotency guard checks.
-4. Event Service persists canonical event and lifecycle state.
-5. Scheduling Service generates default reminder schedule records.
-6. Calendar Sync Service enqueues and executes Google Calendar upsert.
-7. Sync outcomes are persisted and emitted to observability/alerts.
+Canonical MVP runtime lifecycle authority is maintained in `docs/01-tech-spec/runtime-flow.md`.
 
-Trace: FR-01 through FR-06, FR-09, FR-10; US-01 through US-07, US-09.
+Architecture-level interpretation:
+- This document defines ownership boundaries and component responsibilities for each runtime stage.
+- Sequence-level behavior views remain in `sequence-flows.md` and must reference the canonical runtime flow.
+- Correlation identifiers (`user_id`, `event_id`, `source_message_id`) propagate across all components.
 
-### 4.2 Data boundaries and persistence expectations
-- Canonical event records must be durable before external sync is attempted.
-- Duplicate prevention keys are evaluated before schedule/sync fan-out.
-- Sync-state persistence includes `attempt_count`, `last_error_code`, `last_error_at`, and terminal status marker.
-- Correlation identifiers (`user_id`, `event_id`, `source_message_id`) must be propagated across all components.
-
-Trace: FR-09, FR-10; US-07, US-09.
+For full traceability mapping, see `docs/00-product/traceability-matrix.md`.
 
 ## 5. Reliability and Resilience Design
-### 5.1 Retry and timeout behavior
-- Calendar sync attempts are bounded (max-attempt policy) with exponential backoff.
-- Each outbound sync call enforces timeout controls.
-- Retryability is determined by categorized failure classes (transient vs terminal).
+Reliability policy authority is maintained in `docs/01-tech-spec/reliability-policy.md`.
 
-### 5.2 Terminal failure behavior
-- When max attempts are exhausted or terminal failures are detected, event sync status is persisted as terminal failure.
-- Persisted failure metadata is retained for operator triage and replay.
-- Terminal failures emit alert hooks for remediation.
-
-### 5.3 Idempotency and duplicate prevention boundaries
-- Idempotency applies at event persistence and calendar upsert boundaries.
-- Duplicate suppression occurs before schedule and sync work is produced.
-- Reprocessing uses deterministic keys to avoid duplicate calendar artifacts.
-
-Trace: FR-09, FR-10; US-07, US-09.
+Architecture-level obligations:
+- Components implement bounded retry orchestration and timeout enforcement as defined in the canonical policy.
+- Terminal failures must surface alert hooks and support replay-safe operator remediation workflows.
+- Idempotency and duplicate-suppression boundaries are enforced before schedule/sync fan-out.
 
 ## 6. Observability and Operational Architecture
 ### 6.1 Required signals
@@ -105,7 +85,7 @@ Trace: FR-09, FR-10; US-07, US-09.
 - Operator remediation includes inspect-failure-context, replay-safe retry, and close-loop status update.
 - Runbook guidance references reason-code classes and recommended actions.
 
-Trace: FR-11, FR-09, FR-10; US-11, US-09, US-07.
+Trace reference: `docs/00-product/traceability-matrix.md`.
 
 ## 7. Failure Modes and Remediation Paths
 | Failure mode | Detection signal | Containment behavior | Remediation path |
@@ -116,7 +96,7 @@ Trace: FR-11, FR-09, FR-10; US-11, US-09, US-07.
 | Calendar API timeout/transient failure | Sync retry counter + latency timeout alert | Retry with bounded exponential backoff | Auto-retry then escalate if threshold exceeded |
 | Calendar sync terminal failure | Terminal failure metric + alert webhook | Mark event sync terminal_failed; halt further retries | Operator triage and replay after issue resolution |
 
-Trace: FR-04, FR-09, FR-10, FR-11; US-05, US-07, US-09, US-11.
+Trace reference: `docs/00-product/traceability-matrix.md`.
 
 ## 8. Deployment and Environment Notes
 - Separate runtime environments (dev/staging/prod) with isolated credentials and observability scopes.

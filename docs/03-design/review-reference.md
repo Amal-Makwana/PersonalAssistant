@@ -6,7 +6,7 @@ Use canonical prompts from `docs/05-prompts` when updating this phase:
 - `repository-documentation-audit.md` for full-repository governance checks.
 
 ## Required design workflow guardrails
-1. Preserve phase order: Product -> Tech Spec -> UI/UX -> Design -> Delivery.
+1. Preserve phase order: Product -> Tech Spec -> UI/UX -> Design -> Task Planning -> Delivery.
 2. Keep markdown as source of truth and HTML as secondary consolidated artifact.
 3. Regenerate `design-summary.html` in the same change set whenever any file in `docs/03-design/*.md` changes.
 4. Run an HTML Coverage Check before finalization:

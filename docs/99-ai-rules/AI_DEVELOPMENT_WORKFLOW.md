@@ -35,16 +35,17 @@ flowchart TD
     A[Read Product Documentation] --> B[Read Technical Specification]
     B --> C[Read UI / UX Documentation]
     C --> D[Read Design / Architecture]
-    D --> E[Read Delivery / Execution Plan]
+    D --> E[Read Task Planning]
+    E --> F[Read Delivery / Execution Plan]
 
-    E --> F[Gap Analysis]
-    F --> G[Assumptions and Clarifications]
-    G --> H[Implementation Plan]
-    H --> I[File-by-File Change Plan]
-    I --> J[Implementation]
-    J --> K[Tests]
-    K --> L[Documentation Refresh]
-    L --> M[Pull Request Readiness]
+    F --> G[Gap Analysis]
+    G --> H[Assumptions and Clarifications]
+    H --> I[Implementation Plan]
+    I --> J[File-by-File Change Plan]
+    J --> K[Implementation]
+    K --> L[Tests]
+    L --> M[Documentation Refresh]
+    M --> N[Pull Request Readiness]
 ```
 
 AI **must not generate implementation code until documentation is reviewed.**
@@ -59,7 +60,8 @@ AI agents must read documentation in this order:
 2. `docs/01-tech-spec`
 3. `docs/02-ui-ux`
 4. `docs/03-design`
-5. `docs/04-delivery`
+5. `docs/04-task-planning`
+6. `docs/05-delivery`
 
 This represents the progression:
 
@@ -75,7 +77,8 @@ This represents the progression:
 | Tech Spec | docs/01-tech-spec | System behavior, integrations |
 | UI / UX | docs/02-ui-ux | User flows and interface behavior |
 | Design | docs/03-design | Architecture diagrams and system structure |
-| Delivery | docs/04-delivery | Implementation and rollout planning |
+| Task Planning | docs/04-task-planning | Implementation decomposition and incremental task planning |
+| Delivery | docs/05-delivery | Implementation execution, testing, rollout, and release governance |
 | Prompt Library | docs/05-prompts | Canonical prompts for AI workflows |
 
 ---
@@ -112,7 +115,8 @@ docs/00-product/product-summary.html
 docs/01-tech-spec/tech-spec-summary.html
 docs/02-ui-ux/ui-ux-summary.html
 docs/03-design/design-summary.html
-docs/04-delivery/delivery-summary.html
+docs/04-task-planning/task-planning-summary.html
+docs/05-delivery/delivery-summary.html
 ```
 
 Mandatory standards for every section-level HTML summary:
@@ -191,11 +195,12 @@ flowchart TD
     A[Product Docs] --> B[Tech Spec]
     B --> C[UI / UX]
     C --> D[Design / Architecture]
-    D --> E[Delivery Plan]
-    E --> F[Engineering Planning]
-    F --> G[Implementation]
-    G --> H[Testing]
-    H --> I[Documentation Update]
+    D --> E[Task Planning]
+    E --> F[Delivery Plan]
+    F --> G[Engineering Planning]
+    G --> H[Implementation]
+    H --> I[Testing]
+    I --> J[Documentation Update]
 ```
 
 ---
@@ -259,13 +264,14 @@ flowchart LR
     A[docs/00-product] --> B[docs/01-tech-spec]
     B --> C[docs/02-ui-ux]
     C --> D[docs/03-design]
-    D --> E[docs/04-delivery]
-    E --> F[Implementation]
+    D --> E[docs/04-task-planning]
+    E --> F[docs/05-delivery]
+    F --> G[Implementation]
 
-    F --> G[apps/web]
-    F --> H[apps/api]
-    F --> I[packages]
-    F --> J[infra]
+    G --> H[apps/web]
+    G --> I[apps/api]
+    G --> J[packages]
+    G --> K[infra]
 ```
 
 ---
@@ -448,7 +454,8 @@ Read first:
 2. docs/01-tech-spec
 3. docs/02-ui-ux
 4. docs/03-design
-5. docs/04-delivery
+5. docs/04-task-planning
+6. docs/05-delivery
 
 Use prompts from:
 
@@ -462,3 +469,11 @@ Code locations:
 - backend → apps/api
 - shared → packages/
 - infra → infra/
+
+## Canonical Documentation Contracts (Required)
+
+- Runtime lifecycle is defined only in `docs/01-tech-spec/runtime-flow.md`.
+- Reliability policy and canonical sync states are defined only in `docs/01-tech-spec/reliability-policy.md`.
+- Full cross-phase traceability mapping is defined only in `docs/00-product/traceability-matrix.md`.
+- Design and sequence documents must reference these canonical artifacts instead of redefining them.
+- The single authoritative documentation tree is `docs/`; `reminder-app/docs/` is deprecated.

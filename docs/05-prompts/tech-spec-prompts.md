@@ -16,6 +16,8 @@ Follow .github/copilot-instructions.md and docs/99-ai-rules/AI_DEVELOPMENT_WORKF
 Task: Generate or improve the technical documentation in docs/01-tech-spec for the Email-Driven Reminder Assistant.
 
 Required markdown outputs:
+- docs/01-tech-spec/runtime-flow.md
+- docs/01-tech-spec/reliability-policy.md
 - docs/01-tech-spec/tech-overview.md
 - docs/01-tech-spec/backend-spec.md
 - docs/01-tech-spec/frontend-spec.md
@@ -35,6 +37,9 @@ Also maintain diagram markdown set:
 
 Quality and structure requirements:
 - Enterprise-grade technical writing with implementation-ready clarity.
+- Treat `docs/01-tech-spec/runtime-flow.md` as the only runtime lifecycle authority.
+- Treat `docs/01-tech-spec/reliability-policy.md` as the only reliability authority.
+- Use `docs/00-product/traceability-matrix.md` for full traceability mapping.
 - Strong mapping to product requirements and UX flows.
 - Explicit assumptions, constraints, and known risks.
 - Consistent naming for services, domains, entities, and APIs.

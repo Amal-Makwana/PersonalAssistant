@@ -1,6 +1,8 @@
 # Integration Specification
 
 ## 1. Purpose
+Canonical reliability policy and sync-state vocabulary are defined in `reliability-policy.md`. This file implements those contracts for its scope.
+
 Define integration contracts, trigger points, retry/timeout behavior, and observability requirements aligned to the revised MVP.
 
 ## 2. Integration Scope
@@ -74,7 +76,7 @@ Trace: FR-09, FR-10, US-09
 ## 8. Traceability
 | Product Source | Integration Behavior |
 | --- | --- |
-| FR-09 + US-09 | mandatory Google Calendar sync with 10s target, retries, canonical states, terminal failure persistence fields |
+| FR-09 + US-09 | mandatory Google Calendar sync with reliability semantics from `reliability-policy.md` |
 | FR-10 + US-07 | dedupe before sync enqueue, idempotent upsert semantics |
 | US-05 | extraction confidence output feeds normalized event eligibility and logs |
 | FR-07 / FR-08 | explicitly post-MVP integration placeholders only |

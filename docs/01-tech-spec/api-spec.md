@@ -53,9 +53,9 @@ RESTful JSON API for authentication handoff, preference management, event visibi
 - Date-time inputs normalized to UTC
 
 ## 9. Canonical Sync State Contract
-Canonical sync states: `PENDING`, `IN_PROGRESS`, `SYNCED`, `FAILED_RETRYABLE`, `FAILED_TERMINAL`. All docs and APIs must use this exact set. Any state transition to `FAILED_TERMINAL` must persist `failure_reason`, `provider_status`, and `last_attempt_at`.
+Canonical sync states and terminal failure persistence semantics are authoritative in `reliability-policy.md`. API payloads and docs must use that canonical state contract without divergence.
 
-Trace: FR-09, US-09
+Trace reference: `docs/00-product/traceability-matrix.md`
 
 ## 10. MVP Capability Exposure Rules
 In MVP, only `calendarSync` capability is active. `sms` and `whatsapp` capabilities are reserved for post-MVP and must be omitted from MVP examples or explicitly returned as disabled via a `postMvpReserved` metadata flag.
@@ -222,7 +222,7 @@ Trace: FR-09, FR-10, US-07, US-09
 - Correlation IDs propagated to worker jobs and provider calls.
 - Audit record retention aligned with `db-schema.md` and `security-nfr.md`.
 
-Trace: FR-04, FR-09, FR-10, US-05, US-07, US-09
+Trace reference: `docs/00-product/traceability-matrix.md`
 
 ## 15. Open Questions / Gaps
 1. Should a dedicated endpoint exist for manual event confirmation for low-confidence extraction?

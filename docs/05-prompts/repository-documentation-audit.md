@@ -27,7 +27,8 @@ Phases reviewed in order:
 2 Tech Spec  
 3 UI/UX  
 4 Design  
-5 Delivery  
+5 Task Planning  
+6 Delivery  
 
 The audit orchestrates phase reviews using:
 
@@ -39,7 +40,8 @@ docs/00-product/*
 docs/01-tech-spec/*  
 docs/02-ui-ux/*  
 docs/03-design/*  
-docs/04-delivery/*  
+docs/04-task-planning/*  
+docs/05-delivery/*  
 
 Output Format:
 
@@ -53,6 +55,7 @@ This section MUST appear first in the report.
 | Tech Spec | X/5 | ... |
 | UI/UX | X/5 | ... |
 | Architecture (Design) | X/5 | ... |
+| Task Planning | X/5 | ... |
 | Delivery | X/5 | ... |
 
 Rules:
@@ -72,6 +75,7 @@ Product
 Tech Spec  
 UI/UX  
 Architecture (Design)  
+Task Planning  
 Delivery
 
 Score scale:
@@ -216,7 +220,7 @@ Traceability Validation
 
 Validate chain:
 
-Product → Tech Spec → UI/UX → Design → Delivery
+Product → Tech Spec → UI/UX → Design → Task Planning → Delivery
 
 Documentation Quality Observations
 

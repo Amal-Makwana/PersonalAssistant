@@ -9,7 +9,8 @@ Use for:
 - `docs/01-tech-spec/tech-spec-summary.html`
 - `docs/02-ui-ux/ui-ux-summary.html`
 - `docs/03-design/design-summary.html`
-- `docs/04-delivery/delivery-summary.html`
+- `docs/04-task-planning/task-planning-summary.html`
+- `docs/05-delivery/delivery-summary.html`
 
 ## Core Rules (Mandatory)
 - Markdown remains source of truth.
@@ -44,7 +45,7 @@ Use for:
 
 
 ## Design-Specific Enforcement (When target is docs/03-design)
-- Preserve phase order and traceability chain: Product -> Tech Spec -> UI/UX -> Design -> Delivery.
+- Preserve phase order and traceability chain: Product -> Tech Spec -> UI/UX -> Design -> Task Planning -> Delivery.
 - Keep MVP architecture explicit: Gmail ingestion, extraction, persistence, duplicate prevention, schedule generation, and Google Calendar sync are in MVP.
 - Ensure WhatsApp/SMS are represented only as post-MVP extensibility and never as active MVP runtime components.
 - Require explicit reliability coverage: retry behavior, terminal failure handling, persisted failure metadata, operator remediation flows, and observability/alert hooks.

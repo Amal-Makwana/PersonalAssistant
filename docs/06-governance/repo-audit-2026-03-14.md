@@ -1,7 +1,7 @@
 # Repository Documentation Audit
 
 - **Date:** 2026-03-14
-- **Scope:** Full repository documentation (`docs/00-product` → `docs/04-delivery`)
+- **Scope:** Full repository documentation (`docs/00-product` → `docs/05-delivery`)
 - **Focus:** Architecture readiness before development start (with full governance coverage)
 - **Audit prompt used:** `docs/05-prompts/repository-documentation-audit.md`
 
@@ -13,7 +13,7 @@
 | Tech Spec | 4/5 | Comprehensive technical baseline across architecture, API, schema, integration, and security. Some traceability and implementation details still need tightening for deterministic delivery. |
 | UI/UX | 4/5 | Well-governed UX corpus with canonical screen/state/component mapping and strong consistency rules. Needs stronger explicit requirement-level acceptance mapping and accessibility verification artifacts. |
 | Architecture (Design) | 1/5 | Critical gap: `docs/03-design` lacks substantive architecture documentation and currently only contains a review reference placeholder. |
-| Delivery | 1/5 | Critical gap: `docs/04-delivery` lacks roadmap/milestone/backlog/release documentation and currently only contains a review reference placeholder. |
+| Delivery | 1/5 | Critical gap: `docs/05-delivery` lacks roadmap/milestone/backlog/release documentation and currently only contains a review reference placeholder. |
 
 ## Phase Findings
 
@@ -95,7 +95,7 @@
 ### Delivery (Program Manager / Release Manager)
 
 **Summary critique**
-- The delivery phase is not documented in `docs/04-delivery`; only a placeholder note exists.
+- The delivery phase is not documented in `docs/05-delivery`; only a placeholder note exists.
 - This blocks readiness assessment for sequencing, dependency management, and release governance.
 
 **Key issues**
@@ -104,21 +104,21 @@
 3. No release readiness criteria/checklists, risk burndown, or dependency register.
 
 **Priority fixes**
-1. Create `docs/04-delivery` baseline artifacts: roadmap, milestone plan, dependency register, release-readiness checklist, and execution backlog summary.
+1. Create `docs/05-delivery` baseline artifacts: roadmap, milestone plan, dependency register, release-readiness checklist, and execution backlog summary.
 2. Add explicit phase gates (design complete, API freeze, integration test pass, launch criteria).
-3. Generate/update `docs/04-delivery/delivery-summary.html` once markdown artifacts are established.
+3. Generate/update `docs/05-delivery/delivery-summary.html` once markdown artifacts are established.
 
 ## Cross-Phase Consistency Issues
 
 1. **Critical phase coverage gap**: Product/Tech/UI-UX are detailed, but Design and Delivery phases are effectively missing, preventing end-to-end governance continuity.
 2. **Architecture ownership split**: Technical architecture details exist in `docs/01-tech-spec`, but the dedicated architecture phase (`docs/03-design`) has no substantive content.
-3. **Delivery traceability gap**: Requirements and UX are documented, but there is no canonical roadmap/backlog mapping in `docs/04-delivery` to validate execution sequencing.
+3. **Delivery traceability gap**: Requirements and UX are documented, but there is no canonical roadmap/backlog mapping in `docs/05-delivery` to validate execution sequencing.
 4. **Dual-layer completeness risk**: The repository standard expects section markdown + section summary HTML; Design and Delivery summary artifacts are absent because source markdown is absent.
 
 ## Top-Priority Fix List (Next Actions)
 
 1. **P0:** Stand up `docs/03-design` architecture corpus and `design-summary.html`.
-2. **P0:** Stand up `docs/04-delivery` delivery corpus and `delivery-summary.html`.
+2. **P0:** Stand up `docs/05-delivery` delivery corpus and `delivery-summary.html`.
 3. **P1:** Add FR/NFR trace tags in key tech-spec artifacts for auditable requirement linkage.
 4. **P1:** Add UI/UX accessibility verification matrix and FR/US/AC mapping appendix.
 5. **P2:** Harden KPI governance and risk trigger thresholds in Product docs.

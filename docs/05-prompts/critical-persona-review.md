@@ -8,6 +8,7 @@ product
 tech-spec
 ui-ux
 design
+task-planning
 delivery
 
 Command Behavior:
@@ -18,7 +19,8 @@ Command Behavior:
    - tech-spec -> `docs/01-tech-spec/*`
    - ui-ux -> `docs/02-ui-ux/*`
    - design -> `docs/03-design/*`
-   - delivery -> `docs/04-delivery/*`
+   - task-planning -> `docs/04-task-planning/*`
+   - delivery -> `docs/05-delivery/*`
 3. Generate a phase documentation review.
 4. Save output to `docs/06-governance/audit-<phase>-YYYY-MM-DD.md`.
 
@@ -39,6 +41,7 @@ Phase:
 - Tech Spec
 - UI/UX
 - Design
+- Task Planning
 - Delivery
 
 Target Files:
@@ -53,6 +56,7 @@ Product → Head of Product / Business Analyst
 Tech Spec → Principal Engineer / Solution Architect  
 UI/UX → UX Lead / Accessibility Specialist  
 Design → Staff Architect / SRE-minded reviewer  
+Task Planning → Engineering Manager / Technical Program Manager  
 Delivery → Program Manager / Release Manager  
 
 Review Instructions:

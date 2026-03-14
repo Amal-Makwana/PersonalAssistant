@@ -10,7 +10,17 @@ Before writing any code always read documentation in this order:
 2. docs/01-tech-spec
 3. docs/02-ui-ux
 4. docs/03-design
-5. docs/04-delivery
+5. docs/04-task-planning
+6. docs/05-delivery
+
+
+## Canonical Documentation Contracts (Required)
+
+- Runtime lifecycle is defined only in `docs/01-tech-spec/runtime-flow.md`.
+- Reliability policy and canonical sync states are defined only in `docs/01-tech-spec/reliability-policy.md`.
+- Full cross-phase traceability mapping is defined only in `docs/00-product/traceability-matrix.md`.
+- Design and sequence documents must reference these canonical artifacts instead of redefining them.
+- The single authoritative documentation tree is `docs/`; `reminder-app/docs/` is deprecated.
 
 ## Canonical Prompt Library
 
@@ -31,7 +41,8 @@ Required consolidated HTML files:
 - `docs/01-tech-spec/tech-spec-summary.html`
 - `docs/02-ui-ux/ui-ux-summary.html`
 - `docs/03-design/design-summary.html`
-- `docs/04-delivery/delivery-summary.html`
+- `docs/04-task-planning/task-planning-summary.html`
+- `docs/05-delivery/delivery-summary.html`
 
 Mandatory HTML summary standard for every section:
 - HTML summaries are not lightweight overviews; they must consolidate all major concepts, decisions, requirements, constraints, traceability anchors, and open questions from the section markdown.

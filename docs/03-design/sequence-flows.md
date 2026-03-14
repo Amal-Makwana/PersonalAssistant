@@ -1,5 +1,9 @@
 # MVP Sequence Flows
 
+Canonical runtime lifecycle authority: `docs/01-tech-spec/runtime-flow.md`.
+
+Canonical reliability policy authority: `docs/01-tech-spec/reliability-policy.md`.
+
 ## 1. Email to Calendar Sync (Primary MVP Flow)
 
 ```mermaid
@@ -30,7 +34,7 @@ sequenceDiagram
   end
 ```
 
-**Trace:** FR-01 through FR-06, FR-09, FR-10; US-01 through US-07, US-09.
+**Trace reference:** see `docs/00-product/traceability-matrix.md`.
 
 ## 2. Calendar Sync Retry and Terminal Failure (Operational Reliability)
 
@@ -62,7 +66,7 @@ sequenceDiagram
   end
 ```
 
-**Trace:** FR-09, FR-11; US-09, US-11.
+**Trace reference:** see `docs/00-product/traceability-matrix.md`.
 
 ## 3. Duplicate Prevention and Safe Reprocessing Boundary
 
@@ -83,11 +87,11 @@ sequenceDiagram
   end
 ```
 
-**Trace:** FR-10, FR-11; US-07, US-11.
+**Trace reference:** see `docs/00-product/traceability-matrix.md`.
 
 ## 4. Scope Guardrails and Future-Phase Notes
 - WhatsApp and SMS flows are intentionally excluded from MVP sequence runtime.
 - Any references to these channels represent post-MVP extensibility only.
 - MVP sequence authority remains Gmail → extraction → persistence/dedupe → scheduling → Google Calendar sync.
 
-**Trace:** Scope V1, FR-07, FR-08.
+**Trace reference:** see `docs/00-product/traceability-matrix.md` and `docs/00-product/scope-v1.md`.

@@ -138,3 +138,9 @@ After ADR updates, regenerate docs/03-design/design-summary.html with complete c
 - Include architecture overview, major decisions, constraints/trade-offs, diagram coverage, risks, and open questions where applicable.
 - Follow the visual system used by docs/00-product/product-summary.html.
 - Do not omit important markdown content for brevity; condense and structure it for readability.
+
+
+## Canonical Contract Rule
+- Do not redefine runtime lifecycle semantics in design docs; reference `docs/01-tech-spec/runtime-flow.md`.
+- Do not redefine reliability policy in design docs; reference `docs/01-tech-spec/reliability-policy.md`.
+- Use `docs/00-product/traceability-matrix.md` for full mapping and keep inline traces minimal.
