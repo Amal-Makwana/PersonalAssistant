@@ -1,8 +1,8 @@
 # MVP Sequence Flows
 
-Canonical runtime lifecycle authority: `docs/01-tech-spec/runtime-flow.md`.
+Canonical runtime lifecycle authority: `docs/02-design/runtime-flow.md`.
 
-Canonical reliability policy authority: `docs/01-tech-spec/reliability-policy.md`.
+Canonical reliability policy authority: `docs/02-design/reliability-policy.md`.
 
 ## 1. Email to Calendar Sync (Primary MVP Flow)
 

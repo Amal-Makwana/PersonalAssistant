@@ -28,7 +28,7 @@ Users connect a Google account, authorize Gmail ingestion, and manage reminder o
 |---|---|---|
 | MVP scope alignment | Calendar sync was not modeled as first-class MVP behavior | Flows, screen states, and wireframes now include calendar sync visibility and confirmations |
 | Channel boundary clarity | Generic channel language implied non-MVP messaging controls | WhatsApp/SMS references are constrained to explicit post-MVP roadmap notes only |
-| Flow-to-screen traceability | Flows did not reliably map to Product + Tech Spec contracts | UI/UX flows now include FR/US trace tags for auditable mapping |
+| Flow-to-screen traceability | Flows did not reliably map to Product + Design contracts | UI/UX flows now include FR/US trace tags for auditable mapping |
 | State specificity | Failure messaging under-specified for extraction/sync/duplicate cases | Screen docs now include explicit empty/loading/error/success states for critical transitions |
 
 ## 6. Core Users

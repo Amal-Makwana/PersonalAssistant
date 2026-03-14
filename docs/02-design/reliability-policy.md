@@ -61,4 +61,4 @@ When terminal failure is reached:
 - `api-spec.md` references this contract for state vocabulary and status exposure.
 - `backend-spec.md` references this contract for worker behavior.
 - `integration-spec.md` references this contract for provider interactions.
-- `docs/03-design/*` references this contract for reliability viewpoints.
+- `docs/02-design/*` references this contract for reliability viewpoints.

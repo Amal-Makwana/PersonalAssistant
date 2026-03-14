@@ -6,9 +6,9 @@ The single authoritative documentation tree for this repository is `docs/`.
 `reminder-app/docs/` is deprecated and retained only as a pointer path for backward compatibility.
 
 ## Canonical Source Contracts
-- Runtime flow authority: `docs/01-tech-spec/runtime-flow.md`
-- Reliability policy authority: `docs/01-tech-spec/reliability-policy.md`
+- Runtime flow authority: `docs/02-design/runtime-flow.md`
+- Reliability policy authority: `docs/02-design/reliability-policy.md`
 - Cross-phase traceability authority: `docs/00-product/traceability-matrix.md`
 
 ## Phase Order
-Product -> Tech Spec -> UI/UX -> Design -> Task Planning -> Delivery
+Product -> UI/UX -> Design -> Task Planning -> Delivery

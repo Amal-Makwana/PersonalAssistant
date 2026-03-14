@@ -94,7 +94,7 @@
     <div class="hero">
       <div class="eyebrow">Design Documentation • Executive Consolidated View</div>
       <h1>Email-Driven Reminder Assistant — Design / Architecture Summary</h1>
-      <p>This page consolidates all markdown in <code>docs/03-design</code> into a stakeholder-ready architecture narrative with explicit MVP scope boundaries, reliability behavior, traceability, and operations guidance. Markdown files remain the source of truth.</p>
+      <p>This page consolidates all markdown in <code>docs/02-design</code> into a stakeholder-ready architecture narrative with explicit MVP scope boundaries, reliability behavior, traceability, and operations guidance. Markdown files remain the source of truth.</p>
       <div class="chips">
         <span class="chip">MVP: Gmail → Calendar</span>
         <span class="chip">Calendar Sync in MVP</span>
@@ -252,10 +252,10 @@
 
     <section class="card" id="traceability">
       <div class="source">Source: architecture.md (Section 11), sequence-flows.md</div>
-      <h2>6) Cross-Phase Traceability Matrix (Product → Tech Spec → UI/UX → Design)</h2>
+      <h2>6) Cross-Phase Traceability Matrix (Product → Design → UI/UX → Design)</h2>
       <table class="trace">
         <thead>
-          <tr><th>Design concern</th><th>Product refs</th><th>Tech Spec refs</th><th>UI/UX refs</th><th>Design implementation summary</th></tr>
+          <tr><th>Design concern</th><th>Product refs</th><th>Design refs</th><th>UI/UX refs</th><th>Design implementation summary</th></tr>
         </thead>
         <tbody>
           <tr>
@@ -294,9 +294,9 @@
       <h2>7) Source Coverage Manifest and Coverage Notes</h2>
       <p>Markdown remains the source of truth. This HTML is a consolidated secondary artifact aligned to the Product summary visual baseline.</p>
       <ul>
-        <li><code>docs/03-design/architecture.md</code> — represented across architecture scope, component model, flow, reliability, observability, deployment notes, assumptions, trade-offs, traceability, and open questions.</li>
-        <li><code>docs/03-design/sequence-flows.md</code> — represented in primary flow, retry/terminal failure flow, duplicate/replay boundary, and MVP channel guardrail coverage.</li>
-        <li><code>docs/03-design/review-reference.md</code> — represented in workflow guardrail and HTML regeneration compliance expectations.</li>
+        <li><code>docs/02-design/architecture.md</code> — represented across architecture scope, component model, flow, reliability, observability, deployment notes, assumptions, trade-offs, traceability, and open questions.</li>
+        <li><code>docs/02-design/sequence-flows.md</code> — represented in primary flow, retry/terminal failure flow, duplicate/replay boundary, and MVP channel guardrail coverage.</li>
+        <li><code>docs/02-design/review-reference.md</code> — represented in workflow guardrail and HTML regeneration compliance expectations.</li>
       </ul>
       <table class="trace">
         <thead>
@@ -308,19 +308,19 @@
           <tr><td>architecture.md — 4. Data and Event Flow Architecture</td><td>Section 3 (Data and Sequence Flow Design)</td></tr>
           <tr><td>architecture.md — 5. Reliability and Resilience Design / 6. Observability and Operational Architecture / 7. Failure Modes and Remediation Paths</td><td>Section 4 (Reliability, Failure Handling, and Observability)</td></tr>
           <tr><td>architecture.md — 8. Deployment and Environment Notes / 9. Extensibility and Post-MVP Channels / 10. Assumptions, Constraints, and Trade-offs / 12. Open Questions</td><td>Section 5 (Deployment Notes, Assumptions, Trade-offs, and Open Questions)</td></tr>
-          <tr><td>architecture.md — 11. Design Traceability Matrix (Product → Tech Spec → UI/UX → Design)</td><td>Section 6 (Cross-Phase Traceability Matrix)</td></tr>
+          <tr><td>architecture.md — 11. Design Traceability Matrix (Product → Design → UI/UX → Design)</td><td>Section 6 (Cross-Phase Traceability Matrix)</td></tr>
           <tr><td>sequence-flows.md — 1. Email to Calendar Sync (Primary MVP Flow); 2. Calendar Sync Retry and Terminal Failure (Operational Reliability); 3. Duplicate Prevention and Safe Reprocessing Boundary; 4. Scope Guardrails and Future-Phase Notes</td><td>Section 3 (Flow narratives) + Section 1 guardrail callout</td></tr>
           <tr><td>review-reference.md — Required design workflow guardrails</td><td>Section 7 Source Coverage notes + footer regeneration reminder</td></tr>
         </tbody>
       </table>
       <div class="callout">
-        <strong>HTML Coverage Check:</strong> Status <strong>Complete</strong>. Every markdown file and major heading/topic in <code>docs/03-design</code> is represented, including traceability content, reliability/failure design, assumptions/trade-offs, and open questions.
+        <strong>HTML Coverage Check:</strong> Status <strong>Complete</strong>. Every markdown file and major heading/topic in <code>docs/02-design</code> is represented, including traceability content, reliability/failure design, assumptions/trade-offs, and open questions.
       </div>
     </section>
   </main>
 
   <footer>
-    Design / Architecture summary artifact. Regenerate when markdown in <code>docs/03-design</code> changes.
+    Design / Architecture summary artifact. Regenerate when markdown in <code>docs/02-design</code> changes.
   </footer>
 </body>
 </html>

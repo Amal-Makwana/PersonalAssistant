@@ -106,4 +106,4 @@ Provide step-level journeys mapped to the canonical screen catalogue in `screen-
 - In Figma, place each flow in a horizontal sequence with desktop frames first, then tablet/mobile variants below.
 - Use connector labels: `Trigger`, `Decision`, `System Response`, `Outcome`.
 - Link each decision node to at least one non-happy-path state frame (Error, Empty, Permission).
-- Annotate each flow with its `Trace` line so Product -> Tech Spec -> UI/UX chain remains auditable.
+- Annotate each flow with its `Trace` line so Product -> Design -> UI/UX chain remains auditable.

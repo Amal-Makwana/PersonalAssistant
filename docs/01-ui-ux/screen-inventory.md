@@ -1,7 +1,7 @@
 # Screen Inventory (Canonical Screen Catalogue)
 
 ## 1. Purpose
-Define and govern the single authoritative screen catalogue for all UI/UX documentation in `docs/02-ui-ux`.
+Define and govern the single authoritative screen catalogue for all UI/UX documentation in `docs/01-ui-ux`.
 
 ## 2. Canonical Screen Catalogue
 
@@ -58,7 +58,7 @@ Define and govern the single authoritative screen catalogue for all UI/UX docume
 - **Duplicate suppression state visibility:** S03, S04, S05, S08.
 
 ## 8. Screen Governance Rules
-1. Every product screen must be registered in this file before being referenced anywhere else in `docs/02-ui-ux`.
+1. Every product screen must be registered in this file before being referenced anywhere else in `docs/01-ui-ux`.
 2. `wireframes.md`, `ui-mockups.md`, `user-flows.md`, and `information-architecture.md` must only reference screens that exist in this inventory.
 3. Screen IDs (`Sxx`) are stable identifiers and must not be reassigned to different screens.
 4. Screen names must match the canonical names exactly across all UI/UX documents.

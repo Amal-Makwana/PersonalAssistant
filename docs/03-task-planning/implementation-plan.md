@@ -1,13 +1,13 @@
 # Implementation Plan
 
 ## Purpose
-Translate approved Product, Tech Spec, UI/UX, and Design artifacts into implementation-ready phased execution.
+Translate approved Product, Design, UI/UX, and Design artifacts into implementation-ready phased execution.
 
 ## Preconditions
-- Product, Tech Spec, UI/UX, and Design markdown are complete and reviewed.
+- Product, Design, UI/UX, and Design markdown are complete and reviewed.
 - Canonical references are aligned:
-  - Runtime flow: `docs/01-tech-spec/runtime-flow.md`
-  - Reliability policy: `docs/01-tech-spec/reliability-policy.md`
+  - Runtime flow: `docs/02-design/runtime-flow.md`
+  - Reliability policy: `docs/02-design/reliability-policy.md`
   - Traceability mapping: `docs/00-product/traceability-matrix.md`
 
 ## Gap Analysis

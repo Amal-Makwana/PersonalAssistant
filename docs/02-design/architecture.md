@@ -3,7 +3,7 @@
 For critical documentation review, use docs/05-prompts/critical-persona-review.md
 
 ## 1. Purpose and Scope
-This document defines the implementation-guiding architecture for the MVP Email-Driven Reminder Assistant and explicitly aligns Design to Product, Tech Spec, and UI/UX decisions.
+This document defines the implementation-guiding architecture for the MVP Email-Driven Reminder Assistant and explicitly aligns Design to Product, Design, and UI/UX decisions.
 
 **Scope boundary (MVP runtime):** Gmail ingestion, event extraction, persistence, duplicate prevention, reminder scheduling, and Google Calendar synchronization.
 
@@ -57,7 +57,7 @@ Trace reference: `docs/00-product/traceability-matrix.md`.
 Trace reference: `docs/00-product/traceability-matrix.md`.
 
 ## 4. Data and Event Flow Architecture
-Canonical MVP runtime lifecycle authority is maintained in `docs/01-tech-spec/runtime-flow.md`.
+Canonical MVP runtime lifecycle authority is maintained in `docs/02-design/runtime-flow.md`.
 
 Architecture-level interpretation:
 - This document defines ownership boundaries and component responsibilities for each runtime stage.
@@ -67,7 +67,7 @@ Architecture-level interpretation:
 For full traceability mapping, see `docs/00-product/traceability-matrix.md`.
 
 ## 5. Reliability and Resilience Design
-Reliability policy authority is maintained in `docs/01-tech-spec/reliability-policy.md`.
+Reliability policy authority is maintained in `docs/02-design/reliability-policy.md`.
 
 Architecture-level obligations:
 - Components implement bounded retry orchestration and timeout enforcement as defined in the canonical policy.
@@ -104,7 +104,7 @@ Trace reference: `docs/00-product/traceability-matrix.md`.
 - Queue/retry configuration values are environment-configurable but policy-governed.
 - Production runbooks must include sync retry and terminal-failure remediation procedures.
 
-Trace: NFR reliability/security constraints in Tech Spec (`security-nfr.md`, `integration-spec.md`).
+Trace: NFR reliability/security constraints in Design (`security-nfr.md`, `integration-spec.md`).
 
 ## 9. Extensibility and Post-MVP Channels
 - Messaging channels (WhatsApp/SMS) are represented only as future extension interfaces.
@@ -127,8 +127,8 @@ Trace: FR-07, FR-08 (post-MVP); scope-v1 boundary.
 - Deferring WhatsApp/SMS in MVP reduces integration complexity and supports stronger reliability on calendar continuity.
 - Bounded retry strategy favors predictable operations over unbounded eventual success attempts.
 
-## 11. Design Traceability Matrix (Product → Tech Spec → UI/UX → Design)
-| Design concern | Product refs | Tech Spec refs | UI/UX refs | Design realization |
+## 11. Design Traceability Matrix (Product → Design → UI/UX → Design)
+| Design concern | Product refs | Design refs | UI/UX refs | Design realization |
 | --- | --- | --- | --- | --- |
 | Calendar sync architecture | FR-09, US-09 | `integration-spec.md`, `backend-spec.md` | `user-flows.md` (email-to-reminder continuity) | Dedicated Calendar Sync Service with retries, timeout, and persisted outcome states |
 | Duplicate prevention and idempotency | FR-10, US-07 | `backend-spec.md`, `db-schema.md` | `user-flows.md` (avoid duplicate reminders) | Event Service dedupe guard before schedule/sync fan-out |

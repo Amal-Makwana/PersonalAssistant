@@ -16,4 +16,4 @@ Break architecture and technical contracts into implementable work items.
 ## Sequencing Rules
 - Prioritize tasks that unblock canonical runtime flow stages.
 - Preserve dependency order across ingestion, extraction, dedupe, scheduling, and sync.
-- Align reliability-sensitive tasks with `docs/01-tech-spec/reliability-policy.md`.
+- Align reliability-sensitive tasks with `docs/02-design/reliability-policy.md`.

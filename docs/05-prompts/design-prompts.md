@@ -1,19 +1,19 @@
 # Design Documentation Prompts
 
 ## Prompt Name
-Generate / Improve Architecture Documentation (docs/03-design)
+Generate / Improve Architecture Documentation (docs/02-design)
 
 ### Purpose
-Generate or improve architecture documentation for `docs/03-design` with clear system boundaries, rationale, and quality attributes.
+Generate or improve architecture documentation for `docs/02-design` with clear system boundaries, rationale, and quality attributes.
 
 ### When To Use
-Use when creating the design section baseline or aligning architecture docs to updated product/tech specs.
+Use when creating the design section baseline or aligning architecture docs to updated product and design contracts.
 
 ### Prompt Text
 ```text
 Follow .github/copilot-instructions.md and docs/99-ai-rules/AI_DEVELOPMENT_WORKFLOW.md.
 
-Task: Generate or improve architecture documentation in docs/03-design.
+Task: Generate or improve architecture documentation in docs/02-design.
 
 Expected documentation scope:
 - Architecture overview and system boundaries.
@@ -24,14 +24,14 @@ Expected documentation scope:
 
 Quality requirements:
 - Enterprise-grade architecture writing.
-- Clear alignment to docs/00-product and docs/01-tech-spec.
+- Clear alignment to docs/00-product and docs/01-ui-ux.
 - Decision rationale should be explicit, not implied.
 
 Constraints:
 - Documentation only.
 - Do NOT generate application code.
 
-After markdown updates, regenerate docs/03-design/design-summary.html as a rich consolidated executive view with complete section coverage, source mappings, and Product-summary-aligned visual style.
+After markdown updates, regenerate docs/02-design/design-summary.html as a rich consolidated executive view with complete section coverage, source mappings, and Product-summary-aligned visual style.
 ```
 
 ---
@@ -49,7 +49,7 @@ Use when design-level details (flows, resiliency, scaling, fault handling) need 
 ```text
 Follow .github/copilot-instructions.md and docs/99-ai-rules/AI_DEVELOPMENT_WORKFLOW.md.
 
-Task: Generate or improve system-design documentation in docs/03-design.
+Task: Generate or improve system-design documentation in docs/02-design.
 
 Required content:
 - End-to-end system interaction narratives.
@@ -63,7 +63,7 @@ Rules:
 - Keep language implementation-guiding but documentation-only.
 - Do NOT generate application code.
 
-After updates, regenerate docs/03-design/design-summary.html with complete coverage, source mapping labels, traceability cues, and Product-summary-aligned visual style.
+After updates, regenerate docs/02-design/design-summary.html with complete coverage, source mapping labels, traceability cues, and Product-summary-aligned visual style.
 ```
 
 ---
@@ -81,7 +81,7 @@ Use when diagrams are added, changed, or require stronger explanatory context.
 ```text
 Follow .github/copilot-instructions.md and docs/99-ai-rules/AI_DEVELOPMENT_WORKFLOW.md.
 
-Task: Generate or improve design diagram documentation under docs/03-design.
+Task: Generate or improve design diagram documentation under docs/02-design.
 
 Include:
 - Diagram purpose and viewpoint.
@@ -94,7 +94,7 @@ Rules:
 - Keep markdown as source of truth.
 - Do NOT generate application code.
 
-After markdown updates, regenerate docs/03-design/design-summary.html as a rich consolidated executive view with complete section coverage, source mappings, and Product-summary-aligned visual style.
+After markdown updates, regenerate docs/02-design/design-summary.html as a rich consolidated executive view with complete section coverage, source mappings, and Product-summary-aligned visual style.
 ```
 
 ---
@@ -112,7 +112,7 @@ Use when new architecture decisions are made, revised, or deprecated.
 ```text
 Follow .github/copilot-instructions.md and docs/99-ai-rules/AI_DEVELOPMENT_WORKFLOW.md.
 
-Task: Generate or improve ADR documentation in docs/03-design.
+Task: Generate or improve ADR documentation in docs/02-design.
 
 ADR format requirements:
 - Title
@@ -121,19 +121,19 @@ ADR format requirements:
 - Decision
 - Alternatives Considered
 - Consequences
-- Links to impacted docs (product/tech-spec/ui-ux/design)
+- Links to impacted docs (product/design/ui-ux/design)
 
 Rules:
 - Keep ADR statements concise, auditable, and decision-focused.
 - Preserve consistency with architecture/system-design docs.
 - Do NOT generate application code.
 
-After ADR updates, regenerate docs/03-design/design-summary.html with complete coverage, source mapping labels, traceability cues, and Product-summary-aligned visual style.
+After ADR updates, regenerate docs/02-design/design-summary.html with complete coverage, source mapping labels, traceability cues, and Product-summary-aligned visual style.
 ```
 
 
 ## HTML summary quality standard (applies whenever regenerating `design-summary.html`)
-- Read all markdown files in docs/03-design before generation.
+- Read all markdown files in docs/02-design before generation.
 - Produce a rich consolidated executive synthesis with table of contents, source mappings, and traceability cues.
 - Include architecture overview, major decisions, constraints/trade-offs, diagram coverage, risks, and open questions where applicable.
 - Follow the visual system used by docs/00-product/product-summary.html.
@@ -141,6 +141,6 @@ After ADR updates, regenerate docs/03-design/design-summary.html with complete c
 
 
 ## Canonical Contract Rule
-- Do not redefine runtime lifecycle semantics in design docs; reference `docs/01-tech-spec/runtime-flow.md`.
-- Do not redefine reliability policy in design docs; reference `docs/01-tech-spec/reliability-policy.md`.
+- Do not redefine runtime lifecycle semantics in design docs; reference `docs/02-design/runtime-flow.md`.
+- Do not redefine reliability policy in design docs; reference `docs/02-design/reliability-policy.md`.
 - Use `docs/00-product/traceability-matrix.md` for full mapping and keep inline traces minimal.

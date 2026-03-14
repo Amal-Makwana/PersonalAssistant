@@ -62,8 +62,8 @@ sequenceDiagram
 - Reliability semantics (retry policy, terminal failure handling, canonical sync states) are defined only in `reliability-policy.md`.
 
 ## 5. Cross References
-- Reliability contract: `docs/01-tech-spec/reliability-policy.md`
-- Runtime implementation details: `docs/01-tech-spec/backend-spec.md`
-- Integration behavior and provider contracts: `docs/01-tech-spec/integration-spec.md`
-- Architecture boundaries and ownership: `docs/03-design/architecture.md`
-- Sequence viewpoints: `docs/03-design/sequence-flows.md`
+- Reliability contract: `docs/02-design/reliability-policy.md`
+- Runtime implementation details: `docs/02-design/backend-spec.md`
+- Integration behavior and provider contracts: `docs/02-design/integration-spec.md`
+- Architecture boundaries and ownership: `docs/02-design/architecture.md`
+- Sequence viewpoints: `docs/02-design/sequence-flows.md`

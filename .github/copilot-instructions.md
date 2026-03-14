@@ -7,17 +7,15 @@ All AI agents working in this repository must follow the documentation-first wor
 Before writing any code always read documentation in this order:
 
 1. docs/00-product
-2. docs/01-tech-spec
-3. docs/02-ui-ux
-4. docs/03-design
-5. docs/04-task-planning
-6. docs/05-delivery
-
+2. docs/01-ui-ux
+3. docs/02-design
+4. docs/03-task-planning
+5. docs/04-delivery
 
 ## Canonical Documentation Contracts (Required)
 
-- Runtime lifecycle is defined only in `docs/01-tech-spec/runtime-flow.md`.
-- Reliability policy and canonical sync states are defined only in `docs/01-tech-spec/reliability-policy.md`.
+- Runtime lifecycle is defined only in `docs/02-design/runtime-flow.md`.
+- Reliability policy and canonical sync states are defined only in `docs/02-design/reliability-policy.md`.
 - Full cross-phase traceability mapping is defined only in `docs/00-product/traceability-matrix.md`.
 - Design and sequence documents must reference these canonical artifacts instead of redefining them.
 - The single authoritative documentation tree is `docs/`; `reminder-app/docs/` is deprecated.
@@ -38,50 +36,12 @@ For every major documentation section, maintain two synchronized layers:
 
 Required consolidated HTML files:
 - `docs/00-product/product-summary.html`
-- `docs/01-tech-spec/tech-spec-summary.html`
-- `docs/02-ui-ux/ui-ux-summary.html`
-- `docs/03-design/design-summary.html`
-- `docs/04-task-planning/task-planning-summary.html`
-- `docs/05-delivery/delivery-summary.html`
-
-Mandatory HTML summary standard for every section:
-- HTML summaries are not lightweight overviews; they must consolidate all major concepts, decisions, requirements, constraints, traceability anchors, and open questions from the section markdown.
-- Preserve logical flow: section purpose/overview, consolidated narrative, key subsection synthesis, source mapping, traceability/coverage view, and gaps/risks/open questions where relevant.
-- Include explicit mapping back to source markdown files and maintain clear stakeholder readability.
-- Do not omit important markdown content for brevity; condense and structure it for readability instead.
-- Use the visual system of `docs/00-product/product-summary.html` as the canonical style baseline (hero/header, chips, stats cards, section cards, source labels, content grids, traceability tables, and callouts) unless a shared template is later introduced.
+- `docs/01-ui-ux/ui-ux-summary.html`
+- `docs/02-design/design-summary.html`
+- `docs/03-task-planning/task-planning-summary.html`
+- `docs/04-delivery/delivery-summary.html`
 
 Whenever markdown docs in a section change, the section summary HTML must be regenerated in the same PR/commit.
-
-Mandatory HTML completeness enforcement (required before finalizing any section HTML summary):
-- Generator must read all markdown files in the section.
-- HTML summary must represent all major headings/topics, decisions, requirements, tables/lists, traceability content, scope statements, assumptions, risks, gaps, and open questions where present in markdown.
-- Important markdown content must never be omitted merely for brevity.
-- Consolidation/restructure is allowed for readability, but completeness is mandatory.
-
-HTML Coverage Check (required):
-- Verify every markdown source file in the section is represented.
-- Verify every major markdown heading/topic is represented in HTML narrative or structured components.
-- Verify major tables/lists/traceability content are represented.
-- Verify risks/gaps/assumptions/open questions are represented where present.
-- Verify no major markdown topic is missing.
-- If any check fails, treat as a documentation defect and revise before completion.
-
-Source Coverage Manifest requirement (required in HTML):
-- Include a visible “Source Coverage” (or equivalent) section in each section summary HTML.
-- List all markdown source files consolidated for that section.
-- Include optional subsection-to-source mapping where helpful.
-- Include an explicit note that markdown remains the source of truth.
-
-Mandatory HTML Completeness Checklist (apply on every HTML regeneration):
-- [ ] All markdown files in the section were reviewed.
-- [ ] All major headings/topics are represented.
-- [ ] Requirements/stories/criteria/decisions are represented where applicable.
-- [ ] Tables and traceability content are represented where applicable.
-- [ ] Risks/assumptions/gaps/open questions are represented where applicable.
-- [ ] HTML uses Product summary visual style baseline.
-- [ ] HTML remains synchronized with markdown.
-
 
 ## Required Process
 

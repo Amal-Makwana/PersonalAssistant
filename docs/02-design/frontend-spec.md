@@ -113,7 +113,7 @@ Trace: FR-09, FR-10, US-07, US-09
 - Testing: Vitest/Jest + Playwright + Testing Library
 
 ## 20. Interfaces with UI/UX docs
-- UX structure and journey references should come from `docs/02-ui-ux` artifacts (wireframes, flows, IA).
+- UX structure and journey references should come from `docs/01-ui-ux` artifacts (wireframes, flows, IA).
 - This file intentionally excludes visual styling decisions except where they affect technical implementation (accessibility, responsiveness, performance).
 
 ## 21. Open Questions / Gaps

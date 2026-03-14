@@ -12,5 +12,5 @@ This index tracks architecture diagrams used by the technical specification set.
 | Sequence Placeholders | `sequence-diagram-placeholders.md` | Standard sequence outlines for critical runtime flows, including calendar sync transient and terminal failure paths. | Flow logic change, new integration step, or failure policy updates. |
 
 ## Governance
-- Diagrams must align with markdown source documents in `docs/01-tech-spec/`.
+- Diagrams must align with markdown source documents in `docs/02-design/`.
 - Any architecture-impacting change should update at least one diagram and cross-reference.

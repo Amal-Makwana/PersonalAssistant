@@ -52,5 +52,5 @@ Outside boundary: Google OAuth + Gmail API + Google Calendar API, plus post-MVP 
 ## 8. Cross References
 - Product source of truth: `docs/00-product/*.md`
 - Traceability source of truth: `docs/00-product/traceability-matrix.md`
-- Design architecture: `docs/03-design/architecture.md`
-- Design sequence viewpoints: `docs/03-design/sequence-flows.md`
+- Design architecture: `docs/02-design/architecture.md`
+- Design sequence viewpoints: `docs/02-design/sequence-flows.md`
