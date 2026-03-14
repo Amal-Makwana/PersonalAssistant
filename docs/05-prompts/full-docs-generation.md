@@ -41,61 +41,6 @@ Ignore:
 
 ---
 
-## SECTION 2 — STEP 1: SOURCE MANIFEST (MANDATORY)
-
-Before generating HTML, enumerate every markdown file.
-
-Create a **Source Manifest** containing:
-
-- Section Name
-- File Path
-
-Example:
-
-Product
-- `docs/00-product/product-overview.md`
-- `docs/00-product/requirements.md`
-
-UI/UX
-- `docs/01-ui-ux/screens.md`
-- `docs/01-ui-ux/states.md`
-
-Design
-- `docs/02-design/architecture.md`
-- `docs/02-design/runtime-flow.md`
-
-Execution Planning
-- `docs/03-execution-planning/build-plan.md`
-- `docs/03-execution-planning/backlog-and-dependencies.md`
-
-This manifest must be used to ensure no file is skipped.
-
----
-
-## SECTION 3 — STEP 2: HEADING MANIFEST (MANDATORY)
-
-For every markdown file, extract all headings:
-
-- H1
-- H2
-- H3
-
-Example:
-
-File: `docs/02-design/runtime-flow.md`
-
-Headings:
-- Runtime Flow Overview
-- Ingestion Pipeline
-- Event Extraction
-- Deduplication Logic
-- Reminder Scheduling
-- Calendar Sync
-
-This heading manifest will be used to enforce coverage.
-
----
-
 ## SECTION 4 — CORE GENERATION RULES
 
 The final HTML must:
@@ -104,12 +49,13 @@ The final HTML must:
 - preserve ALL headings
 - preserve ALL tables
 - preserve ALL lists
+- preserve each and every line
 - preserve traceability matrices
 - preserve assumptions, risks, gaps, open questions
 - preserve requirement tables
 - preserve diagrams references
 
-No material content may be removed for brevity.
+No content may be removed for brevity.
 
 Large output is expected.
 
@@ -153,20 +99,7 @@ Short description of the file's purpose.
 
 #### Full Consolidated Details
 
-Include all content from the markdown file including:
-
-- headings
-- paragraphs
-- tables
-- lists
-- traceability matrices
-- risks
-- assumptions
-- open questions
-- decisions
-
-Maintain heading hierarchy.
-
+Include all content from the markdown file as is 
 -------------------------------------------------
 
 After all files in the section:
