@@ -20,7 +20,7 @@ Use for:
 ## Generation Instructions (Mandatory)
 1. Read **all** markdown files in the target section (including relevant subfolders like diagrams where applicable).
 2. Synthesize one rich HTML summary with executive readability and strong narrative continuity.
-3. Include all material section content, including where present:
+3. Include all the content from all md files, including where present:
    - major headings/topics
    - decisions/requirements
    - scope/constraints/assumptions
@@ -53,10 +53,10 @@ Use for:
 ## HTML Coverage Check (Required Before Finalizing)
 Run this check and fail generation if any item is not satisfied:
 - Every markdown source file in the section is represented in HTML.
-- Every major markdown heading/topic is represented.
+- Every markdown heading/topic is represented.
 - Important tables/lists/traceability content are represented.
 - Risks/gaps/assumptions/open questions are represented where present.
-- No major markdown topic is missing from the summary.
+- No markdown topic is missing from the summary.
 
 ## Required Task Response Addendum
 After generation, always output:
@@ -74,7 +74,7 @@ Task: Regenerate <section-summary.html> from markdown files in <section-folder>.
 Mandatory requirements:
 - Read all markdown files in <section-folder> (and relevant subfolders).
 - Generate one rich consolidated stakeholder-facing HTML summary (not a lightweight overview).
-- Include all material content from markdown: major headings/topics, decisions/requirements, scope/constraints/assumptions, tables/lists, traceability content, and risks/gaps/open questions where present.
+- Include all content from markdown: all headings/topics, decisions/requirements, scope/constraints/assumptions, tables/lists, traceability content, and risks/gaps/open questions where present.
 - Include table of contents, source labels, and a visible Source Coverage section listing all source markdown files.
 - Include traceability views where relevant.
 - Use docs/00-product/product-summary.html as CSS/style baseline.
@@ -83,10 +83,10 @@ Mandatory requirements:
 
 Before finalizing, run HTML Coverage Check:
 1) Every markdown file represented
-2) Every major heading/topic represented
-3) Important tables/lists/traceability represented
+2) Every heading/topic represented
+3) All tables/lists/traceability represented
 4) Risks/gaps/assumptions/open questions represented where present
-5) No major topic missing
+5) No topic missing
 
 Output in response:
 - Source files reviewed
