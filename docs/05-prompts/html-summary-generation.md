@@ -10,7 +10,9 @@
 Product -> UI/UX -> Design -> Execution Planning
 
 ## Purpose
-Generate premium consolidated stakeholder-facing HTML summaries from markdown source files while preserving markdown as source of truth.
+Generate premium consolidated stakeholder-facing **section-scoped** HTML summaries from markdown source files while preserving markdown as source of truth.
+
+For repository-wide consolidation across all sections, use `docs/05-prompts/full-docs-generation.md` and generate `docs/full-docs.html` as a separate governed artifact.
 
 ## Global Rules
 - Read all markdown files in the target section before generation.
@@ -32,6 +34,12 @@ Run this check and fail generation if any item is not satisfied:
 - Important tables/lists/traceability content are represented.
 - Risks/gaps/assumptions/open questions are represented where present.
 - No markdown topic is missing from the summary.
+
+## Style and Governance Consistency
+- Section summaries and full-doc output must both follow the Product summary HTML baseline (`docs/00-product/product-summary.html`).
+- Section summary artifacts remain phase/section scoped.
+- Full-doc generation remains repository scoped and must use the deterministic full-doc structure.
+- Both section summaries and full-doc output must pass coverage checks before finalization.
 
 ## Required Task Response Addendum
 After generation, always output:

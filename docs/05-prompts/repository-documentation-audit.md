@@ -44,6 +44,14 @@ For each phase summary HTML, include:
 - Synchronization Issues
 - Style Consistency Status (baseline: `docs/00-product/product-summary.html`)
 
+## Full-Docs Artifact Governance Checks (Mandatory when artifact exists)
+For `docs/full-docs.html`, include:
+- Full Docs Coverage Check Status (Complete/Partial)
+- Missing Coverage Items by section
+- Deterministic structure compliance status
+- Style Consistency Status (baseline: `docs/00-product/product-summary.html`)
+- Defect classification: incomplete full-doc generation is a documentation defect
+
 ## Audit Result Format
 For each phase:
 - Score: `X/5`
