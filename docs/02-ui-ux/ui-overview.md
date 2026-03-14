@@ -1,5 +1,7 @@
 # UI/UX Overview
 
+For critical documentation review, use docs/05-prompts/critical-persona-review.md
+
 ## 1. Purpose
 Define a Figma-ready UX specification for the Email-Driven Reminder Assistant V1 so product, design, frontend, and QA teams can build and validate the same screen system with minimal ambiguity.
 

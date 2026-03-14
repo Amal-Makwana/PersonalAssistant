@@ -19,6 +19,18 @@ These prompts are documentation prompts only. They are not for generating applic
 - `html-generation-prompts.md`
   - Section-specific prompts used to regenerate premium HTML presentation layers from markdown source-of-truth files.
 
+
+## Review & Quality Prompts
+
+### Critical Persona Review by Documentation Phase
+
+- **Purpose:** Run deterministic, documentation-only critical reviews using a phase-appropriate expert persona to improve clarity, completeness, traceability, and readiness.
+- **Supported phases:** Product, Tech Spec, UI/UX, Design, Delivery.
+- **Output structure:** Persona Used, Executive Critique, Section-by-Section Findings, Priority Fix List, Proposed Edits, Traceability Validation, Risks, Open Questions, Dual-Layer Documentation Reminder.
+- **Usage example:** `Phase: Tech Spec` with target files such as `docs/01-tech-spec/api-spec.md` and `docs/01-tech-spec/db-schema.md`, plus optional context for recent architecture changes.
+- **Governance notes:** Documentation-focused only; no application code generation; deterministic sectioned output; markdown-first review workflow; if markdown is updated, regenerate corresponding HTML summary to preserve dual-layer sync.
+- **Source file:** `critical-persona-review.md`
+
 ## Mapping Between Prompts and Documentation Sections
 
 | Documentation Section | Prompt Source | Primary Outputs |

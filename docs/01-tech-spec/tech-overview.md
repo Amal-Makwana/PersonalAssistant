@@ -1,5 +1,7 @@
 # Technical Overview
 
+For critical documentation review, use docs/05-prompts/critical-persona-review.md
+
 ## 1. Document Purpose
 This document defines the target technical architecture and engineering constraints for the Email-Driven Reminder Assistant V1. It translates product requirements into implementation-ready guidance for backend, frontend, data, integrations, security, and operations.
 

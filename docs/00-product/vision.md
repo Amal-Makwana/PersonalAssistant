@@ -1,5 +1,7 @@
 # Product Vision
 
+For critical documentation review, use docs/05-prompts/critical-persona-review.md
+
 ## Strategic Narrative
 Modern users do not fail to keep commitments because they lack calendars; they fail because the operational step between receiving an event email and configuring reminders is fragile, repetitive, and easy to postpone. The Email-Driven Reminder Assistant exists to close that gap with dependable automation.
 
