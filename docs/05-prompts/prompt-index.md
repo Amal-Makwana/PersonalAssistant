@@ -19,6 +19,11 @@ These prompts are documentation prompts only. They are not for generating applic
 - `html-generation-prompts.md`
   - Section-specific prompts used to regenerate premium HTML presentation layers from markdown source-of-truth files.
 
+## Documentation Governance Prompts
+
+- `repository-documentation-audit.md`
+  - Orchestrates a full repository documentation governance audit across Product, Tech Spec, UI/UX, Design, and Delivery phases, using `critical-persona-review.md` as the canonical review prompt.
+
 ## Mapping Between Prompts and Documentation Sections
 
 | Documentation Section | Prompt Source | Primary Outputs |
@@ -27,6 +32,7 @@ These prompts are documentation prompts only. They are not for generating applic
 | `docs/01-tech-spec` | `tech-spec-prompts.md` | `tech-overview.md`, `backend-spec.md`, `frontend-spec.md`, `api-spec.md`, `db-schema.md`, `integration-spec.md`, `security-nfr.md`, `diagrams/*`, `tech-spec-summary.html` |
 | `docs/02-ui-ux` | `ui-ux-prompts.md` | `ui-overview.md`, `information-architecture.md`, `user-flows.md`, `screen-inventory.md`, `wireframes.md`, `components.md`, `design-principles.md`, `ui-mockups.md`, `ui-ux-summary.html` |
 | `docs/03-design` | `design-prompts.md` | architecture/system-design markdown, ADR documentation, design diagrams, `design-summary.html` |
+| Repository-wide documentation audit | `repository-documentation-audit.md` | consolidated repository health scoring, cross-phase findings, critical risks, readiness rating, and top-priority fix list |
 | HTML summaries | `html-generation-prompts.md` | `product-summary.html`, `tech-spec-summary.html`, `ui-ux-summary.html`, `design-summary.html` |
 
 ## Prompt Usage Workflow
