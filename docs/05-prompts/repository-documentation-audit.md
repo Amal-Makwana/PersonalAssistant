@@ -148,6 +148,27 @@ Example recommendation types:
 - Add accessibility acceptance criteria
 - Add delivery milestone breakdown
 
+
+## HTML Summary Compliance by Phase
+
+For each phase, audit the section HTML summary (if expected) against these standards:
+- Coverage: includes all major markdown topics in the phase.
+- Consistency: no contradiction with markdown source-of-truth docs.
+- Traceability: source files and mappings are explicit.
+- Flow: coherent, summary-first executive readability.
+- Style: aligned to `docs/00-product/product-summary.html` visual system.
+- Synchronization: regenerated when markdown changed.
+
+Include a table:
+
+| Phase | Coverage | Consistency | Traceability | Flow | Style | Synchronization |
+|---|---|---|---|---|---|---|
+| Product | Pass/Gap | Pass/Gap | Pass/Gap | Pass/Gap | Pass/Gap | Pass/Gap |
+| Tech Spec | Pass/Gap | Pass/Gap | Pass/Gap | Pass/Gap | Pass/Gap | Pass/Gap |
+| UI/UX | Pass/Gap | Pass/Gap | Pass/Gap | Pass/Gap | Pass/Gap | Pass/Gap |
+| Architecture (Design) | Pass/Gap | Pass/Gap | Pass/Gap | Pass/Gap | Pass/Gap | Pass/Gap |
+| Delivery | Pass/Gap | Pass/Gap | Pass/Gap | Pass/Gap | Pass/Gap | Pass/Gap |
+
 ## Top Repository Improvements
 
 List the 10 most important improvements across all phases.

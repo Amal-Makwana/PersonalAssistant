@@ -97,13 +97,13 @@ Rules:
 
 # 6. Dual‑Layer Documentation Rule
 
-Each documentation area must have:
+Each documentation area must maintain two synchronized layers:
 
 ### Markdown
 Detailed working documentation (source of truth)
 
 ### HTML Summary
-Stakeholder presentation layer
+Stakeholder-facing consolidated executive view generated from markdown.
 
 Required summaries:
 
@@ -115,7 +115,15 @@ docs/03-design/design-summary.html
 docs/04-delivery/delivery-summary.html
 ```
 
-Markdown changes must update HTML summaries in the **same commit**.
+Mandatory standards for every section-level HTML summary:
+- Must be a rich consolidated view, not a lightweight overview.
+- Must include all major section content: concepts, decisions, requirements, constraints, traceability anchors, and open questions from markdown.
+- Must preserve coherent flow: overview/purpose -> narrative synthesis -> source-mapped subsections -> traceability/coverage -> risks/gaps/open questions (where relevant).
+- Must include explicit source mapping back to markdown files and preserve markdown-to-HTML traceability.
+- Must not omit important markdown content for brevity; condense and structure for readability.
+- Must follow the visual system used by `docs/00-product/product-summary.html` (hero/header, chips/tags, stats cards, section cards, source labels, grids/mini-cards, traceability tables, and callouts) unless a shared template is introduced later.
+
+Markdown changes must regenerate impacted section HTML summaries in the **same commit**.
 
 ---
 
@@ -129,6 +137,17 @@ flowchart LR
 ```
 
 Markdown and HTML documentation **must remain synchronized**.
+
+## HTML Summary Audit Checklist (Required)
+
+Use this checklist in reviews and audits:
+
+- Coverage: includes all major markdown topics for the section.
+- Consistency: no contradictions with markdown source files.
+- Traceability: source files are explicitly identified.
+- Flow: ordering is coherent and executive-readable.
+- Style: visual language aligns with `docs/00-product/product-summary.html`.
+- Synchronization: regenerated in same change set whenever markdown changes.
 
 ---
 

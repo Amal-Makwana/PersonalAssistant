@@ -24,7 +24,7 @@ When generating or updating documentation, use prompts from this library to ensu
 For every major documentation section, maintain two synchronized layers:
 
 1. **Markdown files** = detailed source of truth.
-2. **Single premium HTML summary** = consolidated stakeholder-facing presentation.
+2. **Single premium HTML summary** = consolidated stakeholder-facing executive view.
 
 Required consolidated HTML files:
 - `docs/00-product/product-summary.html`
@@ -33,7 +33,14 @@ Required consolidated HTML files:
 - `docs/03-design/design-summary.html`
 - `docs/04-delivery/delivery-summary.html`
 
-Whenever markdown docs in a section change, the section summary HTML must be refreshed in the same PR/commit.
+Mandatory HTML summary standard for every section:
+- HTML summaries are not lightweight overviews; they must consolidate all major concepts, decisions, requirements, constraints, traceability anchors, and open questions from the section markdown.
+- Preserve logical flow: section purpose/overview, consolidated narrative, key subsection synthesis, source mapping, traceability/coverage view, and gaps/risks/open questions where relevant.
+- Include explicit mapping back to source markdown files and maintain clear stakeholder readability.
+- Do not omit important markdown content for brevity; condense and structure it for readability instead.
+- Use the visual system of `docs/00-product/product-summary.html` as the canonical style baseline (hero/header, chips, stats cards, section cards, source labels, content grids, traceability tables, and callouts) unless a shared template is later introduced.
+
+Whenever markdown docs in a section change, the section summary HTML must be regenerated in the same PR/commit.
 
 ## Required Process
 

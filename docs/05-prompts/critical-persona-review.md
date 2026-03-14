@@ -86,6 +86,7 @@ architecture ↔ components ↔ reliability model
 7. Scoring is mandatory for every phase audit.
 8. Always provide a numeric `X/5` score using the allowed 0.5-step increment scale.
 9. Do not skip scoring for incomplete docs; assign score and explain.
+10. Validate section HTML summary quality (if present): coverage completeness, markdown consistency, source traceability, flow readability, style alignment to Product summary, and synchronization status.
 
 Output Format:
 
@@ -159,4 +160,4 @@ Open Questions
 List the top 3 to 5 changes that would raise the score.
 
 Dual-Layer Documentation Reminder:
-If markdown changes are recommended, regenerate HTML summaries.
+If markdown changes are recommended, regenerate corresponding section HTML summaries in the same change set as rich consolidated executive views with complete source coverage and Product-style visual consistency.

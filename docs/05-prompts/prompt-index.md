@@ -26,7 +26,7 @@ These prompts are documentation prompts only. They are not for generating applic
 - **Purpose:** Run deterministic, documentation-only critical reviews using a phase-appropriate expert persona to improve clarity, completeness, traceability, and readiness.
 - **Supported phases:** Product, Tech Spec, UI/UX, Design, Delivery.
 - **Output structure:** Persona justification, mandatory phase score (`X/5`), executive critique, findings table, priority fixes, rewrite suggestions, traceability validation, risk analysis, and score improvement path.
-- **Governance notes:** Markdown-first workflow; no application code generation; regenerate the corresponding HTML summary whenever markdown sources are changed.
+- **Governance notes:** Markdown-first workflow; no application code generation; regenerate the corresponding HTML summary whenever markdown sources are changed. HTML summaries must be rich consolidated views with complete section coverage, explicit source mapping, and Product-summary-aligned styling.
 - **Location:** `docs/05-prompts/critical-persona-review.md`
 
 ### Repository Documentation Audit
@@ -49,7 +49,7 @@ These prompts are documentation prompts only. They are not for generating applic
 When updating only Tech Spec and/or Design documentation:
 - Start with `critical-persona-review.md` for the target phase (`tech-spec` or `design`) to drive focused quality and traceability edits.
 - Use `repository-documentation-audit.md` when you need a full cross-phase governance validation across Product -> Tech Spec -> UI/UX -> Design -> Delivery.
-- Keep markdown as source of truth and refresh the corresponding section HTML summary in the same change set.
+- Keep markdown as source of truth and regenerate the corresponding section HTML summary in the same change set as a rich consolidated executive view (not a lightweight overview).
 
 ## Repository Commands
 
@@ -86,8 +86,10 @@ Run audit - delivery
 2. Select the prompt file matching the documentation section you are updating.
 3. Run the markdown-generation prompt first and update markdown source-of-truth artifacts.
 4. Run the corresponding HTML-generation prompt to refresh the section summary page.
-5. Validate consistency across linked files (requirements ↔ stories ↔ acceptance criteria; specs ↔ diagrams; flows ↔ screens ↔ components).
-6. Keep only documentation changes in the resulting update.
+5. Ensure HTML summary quality: comprehensive section coverage, explicit markdown source mapping, logical narrative flow, traceability/coverage view, and risks/gaps where relevant.
+6. Ensure HTML summary style follows `docs/00-product/product-summary.html` as canonical baseline unless a shared template is introduced.
+7. Validate consistency across linked files (requirements ↔ stories ↔ acceptance criteria; specs ↔ diagrams; flows ↔ screens ↔ components).
+8. Keep only documentation changes in the resulting update.
 
 ## Prompt Governance
 
@@ -97,3 +99,15 @@ Run audit - delivery
 - Prompts must generate markdown documentation first.
 - HTML files are presentation layers generated from markdown source-of-truth documentation.
 - Prompts should preserve enterprise-grade structure, traceability, and editorial consistency.
+
+
+## HTML Summary Standards (Auditable)
+
+Every section-level summary HTML must satisfy all of the following:
+
+- Coverage: includes all major topics from markdown files in that section.
+- Consistency: does not conflict with markdown source-of-truth content.
+- Traceability: explicitly maps sections/cards/tables back to source markdown files.
+- Flow: reads as a coherent executive narrative with a clear table of contents.
+- Style: uses the same design language as `docs/00-product/product-summary.html`.
+- Synchronization: regenerated in the same change set when markdown changes.

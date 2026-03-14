@@ -41,7 +41,7 @@ Important constraints:
 - Do NOT modify technical implementation code.
 - Only documentation outputs.
 
-After markdown is complete, regenerate docs/00-product/product-summary.html as the stakeholder-facing presentation layer derived from markdown.
+After markdown is complete, regenerate docs/00-product/product-summary.html as a rich consolidated executive view with complete section coverage, source mappings, traceability cues, and canonical Product visual style.
 ```
 
 ---
@@ -74,7 +74,7 @@ Output rules:
 - Keep enterprise PRD tone.
 - Do NOT generate application code.
 
-After merge/update, regenerate docs/00-product/product-summary.html from markdown.
+After merge/update, regenerate docs/00-product/product-summary.html from markdown as a complete executive synthesis with source mappings and traceability coverage.
 ```
 
 ---
@@ -105,7 +105,7 @@ Constraints:
 - Documentation only.
 - Do NOT generate application code.
 
-After updates, regenerate docs/00-product/product-summary.html from the final markdown.
+After updates, regenerate docs/00-product/product-summary.html from final markdown as a complete executive synthesis with source mappings and traceability coverage.
 ```
 
 ---
@@ -126,9 +126,11 @@ Follow .github/copilot-instructions.md and docs/99-ai-rules/AI_DEVELOPMENT_WORKF
 Task: Regenerate docs/00-product/product-summary.html using docs/00-product markdown as the only source of truth.
 
 Presentation goals:
-- Executive-friendly narrative and visual hierarchy.
-- Coverage of vision, scope, personas, requirements, stories, and acceptance posture.
-- Clear traceability cues (FR/US references).
+- Executive-friendly narrative and visual hierarchy with table of contents.
+- Comprehensive condensed coverage of all product markdown files (not a shallow overview).
+- Clear source mapping labels and traceability cues (FR/US/AC references).
+- Include assumptions/constraints, summary stats, and open questions where present in markdown.
+- Maintain canonical Product visual language (this file is the style baseline).
 
 Rules:
 - Do not invent net-new product behavior not present in markdown.
