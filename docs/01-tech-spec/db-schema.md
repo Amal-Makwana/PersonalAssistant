@@ -97,16 +97,16 @@ Primary domains:
 - **required/optional:** provider ids and errors optional
 - **keys:** PK `id`, unique `(reminder_id, attempt_no)`
 - **relationships:** N:1 `reminders`
-- **constraints:** status enum with terminal/non-terminal states
+- **constraints:** status enum uses canonical sync states where applicable: `PENDING`, `IN_PROGRESS`, `SYNCED`, `FAILED_RETRYABLE`, `FAILED_TERMINAL`
 - **lifecycle notes:** drives support diagnostics
 
 ### calendar_sync_records
 - **purpose:** Google Calendar linkage (MVP-critical)
-- **fields:** `id UUID`, `event_id UUID`, `provider_event_id TEXT`, `sync_status TEXT`, `last_synced_at TIMESTAMPTZ NULL`, `error_code TEXT NULL`, `created_at`, `updated_at`
+- **fields:** `id UUID`, `event_id UUID`, `provider_event_id TEXT`, `sync_status TEXT`, `last_synced_at TIMESTAMPTZ NULL`, `failure_reason TEXT NULL`, `provider_status TEXT NULL`, `last_attempt_at TIMESTAMPTZ NULL`, `created_at`, `updated_at`
 - **required/optional:** sync metadata optional when pending
 - **keys:** PK `id`, unique `(event_id)`
 - **relationships:** 1:1 `events`
-- **constraints:** one record per event; tracks retry/terminal state when sync enabled
+- **constraints:** one record per event; `sync_status` must use canonical states `PENDING`, `IN_PROGRESS`, `SYNCED`, `FAILED_RETRYABLE`, `FAILED_TERMINAL`
 - **lifecycle notes:** updated asynchronously
 
 ### audit_logs
@@ -141,6 +141,17 @@ Primary domains:
 - FK constraints enforce ownership lineage
 - Unique constraints prevent duplicate event/reminder creation
 - Check constraints for timestamps/enums/confidence range
+
+
+## 8.1 MVP Channel Enforcement Guardrail
+Although `whatsapp` and `sms` enum values may be pre-modeled for future migrations, MVP services must reject creation or scheduling of reminders for non-MVP channels at validation boundaries.
+
+Enforcement requirement:
+- Schema-level enum presence does not imply runtime enablement.
+- Application service validation (API boundary + worker scheduling boundary) must reject non-MVP channel writes in MVP environments.
+- Any rejected non-MVP channel request must return a validation/policy conflict response and emit an audit event.
+
+Trace: FR-09, FR-10, US-07
 
 ## 9. Audit Fields
 Standard fields: `created_at`, `updated_at`, optional `deleted_at`, plus actor/audit in `audit_logs` for state changes.

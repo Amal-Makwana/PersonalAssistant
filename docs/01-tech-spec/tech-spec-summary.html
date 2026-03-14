@@ -16,47 +16,63 @@
 </head>
 <body>
   <h1>Technical Specification Summary (MVP-Aligned)</h1>
-  <p>Markdown source: <code>tech-overview.md</code>, <code>backend-spec.md</code>, <code>integration-spec.md</code>, and diagrams under <code>diagrams/</code>.</p>
+  <p>Markdown source of truth: <code>docs/01-tech-spec/*.md</code>.</p>
 
   <div class="card">
-    <h2>MVP Scope</h2>
+    <h2>MVP Scope Boundary</h2>
     <ul>
-      <li>Gmail ingestion and event detection/extraction</li>
-      <li>Persistence and duplicate prevention</li>
+      <li>Gmail ingestion, event detection/extraction, persistence, duplicate prevention</li>
       <li>Reminder schedule generation (4h / 1h / 15m)</li>
-      <li>Google Calendar sync as committed MVP integration (FR-09)</li>
+      <li>Google Calendar sync as the only active downstream capability in MVP</li>
+      <li>WhatsApp and SMS remain post-MVP and operationally disabled in MVP</li>
     </ul>
   </div>
 
   <div class="card">
-    <h2>Post-MVP Scope</h2>
-    <ul>
-      <li>WhatsApp reminders (FR-07)</li>
-      <li>SMS reminders (FR-08)</li>
-    </ul>
+    <h2>Canonical Sync State Contract</h2>
+    <p><code>PENDING</code>, <code>IN_PROGRESS</code>, <code>SYNCED</code>, <code>FAILED_RETRYABLE</code>, <code>FAILED_TERMINAL</code></p>
+    <p>Any transition to <code>FAILED_TERMINAL</code> persists <code>failure_reason</code>, <code>provider_status</code>, and <code>last_attempt_at</code>.</p>
   </div>
 
   <div class="card">
-    <h2>Reliability and Failure Handling</h2>
-    <ul>
-      <li>Calendar sync trigger is after successful persistence + dedupe pass.</li>
-      <li>Retry policy: 5 attempts with exponential backoff (5s, 10s, 30s, 60s, 120s).</li>
-      <li>Timeout: 10s per Google Calendar call.</li>
-      <li>Terminal failures are logged with reason code and persisted state.</li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <h2>Traceability</h2>
+    <h2>Idempotency and Conflict Outcomes</h2>
     <table>
-      <thead><tr><th>Product Reference</th><th>Technical Realization</th></tr></thead>
+      <thead><tr><th>Scenario</th><th>Persisted Status</th><th>API-visible Outcome</th></tr></thead>
       <tbody>
-        <tr><td>FR-09 / US-09</td><td>MVP Google Calendar sync with 10-second target, retry policy, terminal status handling</td></tr>
-        <tr><td>FR-10 / US-07</td><td>Dedupe and idempotency before sync side effects</td></tr>
-        <tr><td>FR-04 / US-05</td><td>Extraction confidence policy and observability hooks</td></tr>
-        <tr><td>FR-07 / FR-08</td><td>Documented as post-MVP integrations only</td></tr>
+        <tr><td>Duplicate enqueue attempt</td><td>Existing <code>PENDING</code>/<code>IN_PROGRESS</code> retained</td><td>Replay-safe <code>202</code> with dedupe metadata</td></tr>
+        <tr><td>Repeated sync attempt</td><td><code>IN_PROGRESS</code> retained unless retry executes</td><td>No duplicate provider create</td></tr>
+        <tr><td>Retry exhaustion</td><td><code>FAILED_TERMINAL</code> + terminal metadata</td><td>Terminal status visible for remediation</td></tr>
+        <tr><td>Already-synced replay</td><td><code>SYNCED</code> retained</td><td><code>alreadySynced=true</code> response metadata</td></tr>
       </tbody>
     </table>
+  </div>
+
+  <div class="card">
+    <h2>Integration MVP Execution Boundary</h2>
+    <ul>
+      <li>Active in MVP: Google OAuth, Gmail ingestion, Google Calendar sync</li>
+      <li>Disabled in MVP: WhatsApp/SMS adapters and provider runbooks</li>
+      <li>Post-MVP providers are excluded from MVP SLOs and support scope</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Measurable Security / NFR Controls</h2>
+    <ul>
+      <li>Monthly rolling-window availability verification (excluding planned maintenance)</li>
+      <li>Quarterly access review evidence</li>
+      <li>Dependency scan release gate for unresolved high/critical vulnerabilities</li>
+      <li>Annual restore drill evidence</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Failure Path Diagram Coverage</h2>
+    <ul>
+      <li>Calendar sync transient failure -> retry -> success sequence</li>
+      <li>Calendar sync terminal failure -> persisted terminal status -> operator remediation sequence</li>
+    </ul>
+    <p>See <code>docs/01-tech-spec/diagrams/sequence-diagram-placeholders.md</code>.</p>
   </div>
 </body>
 </html>

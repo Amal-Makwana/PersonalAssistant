@@ -5,7 +5,7 @@ Define major components inside application containers and their dependencies.
 
 ## Frontend Components
 - Auth Module (session bootstrap, protected routing)
-- Preferences Module (calendar sync + future channel toggles)
+- Preferences Module (calendar sync controls; future channel toggles remain disabled in MVP)
 - Events Module (event/reminder status visibility)
 - API Client Layer (typed requests, retries, auth refresh)
 - Shared UI Components (`packages/ui`)
