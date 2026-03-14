@@ -34,6 +34,12 @@ Whenever markdown files in a section are created or updated, refresh that sectio
 
 Use this as the single-entry rich HTML artifact for complete repository documentation coverage, section summaries, and source manifest visibility.
 
+## Comprehensive Markdown Documentation
+
+- `docs/full-documentation.md`
+
+Use this as the complete markdown handbook for repository structure, documentation governance, section-by-section coverage, and contributor workflow.
+
 ## Canonical Prompt Library
 
 The canonical prompt library for generating and maintaining repository documentation is located in:
