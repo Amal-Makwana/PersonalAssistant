@@ -1,119 +1,44 @@
 # Prompt Library Index
 
-## Purpose of Prompt Library
+## Purpose
+This folder stores canonical prompts used to generate and maintain repository documentation.
 
-This folder stores the canonical, reusable prompts used to generate and improve this repository's documentation set. The prompts are written so future AI agents can reliably reproduce the current documentation quality and structure across Product, Tech Spec, UI/UX, Design, Delivery, and HTML summary outputs.
+These are documentation-only prompts (not for application code generation).
 
-These prompts are documentation prompts only. They are not for generating application features or production code.
+## Documentation Phases
+1. Product (`docs/00-product`)
+2. UI/UX (`docs/01-ui-ux`)
+3. Design (`docs/02-design`) — merged technical + architecture docs
+4. Task Planning (`docs/03-task-planning`)
+5. Delivery (`docs/04-delivery`)
 
 ## Prompt Categories
-
 - `product-prompts.md`
-  - Prompts used to generate and improve `docs/00-product` markdown and product summary HTML.
-- `tech-spec-prompts.md`
-  - Prompts used to generate and improve `docs/01-tech-spec` markdown and technical summary HTML.
 - `ui-ux-prompts.md`
-  - Prompts used to generate and improve `docs/02-ui-ux` markdown and UI/UX summary HTML.
 - `design-prompts.md`
-  - Prompts used to generate and improve `docs/03-design` architecture/system-design documentation and summary HTML.
+- `task-planning-prompts.md`
 - `html-summary-generation.md`
-  - Coverage-enforced prompt for regenerating section HTML summaries as complete, stakeholder-facing consolidated views from markdown source-of-truth files.
+- `critical-persona-review.md`
+- `delivery-prompts.md`
+- `repository-documentation-audit.md`
 
-## Governance & Review Prompts
+## Canonical Contract References
+Prompts must reference these canonical artifacts rather than redefining shared concepts:
+- Runtime flow: `docs/02-design/runtime-flow.md`
+- Reliability policy: `docs/02-design/reliability-policy.md`
+- Traceability matrix: `docs/00-product/traceability-matrix.md`
 
-### Critical Persona Review by Documentation Phase
-
-- **Purpose:** Run deterministic, documentation-only critical reviews using a phase-appropriate expert persona to improve clarity, completeness, traceability, and readiness.
-- **Supported phases:** Product, Tech Spec, UI/UX, Design, Delivery.
-- **Output structure:** Persona justification, mandatory phase score (`X/5`), executive critique, findings table, priority fixes, rewrite suggestions, traceability validation, risk analysis, and score improvement path.
-- **Governance notes:** Markdown-first workflow; no application code generation; regenerate the corresponding HTML summary whenever markdown sources are changed. HTML summaries must be rich consolidated views with complete section coverage, explicit source mapping, and Product-summary-aligned styling.
-- **Location:** `docs/05-prompts/critical-persona-review.md`
-
-### Repository Documentation Audit
-
-- **Purpose:** Run a full repository documentation governance audit across Product, Tech Spec, UI/UX, Design, and Delivery.
-- **Output:** Mandatory per-phase repository health scores (`X/5`) plus mandatory overall repository score (`X/5`), phase critiques, cross-phase inconsistencies, risk analysis, and implementation readiness.
-- **Location:** `docs/05-prompts/repository-documentation-audit.md`
-
-
-## Audit Scoring Rules (Mandatory)
-
-- All audits must return explicit numeric scores in `X/5` format.
-- Allowed values are whole-step or 0.5-step increments only: `0/5`, `0.5/5`, `1/5`, `1.5/5`, `2/5`, `2.5/5`, `3/5`, `3.5/5`, `4/5`, `4.5/5`, `5/5`.
-- Full repository audits must return all five phase scores plus one overall repository score.
-- Phase audits must return one phase score and a required score improvement path section.
-- Scoring is never optional, even for incomplete or placeholder documentation.
-
-## Recommended Usage for Phase Updates
-
-When updating only Tech Spec and/or Design documentation:
-- Start with `critical-persona-review.md` for the target phase (`tech-spec` or `design`) to drive focused quality and traceability edits.
-- Use `repository-documentation-audit.md` when you need a full cross-phase governance validation across Product -> Tech Spec -> UI/UX -> Design -> Delivery.
-- Keep markdown as source of truth and regenerate the corresponding section HTML summary in the same change set as a rich consolidated executive view (not a lightweight overview).
-- Run the HTML Coverage Check; HTML summaries that fail coverage are documentation defects.
-- For UI/UX updates, explicitly preserve MVP boundaries (Gmail + Google Calendar sync in MVP; WhatsApp/SMS post-MVP only) and include Product/Tech traceability tags (for example FR-09/US-09, FR-10/US-07) in markdown and HTML artifacts.
-- For Design updates, enforce MVP architecture boundaries (Gmail + Google Calendar sync active; WhatsApp/SMS post-MVP only), include reliability/failure/remediation coverage, and regenerate `docs/03-design/design-summary.html` with complete source coverage.
-
-## Repository Commands
-
-Run full audit
-Runs repository-wide documentation governance audit and saves output to `docs/06-governance`.
-
-Run audit - <phase>
-Runs documentation review for a specific phase (`product`, `tech-spec`, `ui-ux`, `design`, `delivery`).
-
-Examples:
-
-Run audit - product  
-Run audit - tech-spec  
-Run audit - ui-ux  
-Run audit - design  
-Run audit - delivery
-
-## Mapping Between Prompts and Documentation Sections
-
+## Prompt-to-Section Mapping
 | Documentation Section | Prompt Source | Primary Outputs |
 | --- | --- | --- |
-| `docs/00-product` | `product-prompts.md` | `vision.md`, `scope-v1.md`, `user-personas.md`, `requirements.md`, `user-stories.md`, `acceptance-criteria.md`, `product-summary.html` |
-| `docs/01-tech-spec` | `tech-spec-prompts.md` | `tech-overview.md`, `backend-spec.md`, `frontend-spec.md`, `api-spec.md`, `db-schema.md`, `integration-spec.md`, `security-nfr.md`, `diagrams/*`, `tech-spec-summary.html` |
-| `docs/02-ui-ux` | `ui-ux-prompts.md` | `ui-overview.md`, `information-architecture.md`, `user-flows.md`, `screen-inventory.md`, `wireframes.md`, `components.md`, `design-principles.md`, `ui-mockups.md`, `ui-ux-summary.html` |
-| `docs/03-design` | `design-prompts.md` | architecture/system-design markdown, ADR documentation, design diagrams, `design-summary.html` |
-| Repository-wide documentation audit | `repository-documentation-audit.md` | consolidated repository health scoring, cross-phase findings, critical risks, readiness rating, and top-priority fix list |
-| HTML summaries | `html-summary-generation.md` | `product-summary.html`, `tech-spec-summary.html`, `ui-ux-summary.html`, `design-summary.html`, `delivery-summary.html` |
+| `docs/00-product` | `product-prompts.md` | Product markdown + `product-summary.html` |
+| `docs/01-ui-ux` | `ui-ux-prompts.md` | UI/UX markdown + `ui-ux-summary.html` |
+| `docs/02-design` | `design-prompts.md` | Merged design markdown + `design-summary.html` |
+| `docs/03-task-planning` | `task-planning-prompts.md` | Planning markdown + `task-planning-summary.html` |
+| `docs/04-delivery` | `delivery-prompts.md` | Delivery markdown + `delivery-summary.html` |
+| HTML summaries | `html-summary-generation.md` | section summary HTML files |
 
-## Prompt Usage Workflow
-
-1. Read and follow:
-   - `.github/copilot-instructions.md`
-   - `docs/99-ai-rules/AI_DEVELOPMENT_WORKFLOW.md`
-2. Select the prompt file matching the documentation section you are updating.
-3. Run the markdown-generation prompt first and update markdown source-of-truth artifacts.
-4. Run `html-summary-generation.md` to refresh the section summary page.
-5. Ensure HTML summary quality: comprehensive section coverage, explicit markdown source mapping, logical narrative flow, traceability/coverage view, and risks/gaps where relevant.
-6. Ensure HTML summary style follows `docs/00-product/product-summary.html` as canonical baseline unless a shared template is introduced.
-7. Ensure HTML Coverage Check passes (Complete coverage, no missing major topics).
-8. Validate consistency across linked files (requirements ↔ stories ↔ acceptance criteria; specs ↔ diagrams; flows ↔ screens ↔ components).
-9. Keep only documentation changes in the resulting update.
-
-## Prompt Governance
-
-- Prompts must remain reproducible and deterministic for equivalent inputs.
-- Prompts must not generate application code.
-- Prompts must follow repository workflow rules in `.github/copilot-instructions.md` and `docs/99-ai-rules/AI_DEVELOPMENT_WORKFLOW.md`.
-- Prompts must generate markdown documentation first.
-- HTML files are presentation layers generated from markdown source-of-truth documentation.
-- Prompts should preserve enterprise-grade structure, traceability, and editorial consistency.
-
-
-## HTML Summary Standards (Auditable)
-
-Every section-level summary HTML must satisfy all of the following:
-
-- Coverage: includes all major topics from markdown files in that section.
-- Consistency: does not conflict with markdown source-of-truth content.
-- Traceability: explicitly maps sections/cards/tables back to source markdown files.
-- Flow: reads as a coherent executive narrative with a clear table of contents.
-- Style: uses the same design language as `docs/00-product/product-summary.html`.
-- Synchronization: regenerated in the same change set when markdown changes.
-- Coverage Check: explicitly reported as Complete/Partial with missing topics list.
-- Defect policy: incomplete or shallow HTML summaries are documentation defects.
+## Governance Notes
+- Always keep markdown as source of truth.
+- Regenerate impacted section HTML in the same change set.
+- Use phase order: Product -> UI/UX -> Design -> Task Planning -> Delivery.

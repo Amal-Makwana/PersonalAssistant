@@ -4,7 +4,7 @@
 Generate / Improve Full UI/UX Documentation Set
 
 ### Purpose
-Generate or improve the complete UX documentation in `docs/02-ui-ux` with enterprise-grade structure and cross-file consistency.
+Generate or improve the complete UX documentation in `docs/01-ui-ux` with enterprise-grade structure and cross-file consistency.
 
 ### When To Use
 Use when establishing the UX baseline or performing major UX documentation improvements.
@@ -13,17 +13,17 @@ Use when establishing the UX baseline or performing major UX documentation impro
 ```text
 Follow .github/copilot-instructions.md and docs/99-ai-rules/AI_DEVELOPMENT_WORKFLOW.md.
 
-Task: Generate or improve docs/02-ui-ux documentation for the Email-Driven Reminder Assistant.
+Task: Generate or improve docs/01-ui-ux documentation for the Email-Driven Reminder Assistant.
 
 Required markdown outputs:
-- docs/02-ui-ux/ui-overview.md
-- docs/02-ui-ux/information-architecture.md
-- docs/02-ui-ux/user-flows.md
-- docs/02-ui-ux/screen-inventory.md
-- docs/02-ui-ux/wireframes.md
-- docs/02-ui-ux/components.md
-- docs/02-ui-ux/design-principles.md
-- docs/02-ui-ux/ui-mockups.md
+- docs/01-ui-ux/ui-overview.md
+- docs/01-ui-ux/information-architecture.md
+- docs/01-ui-ux/user-flows.md
+- docs/01-ui-ux/screen-inventory.md
+- docs/01-ui-ux/wireframes.md
+- docs/01-ui-ux/components.md
+- docs/01-ui-ux/design-principles.md
+- docs/01-ui-ux/ui-mockups.md
 
 Documentation requirements:
 - Enterprise-grade clarity for product, design, and engineering audiences.
@@ -36,7 +36,7 @@ Constraints:
 - Markdown documentation only for source-of-truth updates.
 - Do NOT generate application code.
 
-After markdown updates, regenerate docs/02-ui-ux/ui-ux-summary.html as a rich consolidated executive view with complete section coverage, source mappings, and Product-summary-aligned visual style.
+After markdown updates, regenerate docs/01-ui-ux/ui-ux-summary.html as a rich consolidated executive view with complete section coverage, source mappings, and Product-summary-aligned visual style.
 ```
 
 ---
@@ -55,9 +55,9 @@ Use when screens are duplicated, missing, renamed inconsistently, or not traceab
 Follow .github/copilot-instructions.md and docs/99-ai-rules/AI_DEVELOPMENT_WORKFLOW.md.
 
 Task: Reconcile and improve consistency across:
-- docs/02-ui-ux/user-flows.md
-- docs/02-ui-ux/screen-inventory.md
-- docs/02-ui-ux/wireframes.md
+- docs/01-ui-ux/user-flows.md
+- docs/01-ui-ux/screen-inventory.md
+- docs/01-ui-ux/wireframes.md
 
 Required outputs:
 - One canonical ID per screen.
@@ -74,7 +74,7 @@ Constraints:
 - Documentation only.
 - Do NOT generate application code.
 
-After updates, regenerate docs/02-ui-ux/ui-ux-summary.html with complete coverage, source mapping labels, traceability cues, and Product-summary-aligned visual style.
+After updates, regenerate docs/01-ui-ux/ui-ux-summary.html with complete coverage, source mapping labels, traceability cues, and Product-summary-aligned visual style.
 ```
 
 ---
@@ -92,7 +92,7 @@ Use when component definitions are incomplete or UX behavior needs standardizati
 ```text
 Follow .github/copilot-instructions.md and docs/99-ai-rules/AI_DEVELOPMENT_WORKFLOW.md.
 
-Task: Generate or improve docs/02-ui-ux/components.md.
+Task: Generate or improve docs/01-ui-ux/components.md.
 
 Include for each component:
 - Purpose and usage context.
@@ -107,7 +107,7 @@ Rules:
 - Ensure alignment with wireframes and screen inventory.
 - Do NOT generate application code.
 
-After updates, regenerate docs/02-ui-ux/ui-ux-summary.html with complete coverage, source mapping labels, traceability cues, and Product-summary-aligned visual style.
+After updates, regenerate docs/01-ui-ux/ui-ux-summary.html with complete coverage, source mapping labels, traceability cues, and Product-summary-aligned visual style.
 ```
 
 ---
@@ -116,16 +116,16 @@ After updates, regenerate docs/02-ui-ux/ui-ux-summary.html with complete coverag
 Regenerate UI/UX HTML Summary from Markdown
 
 ### Purpose
-Refresh `docs/02-ui-ux/ui-ux-summary.html` as a premium stakeholder and design handoff summary.
+Refresh `docs/01-ui-ux/ui-ux-summary.html` as a premium stakeholder and design handoff summary.
 
 ### When To Use
-Use after any markdown change in `docs/02-ui-ux`.
+Use after any markdown change in `docs/01-ui-ux`.
 
 ### Prompt Text
 ```text
 Follow .github/copilot-instructions.md and docs/99-ai-rules/AI_DEVELOPMENT_WORKFLOW.md.
 
-Task: Regenerate docs/02-ui-ux/ui-ux-summary.html from docs/02-ui-ux markdown sources.
+Task: Regenerate docs/01-ui-ux/ui-ux-summary.html from docs/01-ui-ux markdown sources.
 
 Presentation goals:
 - Executive summary + table of contents with clear section-to-section continuity.

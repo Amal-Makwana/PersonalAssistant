@@ -1,21 +1,16 @@
-# Prompt: Section HTML Summary Generation (Coverage-Enforced)
+# Prompt: HTML Summary Generation (Coverage-Enforced)
 
-## Purpose
-Generate or regenerate section-level summary HTML files as rich, stakeholder-facing consolidated views while preserving markdown-first authority.
+Use this prompt to regenerate section HTML summaries from markdown source-of-truth files.
 
-## Scope
-Use for:
+Required summary outputs:
 - `docs/00-product/product-summary.html`
-- `docs/01-tech-spec/tech-spec-summary.html`
-- `docs/02-ui-ux/ui-ux-summary.html`
-- `docs/03-design/design-summary.html`
+- `docs/01-ui-ux/ui-ux-summary.html`
+- `docs/02-design/design-summary.html`
+- `docs/03-task-planning/task-planning-summary.html`
 - `docs/04-delivery/delivery-summary.html`
 
-## Core Rules (Mandatory)
-- Markdown remains source of truth.
-- HTML is a secondary consolidated presentation artifact.
-- Omission of major markdown content is a documentation defect.
-- Use `docs/00-product/product-summary.html` as the canonical CSS/style baseline unless a shared template is introduced later.
+Phase order:
+Product -> UI/UX -> Design -> Task Planning -> Delivery
 
 ## Generation Instructions (Mandatory)
 1. Read **all** markdown files in the target section (including relevant subfolders like diagrams where applicable).

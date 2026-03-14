@@ -13,10 +13,10 @@ The repository is **documentation-heavy and implementation-light**, with strong 
 
 | Area | Score | Rationale |
 |---|---:|---|
-| Documentation Completeness | 4/5 | `reminder-app/docs` has all sections and summary HTML files. |
-| Documentation Consistency | 2/5 | Root `docs` and `reminder-app/docs` conflict in maturity and structure. |
+| Documentation Completeness | 4/5 | `docs` has all sections and summary HTML files. |
+| Documentation Consistency | 2/5 | Root `docs` and `docs` conflict in maturity and structure. |
 | Workflow/CI Reliability | 2/5 | CI path checks reference directories that do not exist in expected naming convention. |
-| Delivery Readiness | 3/5 | Plans exist in `reminder-app/docs/04-delivery`, but no implementation skeleton exists yet. |
+| Delivery Readiness | 3/5 | Plans exist in `docs/05-delivery`, but no implementation skeleton exists yet. |
 | Governance Traceability | 5/5 | Previous and current audit artifacts exist, enabling controlled remediation. |
 
 ## What Was Checked
@@ -31,8 +31,8 @@ The repository is **documentation-heavy and implementation-light**, with strong 
 
 ### 1) Duplicate documentation trees are diverging (**High**)
 
-- Root docs (`docs/...`) and app docs (`reminder-app/docs/...`) both exist.
-- `reminder-app/docs` includes complete Design and Delivery artifacts with HTML summaries.
+- Root docs (`docs/...`) and app docs (`docs/...`) both exist.
+- `docs` includes complete Design and Delivery artifacts with HTML summaries.
 - Root docs still show Design/Delivery as minimal placeholders and have no summary HTML for those phases.
 
 **Impact:** Contributors can follow different “sources of truth,” causing planning and execution drift.
@@ -40,7 +40,7 @@ The repository is **documentation-heavy and implementation-light**, with strong 
 ### 2) Root governance audit is stale relative to current repository reality (**High**)
 
 - Existing audit in root reports Design/Delivery as missing.
-- That is now true for root `docs`, but not true for `reminder-app/docs` where those artifacts exist.
+- That is now true for root `docs`, but not true for `docs` where those artifacts exist.
 
 **Impact:** Leadership/readiness decisions based on a partial or stale view may be incorrect.
 
@@ -53,7 +53,7 @@ In `reminder-app/.github/workflows/ci.yml`, the docs check validates:
 But actual naming in repository is:
 - `docs/02-ui-ux`
 - `docs/03-design`
-- `docs/04-delivery`
+- `docs/05-delivery`
 
 **Impact:** CI can fail or pass incorrectly, reducing trust in automation gates.
 
@@ -74,7 +74,7 @@ No broken markdown links were detected in repository markdown files during this 
 ### P0 (Immediate - same day)
 
 1. **Declare one canonical docs root**
-   - Choose either root `docs/` or `reminder-app/docs/` as authoritative.
+   - Choose either root `docs/` or `docs/` as authoritative.
    - Add a short banner in the non-canonical set pointing to canonical location.
    - If root docs are deprecated, archive or remove them after migration.
 
@@ -84,7 +84,7 @@ No broken markdown links were detected in repository markdown files during this 
      - `docs/01-tech-spec`
      - `docs/02-ui-ux`
      - `docs/03-design`
-     - `docs/04-delivery`
+     - `docs/05-delivery`
 
 3. **Create a single readiness dashboard doc**
    - Add `docs/06-governance/readiness-dashboard.md` (or in canonical tree) with:
@@ -133,7 +133,7 @@ find reminder-app -maxdepth 4 -type f | sed 's#^./##' | head -n 300
 find docs -maxdepth 3 -type f | sort
 python - <<'PY'
 from pathlib import Path
-for base in ['docs','reminder-app/docs']:
+for base in ['docs','docs']:
     p=Path(base)
     print('\n',base)
     for phase,file in [('00-product','product-summary.html'),('01-tech-spec','tech-spec-summary.html'),('02-ui-ux','ui-ux-summary.html'),('03-design','design-summary.html'),('04-delivery','delivery-summary.html')]:
