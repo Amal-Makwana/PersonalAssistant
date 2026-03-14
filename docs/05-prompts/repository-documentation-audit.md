@@ -1,5 +1,23 @@
 # Prompt: Repository Documentation Audit
 
+Repository Command:
+Run full audit
+
+Command Behavior:
+
+1. Execute this prompt file: `docs/05-prompts/repository-documentation-audit.md`.
+2. Use scope: Full repository.
+3. Generate a repository documentation governance audit report.
+4. Save output to `docs/06-governance/repo-audit-YYYY-MM-DD.md`.
+
+Output File Rules:
+
+- Create `docs/06-governance` if it does not exist.
+- Use today's date in `YYYY-MM-DD` format.
+- Never overwrite an existing report.
+- If the dated filename already exists, append incremental suffixes (`-1`, `-2`, etc.).
+- Return a short audit summary in the response.
+
 Purpose:
 Run a full documentation governance audit across the repository.
 

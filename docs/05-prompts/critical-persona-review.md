@@ -1,5 +1,35 @@
 # Prompt: Critical Persona Review by Documentation Phase
 
+Repository Command:
+Run audit - <phase>
+
+Supported phases:
+product
+tech-spec
+ui-ux
+design
+delivery
+
+Command Behavior:
+
+1. Execute this prompt file: `docs/05-prompts/critical-persona-review.md`.
+2. Map `<phase>` to target files:
+   - product -> `docs/00-product/*`
+   - tech-spec -> `docs/01-tech-spec/*`
+   - ui-ux -> `docs/02-ui-ux/*`
+   - design -> `docs/03-design/*`
+   - delivery -> `docs/04-delivery/*`
+3. Generate a phase documentation review.
+4. Save output to `docs/06-governance/audit-<phase>-YYYY-MM-DD.md`.
+
+Output File Rules:
+
+- Create `docs/06-governance` if it does not exist.
+- Use today's date in `YYYY-MM-DD` format.
+- Never overwrite an existing report.
+- If the dated filename already exists, append incremental suffixes (`-1`, `-2`, etc.).
+- Return a short audit summary in the response.
+
 Purpose:
 Critically review documentation using a phase-appropriate expert persona.
 
