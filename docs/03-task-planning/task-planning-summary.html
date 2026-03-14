@@ -1,13 +1,326 @@
-<!DOCTYPE html>
-<html><head><meta charset="utf-8"><title>Task Planning Summary</title></head>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Planning Summary | Email-Driven Reminder Assistant</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f6fb;
+      --panel: #ffffff;
+      --ink: #172033;
+      --muted: #58627a;
+      --line: #dbe3f1;
+      --brand: #305dff;
+      --brand-soft: #e8efff;
+      --ok: #0b7a63;
+      --warn: #9a6700;
+      --radius: 16px;
+      --shadow: 0 14px 40px rgba(21, 37, 86, 0.08);
+      --max: 1160px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 15% -10%, #dbe6ff 0%, rgba(219, 230, 255, 0) 38%),
+        radial-gradient(circle at 85% -10%, #e3eeff 0%, rgba(227, 238, 255, 0) 35%),
+        var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+    }
+    .hero-wrap {
+      background: linear-gradient(135deg, #102856 0%, #1d4194 40%, #2f5dff 100%);
+      color: #f7faff;
+      padding: 2.5rem 1.25rem 3rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+    }
+    .hero { max-width: var(--max); margin: 0 auto; display: grid; gap: 1.3rem; }
+    .eyebrow { letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.78rem; opacity: 0.9; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(1.9rem, 4vw, 3rem); line-height: 1.15; max-width: 24ch; }
+    .hero p { margin: 0; max-width: 78ch; color: #dbe8ff; font-size: 1.03rem; }
+    .chips { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+    .chip {
+      border: 1px solid rgba(255, 255, 255, 0.33);
+      color: #eff5ff;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      padding: 0.35rem 0.7rem;
+      background: rgba(255, 255, 255, 0.09);
+    }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.75rem; }
+    .stat { border: 1px solid rgba(255, 255, 255, 0.23); border-radius: 12px; padding: 0.8rem; background: rgba(8, 20, 48, 0.26); }
+    .stat strong { display: block; font-size: 1.28rem; }
+    .stat span { font-size: 0.82rem; color: #d6e4ff; }
+    main { max-width: var(--max); margin: 0 auto; padding: 1.2rem; display: grid; gap: 1rem; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.1rem; box-shadow: var(--shadow); }
+    .toc-grid, .columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 0.65rem; margin-top: 0.75rem; }
+    .toc-grid a { text-decoration: none; color: var(--ink); border: 1px solid var(--line); border-radius: 12px; padding: 0.65rem 0.75rem; background: #fbfcff; font-size: 0.94rem; }
+    .toc-grid a:hover { border-color: #b8c8f2; background: #f3f7ff; }
+    h2, h3 { margin: 0 0 0.65rem; line-height: 1.25; }
+    h2 { font-size: 1.35rem; }
+    h3 { font-size: 1.03rem; }
+    p { margin: 0.45rem 0 0; color: var(--muted); }
+    ul { margin: 0.5rem 0 0; padding-left: 1.1rem; color: var(--muted); }
+    li { margin: 0.22rem 0; }
+    .mini { border: 1px solid var(--line); border-radius: 12px; padding: 0.85rem; background: #fcfdff; }
+    .source {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-radius: 999px;
+      background: var(--brand-soft);
+      color: #123baf;
+      border: 1px solid #cddcff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.28rem 0.62rem;
+      margin-bottom: 0.8rem;
+    }
+    .trace { width: 100%; border-collapse: collapse; margin-top: 0.7rem; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; font-size: 0.92rem; }
+    .trace th, .trace td { padding: 0.65rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    .trace th { background: #f3f7ff; color: #233a72; }
+    .callout { margin-top: 0.85rem; border-radius: 12px; border: 1px solid #c5d7ff; background: linear-gradient(180deg, #f4f8ff 0%, #eef4ff 100%); padding: 0.85rem; }
+    .warn { border-color: #f2d5a5; background: linear-gradient(180deg, #fff9ef 0%, #fff4df 100%); }
+    code { background: #f5f7fd; border: 1px solid #e0e7f8; border-radius: 6px; padding: 0.02rem 0.3rem; }
+    footer { margin: 0.5rem 0 1rem; text-align: center; color: #6a748c; font-size: 0.82rem; }
+  </style>
+</head>
 <body>
-<h1>Task Planning Summary</h1>
-<p>Markdown is the source of truth for this section.</p>
-<h2>Source Coverage</h2>
-<ul>
-<li>implementation-plan.md</li>
-<li>milestone-plan.md</li>
-<li>task-breakdown.md</li>
-<li>delivery-increments.md</li>
-</ul>
-</body></html>
+  <header class="hero-wrap">
+    <div class="hero">
+      <div class="eyebrow">Task Planning Documentation • Executive Consolidated View</div>
+      <h1>Email-Driven Reminder Assistant — Task Planning Summary</h1>
+      <p>This summary consolidates all Task Planning markdown artifacts into one execution-facing view that bridges Design contracts to Delivery readiness. Markdown remains source of truth.</p>
+      <div class="chips">
+        <span class="chip">Phase bridge: Design → Task Planning → Delivery</span>
+        <span class="chip">MVP path: Gmail → Extraction → Persistence → Dedupe → Scheduling → Calendar</span>
+        <span class="chip">Future phase only: WhatsApp / SMS</span>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong>4</strong><span>Task-planning markdown sources consolidated</span></div>
+        <div class="stat"><strong>6</strong><span>Execution workstreams (WS1..WS6)</span></div>
+        <div class="stat"><strong>4</strong><span>Milestones (M1..M4)</span></div>
+        <div class="stat"><strong>6</strong><span>Delivery increments (I1..I6)</span></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="card" id="toc">
+      <h2>Table of Contents</h2>
+      <div class="toc-grid">
+        <a href="#bridge">1) Phase Bridge and Scope Guardrails</a>
+        <a href="#workstreams">2) Implementation Workstreams and Sequencing</a>
+        <a href="#milestones">3) Milestone Entry/Exit Governance</a>
+        <a href="#tasks">4) Task Breakdown and Dependency Logic</a>
+        <a href="#increments">5) Delivery Increments and Demo Plan</a>
+        <a href="#traceability">6) Traceability and Critical Path Matrix</a>
+        <a href="#risks">7) Assumptions, Constraints, Open Questions</a>
+        <a href="#coverage">8) Source Coverage + HTML Coverage Check</a>
+      </div>
+    </section>
+
+    <section class="card" id="bridge">
+      <div class="source">Sources: implementation-plan.md, delivery-increments.md</div>
+      <h2>1) Phase Bridge and Scope Guardrails</h2>
+      <p>Task Planning is the execution-planning bridge that translates canonical Design contracts into sequenced implementation and increment-level delivery outcomes. Scope is constrained to MVP capabilities: Gmail ingestion, event detection/extraction, event persistence, duplicate prevention, reminder scheduling, and Google Calendar sync.</p>
+      <div class="callout warn"><strong>Scope guardrail:</strong> WhatsApp/SMS are documented only as future-phase placeholders and must not become dependencies in MVP milestones or critical path sequencing.</div>
+      <div class="columns">
+        <article class="mini">
+          <h3>Canonical Dependencies</h3>
+          <ul>
+            <li><code>docs/02-design/runtime-flow.md</code> (runtime lifecycle authority)</li>
+            <li><code>docs/02-design/reliability-policy.md</code> (retry/state/failure policy authority)</li>
+            <li><code>docs/00-product/traceability-matrix.md</code> (cross-phase traceability authority)</li>
+          </ul>
+        </article>
+        <article class="mini">
+          <h3>Execution Readiness Preconditions</h3>
+          <ul>
+            <li>OAuth + provider sandbox readiness for Gmail and Calendar</li>
+            <li>Migration path for events/reminders/sync failure metadata</li>
+            <li>Deterministic extraction/dedupe fixtures for validation</li>
+            <li>Baseline telemetry for intake, extraction, schedule, and sync</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="card" id="workstreams">
+      <div class="source">Source: implementation-plan.md</div>
+      <h2>2) Implementation Workstreams and Sequencing</h2>
+      <table class="trace" aria-label="Implementation workstreams">
+        <thead><tr><th>Workstream</th><th>Primary Outcome</th><th>Key Dependencies</th><th>Readiness Signal</th></tr></thead>
+        <tbody>
+          <tr><td>WS1 Intake</td><td>Trusted Gmail intake and eligibility classification</td><td>Runtime intake state boundaries</td><td>Stable intake payload + telemetry</td></tr>
+          <tr><td>WS2 Extraction</td><td>Normalized event candidate + confidence classification</td><td>WS1 payload contract</td><td>Reliable parser output and low-confidence path</td></tr>
+          <tr><td>WS3 Persistence + Dedupe</td><td>Durable event model and duplicate suppression</td><td>WS2 normalized output and schema constraints</td><td>No duplicate active events/reminders</td></tr>
+          <tr><td>WS4 Scheduling</td><td>Default 4h/1h/15m reminder schedule generation</td><td>WS3 persistence lifecycle</td><td>Stable schedule creation + updates</td></tr>
+          <tr><td>WS5 Calendar Sync</td><td>Create/update sync with retry and terminal failure capture</td><td>WS3 and WS4 outputs + reliability policy</td><td>Observable sync state lifecycle</td></tr>
+          <tr><td>WS6 Hardening</td><td>E2E evidence and rollout-ready documentation</td><td>WS1–WS5 completion evidence</td><td>Delivery handoff readiness</td></tr>
+        </tbody>
+      </table>
+      <div class="callout"><strong>Critical path:</strong> WS1 → WS2 → WS3 → WS4 → WS5. Defects in extraction confidence handling, dedupe integrity, or sync terminal-state handling are release blockers.</div>
+    </section>
+
+    <section class="card" id="milestones">
+      <div class="source">Source: milestone-plan.md</div>
+      <h2>3) Milestone Entry/Exit Governance</h2>
+      <table class="trace" aria-label="Milestone plan">
+        <thead><tr><th>Milestone</th><th>Outcome</th><th>Entry Criteria</th><th>Exit Criteria</th></tr></thead>
+        <tbody>
+          <tr><td>M1 Intake + Extraction Foundation</td><td>Non-prod ingestion + extraction baseline operational</td><td>Canonical runtime/reliability inputs accepted</td><td>Normalized candidates + low-confidence path + telemetry present</td></tr>
+          <tr><td>M2 Persistence + Duplicate Integrity</td><td>Durable canonical event lifecycle with duplicate controls</td><td>M1 output contract stable</td><td>No duplicate active event/reminder creation and anomaly metadata capture</td></tr>
+          <tr><td>M3 Scheduling + Calendar Reliability</td><td>Reminder generation and calendar sync policy compliance</td><td>M2 validation gates pass</td><td>E2E critical path scenarios pass incl. retry and failure-state visibility</td></tr>
+          <tr><td>M4 Release Readiness + Hardening</td><td>Execution baseline ready for Delivery handoff</td><td>M3 integrated evidence complete</td><td>Docs/test/rollout synchronization complete with known gaps owned</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" id="tasks">
+      <div class="source">Source: task-breakdown.md</div>
+      <h2>4) Task Breakdown and Dependency Logic</h2>
+      <p>The task catalog groups WS1–WS6 into implementation, validation, observability/reliability, and documentation-sync work so readiness is evidence-driven rather than feature-only.</p>
+      <div class="columns">
+        <article class="mini">
+          <h3>Engineering Task Coverage</h3>
+          <ul>
+            <li>Ingestion/auth integration</li>
+            <li>Extraction parsing + confidence gating</li>
+            <li>Persistence + dedupe controls</li>
+            <li>Schedule generation/re-computation</li>
+            <li>Calendar create/update + retry/failure-state handling</li>
+          </ul>
+        </article>
+        <article class="mini">
+          <h3>Validation + Reliability Coverage</h3>
+          <ul>
+            <li>Fixture-driven parser/dedupe checks</li>
+            <li>E2E critical path scenarios (happy + failure)</li>
+            <li>Retry-policy conformance and terminal-state recording</li>
+            <li>Telemetry and alert coverage for key transitions</li>
+            <li>Documentation synchronization and HTML regeneration</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="card" id="increments">
+      <div class="source">Source: delivery-increments.md</div>
+      <h2>5) Delivery Increments and Demo Plan</h2>
+      <table class="trace" aria-label="Delivery increments">
+        <thead><tr><th>Increment</th><th>Thin Slice</th><th>Demo Focus</th><th>Risk Retired</th></tr></thead>
+        <tbody>
+          <tr><td>I1</td><td>Ingestion visibility</td><td>Eligible emails received and classified</td><td>Provider auth/integration uncertainty</td></tr>
+          <tr><td>I2</td><td>Extraction confidence</td><td>Normalized fields + confidence routing</td><td>Semantic parsing uncertainty</td></tr>
+          <tr><td>I3</td><td>Persistence + dedupe</td><td>Durable records and duplicate suppression</td><td>Data integrity and duplication risk</td></tr>
+          <tr><td>I4</td><td>Scheduling</td><td>Default 4h/1h/15m reminders and update handling</td><td>Reminder-value correctness risk</td></tr>
+          <tr><td>I5</td><td>Calendar continuity</td><td>Calendar sync with retry and terminal failure status</td><td>External dependency reliability risk</td></tr>
+          <tr><td>I6</td><td>Hardening</td><td>Full-path validation and Delivery handoff readiness</td><td>Launch readiness uncertainty</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" id="traceability">
+      <div class="source">Sources: implementation-plan.md, milestone-plan.md, task-breakdown.md, delivery-increments.md</div>
+      <h2>6) Traceability and Critical Path Matrix</h2>
+      <table class="trace" aria-label="Task planning traceability matrix">
+        <thead><tr><th>Product Trace</th><th>Planning Realization</th><th>Design Dependency</th><th>Milestone/Increment Anchor</th></tr></thead>
+        <tbody>
+          <tr><td>FR-02/03, US-01/02</td><td>WS1 intake + TP-WS1 tasks</td><td>runtime-flow intake stages</td><td>M1, I1</td></tr>
+          <tr><td>FR-04, US-05</td><td>WS2 extraction + confidence routing tasks</td><td>runtime-flow + reliability policy</td><td>M1, I2</td></tr>
+          <tr><td>FR-05/10, US-06/07</td><td>WS3 persistence + dedupe tasks</td><td>db-schema + reliability policy</td><td>M2, I3</td></tr>
+          <tr><td>FR-06, US-08</td><td>WS4 schedule generation tasks</td><td>runtime state transitions</td><td>M3, I4</td></tr>
+          <tr><td>FR-09, US-09</td><td>WS5 calendar sync and remediation tasks</td><td>runtime-flow + reliability-policy sync states</td><td>M3, I5</td></tr>
+          <tr><td>Cross-MVP readiness</td><td>WS6 validation/reliability/doc-sync tasks</td><td>delivery test + rollout references</td><td>M4, I6</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" id="risks">
+      <div class="source">Sources: implementation-plan.md, task-breakdown.md, delivery-increments.md</div>
+      <h2>7) Assumptions, Constraints, Open Questions</h2>
+      <div class="columns">
+        <article class="mini">
+          <h3>Assumptions</h3>
+          <ul>
+            <li>Extraction fixtures adequately represent MVP email variability.</li>
+            <li>Calendar provider quotas can support MVP validation and rollout.</li>
+          </ul>
+        </article>
+        <article class="mini">
+          <h3>Constraints</h3>
+          <ul>
+            <li>MVP excludes WhatsApp/SMS implementation dependencies.</li>
+            <li>Retry/terminal-state behavior must follow reliability policy.</li>
+          </ul>
+        </article>
+        <article class="mini">
+          <h3>Open Questions</h3>
+          <ul>
+            <li>Threshold and path for mandatory low-confidence manual review.</li>
+            <li>Escalation policy for sync failure classes in MVP operations.</li>
+            <li>Initial sync-latency SLO target beyond acceptance baseline.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="card" id="coverage">
+      <h2>8) Source Coverage + HTML Coverage Check</h2>
+      <p><strong>Markdown-first rule:</strong> this HTML is a secondary artifact. Source of truth remains markdown in <code>docs/03-task-planning</code>.</p>
+      <h3>Source Coverage</h3>
+      <h3>Source Heading Index</h3>
+      <div class="columns">
+        <article class="mini">
+          <h3>implementation-plan.md headings</h3>
+          <ul>
+            <li>Implementation Plan</li><li>Purpose</li><li>Canonical Inputs and Non-Redefinition Rule</li><li>MVP Scope Guardrails</li><li>Traceability Anchors</li><li>Preconditions for Build/Test Readiness</li><li>Workstreams and Sequencing Logic</li><li>WS1 — Intake and Source Connectivity</li><li>WS2 — Event Intelligence and Normalization</li><li>WS3 — Persistence and Duplicate Controls</li><li>WS4 — Scheduling and Reminder Materialization</li><li>WS5 — Calendar Continuity and Sync Reliability</li><li>WS6 — Operational Readiness and Release Hardening</li><li>Dependency and Critical Path Notes</li><li>Dependency Ordering</li><li>Critical Path</li><li>Assumptions, Constraints, Open Questions</li><li>Assumptions</li><li>Constraints</li><li>Open Questions</li>
+          </ul>
+        </article>
+        <article class="mini">
+          <h3>milestone-plan.md headings</h3>
+          <ul>
+            <li>Milestone Plan</li><li>Purpose</li><li>Milestone Sequence Overview</li><li>Milestone Details</li><li>M1 — Intake + Extraction Foundation</li><li>M2 — Persistence + Duplicate Integrity</li><li>M3 — Scheduling + Calendar Reliability</li><li>M4 — Release Readiness + Hardening</li><li>Milestone Governance Notes</li>
+          </ul>
+        </article>
+        <article class="mini">
+          <h3>task-breakdown.md headings</h3>
+          <ul>
+            <li>Purpose</li><li>Workstream Task Catalog</li><li>WS1 — Gmail Intake Pipeline</li><li>WS2 — Detection/Extraction Intelligence</li><li>WS3 — Persistence and Duplicate Prevention</li><li>WS4 — Reminder Scheduling</li><li>WS5 — Google Calendar Sync</li><li>WS6 — Validation, Reliability, and Documentation Sync</li><li>Design / UX Dependency Notes</li><li>Sequencing Quality Rules</li><li>Constraints and Open Questions</li>
+          </ul>
+        </article>
+        <article class="mini">
+          <h3>delivery-increments.md headings</h3>
+          <ul>
+            <li>Purpose</li><li>Increment Strategy</li><li>Increment Plan</li><li>Increment 1 — Ingestion Visibility Slice</li><li>Increment 2 — Extraction Confidence Slice</li><li>Increment 3 — Persistence + Dedupe Slice</li><li>Increment 4 — Scheduling Slice</li><li>Increment 5 — Calendar Continuity Slice</li><li>Increment 6 — Hardening and Delivery Readiness Slice</li><li>Dependencies and Critical Path Summary</li><li>Assumptions / Constraints / Gaps</li>
+          </ul>
+        </article>
+      </div>
+      <ul>
+        <li><code>implementation-plan.md</code></li>
+        <li><code>milestone-plan.md</code></li>
+        <li><code>task-breakdown.md</code></li>
+        <li><code>delivery-increments.md</code></li>
+      </ul>
+      <table class="trace" aria-label="HTML coverage check">
+        <thead><tr><th>Coverage Check Item</th><th>Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Every markdown source file represented</td><td style="color: var(--ok);"><strong>Complete</strong></td><td>All four Task Planning markdown files consolidated.</td></tr>
+          <tr><td>Major headings/topics represented</td><td style="color: var(--ok);"><strong>Complete</strong></td><td>Implementation streams, milestones, tasks, increments, dependencies, critical path, and governance coverage included.</td></tr>
+          <tr><td>Important tables/lists/traceability represented</td><td style="color: var(--ok);"><strong>Complete</strong></td><td>Workstream, milestone, increment, and traceability matrices included.</td></tr>
+          <tr><td>Assumptions/constraints/open questions represented</td><td style="color: var(--ok);"><strong>Complete</strong></td><td>Dedicated section includes all categories from source markdown.</td></tr>
+          <tr><td>Missing major markdown topics</td><td style="color: var(--ok);"><strong>None</strong></td><td>No major source topic omitted.</td></tr>
+        </tbody>
+      </table>
+      <div class="callout"><strong>Style baseline:</strong> `docs/00-product/product-summary.html`.</div>
+    </section>
+  </main>
+
+  <footer>Task Planning summary generated from markdown source-of-truth files in docs/03-task-planning.</footer>
+</body>
+</html>

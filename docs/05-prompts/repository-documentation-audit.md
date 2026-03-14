@@ -28,3 +28,32 @@ Audit must validate canonical contracts:
 - Runtime flow: `docs/02-design/runtime-flow.md`
 - Reliability policy: `docs/02-design/reliability-policy.md`
 - Traceability matrix: `docs/00-product/traceability-matrix.md`
+
+## Task Planning Governance Checks (Mandatory)
+For `docs/03-task-planning`, audit must explicitly evaluate:
+- traceability to Product/UI/UX/Design artifacts
+- sequencing quality and dependency ordering
+- milestone clarity (outcomes + entry/exit criteria)
+- delivery increment quality (thin slices + demoability)
+- execution readiness (test/reliability/doc-sync planning)
+- critical-path articulation and scope discipline (MVP vs future-phase)
+
+## HTML Summary Governance Checks (Mandatory when summary exists)
+For each phase summary HTML, include:
+- HTML Coverage Status
+- Missing Coverage Items
+- Synchronization Issues
+- Style Consistency Status (baseline: `docs/00-product/product-summary.html`)
+
+## Audit Result Format
+For each phase:
+- Score: `X/5`
+- Strengths
+- Defects
+- Required fixes
+- Coverage + sync status (markdown vs HTML)
+
+Then provide:
+- Overall Score: `X/5`
+- Top cross-phase risks
+- Prioritized remediation plan with suggested sequence
