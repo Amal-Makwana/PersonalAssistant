@@ -83,10 +83,55 @@ flows ↔ screens ↔ states
 architecture ↔ components ↔ reliability model
 
 6. Do NOT generate application code.
+7. Scoring is mandatory for every phase audit.
+8. Always provide a numeric `X/5` score using the allowed 0.5-step increment scale.
+9. Do not skip scoring for incomplete docs; assign score and explain.
 
 Output Format:
 
 Persona Used  
+
+## Phase Score
+
+Phase: <selected phase>  
+Score: X/5
+
+Short explanation:
+- why this score was assigned
+- what prevents a higher score
+
+Rules:
+- This section must always appear near the top of every phase audit output.
+- Score format must always be `X/5`.
+- Allowed values are whole-step or 0.5-step increments only: `0/5`, `0.5/5`, `1/5`, `1.5/5`, `2/5`, `2.5/5`, `3/5`, `3.5/5`, `4/5`, `4.5/5`, `5/5`.
+- Never omit scoring sections.
+- Never replace numeric scores with only qualitative labels.
+- Never skip scoring because documentation is incomplete.
+- Incomplete documentation must still be scored with explanation.
+- Score must reflect documentation quality, traceability, measurability, and implementation readiness.
+
+Scoring rubric:
+
+5/5
+- complete, measurable, traceable, implementation-ready, minimal ambiguity
+
+4/5
+- strong and mostly ready, minor gaps in precision or traceability
+
+3/5
+- usable but important gaps remain in measurability, consistency, or readiness
+
+2/5
+- major gaps, weak traceability, insufficient implementation detail
+
+1/5
+- critical missing content or placeholder-level documentation
+
+0/5
+- phase absent or not reviewable
+
+Use `0.5` increments when documentation falls between levels.
+
 Executive Critique  
 
 Section-by-Section Findings
@@ -108,6 +153,10 @@ Risks
 | Risk | Severity | Impact |
 
 Open Questions
+
+## Score Improvement Path
+
+List the top 3 to 5 changes that would raise the score.
 
 Dual-Layer Documentation Reminder:
 If markdown changes are recommended, regenerate HTML summaries.
