@@ -36,7 +36,7 @@ Constraints:
 - Markdown documentation only for source-of-truth updates.
 - Do NOT generate application code.
 
-After markdown updates, regenerate docs/02-ui-ux/ui-ux-summary.html.
+After markdown updates, regenerate docs/02-ui-ux/ui-ux-summary.html as a rich consolidated executive view with complete section coverage, source mappings, and Product-summary-aligned visual style.
 ```
 
 ---
@@ -74,7 +74,7 @@ Constraints:
 - Documentation only.
 - Do NOT generate application code.
 
-After updates, regenerate docs/02-ui-ux/ui-ux-summary.html.
+After updates, regenerate docs/02-ui-ux/ui-ux-summary.html with complete coverage, source mapping labels, traceability cues, and Product-summary-aligned visual style.
 ```
 
 ---
@@ -107,7 +107,7 @@ Rules:
 - Ensure alignment with wireframes and screen inventory.
 - Do NOT generate application code.
 
-After updates, regenerate docs/02-ui-ux/ui-ux-summary.html.
+After updates, regenerate docs/02-ui-ux/ui-ux-summary.html with complete coverage, source mapping labels, traceability cues, and Product-summary-aligned visual style.
 ```
 
 ---
@@ -128,9 +128,11 @@ Follow .github/copilot-instructions.md and docs/99-ai-rules/AI_DEVELOPMENT_WORKF
 Task: Regenerate docs/02-ui-ux/ui-ux-summary.html from docs/02-ui-ux markdown sources.
 
 Presentation goals:
-- Clear, visual narrative of IA, flows, screens, wireframes, and component model.
-- Scannable sections for product/design/engineering stakeholders.
-- Preserve fidelity with markdown source-of-truth content.
+- Executive summary + table of contents with clear section-to-section continuity.
+- Comprehensive condensed coverage of IA, flows, screens, wireframes, components, principles, and mockups.
+- Explicit source mapping labels, traceability cues, and canonical ID coverage.
+- Include constraints, risks/gaps, and open questions where present in markdown.
+- Follow the Product summary visual system and readability quality bar.
 
 Rules:
 - HTML is presentation layer only.

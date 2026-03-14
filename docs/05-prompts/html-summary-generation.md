@@ -1,0 +1,80 @@
+# Prompt: Section HTML Summary Generation (Coverage-Enforced)
+
+## Purpose
+Generate or regenerate section-level summary HTML files as rich, stakeholder-facing consolidated views while preserving markdown-first authority.
+
+## Scope
+Use for:
+- `docs/00-product/product-summary.html`
+- `docs/01-tech-spec/tech-spec-summary.html`
+- `docs/02-ui-ux/ui-ux-summary.html`
+- `docs/03-design/design-summary.html`
+- `docs/04-delivery/delivery-summary.html`
+
+## Core Rules (Mandatory)
+- Markdown remains source of truth.
+- HTML is a secondary consolidated presentation artifact.
+- Omission of major markdown content is a documentation defect.
+- Use `docs/00-product/product-summary.html` as the canonical CSS/style baseline unless a shared template is introduced later.
+
+## Generation Instructions (Mandatory)
+1. Read **all** markdown files in the target section (including relevant subfolders like diagrams where applicable).
+2. Synthesize one rich HTML summary with executive readability and strong narrative continuity.
+3. Include all material section content, including where present:
+   - major headings/topics
+   - decisions/requirements
+   - scope/constraints/assumptions
+   - major tables/lists and traceability content
+   - risks/gaps/open questions
+4. Include structured navigation and readability components:
+   - table of contents
+   - section cards / content grids / tables / callouts where useful
+   - source labels on major sections
+5. Include a visible **Source Coverage** section that lists all markdown files consolidated and a markdown-source-of-truth note.
+6. Include traceability views (tables/matrices) where relevant.
+7. Keep narrative summary-first, but comprehensive (not shallow).
+
+## HTML Coverage Check (Required Before Finalizing)
+Run this check and fail generation if any item is not satisfied:
+- Every markdown source file in the section is represented in HTML.
+- Every major markdown heading/topic is represented.
+- Important tables/lists/traceability content are represented.
+- Risks/gaps/assumptions/open questions are represented where present.
+- No major markdown topic is missing from the summary.
+
+## Required Task Response Addendum
+After generation, always output:
+- Source files reviewed: `<list>`
+- Coverage status: `Complete` or `Partial`
+- Missing topics: `<list>` or `None`
+- Style baseline used: `docs/00-product/product-summary.html`
+
+## Reusable Prompt Text
+```text
+Follow .github/copilot-instructions.md and docs/99-ai-rules/AI_DEVELOPMENT_WORKFLOW.md.
+
+Task: Regenerate <section-summary.html> from markdown files in <section-folder>.
+
+Mandatory requirements:
+- Read all markdown files in <section-folder> (and relevant subfolders).
+- Generate one rich consolidated stakeholder-facing HTML summary (not a lightweight overview).
+- Include all material content from markdown: major headings/topics, decisions/requirements, scope/constraints/assumptions, tables/lists, traceability content, and risks/gaps/open questions where present.
+- Include table of contents, source labels, and a visible Source Coverage section listing all source markdown files.
+- Include traceability views where relevant.
+- Use docs/00-product/product-summary.html as CSS/style baseline.
+- Markdown remains source of truth; HTML is a secondary artifact.
+- Omission of major markdown content is a defect.
+
+Before finalizing, run HTML Coverage Check:
+1) Every markdown file represented
+2) Every major heading/topic represented
+3) Important tables/lists/traceability represented
+4) Risks/gaps/assumptions/open questions represented where present
+5) No major topic missing
+
+Output in response:
+- Source files reviewed
+- Coverage status: Complete/Partial
+- Missing topics: None or list
+- Style baseline used
+```

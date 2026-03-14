@@ -31,7 +31,7 @@ Constraints:
 - Documentation only.
 - Do NOT generate application code.
 
-After markdown updates, regenerate docs/03-design/design-summary.html.
+After markdown updates, regenerate docs/03-design/design-summary.html as a rich consolidated executive view with complete section coverage, source mappings, and Product-summary-aligned visual style.
 ```
 
 ---
@@ -63,7 +63,7 @@ Rules:
 - Keep language implementation-guiding but documentation-only.
 - Do NOT generate application code.
 
-After updates, regenerate docs/03-design/design-summary.html.
+After updates, regenerate docs/03-design/design-summary.html with complete coverage, source mapping labels, traceability cues, and Product-summary-aligned visual style.
 ```
 
 ---
@@ -94,7 +94,7 @@ Rules:
 - Keep markdown as source of truth.
 - Do NOT generate application code.
 
-After markdown updates, regenerate docs/03-design/design-summary.html.
+After markdown updates, regenerate docs/03-design/design-summary.html as a rich consolidated executive view with complete section coverage, source mappings, and Product-summary-aligned visual style.
 ```
 
 ---
@@ -128,5 +128,13 @@ Rules:
 - Preserve consistency with architecture/system-design docs.
 - Do NOT generate application code.
 
-After ADR updates, regenerate docs/03-design/design-summary.html.
+After ADR updates, regenerate docs/03-design/design-summary.html with complete coverage, source mapping labels, traceability cues, and Product-summary-aligned visual style.
 ```
+
+
+## HTML summary quality standard (applies whenever regenerating `design-summary.html`)
+- Read all markdown files in docs/03-design before generation.
+- Produce a rich consolidated executive synthesis with table of contents, source mappings, and traceability cues.
+- Include architecture overview, major decisions, constraints/trade-offs, diagram coverage, risks, and open questions where applicable.
+- Follow the visual system used by docs/00-product/product-summary.html.
+- Do not omit important markdown content for brevity; condense and structure it for readability.
