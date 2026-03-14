@@ -3,7 +3,7 @@
 ## Scope Intent
 V1 focuses on delivering a reliable, trust-building automation loop for inbox-derived events. Scope prioritizes consistency and operational confidence over feature breadth.
 
-## In Scope (V1)
+## In Scope (MVP)
 1. Google authentication.
 2. Gmail event ingestion.
 3. Event extraction.
@@ -12,7 +12,7 @@ V1 focuses on delivering a reliable, trust-building automation loop for inbox-de
 6. Default reminder scheduling.
 7. Google Calendar synchronization.
 
-## Explicit Exclusions (V1)
+## Out of Scope (MVP)
 1. WhatsApp reminders.
 2. SMS reminders.
 3. Non-Gmail providers.

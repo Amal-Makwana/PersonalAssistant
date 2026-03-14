@@ -95,5 +95,18 @@
 - Fast-paced multitasking context with limited planning windows.
 - Strong reliance on mobile messaging for immediate attention.
 
+
+## Persona to Feature Sensitivity Mapping
+
+| Persona | Critical Functional Requirements | Impact if Fails |
+|---|---|---|
+| Busy Professional | FR-03, FR-04, FR-09 | Missed meetings and professional commitments |
+| Parent Coordinator | FR-03, FR-06, FR-10 | Duplicate or missed reminders for family events |
+| Freelancer / Consultant | FR-04, FR-09 | Client meetings not appearing in calendar |
+| University Student | FR-03, FR-06 | Academic deadlines missed |
+| Small Business Operator | FR-04, FR-05, FR-09 | Operational appointments missed |
+
+This mapping helps prioritize reliability improvements based on user impact.
+
 ## Traceability
 These personas align to target user definitions in [requirements.md](./requirements.md) Section 8 and are referenced by story mappings in [user-stories.md](./user-stories.md).
