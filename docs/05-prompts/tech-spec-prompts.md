@@ -44,7 +44,7 @@ Constraints:
 - Markdown documentation only.
 - Do NOT generate application code.
 
-After markdown updates, regenerate docs/01-tech-spec/tech-spec-summary.html from markdown sources.
+After markdown updates, regenerate docs/01-tech-spec/tech-spec-summary.html as a rich consolidated executive view with full section coverage, source mappings, traceability tables, and Product-summary-aligned visual style.
 ```
 
 ---
@@ -80,7 +80,7 @@ Rules:
 - Document assumptions and unresolved decisions explicitly.
 - Do NOT generate application code.
 
-After changes, regenerate docs/01-tech-spec/tech-spec-summary.html.
+After changes, regenerate docs/01-tech-spec/tech-spec-summary.html with complete content coverage, explicit source mapping, and Product-summary-aligned visual style.
 ```
 
 ---
@@ -110,7 +110,7 @@ Constraints:
 - Documentation only.
 - Do NOT generate application code.
 
-After updates, regenerate docs/01-tech-spec/tech-spec-summary.html.
+After updates, regenerate docs/01-tech-spec/tech-spec-summary.html with complete content coverage, explicit source mapping, and Product-summary-aligned visual style.
 ```
 
 ---
@@ -131,9 +131,12 @@ Follow .github/copilot-instructions.md and docs/99-ai-rules/AI_DEVELOPMENT_WORKF
 Task: Regenerate docs/01-tech-spec/tech-spec-summary.html from docs/01-tech-spec markdown files.
 
 Presentation goals:
-- Clear architecture narrative.
-- Scannable sections for backend, API, data model, integrations, security/NFR, and diagrams.
-- Highlight technical assumptions and key risks.
+- Executive summary + table of contents with strong narrative continuity.
+- Comprehensive, condensed coverage of all docs/01-tech-spec markdown files (including diagrams).
+- Scannable sections/cards for backend, frontend, API, data model, integrations, security/NFR, and diagrams.
+- Explicit source mapping labels and traceability/coverage tables.
+- Highlight assumptions, constraints, risks, and open questions.
+- Match the visual system used in docs/00-product/product-summary.html.
 
 Rules:
 - Markdown remains source of truth.
