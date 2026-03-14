@@ -25,16 +25,24 @@ These prompts are documentation prompts only. They are not for generating applic
 
 - **Purpose:** Run deterministic, documentation-only critical reviews using a phase-appropriate expert persona to improve clarity, completeness, traceability, and readiness.
 - **Supported phases:** Product, Tech Spec, UI/UX, Design, Delivery.
-- **Output structure:** Persona justification, executive critique, findings table, priority fixes, rewrite suggestions, traceability validation, risk analysis.
+- **Output structure:** Persona justification, mandatory phase score (`X/5`), executive critique, findings table, priority fixes, rewrite suggestions, traceability validation, risk analysis, and score improvement path.
 - **Governance notes:** Markdown-first workflow; no application code generation; regenerate the corresponding HTML summary whenever markdown sources are changed.
 - **Location:** `docs/05-prompts/critical-persona-review.md`
 
 ### Repository Documentation Audit
 
 - **Purpose:** Run a full repository documentation governance audit across Product, Tech Spec, UI/UX, Design, and Delivery.
-- **Output:** Repository health score, phase critiques, cross-phase inconsistencies, risk analysis, implementation readiness.
+- **Output:** Mandatory per-phase repository health scores (`X/5`) plus mandatory overall repository score (`X/5`), phase critiques, cross-phase inconsistencies, risk analysis, and implementation readiness.
 - **Location:** `docs/05-prompts/repository-documentation-audit.md`
 
+
+## Audit Scoring Rules (Mandatory)
+
+- All audits must return explicit numeric scores in `X/5` format.
+- Allowed values are whole-step or 0.5-step increments only: `0/5`, `0.5/5`, `1/5`, `1.5/5`, `2/5`, `2.5/5`, `3/5`, `3.5/5`, `4/5`, `4.5/5`, `5/5`.
+- Full repository audits must return all five phase scores plus one overall repository score.
+- Phase audits must return one phase score and a required score improvement path section.
+- Scoring is never optional, even for incomplete or placeholder documentation.
 
 ## Recommended Usage for Phase Updates
 

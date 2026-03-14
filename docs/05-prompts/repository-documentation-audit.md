@@ -59,7 +59,12 @@ Rules:
 
 - All phases must always appear, even if documentation is missing or placeholder-only.
 - Score format must always be `X/5`.
+- Allowed values are whole-step or 0.5-step increments only: `0/5`, `0.5/5`, `1/5`, `1.5/5`, `2/5`, `2.5/5`, `3/5`, `3.5/5`, `4/5`, `4.5/5`, `5/5`.
 - Summary must be concise and specific.
+- Never omit this section.
+- Never replace numeric scores with only qualitative labels.
+- Never skip scoring because documentation is incomplete.
+- Incomplete or placeholder documentation must still receive a score and summary.
 
 Use these exact phase labels:
 
@@ -70,11 +75,25 @@ Architecture (Design)
 Delivery
 
 Score scale:
-5 Excellent  
-4 Good  
-3 Needs improvement  
-2 Major gaps  
-1 Critical issues
+5/5
+- complete, measurable, traceable, implementation-ready, minimal ambiguity
+
+4/5
+- strong and mostly ready, minor gaps in precision or traceability
+
+3/5
+- usable but important gaps remain in measurability, consistency, or readiness
+
+2/5
+- major gaps, weak traceability, insufficient implementation detail
+
+1/5
+- critical missing content or placeholder-level documentation
+
+0/5
+- phase absent or not reviewable
+
+Use `0.5` increments when documentation falls between levels.
 
 ## Phase Findings
 
@@ -167,6 +186,18 @@ Validate chain:
 Product → Tech Spec → UI/UX → Design → Delivery
 
 Documentation Quality Observations
+
+## Overall Repository Score
+
+Score: X/5
+
+Rules:
+- Score format must always be `X/5`.
+- Allowed values are whole-step or 0.5-step increments only: `0/5`, `0.5/5`, `1/5`, `1.5/5`, `2/5`, `2.5/5`, `3/5`, `3.5/5`, `4/5`, `4.5/5`, `5/5`.
+- This section must always appear in every full repository audit.
+- Never omit this score, even when one or more phases are incomplete.
+
+Include a short explanation of how the overall score was determined.
 
 Dual-Layer Documentation Reminder:
 If markdown is updated, regenerate HTML summaries.
