@@ -30,9 +30,9 @@ Whenever markdown files in a section are created or updated, refresh that sectio
 
 ## Full Documentation Hub
 
-- `docs/FULL_DOCUMENTATION.md`
+- `docs/full-docs.html`
 
-Use this as the single-entry point for the complete documentation map, canonical contracts, and implementation-readiness workflow.
+Use this as the single-entry rich HTML artifact for complete repository documentation coverage, section summaries, and source manifest visibility.
 
 ## Canonical Prompt Library
 
