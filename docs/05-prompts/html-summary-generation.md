@@ -13,7 +13,7 @@ Phase order:
 Product -> UI/UX -> Design -> Task Planning -> Delivery
 
 ## Generation Instructions (Mandatory)
-1. Read **all** markdown files in the target section (including relevant subfolders like diagrams where applicable).
+1. Read **all** markdown files in the target section (including relevant subfolders where applicable).
 2. Synthesize one rich HTML summary with executive readability and strong narrative continuity.
 3. Include all the content from all md files, including where present:
    - major headings/topics
@@ -29,21 +29,26 @@ Product -> UI/UX -> Design -> Task Planning -> Delivery
 6. Include traceability views (tables/matrices) where relevant.
 7. Keep narrative summary-first, but comprehensive (not shallow).
 
-
-## UI/UX-Specific Enforcement (When target is docs/02-ui-ux)
+## UI/UX-Specific Enforcement (When target is `docs/01-ui-ux`)
 - Preserve MVP scope language: Gmail ingestion + Google Calendar sync are active MVP capabilities.
 - Ensure WhatsApp/SMS are described only as post-MVP/future-phase if mentioned.
 - Include consolidated coverage for screen inventory, IA, flow catalog, wireframes, components, design principles, and mockup intent.
 - Include at least one traceability matrix row for calendar sync (FR-09/US-09), duplicate prevention (FR-10/US-07), and extraction review (FR-04/US-05).
 - Include a states/flows/screens coverage section plus assumptions/gaps/open questions if present in markdown.
 
-
-## Design-Specific Enforcement (When target is docs/03-design)
-- Preserve phase order and traceability chain: Product -> Tech Spec -> UI/UX -> Design -> Delivery.
+## Design-Specific Enforcement (When target is `docs/02-design`)
+- Preserve phase order and traceability chain: Product -> UI/UX -> Design -> Task Planning -> Delivery.
 - Keep MVP architecture explicit: Gmail ingestion, extraction, persistence, duplicate prevention, schedule generation, and Google Calendar sync are in MVP.
 - Ensure WhatsApp/SMS are represented only as post-MVP extensibility and never as active MVP runtime components.
 - Require explicit reliability coverage: retry behavior, terminal failure handling, persisted failure metadata, operator remediation flows, and observability/alert hooks.
 - Require a design traceability matrix with at least calendar sync (FR-09/US-09), duplicate prevention (FR-10/US-07), and reliability/remediation references.
+
+## Task Planning-Specific Enforcement (When target is `docs/03-task-planning`)
+- Treat Task Planning as the execution bridge between Design and Delivery.
+- Preserve canonical phase order and explicit upstream traceability.
+- Include implementation stream sequencing, milestone entry/exit criteria, task dependencies, critical path, and thin-slice increment rationale.
+- Keep MVP execution scope explicit (Gmail ingestion, extraction, persistence, dedupe, scheduling, Google Calendar sync) and mark WhatsApp/SMS only as future-phase placeholders.
+- Include coverage for assumptions, constraints, risks/gaps, and open questions when present.
 
 ## HTML Coverage Check (Required Before Finalizing)
 Run this check and fail generation if any item is not satisfied:
