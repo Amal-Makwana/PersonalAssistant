@@ -52,6 +52,7 @@ When updating only Tech Spec and/or Design documentation:
 - Keep markdown as source of truth and regenerate the corresponding section HTML summary in the same change set as a rich consolidated executive view (not a lightweight overview).
 - Run the HTML Coverage Check; HTML summaries that fail coverage are documentation defects.
 - For UI/UX updates, explicitly preserve MVP boundaries (Gmail + Google Calendar sync in MVP; WhatsApp/SMS post-MVP only) and include Product/Tech traceability tags (for example FR-09/US-09, FR-10/US-07) in markdown and HTML artifacts.
+- For Design updates, enforce MVP architecture boundaries (Gmail + Google Calendar sync active; WhatsApp/SMS post-MVP only), include reliability/failure/remediation coverage, and regenerate `docs/03-design/design-summary.html` with complete source coverage.
 
 ## Repository Commands
 
