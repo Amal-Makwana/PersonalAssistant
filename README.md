@@ -27,6 +27,13 @@ Required summary files:
 
 Whenever markdown files in a section are created or updated, refresh that section's HTML summary in the same change set.
 
+
+## Full Documentation Hub
+
+- `docs/full-docs.html`
+
+Use this as the single-entry rich HTML artifact for complete repository documentation coverage, section summaries, and source manifest visibility.
+
 ## Canonical Prompt Library
 
 The canonical prompt library for generating and maintaining repository documentation is located in:
