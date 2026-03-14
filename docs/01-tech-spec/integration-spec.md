@@ -38,8 +38,11 @@ Define integration contracts, trigger points, retry/timeout behavior, and observ
 - **Idempotency contract:** one logical sync target per `event_id + user_id`, provider event ID persisted for future upserts
 - **Retry policy:** 5 attempts (5s, 10s, 30s, 60s, 120s)
 - **Timeout:** 10s per call
-- **Terminal status rule:** if max retries exceeded or non-retryable 4xx occurs, set `FAILED_TERMINAL` and record `failure_reason`
+- **Canonical sync states:** `PENDING`, `IN_PROGRESS`, `SYNCED`, `FAILED_RETRYABLE`, `FAILED_TERMINAL`
+- **Terminal status rule:** if max retries exceeded or non-retryable 4xx occurs, set `FAILED_TERMINAL` and persist `failure_reason`, `provider_status`, and `last_attempt_at`
 - **Latency expectation:** target calendar visibility within 10 seconds from event persistence under normal conditions (US-09)
+
+Trace: FR-09, FR-10, US-07, US-09
 
 ### WhatsApp Provider (Post-MVP)
 - Documented only for extensibility; not required for MVP implementation readiness.
@@ -48,25 +51,34 @@ Define integration contracts, trigger points, retry/timeout behavior, and observ
 - Documented only for extensibility; not required for MVP implementation readiness.
 
 ## 5. Failure Modes and Handling
-| Integration | Failure Class | Handling | Observability |
-| --- | --- | --- | --- |
-| Gmail API | transient timeout / 5xx | retry with backoff | retry_count, ingest_lag |
-| Calendar API | transient timeout / 429 / 5xx | retry with backoff | sync_retry_count, sync_latency |
-| Calendar API | terminal 4xx / consent revoked | mark `FAILED_TERMINAL` | terminal_failure_count, failure_reason |
+| Integration | Failure Class | Handling | Persisted State | Observability |
+| --- | --- | --- | --- | --- |
+| Gmail API | transient timeout / 5xx | retry with backoff | `FAILED_RETRYABLE` job context | retry_count, ingest_lag |
+| Calendar API | transient timeout / 429 / 5xx | retry with backoff | `FAILED_RETRYABLE` | sync_retry_count, sync_latency |
+| Calendar API | terminal 4xx / consent revoked | stop retries + persist terminal metadata | `FAILED_TERMINAL` + `failure_reason` + `provider_status` + `last_attempt_at` | terminal_failure_count, failure_reason |
+| Calendar API | successful upsert | complete sync | `SYNCED` | sync_success_total |
 
 ## 6. Observability Requirements
 - Correlation ID propagated from ingest through calendar sync attempts
 - Metrics: `calendar_sync_success_total`, `calendar_sync_failed_terminal_total`, `calendar_sync_retry_total`, `calendar_sync_latency_ms`
 - Structured logs include `event_id`, `user_id_hash`, `attempt_no`, `provider_status`, `failure_reason`
 
-## 7. Traceability
+## 7. MVP Execution Boundary
+- Google integrations used for Gmail ingestion and Calendar sync are active in MVP.
+- WhatsApp and SMS adapters are disabled in MVP.
+- Post-MVP provider placeholders are not part of MVP runbooks.
+- Post-MVP providers are excluded from MVP SLOs and operational support scope.
+
+Trace: FR-09, FR-10, US-09
+
+## 8. Traceability
 | Product Source | Integration Behavior |
 | --- | --- |
-| FR-09 + US-09 | mandatory Google Calendar sync with 10s target, retries, terminal failure state |
+| FR-09 + US-09 | mandatory Google Calendar sync with 10s target, retries, canonical states, terminal failure persistence fields |
 | FR-10 + US-07 | dedupe before sync enqueue, idempotent upsert semantics |
 | US-05 | extraction confidence output feeds normalized event eligibility and logs |
 | FR-07 / FR-08 | explicitly post-MVP integration placeholders only |
 
-## 8. Open Questions
+## 9. Open Questions
 1. Should calendar reconcile runs be periodic in MVP or operator-triggered only?
 2. What alert thresholds should page on-call for rising terminal sync failures?

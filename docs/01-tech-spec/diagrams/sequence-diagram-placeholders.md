@@ -51,7 +51,7 @@ sequenceDiagram
   API-->>UI: 200 updated preferences
 ```
 
-## 4) Background Job Flow (Ingest -> Extract -> Schedule)
+## 4) Background Job Flow (Ingest -> Extract -> Schedule -> Calendar Sync)
 ```mermaid
 sequenceDiagram
   participant SCH as Scheduler
@@ -67,19 +67,52 @@ sequenceDiagram
   WK->>Q: enqueue normalization jobs
   Q->>WK: normalization job
   WK->>DB: upsert event + dedupe key + reminders
+  WK->>Q: enqueue calendar.sync (status=PENDING)
 ```
 
-## 5) Integration Flow (Reminder Dispatch + Callback)
+## 5) Calendar Sync Transient Failure -> Retry -> Success
 ```mermaid
 sequenceDiagram
   participant WK as Worker
+  participant DB as PostgreSQL
+  participant GC as Google Calendar API
+
+  WK->>DB: set sync_status=IN_PROGRESS
+  WK->>GC: upsert event
+  GC-->>WK: 503 timeout
+  WK->>DB: set sync_status=FAILED_RETRYABLE, provider_status=503, last_attempt_at=t1
+  WK->>WK: apply backoff + retry
+  WK->>DB: set sync_status=IN_PROGRESS
+  WK->>GC: upsert event (retry)
+  GC-->>WK: 200 OK
+  WK->>DB: set sync_status=SYNCED, provider_status=200, last_attempt_at=t2
+```
+
+## 6) Calendar Sync Terminal Failure -> Persisted Terminal Status -> Operator Remediation
+```mermaid
+sequenceDiagram
+  participant WK as Worker
+  participant DB as PostgreSQL
+  participant GC as Google Calendar API
+  participant OPS as Operator
+
+  WK->>DB: set sync_status=IN_PROGRESS
+  WK->>GC: upsert event
+  GC-->>WK: 401 invalid_grant
+  WK->>DB: set sync_status=FAILED_TERMINAL\nset failure_reason=INVALID_CREDENTIALS\nset provider_status=401\nset last_attempt_at=t3
+  WK->>OPS: emit alert with traceId and event_id
+  OPS->>DB: inspect terminal record + metadata
+  OPS->>WK: trigger remediation run after consent repair
+```
+
+## 7) Messaging Provider Callback (Post-MVP Placeholder)
+```mermaid
+sequenceDiagram
   participant WA as WhatsApp Provider
   participant API as Webhook API
   participant DB as PostgreSQL
 
-  WK->>WA: Send reminder message
-  WA-->>WK: accepted(provider_message_id)
-  WK->>DB: write delivery attempt accepted
+  Note over WA,API: Disabled in MVP. Placeholder for post-MVP only.
   WA->>API: delivery callback
   API->>DB: update attempt/reminder status
 ```

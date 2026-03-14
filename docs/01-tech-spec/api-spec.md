@@ -52,9 +52,23 @@ RESTful JSON API for authentication handoff, preference management, event visibi
 - Canonical enums for status/channel values
 - Date-time inputs normalized to UTC
 
-## 9. Endpoint Catalogue
+## 9. Canonical Sync State Contract
+Canonical sync states: `PENDING`, `IN_PROGRESS`, `SYNCED`, `FAILED_RETRYABLE`, `FAILED_TERMINAL`. All docs and APIs must use this exact set. Any state transition to `FAILED_TERMINAL` must persist `failure_reason`, `provider_status`, and `last_attempt_at`.
 
-### 9.1 Start Google Auth
+Trace: FR-09, US-09
+
+## 10. MVP Capability Exposure Rules
+In MVP, only `calendarSync` capability is active. `sms` and `whatsapp` capabilities are reserved for post-MVP and must be omitted from MVP examples or explicitly returned as disabled via a `postMvpReserved` metadata flag.
+
+Versioning note:
+- Messaging channel capability exposure is deferred to a post-MVP API revision.
+- MVP clients must not interpret SMS/WhatsApp capability placeholders as active delivery support.
+
+Trace: FR-09, FR-10, US-07, US-09
+
+## 11. Endpoint Catalogue
+
+### 11.1 Start Google Auth
 - **endpoint name:** Start Google Auth
 - **purpose:** Begin OAuth consent flow
 - **method:** `GET`
@@ -67,7 +81,7 @@ RESTful JSON API for authentication handoff, preference management, event visibi
 - **error cases:** invalid redirect URI (`400`)
 - **business notes:** entrypoint for FR-01/FR-02
 
-### 9.2 Auth Callback
+### 11.2 Auth Callback
 - **endpoint name:** Google Auth Callback
 - **purpose:** Exchange auth code, create session
 - **method:** `GET`
@@ -80,7 +94,7 @@ RESTful JSON API for authentication handoff, preference management, event visibi
 - **error cases:** expired code (`401`), invalid state (`400`)
 - **business notes:** stores delegated token for Gmail/Calendar scopes
 
-### 9.3 Get Current User Profile
+### 11.3 Get Current User Profile
 - **endpoint name:** Get Me
 - **purpose:** Return authenticated account and capability flags
 - **method:** `GET`
@@ -90,39 +104,57 @@ RESTful JSON API for authentication handoff, preference management, event visibi
 - **query/path params:** none
 - **response examples:**
 ```json
-{ "data": { "userId": "u_123", "email": "user@example.com", "capabilities": { "sms": true, "calendarSync": true } }, "meta": { "traceId": "tr_1" } }
+{ "data": { "userId": "u_123", "email": "user@example.com", "capabilities": { "calendarSync": true } }, "meta": { "traceId": "tr_1" } }
+```
+- **alternative reserved-field form (optional):**
+```json
+{
+  "data": {
+    "userId": "u_123",
+    "email": "user@example.com",
+    "capabilities": {
+      "calendarSync": true,
+      "sms": false,
+      "whatsapp": false
+    }
+  },
+  "meta": {
+    "traceId": "tr_1",
+    "postMvpReserved": ["sms", "whatsapp"]
+  }
+}
 ```
 - **validation rules:** n/a
 - **error cases:** not authenticated (`401`)
 - **business notes:** used for UI bootstrapping
 
-### 9.4 Get Preferences
+### 11.4 Get Preferences
 - **endpoint name:** Get Preferences
-- **purpose:** Read channel preferences and sync flags
+- **purpose:** Read MVP preference state and sync flags
 - **method:** `GET`
 - **route:** `/api/v1/preferences`
 - **auth requirement:** session required
 - **request payload:** none
 - **query/path params:** none
-- **response examples:** `{"data":{"whatsappEnabled":true,"smsEnabled":false,"calendarSyncEnabled":true},"meta":{"traceId":"tr_2"}}`
+- **response examples:** `{"data":{"calendarSyncEnabled":true},"meta":{"traceId":"tr_2"}}`
 - **validation rules:** n/a
 - **error cases:** unauthorized (`401`)
-- **business notes:** FR-11
+- **business notes:** FR-11 (MVP-visible preference is calendar sync)
 
-### 9.5 Update Preferences
+### 11.5 Update Preferences
 - **endpoint name:** Update Preferences
-- **purpose:** Update channel toggles
+- **purpose:** Update MVP-supported preference toggles
 - **method:** `PATCH`
 - **route:** `/api/v1/preferences`
 - **auth requirement:** session required
-- **request payload:** `{ "smsEnabled": true, "calendarSyncEnabled": false }`
+- **request payload:** `{ "calendarSyncEnabled": true }`
 - **query/path params:** none
 - **response examples:** updated preference object
-- **validation rules:** booleans only; immutable required channels rejected
+- **validation rules:** booleans only; unsupported channel fields rejected in MVP
 - **error cases:** validation error (`400`), policy conflict (`409`)
 - **business notes:** audit log entry required
 
-### 9.6 List Events
+### 11.6 List Events
 - **endpoint name:** List Events
 - **purpose:** Retrieve extracted events for current user
 - **method:** `GET`
@@ -130,12 +162,12 @@ RESTful JSON API for authentication handoff, preference management, event visibi
 - **auth requirement:** session required
 - **request payload:** none
 - **query/path params:** `status`, `from`, `to`, `limit`, `cursor`, `sort`
-- **response examples:** paginated event list with next cursor
+- **response examples:** paginated event list with sync status values from canonical state set
 - **validation rules:** date range <= 365 days
 - **error cases:** invalid cursor (`400`)
 - **business notes:** read model for transparency
 
-### 9.7 Get Event Detail
+### 11.7 Get Event Detail
 - **endpoint name:** Get Event
 - **purpose:** Retrieve event and reminders
 - **method:** `GET`
@@ -143,12 +175,12 @@ RESTful JSON API for authentication handoff, preference management, event visibi
 - **auth requirement:** session required
 - **request payload:** none
 - **query/path params:** `eventId` UUID
-- **response examples:** event object with reminder instances and statuses
+- **response examples:** event object with reminder instances and calendar sync state (`PENDING|IN_PROGRESS|SYNCED|FAILED_RETRYABLE|FAILED_TERMINAL`)
 - **validation rules:** valid UUID
 - **error cases:** not found (`404`), forbidden (`403`)
 - **business notes:** used for incident triage UI
 
-### 9.8 Internal Ingestion Trigger
+### 11.8 Internal Ingestion Trigger
 - **endpoint name:** Ingestion Trigger
 - **purpose:** enqueue fetch/process for a specific mailbox window
 - **method:** `POST`
@@ -161,35 +193,38 @@ RESTful JSON API for authentication handoff, preference management, event visibi
 - **error cases:** unauthorized (`401`), rate limited (`429`)
 - **business notes:** used by scheduler/maintenance
 
-### 9.9 Provider Delivery Webhook
+### 11.9 Provider Delivery Webhook (Post-MVP)
 - **endpoint name:** Delivery Status Webhook
-- **purpose:** receive provider status updates
+- **purpose:** future inbound status updates for messaging providers
 - **method:** `POST`
 - **route:** `/api/v1/webhooks/delivery-status`
 - **auth requirement:** provider signature/HMAC
+- **MVP availability:** disabled/not exposed in MVP runtime
 - **request payload:** provider-specific status payload mapped to normalized schema
 - **query/path params:** optional provider account identifiers
-- **response examples:** `200 {"data":{"accepted":true}}`
+- **response examples:** `200 {"data":{"accepted":true}}` (post-MVP)
 - **validation rules:** signature freshness and replay protection
 - **error cases:** invalid signature (`401`), malformed payload (`400`)
-- **business notes:** updates reminder attempt status and audit trail
+- **business notes:** post-MVP only
 
-## 10. Idempotency / Retry Considerations
+## 12. Idempotency / Retry Considerations
 - Mutation endpoints support `Idempotency-Key` header where replays are possible.
 - Worker-triggered internal endpoints must dedupe on `(jobType, logicalKey, windowStart)`.
-- Webhook handling must be replay-safe using provider message IDs.
+- Already-synced event replays must remain `SYNCED` and return replay-safe response metadata.
 
-## 11. Rate Limiting / Abuse Considerations
+## 13. Rate Limiting / Abuse Considerations
 - Public session endpoints: per-IP and per-account limits.
 - Internal endpoints: token scope + tighter burst limits.
-- Webhooks: provider IP allow-list (when possible) + signature validation.
+- Webhooks: provider IP allow-list (when possible) + signature validation (post-MVP messaging only).
 
-## 12. Audit / Traceability Considerations
+## 14. Audit / Traceability Considerations
 - Every write endpoint logs actor, action, before/after snapshot hash, and trace ID.
 - Correlation IDs propagated to worker jobs and provider calls.
 - Audit record retention aligned with `db-schema.md` and `security-nfr.md`.
 
-## 13. Open Questions / Gaps
+Trace: FR-04, FR-09, FR-10, US-05, US-07, US-09
+
+## 15. Open Questions / Gaps
 1. Should a dedicated endpoint exist for manual event confirmation for low-confidence extraction?
 2. Do we expose reminder delivery attempts directly in V1 API or aggregate status only?
 3. Which fields must be exportable for compliance requests?

@@ -17,6 +17,7 @@ Define security controls and non-functional quality targets required for product
 - Strict per-user data isolation
 - Internal endpoint scopes for service accounts
 - Deny-by-default authorization middleware
+- Quarterly access review evidence required for production roles
 
 ## 5. Data Protection Requirements
 - TLS 1.2+ in transit
@@ -35,14 +36,30 @@ Define security controls and non-functional quality targets required for product
 - Dependency vulnerability scanning in CI
 - No sensitive data in logs/exceptions
 
+Release gating vs monitoring:
+- **Release-gating:** dependency scan gate blocks release on unresolved high/critical vulnerabilities.
+- **Monitoring-only (MVP):** medium/low vulnerabilities tracked with remediation SLA.
+- **Post-launch hardening:** expanded SAST/DAST policy tuning and threat-model refresh.
+
 ## 8. Audit and Logging Expectations
 - Immutable audit records for auth, preference updates, extraction, scheduling, and calendar sync
 - Structured logs with trace IDs
 - Time synchronization (NTP) required across services
+- Defined audit cadence: monthly control log review + quarterly policy conformance review
 
-## 9. Availability Requirements
-- Target service availability: 99.9% monthly for core API and calendar sync pipeline
-- No single point of failure for production data stores
+Trace: FR-04, FR-09, FR-10, US-05, US-07, US-09
+
+## 9. Availability and Reliability SLOs
+Availability SLO verification uses a monthly rolling window, excluding planned maintenance, measured from API ingress success ratio and sync pipeline completion ratio.
+
+MVP SLO targets:
+- API ingress success ratio: `>= 99.9%` per monthly rolling window
+- Calendar sync pipeline completion ratio: `>= 99.5%` per monthly rolling window
+- Calendar sync latency (normal load): 95% completed within 10 seconds from persistence
+
+Control classification:
+- **Release-gating:** SLO instrumentation and dashboards must exist before MVP release.
+- **Monitoring-only:** ongoing SLO breach alerting and burn-rate alert tuning.
 
 ## 10. Performance Requirements
 - P95 API read latency: <300ms (excluding third-party calls)
@@ -51,8 +68,12 @@ Define security controls and non-functional quality targets required for product
 
 ## 11. Reliability Requirements
 - At-least-once processing for jobs with idempotent handlers
+- Canonical sync states required: `PENDING`, `IN_PROGRESS`, `SYNCED`, `FAILED_RETRYABLE`, `FAILED_TERMINAL`
+- Any transition to `FAILED_TERMINAL` must persist `failure_reason`, `provider_status`, and `last_attempt_at`
 - Dead-letter queues for terminal failures
 - Replay tooling for failed integration operations
+
+Trace: FR-09, FR-10, US-07, US-09
 
 ## 12. Scalability Expectations
 - Horizontal worker scaling by queue depth
@@ -71,12 +92,14 @@ Define security controls and non-functional quality targets required for product
 ## 15. Backup / Recovery Expectations
 - Daily full backups + point-in-time recovery for Postgres
 - Recovery objective targets: RPO <= 15 min, RTO <= 2 hours
-- Quarterly restore drills in non-production environment
+- Annual restore drill evidence required; runbook and drill artifacts stored in ops evidence repository
 
 ## 16. Compliance / Regulatory Considerations
 - Align with applicable privacy regulations for target launch region(s)
 - Provider policy compliance (Google API in MVP; WhatsApp/SMS policy for post-MVP readiness)
 - Data retention and deletion policy approved by legal/security stakeholders
+
+Security control verification includes quarterly access review, dependency scan gate on high/critical vulnerabilities, and annual restore drill evidence.
 
 ## 17. Open Questions / Gaps
 1. Which specific regulatory frameworks apply at launch geography (GDPR/CCPA/others)?

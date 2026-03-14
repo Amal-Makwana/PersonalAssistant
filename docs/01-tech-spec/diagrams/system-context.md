@@ -13,7 +13,7 @@
 3. Event extraction and duplicate prevention execute.
 4. Event is persisted and reminder schedule is generated.
 5. Calendar sync job runs and upserts event to Google Calendar.
-6. Sync result is logged with success, retry, or terminal failure status.
+6. Sync result is logged using canonical states: `PENDING`, `IN_PROGRESS`, `SYNCED`, `FAILED_RETRYABLE`, `FAILED_TERMINAL`.
 
 ## Post-MVP Extension Note
 WhatsApp and SMS channels are intentionally deferred and are shown only as future extensibility.
