@@ -43,9 +43,31 @@ docs/04-delivery/*
 
 Output Format:
 
-Repository Health Score
+## Repository Health Score
+
+This section MUST appear first in the report.
 
 | Phase | Score | Summary |
+|------|------|------|
+| Product | X/5 | ... |
+| Tech Spec | X/5 | ... |
+| UI/UX | X/5 | ... |
+| Architecture (Design) | X/5 | ... |
+| Delivery | X/5 | ... |
+
+Rules:
+
+- All phases must always appear, even if documentation is missing or placeholder-only.
+- Score format must always be `X/5`.
+- Summary must be concise and specific.
+
+Use these exact phase labels:
+
+Product  
+Tech Spec  
+UI/UX  
+Architecture (Design)  
+Delivery
 
 Score scale:
 5 Excellent  
@@ -54,7 +76,38 @@ Score scale:
 2 Major gaps  
 1 Critical issues
 
-Phase Findings:
+## Phase Findings
+
+For every phase section, use this exact structure:
+
+### <Phase Name>
+
+Summary critique
+
+Key issues
+
+Priority fixes
+
+Improvement Recommendations
+
+Include a table:
+
+| Recommendation | Impact | Priority |
+|---------------|------|------|
+
+Priority scale:
+
+P0 – Critical (blocks implementation)  
+P1 – Important (should fix soon)  
+P2 – Improvement (quality enhancement)
+
+Recommendations must be:
+
+- concrete
+- documentation-focused
+- actionable
+
+Phase names to review:
 
 Product  
 Tech Spec  
@@ -66,7 +119,23 @@ Each section must include:
 
 Summary critique  
 Key issues  
-Priority fixes
+Priority fixes  
+Improvement Recommendations
+
+Example recommendation types:
+
+- Add missing architecture diagram
+- Define retry strategy for event handling
+- Add accessibility acceptance criteria
+- Add delivery milestone breakdown
+
+## Top Repository Improvements
+
+List the 10 most important improvements across all phases.
+
+Format:
+
+| Recommendation | Phase | Priority | Impact |
 
 Cross-Phase Consistency Issues
 
