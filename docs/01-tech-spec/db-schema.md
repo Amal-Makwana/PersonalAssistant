@@ -52,7 +52,7 @@ Primary domains:
 - **required/optional:** all required except timezone default `UTC`
 - **keys:** PK/FK `user_id`
 - **relationships:** 1:1 `users`
-- **constraints:** booleans default false except WhatsApp may default true by policy
+- **constraints:** `calendar_sync_enabled` defaults true for MVP continuity; future channel flags default false
 - **lifecycle notes:** updates audited
 
 ### source_messages
@@ -88,7 +88,7 @@ Primary domains:
 - **required/optional:** `last_attempt_at` optional
 - **keys:** PK `id`, unique `(event_id, channel, scheduled_for)`
 - **relationships:** N:1 `events`, 1:N `delivery_attempts`
-- **constraints:** channel enum `whatsapp|sms`
+- **constraints:** channel enum supports MVP `calendar` and reserves `whatsapp|sms` for post-MVP expansion
 - **lifecycle notes:** immutable schedule window in V1
 
 ### delivery_attempts
@@ -101,12 +101,12 @@ Primary domains:
 - **lifecycle notes:** drives support diagnostics
 
 ### calendar_sync_records
-- **purpose:** optional Google Calendar linkage
+- **purpose:** Google Calendar linkage (MVP-critical)
 - **fields:** `id UUID`, `event_id UUID`, `provider_event_id TEXT`, `sync_status TEXT`, `last_synced_at TIMESTAMPTZ NULL`, `error_code TEXT NULL`, `created_at`, `updated_at`
 - **required/optional:** sync metadata optional when pending
 - **keys:** PK `id`, unique `(event_id)`
 - **relationships:** 1:1 `events`
-- **constraints:** only present when calendar sync enabled
+- **constraints:** one record per event; tracks retry/terminal state when sync enabled
 - **lifecycle notes:** updated asynchronously
 
 ### audit_logs

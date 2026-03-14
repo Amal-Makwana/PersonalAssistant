@@ -1,53 +1,34 @@
-# System Context Diagram (Textual Specification)
+# System Context Diagram (MVP-Aligned)
 
-## Objective
-Define external actors/systems and high-level data flows around the Email-Driven Reminder Assistant.
-
-## External Actors
-- End User (mobile/web)
-- Support/Operations user (internal tools - future)
-
-## External Systems
-- Google Identity (OAuth)
+## Actors and External Systems
+- User
+- Google OAuth
 - Gmail API
-- Google Calendar API (optional)
-- WhatsApp Messaging Provider
-- SMS Provider (optional)
+- Google Calendar API (MVP)
+- Future messaging providers (WhatsApp/SMS, post-MVP only)
 
-## System Boundary
-Inside boundary:
-- Web frontend
-- API backend
-- Worker/scheduler pipeline
-- Postgres + Redis
+## MVP Interaction Narrative
+1. User authorizes Google access.
+2. System ingests Gmail messages.
+3. Event extraction and duplicate prevention execute.
+4. Event is persisted and reminder schedule is generated.
+5. Calendar sync job runs and upserts event to Google Calendar.
+6. Sync result is logged with success, retry, or terminal failure status.
 
-Outside boundary:
-- All third-party providers and user devices
+## Post-MVP Extension Note
+WhatsApp and SMS channels are intentionally deferred and are shown only as future extensibility.
 
-## Major Interactions
-1. User authenticates via Google OAuth and grants scopes.
-2. System ingests Gmail messages and extracts event candidates.
-3. Extracted events are persisted and deduplicated.
-4. Scheduler creates reminder tasks.
-5. Dispatch jobs send notifications via WhatsApp/SMS providers.
-6. Provider callbacks update final delivery states.
-7. Optional calendar sync writes events to Google Calendar.
-
-## Context Diagram (Mermaid)
 ```mermaid
 flowchart LR
-  U[End User] -->|Sign-in / Preferences / Status| FE[Web Frontend]
-  FE --> API[API Service]
-  API --> DB[(PostgreSQL)]
-  API --> Q[(Redis Queue)]
-  W[Worker/Scheduler] --> Q
-  W --> DB
+  U[User] --> APP[Reminder Assistant]
+  APP <--> OAUTH[Google OAuth]
+  APP <--> GM[Gmail API]
+  APP <--> GC[Google Calendar API]
 
-  API <--> GO[Google OAuth]
-  W <--> GM[Gmail API]
-  W <--> GC[Google Calendar API]
-  W --> WA[WhatsApp Provider]
-  W --> SMS[SMS Provider]
-  WA -->|Delivery Callbacks| API
-  SMS -->|Delivery Callbacks| API
+  APP -. post-MVP .-> WA[WhatsApp Provider]
+  APP -. post-MVP .-> SMS[SMS Provider]
 ```
+
+## Traceability
+- FR-09 / US-09: Google Calendar sync in MVP.
+- FR-07 / FR-08: WhatsApp/SMS post-MVP.

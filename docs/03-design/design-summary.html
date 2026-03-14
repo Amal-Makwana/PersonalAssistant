@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Design Summary - Email-Driven Reminder Assistant</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; color: #1f2937; }
+    h1, h2 { margin-bottom: 8px; }
+    .card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; margin: 14px 0; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #e5e7eb; padding: 8px; text-align: left; }
+    th { background: #f9fafb; }
+    code { background: #f3f4f6; padding: 2px 4px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Design Summary (MVP-Aligned)</h1>
+  <p>Source markdown: <code>docs/03-design/architecture.md</code> and <code>docs/03-design/sequence-flows.md</code>.</p>
+
+  <div class="card">
+    <h2>MVP Components</h2>
+    <ul>
+      <li>Gmail ingestion</li>
+      <li>Event extraction and confidence policy</li>
+      <li>Persistence with duplicate prevention</li>
+      <li>Reminder schedule generation</li>
+      <li>Google Calendar sync (MVP-critical)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Post-MVP Extensions</h2>
+    <ul>
+      <li>WhatsApp reminder delivery (FR-07)</li>
+      <li>SMS reminder delivery (FR-08)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Traceability Highlights</h2>
+    <table>
+      <thead><tr><th>Product Item</th><th>Design Realization</th></tr></thead>
+      <tbody>
+        <tr><td>FR-09 / US-09</td><td>Calendar sync after persistence, with retry + terminal failure path</td></tr>
+        <tr><td>FR-10 / US-07</td><td>Dedupe boundary before sync enqueue</td></tr>
+        <tr><td>FR-04 / US-05</td><td>Extraction confidence scoring and observability</td></tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

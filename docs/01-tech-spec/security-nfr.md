@@ -36,18 +36,18 @@ Define security controls and non-functional quality targets required for product
 - No sensitive data in logs/exceptions
 
 ## 8. Audit and Logging Expectations
-- Immutable audit records for auth, preference updates, channel dispatch
+- Immutable audit records for auth, preference updates, extraction, scheduling, and calendar sync
 - Structured logs with trace IDs
 - Time synchronization (NTP) required across services
 
 ## 9. Availability Requirements
-- Target service availability: 99.9% monthly for core API and dispatch pipeline
+- Target service availability: 99.9% monthly for core API and calendar sync pipeline
 - No single point of failure for production data stores
 
 ## 10. Performance Requirements
 - P95 API read latency: <300ms (excluding third-party calls)
 - P95 preference update latency: <500ms
-- Reminder dispatch enqueue delay: <60s under normal load
+- Calendar sync enqueue delay after persistence: <10s under normal load
 
 ## 11. Reliability Requirements
 - At-least-once processing for jobs with idempotent handlers
@@ -75,7 +75,7 @@ Define security controls and non-functional quality targets required for product
 
 ## 16. Compliance / Regulatory Considerations
 - Align with applicable privacy regulations for target launch region(s)
-- Provider policy compliance (Google API, WhatsApp/SMS usage)
+- Provider policy compliance (Google API in MVP; WhatsApp/SMS policy for post-MVP readiness)
 - Data retention and deletion policy approved by legal/security stakeholders
 
 ## 17. Open Questions / Gaps
