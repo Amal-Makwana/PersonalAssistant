@@ -4,7 +4,7 @@ Repository Command:
 Create full docs
 
 ## Purpose
-Generate a single governed, rich HTML artifact that consolidates all canonical markdown documentation into one deterministic, section-organized full-documentation view.
+Generate a single governed, rich HTML artifact that consolidates all markdown documentation into one deterministic, section-organized full-documentation view.
 
 Primary output artifact:
 - `docs/full-docs.html`
@@ -15,17 +15,15 @@ Read all markdown files from the canonical documentation tree in this order:
 2. `docs/01-ui-ux/*`
 3. `docs/02-design/*`
 4. `docs/03-execution-planning/*`
-5. Any other valid canonical documentation section folders currently present under `docs/` (markdown files only, excluding archived/deprecated locations).
 
 ## Core Generation Rules (Mandatory)
 - Read **every markdown file** in each in-scope section before generating output.
-- Include **all material content** from all source markdown files.
-- Do not omit major headings/topics, decisions, tables, matrices, traceability content, risks, assumptions, constraints, gaps, or open questions merely for brevity.
+- Include **all content** from all source markdown files.
+- Do not omit any headings/topics, decisions, tables, matrices, traceability content, risks, assumptions, constraints, gaps, or open questions merely for brevity.
 - Reorganization for readability is allowed, but completeness is mandatory.
 - The overall summary must appear before all section content.
 - A section summary must appear before each section's detailed content.
 - The final artifact is a rich consolidated documentation view, not an abbreviated digest.
-- Markdown remains source of truth; HTML is a governed derived artifact.
 - Do not generate application code.
 
 ## Deterministic Output Structure (Use Exactly)
@@ -35,7 +33,7 @@ Always produce the same top-level structure and ordering:
 2. Overall Executive Summary
 3. Repository / Documentation Scope Overview
 4. Table of Contents
-5. Section-by-section consolidated output
+5. Section-by-section full output
 
 For each section, always use this exact pattern:
 
@@ -45,14 +43,10 @@ For each section, always use this exact pattern:
 ### Section Summary
 - concise executive summary of the section
 
-### Consolidated Details
-- include the material details from all markdown files in that section
+### Full Details
+- include all the details from all markdown files in that section
 - preserve source-to-content visibility
 - include subsections, tables, traceability views, assumptions, constraints, risks, gaps, open questions, and decision points where present
-
-### Source Coverage
-- list all markdown files included for that section
-```
 
 After all sections, always include:
 6. Cross-Section Traceability / Dependency Summary
@@ -79,9 +73,9 @@ Before finalizing, run a Full Docs Coverage Check. Fail generation if any criter
 
 Verification requirements:
 - Every markdown file across all canonical sections is represented.
-- Every major heading/topic is represented.
-- Important tables, matrices, traceability content, risks, assumptions, gaps, and open questions are represented where present.
-- No major markdown topic is missing from the final output.
+- Every heading/topic is represented.
+- All tables, matrices, traceability content, risks, assumptions, gaps, and open questions are represented where present.
+- No markdown topic is missing from the final output.
 
 ## Required Task Response Addendum (Mandatory)
 When command `Create full docs` runs, always include this validation note in the response:
