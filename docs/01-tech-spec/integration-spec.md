@@ -1,104 +1,72 @@
 # Integration Specification
 
 ## 1. Purpose
-Define internal and external integration contracts, failure expectations, and observability requirements.
+Define integration contracts, trigger points, retry/timeout behavior, and observability requirements aligned to the revised MVP.
 
-## 2. Integration Overview
-Core integrations:
-- Google OAuth + Gmail + optional Calendar
-- WhatsApp provider
-- Optional SMS provider
-- Internal queue and webhook pipelines
+## 2. Integration Scope
+### MVP Integrations
+- Google OAuth
+- Gmail API
+- Google Calendar API
+- Internal queue/scheduler pipeline
 
-## 3. Internal Integrations
-- API service -> worker queue (job enqueue/dequeue)
-- Worker -> database repositories
-- Scheduler -> ingestion/dispatch jobs
-- Webhook ingress -> delivery status update service
+### Post-MVP Integrations
+- WhatsApp provider (FR-07)
+- SMS provider (FR-08)
+
+## 3. Internal Integration Contracts
+- API service -> queue: enqueue `gmail.ingest`, `event.normalize`, `reminder.schedule`, `calendar.sync`
+- Worker -> Postgres: persistence, dedupe checks, sync state updates
+- Scheduler -> worker: retry processing and stuck-job repair
 
 ## 4. External Integrations
-
 ### Google OAuth
-- **system name:** Google OAuth
-- **purpose:** user authentication and delegated consent
-- **direction of data flow:** bidirectional
-- **auth method:** OAuth 2.0 authorization code flow
-- **data exchanged:** auth code, access/refresh tokens, profile claims
-- **failure handling:** fail login, show recoverable retry state
-- **retry expectations:** not auto-retried on invalid grant; user re-consent required
-- **timeout considerations:** 5-10s API timeout
-- **rate limiting considerations:** honor Google quota and backoff headers
-- **monitoring expectations:** auth success rate and callback error code distribution
+- **Purpose:** authentication + delegated consent
+- **Failure handling:** invalid grant requires re-consent (no automated retry)
+- **Timeout:** 10s
 
 ### Gmail API
-- **system name:** Gmail API
-- **purpose:** fetch and process event-bearing emails
-- **direction of data flow:** inbound to platform
-- **auth method:** delegated OAuth bearer token
-- **data exchanged:** message metadata/body snippets/thread references
-- **failure handling:** classify transient vs permanent; queue retries for transient
-- **retry expectations:** exponential backoff with jitter; max-attempt threshold then dead-letter
-- **timeout considerations:** 10s request timeout with circuit-breaker policy
-- **rate limiting considerations:** per-user and global quota handling
-- **monitoring expectations:** fetch throughput, parse success, quota rejection rate
+- **Purpose:** source ingestion of candidate event messages
+- **Failure handling:** transient API failures retried with bounded backoff
+- **Retry:** up to 3 attempts (2s, 5s, 10s)
+- **Timeout:** 10s
 
-### WhatsApp Provider
-- **system name:** WhatsApp Messaging Provider
-- **purpose:** primary reminder delivery channel
-- **direction of data flow:** outbound messages + inbound delivery callbacks
-- **auth method:** API key/token + provider webhook signature
-- **data exchanged:** destination, reminder text/template, provider message ID, delivery states
-- **failure handling:** retry transient send failures, mark terminal failures with reason code
-- **retry expectations:** bounded retries with escalating delay
-- **timeout considerations:** 5s call timeout, asynchronous callback for final status
-- **rate limiting considerations:** provider throughput quotas and burst controls
-- **monitoring expectations:** accepted/sent/delivered/failed ratios by cohort
+### Google Calendar API (MVP-critical)
+- **Purpose:** synchronize persisted event records into Google Calendar (FR-09)
+- **Trigger point:** async `calendar.sync` job is created after successful `event.normalize` persistence and dedupe validation
+- **Data flow:** outbound upsert (create/update); optional read during reconcile
+- **Idempotency contract:** one logical sync target per `event_id + user_id`, provider event ID persisted for future upserts
+- **Retry policy:** 5 attempts (5s, 10s, 30s, 60s, 120s)
+- **Timeout:** 10s per call
+- **Terminal status rule:** if max retries exceeded or non-retryable 4xx occurs, set `FAILED_TERMINAL` and record `failure_reason`
+- **Latency expectation:** target calendar visibility within 10 seconds from event persistence under normal conditions (US-09)
 
-### SMS Provider (Optional)
-- **system name:** SMS Gateway Provider
-- **purpose:** optional secondary reminder channel
-- **direction of data flow:** outbound + callback inbound
-- **auth method:** API credentials + signed callbacks
-- **data exchanged:** phone destination, message body, status receipts
-- **failure handling:** channel-specific error mapping
-- **retry expectations:** similar bounded retry policy as WhatsApp
-- **timeout considerations:** 5s request timeout
-- **rate limiting considerations:** sender/region throughput caps
-- **monitoring expectations:** per-region delivery and error rates
+### WhatsApp Provider (Post-MVP)
+- Documented only for extensibility; not required for MVP implementation readiness.
 
-### Google Calendar API (Optional)
-- **system name:** Google Calendar API
-- **purpose:** sync normalized events to calendar
-- **direction of data flow:** outbound upsert + optional reconciliation reads
-- **auth method:** delegated OAuth token
-- **data exchanged:** event title/time/location and provider event IDs
-- **failure handling:** mark sync pending/failed, retry async
-- **retry expectations:** transient retries + manual reconcile tooling
-- **timeout considerations:** 10s timeout
-- **rate limiting considerations:** quota/backoff compliance
-- **monitoring expectations:** sync success/failure counts and lag
+### SMS Provider (Post-MVP)
+- Documented only for extensibility; not required for MVP implementation readiness.
 
-## 5. Webhooks / Event Triggers
-- Delivery status webhook endpoint with signature verification and replay protection
-- Internal scheduler triggers ingestion windows and due-reminder dispatch scans
-- Provider callback events mapped to normalized delivery states
+## 5. Failure Modes and Handling
+| Integration | Failure Class | Handling | Observability |
+| --- | --- | --- | --- |
+| Gmail API | transient timeout / 5xx | retry with backoff | retry_count, ingest_lag |
+| Calendar API | transient timeout / 429 / 5xx | retry with backoff | sync_retry_count, sync_latency |
+| Calendar API | terminal 4xx / consent revoked | mark `FAILED_TERMINAL` | terminal_failure_count, failure_reason |
 
-## 6. Dependency Risks
-- Provider outages or SLA degradation can delay reminders
-- API contract changes from third parties may break adapters
-- Quota exhaustion can create backlog spikes
+## 6. Observability Requirements
+- Correlation ID propagated from ingest through calendar sync attempts
+- Metrics: `calendar_sync_success_total`, `calendar_sync_failed_terminal_total`, `calendar_sync_retry_total`, `calendar_sync_latency_ms`
+- Structured logs include `event_id`, `user_id_hash`, `attempt_no`, `provider_status`, `failure_reason`
 
-## 7. Fallback Behaviour
-- On provider transient failure: enqueue retry with backoff
-- On repeated failure: dead-letter + alert + user-visible status failure
-- Channel fallback (WhatsApp -> SMS) is currently an open decision (not guaranteed in V1)
+## 7. Traceability
+| Product Source | Integration Behavior |
+| --- | --- |
+| FR-09 + US-09 | mandatory Google Calendar sync with 10s target, retries, terminal failure state |
+| FR-10 + US-07 | dedupe before sync enqueue, idempotent upsert semantics |
+| US-05 | extraction confidence output feeds normalized event eligibility and logs |
+| FR-07 / FR-08 | explicitly post-MVP integration placeholders only |
 
-## 8. Testing Considerations
-- Sandbox credentials for each provider
-- Contract tests with recorded provider payload fixtures
-- Chaos tests for timeouts/rate limits/webhook retries
-
-## 9. Open Questions / Gaps
-1. Which provider(s) are final for WhatsApp and SMS in V1 contract freeze?
-2. Is automated channel fallback required for MVP or deferred?
-3. What is acceptable maximum dispatch lag during provider incident windows?
+## 8. Open Questions
+1. Should calendar reconcile runs be periodic in MVP or operator-triggered only?
+2. What alert thresholds should page on-call for rising terminal sync failures?

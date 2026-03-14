@@ -5,7 +5,7 @@ Define major components inside application containers and their dependencies.
 
 ## Frontend Components
 - Auth Module (session bootstrap, protected routing)
-- Preferences Module (channel toggles)
+- Preferences Module (calendar sync + future channel toggles)
 - Events Module (event/reminder status visibility)
 - API Client Layer (typed requests, retries, auth refresh)
 - Shared UI Components (`packages/ui`)
@@ -19,10 +19,9 @@ Define major components inside application containers and their dependencies.
   - ExtractionService
   - DedupeService
   - SchedulingService
-  - DispatchService
   - CalendarSyncService
 - Repository Layer
-- Provider Adapter Layer (Google, WhatsApp, SMS)
+- Provider Adapter Layer (Google OAuth/Gmail/Calendar; WhatsApp/SMS post-MVP adapters)
 - Job Processor Layer
 
 ## Key Dependencies

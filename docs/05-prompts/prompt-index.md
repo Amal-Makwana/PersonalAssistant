@@ -35,13 +35,21 @@ These prompts are documentation prompts only. They are not for generating applic
 - **Output:** Repository health score, phase critiques, cross-phase inconsistencies, risk analysis, implementation readiness.
 - **Location:** `docs/05-prompts/repository-documentation-audit.md`
 
+
+## Recommended Usage for Phase Updates
+
+When updating only Tech Spec and/or Design documentation:
+- Start with `critical-persona-review.md` for the target phase (`tech-spec` or `design`) to drive focused quality and traceability edits.
+- Use `repository-documentation-audit.md` when you need a full cross-phase governance validation across Product -> Tech Spec -> UI/UX -> Design -> Delivery.
+- Keep markdown as source of truth and refresh the corresponding section HTML summary in the same change set.
+
 ## Repository Commands
 
-Run full audit  
+Run full audit
 Runs repository-wide documentation governance audit and saves output to `docs/06-governance`.
 
-Run audit - phase  
-Runs documentation review for a specific phase.
+Run audit - <phase>
+Runs documentation review for a specific phase (`product`, `tech-spec`, `ui-ux`, `design`, `delivery`).
 
 Examples:
 

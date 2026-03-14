@@ -1,58 +1,39 @@
-# Container Diagram (Runtime Services)
-
-## Objective
-Describe runtime containers/services and integration pathways.
+# Container Diagram (MVP-Aligned)
 
 ## Containers
-1. **Web App Container**
-   - Next.js frontend
-   - Handles UI routing, auth bootstrap, preference interactions
-2. **API Container**
-   - REST endpoints, auth/session handling, validation, orchestration
-3. **Worker Container**
-   - Queue consumers for ingestion, normalization, scheduling, dispatch, calendar sync
-4. **Scheduler Container (logical role, can share worker runtime)**
-   - Cron-triggered jobs for ingestion windows and due reminders
-5. **PostgreSQL**
-   - System-of-record data store
-6. **Redis**
-   - Queue broker, short-lived lock/idempotency state
+1. Web App
+2. API Service
+3. Worker/Scheduler Service
+4. PostgreSQL
+5. Redis Queue
 
-## Interactions
-- Web App -> API over HTTPS
-- API <-> Postgres for transactional state
-- API -> Redis queue for async jobs
-- Worker <-> Redis queue for job consumption
-- Worker <-> Postgres for domain persistence
-- Worker <-> external providers for ingest/dispatch/sync
-- Provider callbacks -> API webhook endpoints
+## External Dependencies
+- Google OAuth
+- Gmail API
+- Google Calendar API
+- Future-phase providers: WhatsApp/SMS (not in MVP runtime path)
 
-## Container Diagram (Mermaid)
 ```mermaid
-flowchart TB
-  subgraph Client
-    FE[Web App]
-  end
+flowchart LR
+  WEB[Web App] --> API[API Service]
+  API --> DB[(PostgreSQL)]
+  API --> REDIS[(Redis Queue)]
+  WORKER[Worker + Scheduler] --> REDIS
+  WORKER --> DB
 
-  subgraph Platform
-    API[API Service]
-    WK[Worker Service]
-    SCH[Scheduler]
-    PG[(PostgreSQL)]
-    RQ[(Redis/BullMQ)]
-  end
+  API <--> OAUTH[Google OAuth]
+  WORKER <--> GM[Gmail API]
+  WORKER <--> GC[Google Calendar API]
 
-  FE --> API
-  API <--> PG
-  API --> RQ
-  SCH --> RQ
-  WK <--> RQ
-  WK <--> PG
-
-  WK --> GM[Gmail API]
-  WK --> WA[WhatsApp API]
-  WK --> SMS[SMS API]
-  WK --> GC[Google Calendar API]
-  WA --> API
-  SMS --> API
+  WORKER -. post-MVP .-> WA[WhatsApp API]
+  WORKER -. post-MVP .-> SMS[SMS API]
 ```
+
+## Responsibility Boundaries
+- API: auth/session and orchestration entrypoints
+- Worker: ingestion, extraction, dedupe, scheduling, calendar sync
+- DB: source-of-truth records and sync status
+- Redis: async orchestration and retries
+
+## Critical MVP Flow
+`gmail.ingest -> event.normalize/persist -> reminder.schedule -> calendar.sync`

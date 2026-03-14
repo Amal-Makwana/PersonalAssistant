@@ -3,125 +3,69 @@
 For critical documentation review, use docs/05-prompts/critical-persona-review.md
 
 ## 1. Document Purpose
-This document defines the target technical architecture and engineering constraints for the Email-Driven Reminder Assistant V1. It translates product requirements into implementation-ready guidance for backend, frontend, data, integrations, security, and operations.
+This document defines the implementation-ready technical baseline for Email-Driven Reminder Assistant V1, aligned to the current Product scope.
 
-## 2. Audience
-- Engineering leadership (architecture decisions, risk acceptance)
-- Backend/frontend engineers (implementation reference)
-- QA/SRE (test and operational expectations)
-- Security/compliance stakeholders (control requirements)
+## 2. Scope Alignment (Product → Tech)
+### MVP (Committed)
+- Gmail ingestion and event candidate detection (FR-02, FR-03)
+- Event extraction and confidence policy (FR-04, US-05)
+- Event persistence and duplicate prevention (FR-05, FR-10, US-07)
+- Default reminder schedule generation at 4h / 1h / 15m (FR-06)
+- Google Calendar synchronization as a committed MVP integration (FR-09, US-09)
 
-## 3. Technical Scope
-In scope for V1:
-- Google OAuth sign-in and delegated Gmail access
-- Email ingestion, event extraction, duplicate prevention
-- Reminder scheduling and multi-channel dispatch (WhatsApp default, optional SMS)
-- Optional Google Calendar sync
-- Preference management, observability, and operational controls
+### Post-MVP (Not implementation-critical for V1)
+- WhatsApp reminder delivery (FR-07)
+- SMS reminder delivery (FR-08)
 
-Out of scope:
-- Non-Gmail ingestion providers
-- Complex recurring rules engine
-- Multi-tenant admin portal
+## 3. Core Lifecycle
+`gmail ingest -> extract -> dedupe/persist -> schedule reminders -> calendar sync`
 
-## 4. Product Context
-Product goals and FR mapping are defined in `docs/00-product/requirements.md` and `docs/00-product/scope-v1.md`. The technical architecture prioritizes dependable workflow completion for the core chain:
-`email received -> event extracted -> event persisted -> reminders scheduled -> reminders dispatched`.
+Calendar sync is triggered only after successful persistence of normalized event records and dedupe confirmation.
 
-## 5. Architectural Approach
-- **Style:** Modular monolith for V1 with asynchronous job processing boundaries that can be extracted into services later.
-- **Pattern:** Layered backend (`routes -> controllers -> services -> repositories -> models`) with explicit domain services for extraction, dedupe, scheduling, and dispatch.
-- **Consistency model:** Transactional consistency for write operations; eventual consistency for integrations (calendar, messaging provider callbacks).
-- **Resilience:** Queue-backed jobs, bounded retries, idempotency keys, dead-letter handling.
+## 4. Architectural Approach
+- **Style:** Modular monolith with asynchronous workers and queue-based boundaries.
+- **Pattern:** `routes -> controllers -> services -> repositories -> models`.
+- **Consistency model:** Transactional consistency for event/reminder writes; eventual consistency for Google Calendar API writes.
+- **Resilience model:** bounded retries, idempotency keys, dead-letter handling, and terminal failure status.
 
-## 6. Technology Stack
-### frontend stack
-- Next.js (App Router) + TypeScript
-- TanStack Query for server-state caching
-- React Hook Form + Zod for form/schema validation
+## 5. Reliability and Operational Targets
+- **Calendar sync latency target:** event visible in Google Calendar within 10 seconds after successful persistence for normal operating conditions (US-09).
+- **Calendar retry policy:** exponential backoff (5 attempts: 5s, 10s, 30s, 60s, 120s), then terminal failure.
+- **Timeout expectations:** 10s per Google Calendar upsert attempt; classify timeout as retryable transient error.
+- **Terminal failure handling:** set sync status to `FAILED_TERMINAL`, persist reason code, emit alert/event for operational review.
+- **Duplicate prevention interaction:** dedupe key is resolved before enqueueing calendar sync; duplicate suppression prevents repeated calendar creates.
 
-### backend stack
-- Node.js (LTS) + TypeScript + Express/Fastify-compatible HTTP layer
-- Background jobs via BullMQ (Redis)
-- Internal service contracts typed with shared DTO schemas
-
-### database
-- PostgreSQL 15+ as system of record
-- Prisma or Knex for migrations and repository implementation
-
-### auth
-- Google OAuth 2.0 / OpenID Connect
-- Session tokens (httpOnly cookie/JWT), short-lived access + rotating refresh
-- Optional KMS-backed token encryption at rest
-
-### hosting/deployment
-- Containers on managed Kubernetes or managed container platform
-- Managed Postgres + Redis
-- CDN + WAF for frontend edge delivery
-
-### background processing
-- Queue workers for: ingestion parsing, scheduling, reminder dispatch, calendar sync
-- Cron/scheduler service for due-reminder scan fallback
-
-### observability
-- OpenTelemetry traces
-- Structured JSON logs + correlation IDs
-- Metrics (Prometheus-compatible): queue lag, extraction success, delivery success, retry counts
+## 6. Observability Requirements
+Mandatory instrumentation for V1:
+- **Extraction:** confidence distribution, low-confidence count, parse failure reason codes (US-05).
+- **Scheduling:** schedule generation count, scheduler latency, failed schedule creation.
+- **Calendar sync:** enqueue-to-success latency, retry count, transient vs terminal failures, duplicate-suppressed sync attempts (US-09).
+- **Traceability:** correlation IDs across API, worker, DB, and Google provider adapter.
 
 ## 7. System Boundaries
-Inside system boundary:
-- Web app (user configuration, status visibility)
-- API service
-- Worker service
-- Postgres, Redis
+Inside boundary:
+- API service, worker service, scheduler role, Postgres, Redis
 
-Outside system boundary:
-- Google OAuth/Gmail/Calendar APIs
-- WhatsApp provider API
-- SMS provider API
+Outside boundary:
+- Google OAuth + Gmail API + Google Calendar API
+- Future-phase messaging providers (WhatsApp/SMS)
 
-## 8. Key Technical Principles
-1. Markdown documentation is source of truth; summary HTML is presentation layer.
-2. Idempotent processing by default for all external side effects.
-3. Least privilege and data minimization for mailbox data.
-4. Observable-by-default flows with trace IDs and reason-coded failures.
-5. Backward-compatible API evolution for V1.x.
+## 8. Constraints
+- Gmail-only source in V1.
+- Fixed reminder policy (4h / 1h / 15m).
+- Calendar sync included in MVP.
+- WhatsApp/SMS channel delivery deferred to post-MVP scope.
 
-## 9. Environments
-- **Local:** Docker Compose (API, worker, Postgres, Redis); mocked provider adapters allowed.
-- **Dev:** Shared cloud environment, relaxed quotas, synthetic datasets.
-- **Staging:** Production-like infrastructure and secrets setup for release validation.
-- **Production:** HA deployment, auto-scaling workers, managed backups, alerting.
+## 9. Traceability Matrix
+| Product Item | Tech Realization |
+| --- | --- |
+| FR-04 + US-05 extraction confidence policy | Confidence thresholds, low-confidence logging, extraction metrics |
+| FR-10 + US-07 duplicate prevention | Dedupe key before persistence and before sync enqueue |
+| FR-09 + US-09 calendar sync reliability | Post-persistence sync trigger, retry/timeout policy, terminal failure state, 10s sync latency target |
 
-## 10. Assumptions
-- Gmail message bodies contain parsable event patterns at acceptable rates.
-- Third-party messaging providers support delivery status callbacks.
-- Initial load profile remains within modular-monolith scale envelope.
-
-## 11. Constraints
-- V1 reminder windows fixed at 4h, 1h, 15m.
-- Gmail-only source integration.
-- Optional channel toggles are preference-level, not per-event rule engine.
-
-## 12. Dependencies
-- Product baseline: `docs/00-product/*.md`
-- API contract: `api-spec.md`
-- Data contract: `db-schema.md`
+## 10. Cross References
+- Product source of truth: `docs/00-product/requirements.md`, `docs/00-product/user-stories.md`, `docs/00-product/acceptance-criteria.md`, `docs/00-product/scope-v1.md`
+- Backend runtime details: `backend-spec.md`
 - Integration contracts: `integration-spec.md`
-- NFR/security controls: `security-nfr.md`
-- Architecture diagrams: `diagrams/*.md`
-
-## 13. Risks and Technical Considerations
-- Ambiguous email content can create extraction uncertainty; confidence thresholds and review policy required.
-- Provider outages/quota throttling can delay reminder dispatch; fallback and backlog processing needed.
-- Clock skew/timezone mismatch may trigger late reminders; strict UTC normalization and locale-safe rendering required.
-
-## 14. Cross References
-- Product requirements: `docs/00-product/requirements.md`
-- Frontend implementation details: `frontend-spec.md`
-- Backend implementation details: `backend-spec.md`
-- API contract: `api-spec.md`
-- Data schema: `db-schema.md`
-- Security + NFR: `security-nfr.md`
-- Integrations: `integration-spec.md`
-- Diagram index: `diagrams/diagram-index.md`
+- Data constraints: `db-schema.md`
+- Diagrams: `diagrams/*`
