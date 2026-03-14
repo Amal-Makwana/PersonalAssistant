@@ -35,6 +35,57 @@ These prompts are documentation prompts only. They are not for generating applic
 - **Governance notes:** Documentation-focused only; no application code generation; deterministic sectioned output; markdown-first review workflow; if markdown is updated, regenerate corresponding HTML summary to preserve dual-layer sync.
 - **Source file:** `critical-persona-review.md`
 
+
+## Governance & Review Prompts
+
+### Critical Persona Review by Documentation Phase
+
+Purpose:
+Phase-aware expert review of documentation.
+
+Phases Supported:
+Product  
+Tech Spec  
+UI/UX  
+Design  
+Delivery
+
+Output:
+Persona justification  
+Executive critique  
+Findings table  
+Priority fixes  
+Rewrite suggestions  
+Traceability validation  
+Risk analysis
+
+Location:
+docs/05-prompts/critical-persona-review.md
+
+
+### Repository Documentation Audit
+
+Purpose:
+Full governance audit of repository documentation.
+
+Reviews phases:
+
+Product  
+Tech Spec  
+UI/UX  
+Design  
+Delivery
+
+Output:
+Repository health score  
+Phase critiques  
+Cross-phase inconsistencies  
+Risk analysis  
+Implementation readiness
+
+Location:
+docs/05-prompts/repository-documentation-audit.md
+
 ## Mapping Between Prompts and Documentation Sections
 
 | Documentation Section | Prompt Source | Primary Outputs |

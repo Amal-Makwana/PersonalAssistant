@@ -1,27 +1,9 @@
 # Prompt: Critical Persona Review by Documentation Phase
 
-## Purpose
+Purpose:
+Critically review documentation using a phase-appropriate expert persona.
 
-This prompt performs a **critical documentation review** using the most appropriate **expert persona** depending on the documentation phase.
-
-The goal is to improve:
-
-- clarity
-- completeness
-- architectural soundness
-- usability
-- delivery readiness
-- cross-document traceability
-
-This prompt **must NOT generate application code**.  
-It is strictly for **documentation review and improvement**.
-
----
-
-# Inputs
-
-Provide the following inputs:
-
+Inputs:
 Phase:
 - Product
 - Tech Spec
@@ -30,192 +12,72 @@ Phase:
 - Delivery
 
 Target Files:
-- List of markdown files to review
+(list of markdown files)
 
 Optional Context:
-- Requirement changes
-- Architecture decisions
-- Assumptions
-- Known issues
+(requirement changes, architecture decisions, etc.)
 
-Example:
+Persona Mapping:
 
-Phase: Tech Spec  
-Target Files:
-- docs/01-tech-spec/event-model.md
-- docs/01-tech-spec/api-spec.md
+Product → Head of Product / Business Analyst  
+Tech Spec → Principal Engineer / Solution Architect  
+UI/UX → UX Lead / Accessibility Specialist  
+Design → Staff Architect / SRE-minded reviewer  
+Delivery → Program Manager / Release Manager  
 
-Optional Context:
-- event retry strategy recently changed
+Review Instructions:
 
----
-
-# Persona Selection Rules
-
-Select the reviewing persona based on documentation phase.
-
-| Phase | Persona |
-|------|------|
-| Product | Head of Product / Senior Business Analyst |
-| Tech Spec | Principal Engineer / Solution Architect |
-| UI/UX | UX Lead / Accessibility Specialist |
-| Design | Staff Architect / SRE-focused Architecture Reviewer |
-| Delivery | Program Manager / Release Manager |
-
-Explain **why the persona is appropriate** in 2–3 lines.
-
----
-
-# Review Instructions
-
-1. Review each section critically for:
-
-- clarity
-- completeness
-- ambiguity
-- feasibility
-- implementation readiness
-- testability
-- traceability across documents
-
-2. Identify:
-
-- missing requirements
-- contradictions with other documentation
-- vague or non-testable statements
-- architectural risks
-- operational gaps
-
-3. Validate **cross-document traceability** relevant to the phase.
-
-Examples:
-
-Product phase:
-- requirements ↔ user stories ↔ acceptance criteria
-
-Tech Spec phase:
-- requirements ↔ API spec ↔ data model
-
-UI/UX phase:
-- flows ↔ screens ↔ states
-
-Design phase:
-- architecture ↔ components ↔ reliability model
-
-Delivery phase:
-- roadmap ↔ milestones ↔ backlog ↔ release plan
-
-4. Provide **actionable edits** using the structure:
+1. Select persona based on phase and explain in 2–3 lines.
+2. Review each section for:
+   - clarity
+   - completeness
+   - ambiguity
+   - feasibility
+   - testability
+3. Identify:
+   - missing details
+   - contradictions with other docs
+   - non-testable statements
+   - architectural risks
+4. Provide edits using structure:
 
 Issue  
 Why it matters  
 Suggested replacement text
 
-5. Flag risks using severity:
+5. Validate cross-document traceability.
 
-- P0 Critical
-- P1 Important
-- P2 Improvement
+Examples:
+requirements ↔ stories ↔ acceptance criteria  
+flows ↔ screens ↔ states  
+architecture ↔ components ↔ reliability model
 
-6. Do not generate application code.
+6. Do NOT generate application code.
 
----
+Output Format:
 
-# Markdown-First Documentation Rule
+Persona Used  
+Executive Critique  
 
-All documentation in this repository follows a **markdown-first workflow**.
-
-If the review recommends markdown changes:
-
-- remind that corresponding **HTML summary must be regenerated**
-- maintain **dual-layer documentation sync**
-
-Markdown → HTML summary must stay aligned.
-
----
-
-# Output Format (Deterministic)
-
-## Persona Used
-
-Persona:  
-Reason for selection:
-
----
-
-## Executive Critique
-
-Brief high-level evaluation of the documentation.
-
-Focus on:
-
-- overall clarity
-- structural soundness
-- readiness for the next phase
-
----
-
-## Section-by-Section Findings
+Section-by-Section Findings
 
 | Section | Issue | Severity | Recommendation |
-|--------|------|------|------|
 
----
+Priority Fix List
 
-## Priority Fix List
+P0 Critical  
+P1 Important  
+P2 Improvement  
 
-P0 – Critical issues that block implementation  
-P1 – Important improvements  
-P2 – Nice-to-have improvements
+Proposed Edits
 
----
+Traceability Validation
 
-## Proposed Edits
-
-Provide concrete rewrite suggestions.
-
-Format:
-
-Issue:  
-Why it matters:  
-Suggested replacement text:
-
----
-
-## Traceability Validation
-
-Confirm whether traceability exists across related documents.
-
-Example checks:
-
-- requirements ↔ user stories
-- events ↔ APIs
-- flows ↔ screens
-- components ↔ architecture
-- roadmap ↔ milestones
-
-List missing traceability links.
-
----
-
-## Risks
+Risks
 
 | Risk | Severity | Impact |
-|------|------|------|
 
----
+Open Questions
 
-## Open Questions
-
-List questions that require clarification before documentation is considered complete.
-
----
-
-## Dual-Layer Documentation Reminder
-
-If markdown documentation is updated:
-
-- regenerate the corresponding **HTML summary**
-- verify markdown ↔ HTML synchronization
-
-This is mandatory for repository compliance.
+Dual-Layer Documentation Reminder:
+If markdown changes are recommended, regenerate HTML summaries.

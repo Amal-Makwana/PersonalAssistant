@@ -1,319 +1,85 @@
 # Prompt: Repository Documentation Audit
 
-## Purpose
+Purpose:
+Run a full documentation governance audit across the repository.
 
-Perform a full governance audit of the repository documentation.
+Phases reviewed in order:
 
-The audit validates that documentation across all phases is:
+1 Product  
+2 Tech Spec  
+3 UI/UX  
+4 Design  
+5 Delivery  
 
-- complete
-- consistent
-- traceable
-- implementation-ready
-
-This audit runs reviews across documentation phases in the correct order:
-
-1. Product
-2. Tech Spec
-3. UI/UX
-4. Design
-5. Delivery
-
-The review uses the canonical prompt:
+The audit orchestrates phase reviews using:
 
 docs/05-prompts/critical-persona-review.md
 
-This prompt orchestrates phase-by-phase review and produces a consolidated report.
+Review Targets:
 
----
+docs/00-product/*  
+docs/01-tech-spec/*  
+docs/02-ui-ux/*  
+docs/03-design/*  
+docs/04-delivery/*  
 
-# Inputs
+Output Format:
 
-Optional Scope:
-
-- Full repository (default)
-- Specific phase
-- Specific files
-
-Optional Focus Areas:
-
-- architecture readiness
-- product clarity
-- UX completeness
-- delivery readiness
-
-Example Input:
-
-Scope: Full repository  
-Focus: Architecture readiness before development start
-
----
-
-# Review Process
-
-The audit must run the following phases in order.
-
-## Phase 1 — Product
-
-Review:
-
-docs/00-product/*
-
-Persona:
-
-Head of Product / Senior Business Analyst
-
-Validate:
-
-- problem clarity
-- personas
-- requirements
-- acceptance criteria
-- business goals
-
-Traceability checks:
-
-requirements → user stories → acceptance criteria
-
----
-
-## Phase 2 — Tech Spec
-
-Review:
-
-docs/01-tech-spec/*
-
-Persona:
-
-Principal Engineer / Solution Architect
-
-Validate:
-
-- system feasibility
-- API definitions
-- data models
-- event flows
-- integration assumptions
-
-Traceability checks:
-
-requirements → APIs → data model
-
----
-
-## Phase 3 — UI/UX
-
-Review:
-
-docs/02-ui-ux/*
-
-Persona:
-
-UX Lead / Accessibility Specialist
-
-Validate:
-
-- user journeys
-- screen inventory
-- UI states
-- accessibility
-- usability
-
-Traceability checks:
-
-flows → screens → states
-
----
-
-## Phase 4 — Design / Architecture
-
-Review:
-
-docs/03-design/*
-
-Persona:
-
-Staff Architect / SRE-minded reviewer
-
-Validate:
-
-- system architecture
-- service boundaries
-- reliability patterns
-- failure modes
-- observability
-- scaling assumptions
-
-Traceability checks:
-
-architecture → components → operational model
-
----
-
-## Phase 5 — Delivery
-
-Review:
-
-docs/04-delivery/*
-
-Persona:
-
-Program Manager / Release Manager
-
-Validate:
-
-- delivery roadmap
-- milestones
-- dependencies
-- backlog completeness
-- release readiness
-
-Traceability checks:
-
-roadmap → backlog → milestones
-
----
-
-# Output Format
-
-## Repository Health Score
-
-Score each phase:
+Repository Health Score
 
 | Phase | Score | Summary |
-|------|------|------|
 
-Score range:
+Score scale:
+5 Excellent  
+4 Good  
+3 Needs improvement  
+2 Major gaps  
+1 Critical issues
 
-- 5 = Excellent
-- 4 = Good
-- 3 = Needs improvement
-- 2 = Major gaps
-- 1 = Critical issues
+Phase Findings:
 
----
+Product  
+Tech Spec  
+UI/UX  
+Architecture  
+Delivery
 
-## Phase Findings
+Each section must include:
 
-### Product
-
-Summary critique
-
-Key issues
-
+Summary critique  
+Key issues  
 Priority fixes
 
----
-
-### Tech Spec
-
-Summary critique
-
-Key issues
-
-Priority fixes
-
----
-
-### UI/UX
-
-Summary critique
-
-Key issues
-
-Priority fixes
-
----
-
-### Architecture
-
-Summary critique
-
-Key issues
-
-Priority fixes
-
----
-
-### Delivery
-
-Summary critique
-
-Key issues
-
-Priority fixes
-
----
-
-## Cross-Phase Consistency Issues
-
-Identify contradictions across documentation.
+Cross-Phase Consistency Issues
 
 Examples:
-
-- requirements not implemented in API
-- screens without supporting backend
+- requirements missing API coverage
+- screens without backend support
 - architecture missing components required by UX
-- roadmap not covering required work
+- roadmap missing implementation work
 
----
-
-## Critical Risks
+Critical Risks
 
 | Risk | Phase | Severity | Impact |
 
-Severity:
-
-P0 Critical  
-P1 Important  
-P2 Improvement
-
----
-
-## Implementation Readiness
-
-Evaluate whether documentation is sufficient for engineering to begin.
+Implementation Readiness
 
 Rating:
-
-- Ready
-- Ready with fixes
-- Not ready
+Ready  
+Ready with fixes  
+Not ready
 
 Explain reasoning.
 
----
+Top 10 Fixes Required
 
-## Top 10 Fixes Required
+Traceability Validation
 
-List highest priority improvements.
-
----
-
-## Traceability Validation
-
-Validate traceability chain:
+Validate chain:
 
 Product → Tech Spec → UI/UX → Design → Delivery
 
-Identify missing links.
+Documentation Quality Observations
 
----
-
-## Documentation Quality Observations
-
-Comment on:
-
-- clarity
-- duplication
-- missing diagrams
-- ambiguous requirements
-
----
-
-## Dual-Layer Documentation Reminder
-
-If markdown documentation requires changes:
-
-- regenerate corresponding HTML summaries
-- verify markdown ↔ HTML synchronization
+Dual-Layer Documentation Reminder:
+If markdown is updated, regenerate HTML summaries.
