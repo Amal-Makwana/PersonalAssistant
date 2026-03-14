@@ -1,52 +1,326 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Design Summary - Email-Driven Reminder Assistant</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design / Architecture Summary | Email-Driven Reminder Assistant</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 24px; color: #1f2937; }
-    h1, h2 { margin-bottom: 8px; }
-    .card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; margin: 14px 0; }
-    table { border-collapse: collapse; width: 100%; }
-    th, td { border: 1px solid #e5e7eb; padding: 8px; text-align: left; }
-    th { background: #f9fafb; }
-    code { background: #f3f4f6; padding: 2px 4px; border-radius: 4px; }
+    :root {
+      color-scheme: light;
+      --bg: #f4f6fb;
+      --panel: #ffffff;
+      --ink: #172033;
+      --muted: #58627a;
+      --line: #dbe3f1;
+      --brand: #305dff;
+      --brand-2: #4f8bff;
+      --brand-soft: #e8efff;
+      --ok: #0b7a63;
+      --warn: #9a6700;
+      --risk: #a33a00;
+      --radius: 16px;
+      --shadow: 0 14px 40px rgba(21, 37, 86, 0.08);
+      --max: 1160px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 15% -10%, #dbe6ff 0%, rgba(219, 230, 255, 0) 38%),
+        radial-gradient(circle at 85% -10%, #e3eeff 0%, rgba(227, 238, 255, 0) 35%),
+        var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+    }
+    .hero-wrap {
+      background: linear-gradient(135deg, #102856 0%, #1d4194 40%, #2f5dff 100%);
+      color: #f7faff;
+      padding: 2.5rem 1.25rem 3rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+    }
+    .hero { max-width: var(--max); margin: 0 auto; display: grid; gap: 1.4rem; }
+    .eyebrow { letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.78rem; opacity: 0.9; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(1.9rem, 4vw, 3rem); line-height: 1.15; max-width: 20ch; }
+    .hero p { margin: 0; max-width: 75ch; color: #dbe8ff; font-size: 1.03rem; }
+    .chips { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+    .chip {
+      border: 1px solid rgba(255, 255, 255, 0.33);
+      color: #eff5ff;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      padding: 0.35rem 0.7rem;
+      background: rgba(255, 255, 255, 0.09);
+    }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.75rem; margin-top: 0.5rem; }
+    .stat {
+      border: 1px solid rgba(255, 255, 255, 0.23);
+      border-radius: 12px;
+      padding: 0.8rem;
+      background: rgba(8, 20, 48, 0.26);
+    }
+    .stat strong { display: block; font-size: 1.3rem; }
+    .stat span { font-size: 0.82rem; color: #d6e4ff; }
+    main { max-width: var(--max); margin: 0 auto; padding: 1.2rem; display: grid; gap: 1rem; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.1rem; box-shadow: var(--shadow); }
+    .toc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.65rem; margin-top: 0.8rem; }
+    .toc-grid a {
+      text-decoration: none; color: var(--ink); border: 1px solid var(--line); border-radius: 12px; padding: 0.65rem 0.75rem; background: #fbfcff; font-size: 0.94rem;
+    }
+    .toc-grid a:hover { border-color: #b8c8f2; background: #f3f7ff; }
+    h2, h3 { margin: 0 0 0.65rem; line-height: 1.25; }
+    h2 { font-size: 1.35rem; }
+    h3 { font-size: 1.03rem; }
+    p { margin: 0.45rem 0 0; color: var(--muted); }
+    .source {
+      display: inline-flex; align-items: center; gap: 0.4rem; border-radius: 999px; background: var(--brand-soft); color: #123baf; border: 1px solid #cddcff; font-size: 0.75rem; font-weight: 700; padding: 0.28rem 0.62rem; margin-bottom: 0.8rem;
+    }
+    .columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.75rem; }
+    .mini { border: 1px solid var(--line); border-radius: 12px; padding: 0.85rem; background: #fcfdff; }
+    ul { margin: 0.55rem 0 0; padding-left: 1.1rem; color: var(--muted); }
+    li { margin: 0.23rem 0; }
+    .trace { width: 100%; border-collapse: collapse; margin-top: 0.7rem; overflow: hidden; border-radius: 12px; border: 1px solid var(--line); font-size: 0.92rem; }
+    .trace th, .trace td { padding: 0.65rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    .trace th { background: #f3f7ff; color: #233a72; }
+    .callout { margin-top: 0.9rem; border-radius: 12px; border: 1px solid #c5d7ff; background: linear-gradient(180deg, #f4f8ff 0%, #eef4ff 100%); padding: 0.85rem; }
+    .warning { border-color: #f2d5a5; background: linear-gradient(180deg, #fff9ef 0%, #fff4df 100%); }
+    .risk { border-color: #f5b8a3; background: linear-gradient(180deg, #fff4f0 0%, #ffebe4 100%); }
+    footer { margin: 0.5rem 0 1rem; text-align: center; color: #6a748c; font-size: 0.82rem; }
   </style>
 </head>
 <body>
-  <h1>Design Summary (MVP-Aligned)</h1>
-  <p>Source markdown: <code>docs/03-design/architecture.md</code> and <code>docs/03-design/sequence-flows.md</code>.</p>
+  <header class="hero-wrap">
+    <div class="hero">
+      <div class="eyebrow">Design Documentation • Executive Consolidated View</div>
+      <h1>Email-Driven Reminder Assistant — Design / Architecture Summary</h1>
+      <p>This page consolidates all markdown in <code>docs/03-design</code> into a stakeholder-ready architecture narrative with explicit MVP scope boundaries, reliability behavior, traceability, and operations guidance. Markdown files remain the source of truth.</p>
+      <div class="chips">
+        <span class="chip">MVP: Gmail → Calendar</span>
+        <span class="chip">Calendar Sync in MVP</span>
+        <span class="chip">WhatsApp/SMS Post-MVP Only</span>
+        <span class="chip">Reliability + Operator Remediation</span>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong>3</strong><span>Design markdown sources consolidated</span></div>
+        <div class="stat"><strong>6</strong><span>Core MVP runtime components</span></div>
+        <div class="stat"><strong>5</strong><span>Primary failure modes and remediation patterns</span></div>
+        <div class="stat"><strong>4</strong><span>Cross-phase traceability rows</span></div>
+      </div>
+    </div>
+  </header>
 
-  <div class="card">
-    <h2>MVP Components</h2>
-    <ul>
-      <li>Gmail ingestion</li>
-      <li>Event extraction and confidence policy</li>
-      <li>Persistence with duplicate prevention</li>
-      <li>Reminder schedule generation</li>
-      <li>Google Calendar sync (MVP-critical)</li>
-    </ul>
-  </div>
+  <main>
+    <section class="card" id="toc">
+      <h2>Table of Contents</h2>
+      <p>Sections map directly to architecture markdown sources for auditability and coverage verification.</p>
+      <nav class="toc-grid" aria-label="Table of contents">
+        <a href="#overview">1) Architecture Scope and Boundaries</a>
+        <a href="#components">2) Container / Component Architecture</a>
+        <a href="#flows">3) Data and Sequence Flow Design</a>
+        <a href="#reliability">4) Reliability, Failure Handling, and Observability</a>
+        <a href="#deployment">5) Deployment Notes, Assumptions, Trade-offs</a>
+        <a href="#traceability">6) Cross-Phase Traceability Matrix</a>
+        <a href="#coverage">7) Source Coverage Manifest and Coverage Notes</a>
+      </nav>
+    </section>
 
-  <div class="card">
-    <h2>Post-MVP Extensions</h2>
-    <ul>
-      <li>WhatsApp reminder delivery (FR-07)</li>
-      <li>SMS reminder delivery (FR-08)</li>
-    </ul>
-  </div>
+    <section class="card" id="overview">
+      <div class="source">Source: architecture.md (Sections 1-2, 9-10)</div>
+      <h2>1) Architecture Scope and Boundaries</h2>
+      <p>MVP architecture includes Gmail ingestion, event extraction, event persistence, duplicate prevention, schedule generation, and Google Calendar synchronization. This is the active system boundary for V1 runtime behavior.</p>
+      <div class="columns">
+        <article class="mini">
+          <h3>MVP in-scope runtime</h3>
+          <ul>
+            <li>Gmail API ingestion as the only source channel.</li>
+            <li>Extraction confidence + normalized canonical event records.</li>
+            <li>Dedupe/idempotency boundaries before fan-out.</li>
+            <li>Scheduling defaults (4h, 1h, 15m).</li>
+            <li>Google Calendar sync with persisted outcomes.</li>
+          </ul>
+        </article>
+        <article class="mini">
+          <h3>Post-MVP extensibility only</h3>
+          <ul>
+            <li>WhatsApp delivery channel (future phase).</li>
+            <li>SMS delivery channel (future phase).</li>
+            <li>Future adapters must reuse Event Service idempotency + observability contracts.</li>
+          </ul>
+        </article>
+      </div>
+      <div class="callout warning">
+        <strong>MVP channel guardrail:</strong> WhatsApp/SMS are not active architecture commitments for MVP runtime and must not appear as deployed/operational components in implementation planning.
+      </div>
+    </section>
 
-  <div class="card">
-    <h2>Traceability Highlights</h2>
-    <table>
-      <thead><tr><th>Product Item</th><th>Design Realization</th></tr></thead>
-      <tbody>
-        <tr><td>FR-09 / US-09</td><td>Calendar sync after persistence, with retry + terminal failure path</td></tr>
-        <tr><td>FR-10 / US-07</td><td>Dedupe boundary before sync enqueue</td></tr>
-        <tr><td>FR-04 / US-05</td><td>Extraction confidence scoring and observability</td></tr>
-      </tbody>
-    </table>
-  </div>
+    <section class="card" id="components">
+      <div class="source">Source: architecture.md (Sections 3-4)</div>
+      <h2>2) Container / Component Architecture</h2>
+      <p>The architecture separates ingestion, interpretation, state authority, scheduling, and provider sync concerns to keep reliability and idempotency controls explicit.</p>
+      <table class="trace">
+        <thead>
+          <tr><th>Component</th><th>Primary responsibility</th><th>Boundary protection</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Ingestion Adapter</td><td>Fetch and normalize Gmail messages into candidate-event envelopes</td><td>No event business semantics</td></tr>
+          <tr><td>Extraction Service</td><td>Parse event fields and assign confidence metadata</td><td>No external side effects</td></tr>
+          <tr><td>Event Service</td><td>Canonical persistence + duplicate/idempotency guard</td><td>Authoritative event lifecycle state boundary</td></tr>
+          <tr><td>Scheduling Service</td><td>Generate deterministic reminder schedule records</td><td>No channel delivery execution</td></tr>
+          <tr><td>Calendar Sync Service</td><td>Google Calendar upsert orchestration + retry/terminal states</td><td>No parsing or dedupe ownership</td></tr>
+          <tr><td>Observability + Operator Plane</td><td>Metrics/logs/traces/alerts and remediation support</td><td>No business rule authoring</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" id="flows">
+      <div class="source">Source: architecture.md (Sections 4, 7), sequence-flows.md (Sections 1-4)</div>
+      <h2>3) Data and Sequence Flow Design</h2>
+      <div class="columns">
+        <article class="mini">
+          <h3>Email → Calendar canonical flow</h3>
+          <ul>
+            <li>Ingest message and preserve correlation identifiers.</li>
+            <li>Extract structured candidate with confidence score.</li>
+            <li>Run dedupe/idempotency check before persistence fan-out.</li>
+            <li>Persist canonical event, generate schedule records, enqueue calendar sync.</li>
+            <li>Persist sync outcome and emit observability signals.</li>
+          </ul>
+        </article>
+        <article class="mini">
+          <h3>Sequence narratives represented</h3>
+          <ul>
+            <li>Primary MVP path with duplicate branch behavior.</li>
+            <li>Retry loop with timeout enforcement and attempt metadata persistence.</li>
+            <li>Terminal-failure transition with operator remediation signal.</li>
+            <li>Safe replay/reprocessing path with idempotency protection.</li>
+          </ul>
+        </article>
+      </div>
+      <div class="callout">
+        <strong>Sequence coverage summary:</strong> Design markdown explicitly includes primary runtime flow, reliability loop behavior, and safe reprocessing boundaries aligned to FR-09/FR-10/FR-11 and US-07/US-09/US-11.
+      </div>
+    </section>
+
+    <section class="card" id="reliability">
+      <div class="source">Source: architecture.md (Sections 5-8), sequence-flows.md (Section 2)</div>
+      <h2>4) Reliability, Failure Handling, and Observability</h2>
+      <table class="trace">
+        <thead>
+          <tr><th>Reliability concern</th><th>Design decision</th><th>Operational outcome</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Calendar sync retry behavior</td><td>Bounded retry with exponential backoff and timeout control</td><td>Improved transient-failure recovery with predictable resource usage</td></tr>
+          <tr><td>Terminal failure handling</td><td>Persist `terminal_failed` with reason metadata after max attempts or non-retryable errors</td><td>Deterministic handoff to operator remediation</td></tr>
+          <tr><td>Persisted failure metadata</td><td>Store attempt count, reason code, timestamp, and next retry context</td><td>Auditability and replay-safe troubleshooting</td></tr>
+          <tr><td>Idempotency + duplicate prevention</td><td>Guard before schedule/sync fan-out and replay validation gates</td><td>Avoid duplicate event/sync artifacts</td></tr>
+          <tr><td>Observability and alert hooks</td><td>Metrics + structured logs + traces + terminal-failure alerting</td><td>Fast detection and targeted remediation</td></tr>
+        </tbody>
+      </table>
+      <div class="callout risk">
+        <strong>Operational risk note:</strong> Inadequate reason-code taxonomy or weak runbook quality can reduce terminal-failure recoverability; design docs therefore require operator workflow references and alert thresholds.
+      </div>
+    </section>
+
+    <section class="card" id="deployment">
+      <div class="source">Source: architecture.md (Sections 8-10)</div>
+      <h2>5) Deployment Notes, Assumptions, Trade-offs, and Open Questions</h2>
+      <div class="columns">
+        <article class="mini">
+          <h3>Deployment/environment notes</h3>
+          <ul>
+            <li>Dev/staging/prod isolation for credentials and observability scope.</li>
+            <li>Environment-scoped secret management and rotation.</li>
+            <li>Policy-governed retry and queue tuning by environment.</li>
+            <li>Production runbooks must include terminal sync-failure procedures.</li>
+          </ul>
+        </article>
+        <article class="mini">
+          <h3>Assumptions and trade-offs</h3>
+          <ul>
+            <li>MVP source channel is Gmail only.</li>
+            <li>MVP continuity target is Google Calendar only.</li>
+            <li>Reliability depth is prioritized over multi-channel breadth.</li>
+            <li>Deferring WhatsApp/SMS reduces integration risk for V1.</li>
+          </ul>
+        </article>
+      </div>
+      <div class="callout warning">
+        <strong>Open questions highlighted in design markdown:</strong> low-confidence operator intervention depth, retry-attempt policy tuning by environment, and paging-vs-dashboard criteria for specific terminal failure reasons.
+      </div>
+    </section>
+
+    <section class="card" id="traceability">
+      <div class="source">Source: architecture.md (Section 11), sequence-flows.md</div>
+      <h2>6) Cross-Phase Traceability Matrix (Product → Tech Spec → UI/UX → Design)</h2>
+      <table class="trace">
+        <thead>
+          <tr><th>Design concern</th><th>Product refs</th><th>Tech Spec refs</th><th>UI/UX refs</th><th>Design implementation summary</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Calendar sync architecture</td>
+            <td>FR-09, US-09</td>
+            <td>integration-spec.md, backend-spec.md</td>
+            <td>user-flows.md</td>
+            <td>Calendar Sync Service in MVP runtime path with retry, timeout, and persisted outcomes.</td>
+          </tr>
+          <tr>
+            <td>Duplicate prevention and idempotency</td>
+            <td>FR-10, US-07</td>
+            <td>backend-spec.md, db-schema.md</td>
+            <td>user-flows.md</td>
+            <td>Event Service boundary enforces dedupe prior to scheduling/sync fan-out and replay-safe processing.</td>
+          </tr>
+          <tr>
+            <td>Retry and terminal failure remediation</td>
+            <td>FR-09, FR-11, US-09, US-11</td>
+            <td>integration-spec.md, security-nfr.md</td>
+            <td>ui-overview.md</td>
+            <td>Bounded retries, persisted terminal metadata, alert hooks, and operator triage/replay patterns.</td>
+          </tr>
+          <tr>
+            <td>MVP channel boundary</td>
+            <td>Scope V1, FR-07, FR-08</td>
+            <td>tech-overview.md</td>
+            <td>ui-overview.md</td>
+            <td>WhatsApp/SMS explicitly restricted to post-MVP extensibility; not active runtime channels.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" id="coverage">
+      <h2>7) Source Coverage Manifest and Coverage Notes</h2>
+      <p>Markdown remains the source of truth. This HTML is a consolidated secondary artifact aligned to the Product summary visual baseline.</p>
+      <ul>
+        <li><code>docs/03-design/architecture.md</code> — represented across architecture scope, component model, flow, reliability, observability, deployment notes, assumptions, trade-offs, traceability, and open questions.</li>
+        <li><code>docs/03-design/sequence-flows.md</code> — represented in primary flow, retry/terminal failure flow, duplicate/replay boundary, and MVP channel guardrail coverage.</li>
+        <li><code>docs/03-design/review-reference.md</code> — represented in workflow guardrail and HTML regeneration compliance expectations.</li>
+      </ul>
+      <table class="trace">
+        <thead>
+          <tr><th>Markdown heading</th><th>Representation in this HTML summary</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>architecture.md — 1. Purpose and Scope / 2. System Context and Boundaries</td><td>Section 1 (Architecture Scope and Boundaries)</td></tr>
+          <tr><td>architecture.md — 3. Container and Component Architecture</td><td>Section 2 (Container / Component Architecture)</td></tr>
+          <tr><td>architecture.md — 4. Data and Event Flow Architecture</td><td>Section 3 (Data and Sequence Flow Design)</td></tr>
+          <tr><td>architecture.md — 5. Reliability and Resilience Design / 6. Observability and Operational Architecture / 7. Failure Modes and Remediation Paths</td><td>Section 4 (Reliability, Failure Handling, and Observability)</td></tr>
+          <tr><td>architecture.md — 8. Deployment and Environment Notes / 9. Extensibility and Post-MVP Channels / 10. Assumptions, Constraints, and Trade-offs / 12. Open Questions</td><td>Section 5 (Deployment Notes, Assumptions, Trade-offs, and Open Questions)</td></tr>
+          <tr><td>architecture.md — 11. Design Traceability Matrix (Product → Tech Spec → UI/UX → Design)</td><td>Section 6 (Cross-Phase Traceability Matrix)</td></tr>
+          <tr><td>sequence-flows.md — 1. Email to Calendar Sync (Primary MVP Flow); 2. Calendar Sync Retry and Terminal Failure (Operational Reliability); 3. Duplicate Prevention and Safe Reprocessing Boundary; 4. Scope Guardrails and Future-Phase Notes</td><td>Section 3 (Flow narratives) + Section 1 guardrail callout</td></tr>
+          <tr><td>review-reference.md — Required design workflow guardrails</td><td>Section 7 Source Coverage notes + footer regeneration reminder</td></tr>
+        </tbody>
+      </table>
+      <div class="callout">
+        <strong>HTML Coverage Check:</strong> Status <strong>Complete</strong>. Every markdown file and major heading/topic in <code>docs/03-design</code> is represented, including traceability content, reliability/failure design, assumptions/trade-offs, and open questions.
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Design / Architecture summary artifact. Regenerate when markdown in <code>docs/03-design</code> changes.
+  </footer>
 </body>
 </html>

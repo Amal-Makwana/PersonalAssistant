@@ -42,6 +42,14 @@ Use for:
 - Include at least one traceability matrix row for calendar sync (FR-09/US-09), duplicate prevention (FR-10/US-07), and extraction review (FR-04/US-05).
 - Include a states/flows/screens coverage section plus assumptions/gaps/open questions if present in markdown.
 
+
+## Design-Specific Enforcement (When target is docs/03-design)
+- Preserve phase order and traceability chain: Product -> Tech Spec -> UI/UX -> Design -> Delivery.
+- Keep MVP architecture explicit: Gmail ingestion, extraction, persistence, duplicate prevention, schedule generation, and Google Calendar sync are in MVP.
+- Ensure WhatsApp/SMS are represented only as post-MVP extensibility and never as active MVP runtime components.
+- Require explicit reliability coverage: retry behavior, terminal failure handling, persisted failure metadata, operator remediation flows, and observability/alert hooks.
+- Require a design traceability matrix with at least calendar sync (FR-09/US-09), duplicate prevention (FR-10/US-07), and reliability/remediation references.
+
 ## HTML Coverage Check (Required Before Finalizing)
 Run this check and fail generation if any item is not satisfied:
 - Every markdown source file in the section is represented in HTML.
