@@ -132,6 +132,8 @@ Presentation goals:
 - Comprehensive condensed coverage of IA, flows, screens, wireframes, components, principles, and mockups.
 - Explicit source mapping labels, traceability cues, and canonical ID coverage.
 - Include constraints, risks/gaps, and open questions where present in markdown.
+- Preserve MVP boundary language: Gmail + Google Calendar sync in MVP; WhatsApp/SMS post-MVP only.
+- Include an explicit HTML Coverage Check note: source files reviewed, coverage status, missing topics, style baseline used.
 - Follow the Product summary visual system and readability quality bar.
 
 Rules:

@@ -18,9 +18,9 @@ Define how users move through the product and how information is structured, anc
 - Onboarding Wizard (S02)
 
 ## 2.3 Secondary Navigation
-- On S04 (Events List): Filter tabs (All, Needs Review, Scheduled, Failed).
-- On S05 (Event Detail): Internal sections (Overview, Reminder Settings, Delivery History).
-- On S08 (Activity & Diagnostics): Timeline filters (Status, Channel, Date).
+- On S04 (Events List): Filter tabs (All, Needs Review, Scheduled, Calendar Sync Issues, Duplicate Suppressed).
+- On S05 (Event Detail): Internal sections (Overview, Reminder Settings, Calendar Sync History).
+- On S08 (Activity & Diagnostics): Timeline filters (Status, Sync State, Date).
 
 ## 3. IA Hierarchy
 - **Level 0:** Access (S01)
@@ -39,26 +39,31 @@ Define how users move through the product and how information is structured, anc
 | S04 | Row/card click | S05 | Event-level action |
 | S05 | Save reminder | S03 or S04 | Return to monitoring/triage |
 | S03/S05 | "Manage defaults" | S06 | Update global behavior |
-| S03/S08 | Integration warning CTA | S07 | Fix provider/channel health |
-| S05/S07 | "View diagnostics" | S08 | Inspect failures/retries |
+| S03/S08 | Integration warning CTA | S07 | Fix Google OAuth/Gmail/Calendar health |
+| S05/S07 | "View diagnostics" | S08 | Inspect extraction/sync failures and retries |
 | Any authenticated screen | Profile menu | S09 | Account/session updates |
 
 ## 5. IA-to-Flow Mapping
 | Flow ID | Primary Screens | Support Screens | Notes |
 |---|---|---|---|
-| F1 | S01 -> S02 -> S03 | S07 | Integration checks can appear during onboarding |
-| F2 | S03 -> S05 -> S03/S04 | S08 | Activity & Diagnostics inspection optional after confirmation |
-| F3 | S03 -> S06 -> S03 | S09 | Session verification may be required for sensitive settings |
-| F4 | S03/S04 -> S05 -> S04 | S08 | Low-confidence events branch to Activity & Diagnostics if unresolved |
-| F5 | S03/S08 -> S07 -> S08 -> S03 | S05 | Recover failed reminders and verify status transition |
+| F1 | S01 -> S02 -> S03 | S07 | Google integration checks can appear during onboarding. Trace: FR-02, FR-09, US-02, US-09 |
+| F2 | S03 -> S05 -> S03/S04 | S08 | Event review includes extraction confidence and calendar sync confirmation. Trace: FR-04, FR-06, FR-09, US-05, US-08, US-09 |
+| F3 | S03 -> S06 -> S03 | S09 | Preferences govern reminder defaults and calendar sync behavior only in MVP. Trace: FR-11, US-03 |
+| F4 | S03/S04 -> S05 -> S04 | S08 | Low-confidence and duplicate suppression branches are explicit. Trace: FR-04, FR-10, US-05, US-07 |
+| F5 | S03/S08 -> S07 -> S08 -> S03 | S05 | Recover calendar sync failures and verify terminal/retried outcomes. Trace: FR-09, US-09 |
 
-## 6. State Visibility Rules by IA Layer
-- **Global layer:** banners for outage, disconnected channels, or permissions.
+## 6. MVP Channel Boundary Rules
+- MVP active channels: Gmail ingestion and Google Calendar synchronization.
+- WhatsApp/SMS are post-MVP roadmap items and are not navigable interaction surfaces in IA.
+- If future-channel placeholders appear, they must be non-interactive and labeled "Post-MVP".
+
+## 7. State Visibility Rules by IA Layer
+- **Global layer:** banners for outage, disconnected Google integration, or permissions.
 - **Page layer:** section-level loading/error/empty states.
-- **Component layer:** inline validation and status badges.
+- **Component layer:** inline validation, confidence indicators, duplicate suppression badges, and sync status badges.
 - **System feedback layer:** toasts and non-blocking confirmations.
 
-## 7. Figma IA Notes
+## 8. Figma IA Notes
 - Create Figma pages: `00 Foundations`, `01 Navigation`, `02 Screens`, `03 Components`, `04 Flows`, `05 Handoff`.
 - Use screen frame naming: `S03_Dashboard/Desktop`, `S03_Dashboard/Tablet`, `S03_Dashboard/Mobile`.
 - Keep nav patterns as reusable shell components referenced by all screen frames.

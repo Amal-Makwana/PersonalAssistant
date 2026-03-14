@@ -1,5 +1,9 @@
 # Wireframes (Figma-Ready Screen Specifications)
 
+## MVP Channel Boundary Note
+- Active MVP integrations represented in wireframes: Gmail ingest and Google Calendar sync.
+- WhatsApp/SMS are post-MVP and must not be shown as active controls in any wireframe state.
+
 ## S01 — Login & Consent
 **Reference:** `screen-inventory.md`
 ### 1. Screen Purpose
@@ -44,7 +48,8 @@ Frame: `S01_Login/{Desktop|Tablet|Mobile}/{State}`; auto layout vertical; 12/8/4
 ## S02 — Onboarding Wizard
 **Reference:** `screen-inventory.md`
 ### 1. Screen Purpose
-Collect defaults and activate reminder channels.
+Collect defaults and activate Google Calendar sync for MVP.
+**Trace:** FR-09, FR-11, US-03, US-09
 ### 2. Primary User
 New user after first authentication.
 ### 3. Entry Points
@@ -55,7 +60,7 @@ S03 dashboard.
 Progress header; two-column body (form + contextual tips); sticky footer actions.
 ### 6. Regions
 - **R1 Step Header**: progress + title; top.
-- **R2 Setup Form**: timezone, offsets, channels; left/main.
+- **R2 Setup Form**: timezone, offsets, calendar sync preference; left/main.
 - **R3 Tips Panel**: explanations; right rail.
 - **R4 Sticky Action Bar**: back/next/finish; bottom.
 ### 7. Actual Wireframe Representation
@@ -66,8 +71,8 @@ Progress header; two-column body (form + contextual tips); sticky footer actions
 | Timezone [UTC+05:30 v]        | Why this matters             |
 | Default reminder [30m v]      | - Events use this baseline   |
 | Quiet hours [22:00 - 07:00]   | - You can override per event |
-| Channel: [x] In-app [x] Email |                              |
-| Test channel [ Send test ]    |                              |
+| Calendar sync default: [x] Enable |                            |
+| Test calendar sync [ Run test ] |                              |
 +-------------------------------+------------------------------+
 | [Back]                                      [Save & Continue] |
 +--------------------------------------------------------------+
@@ -75,7 +80,7 @@ Progress header; two-column body (form + contextual tips); sticky footer actions
 ### 8. Interaction Zones
 All form fields, test buttons, progress steps, sticky CTA.
 ### 9. States
-Default, field validation, test loading, channel error, save success.
+Default, field validation, test loading, calendar sync error, save success.
 ### 10. Responsive Behaviour
 Desktop 2-column; tablet tips panel below form; mobile single column + sticky bottom action.
 ### 11. Figma Build Notes
@@ -100,7 +105,7 @@ Top app bar; left sidebar; page header; KPI cards; attention queue; upcoming rem
 - **R4 KPI Row**: summary cards; upper main.
 - **R5 Attention Queue**: actionable cards; main center.
 - **R6 Upcoming Table**: reminder schedule list; lower main.
-- **R7 Health Rail**: integration/channel health; right.
+- **R7 Health Rail**: Google integration health; right.
 ### 7. Actual Wireframe Representation
 ```text
 +----------------------+---------------------------------------------------+
@@ -147,11 +152,11 @@ App shell; page header; filter bar with chips; data table/list; pagination/foote
 ### 7. Actual Wireframe Representation
 ```text
 [Events]  124 results                              [Create Manual Reminder]
-[Search.............][Status v][Date v][Channel v][Reset]
+[Search.............][Status v][Date v][Sync State v][Reset]
 +--------------------------------------------------------------------------+
-| Event                | Time        | Confidence | Channel | Status | ... |
-| Client call summary  | Tue 10:00   | 92%        | Email   | Review | >   |
-| Team sync            | Wed 09:00   | 99%        | In-app  | Sched. | >   |
+| Event                | Time        | Confidence | Sync State | Status | ... |
+| Client call summary  | Tue 10:00   | 92%        | Pending   | Review | >   |
+| Team sync            | Wed 09:00   | 99%        | Synced    | Sched. | >   |
 +--------------------------------------------------------------------------+
 [< Prev] Page 1 of 13 [Next >]
 ```
@@ -168,6 +173,7 @@ Use table component with density variant; mobile card-list variant shares same d
 **Reference:** `screen-inventory.md`
 ### 1. Screen Purpose
 Review extracted event context and finalize reminder settings.
+**Trace:** FR-04, FR-06, FR-09, FR-10, US-05, US-07, US-08, US-09
 ### 2. Primary User
 User validating one event.
 ### 3. Entry Points
@@ -179,7 +185,7 @@ Page header with status badge; split body with details left and reminder editor 
 ### 6. Regions
 - **R1 Context Header**: event name/time/source + badge.
 - **R2 Detail Panel**: parsed metadata and confidence callouts.
-- **R3 Reminder Panel**: timing/channel/edit controls.
+- **R3 Reminder Panel**: timing/calendar-sync visibility/edit controls.
 - **R4 History Tab**: delivery attempts list.
 - **R5 Sticky Actions**: confirm, dismiss, cancel.
 ### 7. Actual Wireframe Representation
@@ -187,8 +193,8 @@ Page header with status badge; split body with details left and reminder editor 
 [< Back] Event: Client QBR Invite        [Needs Review]   [View Diagnostics]
 +--------------------------------------+-------------------------------------+
 | Event Details                         | Reminder Settings                   |
-| - Source email snippet                | Channel [Email v]                   |
-| - Extracted datetime [edit]           | Reminder offsets [30m, 5m]          |
+| - Source email snippet                | Calendar Sync [Enabled v]            |
+| - Extracted datetime [edit]           | Reminder offsets [4h, 1h, 15m]       |
 | - Participants                        | Snooze policy [Allowed v]           |
 | [!] Confidence low on date parsing    | [Preview next reminder]             |
 +--------------------------------------+-------------------------------------+
@@ -222,17 +228,17 @@ Page header; grouped settings cards; sticky save bar.
 ### 6. Regions
 - **R1 Header**: title + last saved timestamp.
 - **R2 Default Timing Card**: offsets and quiet hours.
-- **R3 Channel Rules Card**: toggles and fallback order.
+- **R3 Calendar Sync Rules Card**: sync toggle, mode, and retry behavior.
 - **R4 Notifications Card**: digest and alert preferences.
 - **R5 Sticky Actions**: save/cancel/reset.
 ### 7. Actual Wireframe Representation
 ```text
 [Preferences]                               Last saved: 2m ago
 +--------------------------+--------------------------+
-| Default Timing           | Channel Rules            |
-| offset [30m v]           | [x] In-app               |
-| quiet hrs [22:00-07:00]  | [x] Email                |
-| weekend behavior [Skip]  | fallback [Email -> App]  |
+| Default Timing           | Calendar Sync Rules      |
+| offset [30m v]           | [x] Google Calendar sync |
+| quiet hrs [22:00-07:00]  | sync mode [Auto v]       |
+| weekend behavior [Skip]  | retry policy [Standard]  |
 +--------------------------+--------------------------+
 +-----------------------------------------------------+
 | Notification Preferences                             |
@@ -254,8 +260,9 @@ Use card + form-field components only; consistent label widths desktop; one-colu
 **Reference:** `screen-inventory.md`
 ### 1. Screen Purpose
 Show provider health and allow reconnect/test actions.
+**Trace:** FR-02, FR-09, US-02, US-09
 ### 2. Primary User
-Users troubleshooting delivery channel issues.
+Users troubleshooting Google integration and calendar sync issues.
 ### 3. Entry Points
 Global nav, alerts on S03/S08, onboarding.
 ### 4. Exit Paths
@@ -271,11 +278,11 @@ Header with health summary; integrations list cards/table; action drawer/modal f
 [Integrations] 2 healthy / 1 action needed
 +----------------------------------------------------------------+
 | Provider | Status    | Last check | Actions                    |
-| Google   | Healthy   | 1m ago     | [Manage]                   |
-| Email    | Expired   | 5m ago     | [Reconnect] [Test]         |
-| In-app   | Healthy   | now        | [Configure]                |
+| Google OAuth   | Healthy   | 1m ago     | [Manage]            |
+| Gmail API      | Healthy   | 2m ago     | [Reauthorize]       |
+| Google Calendar| Expired   | 5m ago     | [Reconnect] [Test]  |
 +----------------------------------------------------------------+
-[Modal: Reconnect Email]
+[Modal: Reconnect Google Calendar]
 | Credentials fields / OAuth note |
 | [Cancel]              [Reconnect] |
 ```
@@ -291,7 +298,8 @@ Table/list dual component; modal and bottom-sheet variants share same form conte
 ## S08 — Activity & Diagnostics
 **Reference:** `screen-inventory.md`
 ### 1. Screen Purpose
-Trace reminder attempts, identify failures, and trigger retries.
+Trace extraction and calendar sync attempts, identify failures, and trigger retries.
+**Trace:** FR-09, FR-10, US-07, US-09
 ### 2. Primary User
 Users/support-oriented operators.
 ### 3. Entry Points
@@ -302,18 +310,18 @@ S07 for fixes, S05 event detail, S03 dashboard.
 Header; filter strip; timeline/table hybrid; details drawer; retry controls.
 ### 6. Regions
 - **R1 Header**: title + export placeholder + time scope.
-- **R2 Filter Strip**: status/channel/date controls.
+- **R2 Filter Strip**: status/sync state/date controls.
 - **R3 Timeline/Table**: attempts list with state badges.
 - **R4 Detail Drawer**: selected attempt metadata.
 - **R5 Retry Actions**: contextual buttons.
 ### 7. Actual Wireframe Representation
 ```text
 [Activity & Diagnostics]                       Last 7 days [v]
-[Search attempts...][Status v][Channel v][Date v][Reset]
+[Search attempts...][Status v][Sync State v][Date v][Reset]
 +------------------------------------------------+-------------------+
 | 10:02 Failed  Event: Client QBR    [View]      | Attempt Details   |
 | 09:55 Sent    Event: Team Sync     [View]      | Error: Token exp. |
-| 09:22 Retried Event: Client QBR    [View]      | Provider: Email   |
+| 09:22 Retried Event: Client QBR    [View]      | Provider: Google Calendar |
 +------------------------------------------------+-------------------+
 | [Retry Failed Attempts] [Go to Integrations]                      |
 +-------------------------------------------------------------------+
