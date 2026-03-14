@@ -8,6 +8,7 @@ Generate a single governed, rich HTML artifact that consolidates all markdown do
 
 Primary output artifact:
 - `docs/full-docs.html`
+- if a file exists already delete it and replace with newly generated one
 
 ## Canonical Documentation Scope (Read Order)
 Read all markdown files from the canonical documentation tree in this order:
