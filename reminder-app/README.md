@@ -1,54 +1,63 @@
 # Reminder App Monorepo
 
-## Documentation-First Workflow
+## Frontend-Only Local Prototype Phase
 
-This repository enforces a strict development lifecycle:
+This repository currently includes a **frontend-only mock-first prototype** under `apps/web`.
 
-**Product → UI/UX → Design → Execution Planning → Code**
+### Scope of this phase
+- Implement UI flows/components/pages for canonical screens S01-S09.
+- Use local fixtures and mock services to simulate app behavior.
+- Validate loading, empty, error, success, validation, and permission states.
 
-No implementation should begin until each upstream documentation layer is complete, reviewed, and approved.
+### Deferred by design
+- No backend services
+- No databases
+- No API endpoints
+- No external authentication providers
+- No external integrations/cloud dependencies
 
-## Required Execution Order
+## Frontend stack
+- React + TypeScript
+- Vite
+- React Router
+- Tailwind CSS
+- Vitest + React Testing Library
+- ESLint + Prettier
 
-1. `docs/00-product` — Define business intent and user outcomes.
-2. `docs/01-ui-ux` — Define UI/UX structure, screens, flows, and component behavior.
-3. `docs/02-design` — Define merged technical + architecture design contracts.
-4. `docs/03-execution-planning` — Plan build strategy, backlog/dependencies, quality gates, and rollout readiness.
-5. Implementation in `apps/`, `packages/`, and `infra/`.
+## Run locally (offline-compatible)
+From `reminder-app/apps/web`:
 
-## Dual-Layer Documentation Standard (Required)
+1. Install dependencies:
+   - `npm install`
+2. Start development server:
+   - `npm run dev`
+3. Open:
+   - `http://localhost:5173`
 
-For each major section, maintain both:
+## Quality checks
+From `reminder-app/apps/web`:
+- `npm run lint`
+- `npm run test`
+- `npm run build`
 
-- **Detailed markdown source files** (authoritative working docs)
-- **One polished consolidated HTML summary** (stakeholder-facing presentation layer)
+## Project structure
+- `apps/web/src/features` — feature/screen modules
+- `apps/web/src/components` — shared UI shell elements
+- `apps/web/src/mocks` — local fixtures
+- `apps/web/src/services/mock` — async mock service contracts
+- `apps/web/src/types` — DTO-like interfaces for future API compatibility
 
-Required section summaries:
+## Mock service layer
+Mock services simulate:
+- loading latency
+- empty responses
+- error scenarios
+- permission restrictions
+- retry behavior
+- in-memory update flows
 
-- `docs/00-product/product-summary.html`
-- `docs/01-ui-ux/ui-ux-summary.html`
-- `docs/02-design/design-summary.html`
-- `docs/03-execution-planning/execution-planning-summary.html`
+These service contracts are intentionally shaped to mirror future API DTOs and can be swapped with real adapters in later backend phases.
 
-Whenever markdown files in a section are created or updated, refresh the matching HTML summary in the same change.
-
-## Repository Layout
-
-- `docs/` — Source of truth for requirements, UX artifacts, design contracts, and execution planning docs.
-- `apps/web` — Frontend application (feature-based structure).
-- `apps/api` — Backend application (layered architecture).
-- `packages/` — Shared UI, types, utilities, and config.
-- `infra/` — Deployment, database, monitoring, and ops scripts.
-- `.github/workflows/` — CI and quality automation.
-
-## Enforcement Rules
-
-- Every code change must reference supporting requirements and acceptance criteria.
-- Backend code must follow: `routes → controllers → services → repositories → models`.
-- Frontend code must be organized by feature/domain.
-- Shared cross-app logic belongs in `packages/`.
-- Core business flows require automated tests before merge.
-
-## Current Stage
-
-This repository is initialized with templates only. No application logic is included yet.
+## Prototype documentation (parallel set)
+To avoid changing canonical docs, prototype planning/governance docs are stored in:
+- `docs/prototype-frontend-only/`

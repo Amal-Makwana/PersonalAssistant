@@ -2,6 +2,15 @@
 
 A personal AI powered assistant which will help with everyday tasks.
 
+## Frontend-Only Prototype Quick Start
+
+The active local prototype implementation lives at:
+- `reminder-app/apps/web`
+
+Execution guide:
+- `reminder-app/README.md`
+- `docs/prototype-frontend-only/README.frontend-only.md`
+
 ## Documentation Reading Order
 
 For implementation work in `reminder-app`, follow documentation in this order:
@@ -26,7 +35,6 @@ Required summary files:
 - `docs/03-execution-planning/execution-planning-summary.html`
 
 Whenever markdown files in a section are created or updated, refresh that section's HTML summary in the same change set.
-
 
 ## Full Documentation Hub
 
