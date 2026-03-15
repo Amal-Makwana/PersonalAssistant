@@ -82,3 +82,10 @@ When markdown files in a section change, regenerate that section HTML summary in
 - Tests must exist for core business flows.
 - Do not invent behavior outside documented requirements.
 - If docs are missing/conflicting, report gaps and assumptions before coding.
+
+## 11. Frontend-Only Mock Prototype Exception Scope
+When work is explicitly marked as the frontend-only prototype phase:
+- Keep implementation local to frontend prototype surfaces and documentation.
+- Use local fixtures, mock services, deterministic scenario toggles, and simulated async behavior.
+- Do not add backend services, API routes, databases, OAuth/auth providers, or external integrations.
+- Keep visual execution consistent with the approved brand-inspired system (Inter + selective JetBrains Mono, light slate/sky/teal palette, rounded editorial cards, section-based layouts).

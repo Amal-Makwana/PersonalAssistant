@@ -6,16 +6,16 @@ export const PreferencesScreen = () => {
 
   return (
     <section>
-      <h2 className="text-xl font-semibold">S06 Preferences</h2>
-      <p className="mb-4 text-sm text-slate-600">In-memory mock preference updates.</p>
-      <label className="mb-1 block text-sm">Timezone</label>
+      <h2 className="section-title">S06 Preferences</h2>
+      <p className="section-description mb-4">In-memory mock preference updates.</p>
+      <label className="mb-1 block text-sm font-medium">Timezone</label>
       <input
-        className="mb-3 w-full max-w-md rounded border px-2 py-1"
+        className="input-soft mb-3 max-w-md"
         value={timezone}
         onChange={(e) => setTimezone(e.target.value)}
       />
       <button
-        className="rounded bg-slate-900 px-4 py-2 text-white"
+        className="button-primary"
         onClick={() => {
           setSaved(true);
           setTimeout(() => setSaved(false), 800);
@@ -23,7 +23,7 @@ export const PreferencesScreen = () => {
       >
         Save (Mock)
       </button>
-      {saved && <p className="mt-2 text-sm text-green-700">Preferences saved locally.</p>}
+      {saved && <p className="state-banner mt-3 border-teal-200 bg-teal-50 text-teal-700">Preferences saved locally.</p>}
     </section>
   );
 };
