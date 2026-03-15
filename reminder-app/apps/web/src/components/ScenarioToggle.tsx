@@ -7,10 +7,10 @@ export const ScenarioToggle = () => {
   const { scenario, setScenario } = useAppContext();
 
   return (
-    <div className="mt-4 border-t pt-4">
-      <label className="mb-1 block text-sm font-medium">Mock Scenario</label>
+    <div className="mt-5 border-t border-brand-border-soft pt-4">
+      <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-slate-500">Mock Scenario</label>
       <select
-        className="w-full rounded border px-2 py-1 text-sm"
+        className="input-soft"
         value={scenario}
         onChange={(e) => setScenario(e.target.value as Scenario)}
       >
@@ -20,6 +20,7 @@ export const ScenarioToggle = () => {
           </option>
         ))}
       </select>
+      <p className="mono-fragment mt-2">scenario={scenario}</p>
     </div>
   );
 };

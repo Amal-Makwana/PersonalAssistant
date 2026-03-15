@@ -3,19 +3,19 @@ import { Link } from 'react-router-dom';
 export const DashboardScreen = () => {
   return (
     <section>
-      <h2 className="text-xl font-semibold">S03 Dashboard</h2>
-      <p className="mb-4 text-sm text-slate-600">Operational overview using mock data.</p>
-      <div className="grid gap-2 md:grid-cols-2">
-        <Link className="rounded border p-3 hover:bg-slate-50" to="/events">
+      <h2 className="section-title">S03 Dashboard</h2>
+      <p className="section-description mb-5">Operational overview using mock data.</p>
+      <div className="grid gap-3 md:grid-cols-2">
+        <Link className="editorial-card editorial-card-hover block p-4 text-sm font-medium text-slate-700" to="/events">
           View Events
         </Link>
-        <Link className="rounded border p-3 hover:bg-slate-50" to="/diagnostics">
+        <Link className="editorial-card editorial-card-hover block p-4 text-sm font-medium text-slate-700" to="/diagnostics">
           View Diagnostics
         </Link>
-        <Link className="rounded border p-3 hover:bg-slate-50" to="/integrations">
+        <Link className="editorial-card editorial-card-hover block p-4 text-sm font-medium text-slate-700" to="/integrations">
           Integration Status
         </Link>
-        <Link className="rounded border p-3 hover:bg-slate-50" to="/preferences">
+        <Link className="editorial-card editorial-card-hover block p-4 text-sm font-medium text-slate-700" to="/preferences">
           Preferences
         </Link>
       </div>

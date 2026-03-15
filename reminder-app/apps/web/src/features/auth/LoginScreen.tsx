@@ -24,10 +24,10 @@ export const LoginScreen = () => {
 
   return (
     <section>
-      <h2 className="text-xl font-semibold">S01 Login & Consent</h2>
-      <p className="mb-4 text-sm text-slate-600">Mocked authentication session state only.</p>
-      {error && <p className="mb-2 rounded bg-red-50 p-2 text-sm text-red-700">{error}</p>}
-      <button className="rounded bg-slate-900 px-4 py-2 text-white" disabled={loading} onClick={handleLogin}>
+      <h2 className="section-title">S01 Login & Consent</h2>
+      <p className="section-description mb-5">Mocked authentication session state only.</p>
+      {error && <p className="state-banner mb-3 border-red-200 bg-red-50 text-red-700">{error}</p>}
+      <button className="button-primary" disabled={loading} onClick={handleLogin}>
         {loading ? 'Signing in...' : 'Sign in with Google (Mock)'}
       </button>
     </section>

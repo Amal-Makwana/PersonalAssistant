@@ -7,6 +7,12 @@ This folder contains a **parallel documentation track** for the frontend-only mo
 - Mock fixtures and mock service layer only.
 - No backend, DB, API, auth provider, or external integration calls.
 
+## Visual System Direction
+- Primary type: Inter for core UI.
+- Secondary technical type: JetBrains Mono for logs/diagnostics/status fragments.
+- Palette: light slate background, white cards, sky/teal accents, soft blue borders.
+- Pattern language: rounded editorial cards, subtle hover elevation, section-based layout rhythm.
+
 ## Stack
 - React + TypeScript
 - Vite

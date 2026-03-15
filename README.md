@@ -7,6 +7,12 @@ A personal AI powered assistant which will help with everyday tasks.
 The active local prototype implementation lives at:
 - `reminder-app/apps/web`
 
+Current phase contract:
+- This phase is a **Frontend-Only Mock Prototype**.
+- All data and interactions are mocked locally (fixtures + mock service layer + simulated async states).
+- No backend, API routes, database, auth provider, or external integrations are included.
+- Styling direction follows the personal brand language with Inter + JetBrains Mono, light slate/sky/teal palette, rounded editorial cards, and clean section-based layouts.
+
 Execution guide:
 - `reminder-app/README.md`
 - `docs/prototype-frontend-only/README.frontend-only.md`

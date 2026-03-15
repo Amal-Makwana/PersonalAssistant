@@ -23,18 +23,25 @@ export const EventsListScreen = () => {
 
   return (
     <section>
-      <h2 className="text-xl font-semibold">S04 Events List</h2>
-      {loading && <p data-testid="loading-state">Loading events...</p>}
-      {!loading && error && <p className="rounded bg-red-50 p-2 text-red-700">{error}</p>}
-      {!loading && !error && events.length === 0 && <p className="rounded bg-slate-50 p-2">No events available.</p>}
+      <h2 className="section-title">S04 Events List</h2>
+      <p className="section-description mb-5">State handling is deterministic and fully mocked locally.</p>
+      {loading && (
+        <p className="state-banner border-brand-border-alt bg-sky-50 text-sky-700" data-testid="loading-state">
+          Loading events...
+        </p>
+      )}
+      {!loading && error && <p className="state-banner border-red-200 bg-red-50 text-red-700">{error}</p>}
+      {!loading && !error && events.length === 0 && (
+        <p className="state-banner border-brand-border-soft bg-slate-50 text-slate-600">No events available.</p>
+      )}
       {!loading && !error && events.length > 0 && (
-        <ul className="mt-2 space-y-2">
+        <ul className="mt-2 space-y-3">
           {events.map((event) => (
-            <li key={event.id} className="rounded border p-3">
-              <p className="font-medium">{event.title}</p>
+            <li key={event.id} className="editorial-card editorial-card-hover">
+              <p className="font-medium text-brand-text">{event.title}</p>
               <p className="text-sm text-slate-600">Status: {event.status}</p>
               {event.duplicate && <p className="text-sm text-amber-700">Duplicate detected (mocked).</p>}
-              <Link className="text-sm text-blue-600" to={`/events/${event.id}`}>
+              <Link className="text-sm font-medium text-sky-700 transition-colors hover:text-brand-sky-600" to={`/events/${event.id}`}>
                 Open detail
               </Link>
             </li>

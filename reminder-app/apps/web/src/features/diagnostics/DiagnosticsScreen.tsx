@@ -22,14 +22,17 @@ export const DiagnosticsScreen = () => {
 
   return (
     <section>
-      <h2 className="text-xl font-semibold">S08 Activity & Diagnostics</h2>
-      {loading && <p>Loading activity...</p>}
-      {!loading && error && <p className="rounded bg-red-50 p-2 text-red-700">{error}</p>}
-      {!loading && !error && activity.length === 0 && <p className="rounded bg-slate-50 p-2">No activity records.</p>}
+      <h2 className="section-title">S08 Activity & Diagnostics</h2>
+      <p className="section-description mb-5">Machine-like diagnostics surfaces use selective monospaced typography.</p>
+      {loading && <p className="state-banner border-brand-border-alt bg-sky-50 text-sky-700">Loading activity...</p>}
+      {!loading && error && <p className="state-banner border-red-200 bg-red-50 text-red-700">{error}</p>}
+      {!loading && !error && activity.length === 0 && (
+        <p className="state-banner border-brand-border-soft bg-slate-50 text-slate-600">No activity records.</p>
+      )}
       {!loading && !error && activity.length > 0 && (
-        <ul className="space-y-2">
+        <ul className="space-y-3">
           {activity.map((item) => (
-            <li key={item.id} className="rounded border p-2">
+            <li key={item.id} className="editorial-card mono-fragment">
               {item.message}
             </li>
           ))}

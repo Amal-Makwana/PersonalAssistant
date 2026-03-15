@@ -5,6 +5,12 @@ This folder stores canonical prompts used to generate and maintain repository do
 
 These are documentation-only prompts (not for application code generation).
 
+## Frontend-Only Mock Prototype Phase Note
+- For the active prototype phase, prompts must preserve a frontend-only, mock-first scope.
+- All prototype data flows and interactions must stay local through fixtures and mock services.
+- Do not introduce backend/API/DB/OAuth/external integration requirements in prototype prompts.
+- When prompts include visual direction, align with the personal brand language: Inter primary typography, selective JetBrains Mono in technical/status surfaces, light slate/sky/teal palette, rounded editorial cards, and section-based layouts.
+
 ## Canonical Documentation Phase Order
 1. Product (`docs/00-product`)
 2. UI/UX (`docs/01-ui-ux`)

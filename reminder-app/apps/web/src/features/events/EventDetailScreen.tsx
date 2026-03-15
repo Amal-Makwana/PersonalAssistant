@@ -20,12 +20,12 @@ export const EventDetailScreen = () => {
 
   return (
     <section>
-      <h2 className="text-xl font-semibold">S05 Event Detail</h2>
-      <p className="mb-4 text-sm text-slate-600">Event ID: {eventId}</p>
-      <button className="rounded bg-slate-900 px-4 py-2 text-white" onClick={retry}>
+      <h2 className="section-title">S05 Event Detail</h2>
+      <p className="mono-fragment mb-4">eventId={eventId}</p>
+      <button className="button-primary" onClick={retry}>
         Retry Sync (Mock)
       </button>
-      {message && <p className="mt-3 rounded bg-slate-50 p-2 text-sm">{message}</p>}
+      {message && <p className="state-banner mono-fragment mt-3 border-brand-border-soft bg-slate-50">{message}</p>}
     </section>
   );
 };
