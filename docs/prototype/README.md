@@ -6,6 +6,39 @@ This folder tracks prototype-only implementation details and contracts.
 - Frontend app: `reminder-app/apps/web`
 - Mock backend app: `reminder-app/apps/api`
 
+## Vercel Deployment Model (Two Projects, One Repo)
+
+Deploy frontend and backend as **two separate Vercel projects** linked to the same Git repository.
+
+### Frontend project settings
+- Project type: separate Vercel project (suggested name: `reminder-web`)
+- Root Directory: `reminder-app/apps/web`
+- Framework Preset: `Vite`
+- Install Command: `npm install`
+- Build Command: `npm run build`
+- Output Directory: `dist`
+- Required environment variable:
+  - `VITE_API_BASE_URL=https://<your-backend-project>.vercel.app`
+
+### Backend project settings
+- Project type: separate Vercel project (suggested name: `reminder-api`)
+- Root Directory: `reminder-app/apps/api`
+- Framework Preset: `Other`
+- Install Command: `npm install`
+- Build Command: leave empty (serverless build is configured in `apps/api/vercel.json`)
+- Output Directory: not applicable
+- Runtime entrypoint: `api/index.ts`
+- Routing behavior: all request paths rewrite to serverless handler so backend endpoints stay at `/events/*` and `/dashboard/*`
+
+### Frontend -> backend call behavior in deployed environments
+- Frontend must call backend using `VITE_API_BASE_URL`.
+- In production/preview, set `VITE_API_BASE_URL` on the frontend Vercel project to the backend project URL.
+- Local default remains `http://localhost:3000` when the env var is not set.
+
+### Future single-domain option (not implemented)
+- If one shared domain is required later, introduce a dedicated proxy/rewrites layer (for example, a third Vercel project or edge proxy) to route frontend and backend paths.
+- Do not combine frontend and backend into one Vercel project for this prototype.
+
 ## Local Run
 
 ### Backend (local only)

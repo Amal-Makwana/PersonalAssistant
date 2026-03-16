@@ -1,19 +1,8 @@
-import cors from 'cors';
-import express from 'express';
-import { dashboardRouter } from './routes/dashboard.routes';
-import { eventsRouter } from './routes/events.routes';
-
-export const app = express();
-
-app.use(cors());
-app.use(express.json());
-
-app.use('/events', eventsRouter);
-app.use('/dashboard', dashboardRouter);
+import { app } from './app';
 
 const PORT = 3000;
 
-if (process.env.NODE_ENV !== 'test') {
+if (process.env.NODE_ENV !== 'test' && !process.env.VERCEL) {
   app.listen(PORT, () => {
     console.log(`Mock API server running on http://localhost:${PORT}`);
   });
