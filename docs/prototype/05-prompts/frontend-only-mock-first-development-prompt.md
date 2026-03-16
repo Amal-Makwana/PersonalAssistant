@@ -18,4 +18,4 @@ Current baseline to extend from:
 When extending this prototype:
 - Preserve deterministic scenario toggles
 - Avoid backend drift or hidden API dependencies
-- Update docs/prototype-frontend-only and reminder-app README when scope changes
+- Update docs/prototype and reminder-app README when scope changes

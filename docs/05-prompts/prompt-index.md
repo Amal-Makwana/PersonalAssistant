@@ -5,10 +5,10 @@ This folder stores canonical prompts used to generate and maintain repository do
 
 These are documentation-only prompts (not for application code generation).
 
-## Frontend-Only Mock Prototype Phase Note
-- For the active prototype phase, prompts must preserve a frontend-only, mock-first scope.
-- All prototype data flows and interactions must stay local through fixtures and mock services.
-- Do not introduce backend/API/DB/OAuth/external integration requirements in prototype prompts.
+## Prototype System Phase Note
+- For the active prototype phase, prompts must preserve a mock-first prototype system scope (frontend + mock backend APIs).
+- All prototype data flows and interactions must stay deterministic through fixtures and mock services.
+- Do not introduce real DB, OAuth/auth providers, storage, or external integration requirements in prototype prompts.
 - When prompts include visual direction, align with the personal brand language: Inter primary typography, selective JetBrains Mono in technical/status surfaces, light slate/sky/teal palette, rounded editorial cards, and section-based layouts.
 
 ## Canonical Documentation Phase Order
@@ -26,6 +26,7 @@ These are documentation-only prompts (not for application code generation).
 - `full-docs-generation.md`
 - `critical-persona-review.md`
 - `repository-documentation-audit.md`
+- `prototype-backend-development.md`
 
 ## Prompt-to-Section Mapping
 | Documentation Section | Prompt Source | Primary Outputs |
