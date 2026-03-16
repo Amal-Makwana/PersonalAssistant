@@ -89,3 +89,13 @@ When work is explicitly marked as the frontend-only prototype phase:
 - Use local fixtures, mock services, deterministic scenario toggles, and simulated async behavior.
 - Do not add backend services, API routes, databases, OAuth/auth providers, or external integrations.
 - Keep visual execution consistent with the approved brand-inspired system (Inter + selective JetBrains Mono, light slate/sky/teal palette, rounded editorial cards, section-based layouts).
+
+## 12. Prototype Implementation Rules
+When work is explicitly marked as prototype system implementation:
+- Prototype documentation must live under `docs/prototype`.
+- Canonical documentation (`docs/00-product`, `docs/01-ui-ux`, `docs/02-design`, `docs/03-execution-planning`) must not be modified by prototype implementation tasks.
+- Backend responses must be mocked.
+- No persistence layer is allowed.
+- No external integrations are allowed.
+- All prototype APIs must return deterministic fixture data.
+
