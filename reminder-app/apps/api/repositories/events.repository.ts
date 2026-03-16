@@ -44,15 +44,19 @@ export class EventsRepository {
     const normalizedPlan = payload.reminderPlan.map((entry) => ({ ...entry }));
     inMemoryReminderPlans.set(eventId, normalizedPlan);
 
-    const enabledChannels = (Object.keys(payload.channels) as Array<'push' | 'email' | 'sms'>).filter(
+    const channels = (Object.keys(payload.channels) as Array<'push' | 'email' | 'sms'>).filter(
       (channel) => Boolean(payload.channels[channel])
     );
 
     return {
+      success: true,
       eventId,
+      message: 'Reminder plan saved',
+      reminderCount: normalizedPlan.length,
+      channels,
       savedAt: '2026-03-15T10:00:00.000Z',
       totalReminders: normalizedPlan.length,
-      enabledChannels
+      enabledChannels: channels
     };
   }
 

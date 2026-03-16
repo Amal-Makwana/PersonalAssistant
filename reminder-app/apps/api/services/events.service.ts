@@ -45,11 +45,21 @@ export class EventsService {
       throw new Error('Mock error scenario triggered.');
     }
 
-    const offsets = payload.reminderPlan.map((entry) => entry.offset);
-    const isValidOffset = offsets.every((offset) => /^\d+h$|^\d+m$/.test(offset));
+    if (!payload || !Array.isArray(payload.reminderPlan) || !payload.channels || typeof payload.channels !== 'object') {
+      throw new ValidationError('Validation failed: reminderPlan array and channels object are required.');
+    }
+
+    const isValidOffset = payload.reminderPlan.every(
+      (entry) => typeof entry?.offset === 'string' && /^\d+h$|^\d+m$/.test(entry.offset)
+    );
 
     if (!payload.reminderPlan.length || !isValidOffset) {
       throw new ValidationError('Validation failed: reminderPlan requires offsets in Nh or Nm format.');
+    }
+
+    const invalidChannelValue = Object.values(payload.channels).some((value) => typeof value !== 'boolean');
+    if (invalidChannelValue) {
+      throw new ValidationError('Validation failed: channels values must be booleans.');
     }
 
     const saved = this.eventsRepository.saveReminderPlan(eventId, payload);

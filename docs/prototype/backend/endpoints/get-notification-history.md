@@ -1,18 +1,36 @@
 # GET /events/{id}/notification-history
 
 ## Purpose
-Return deterministic notification activity for S05 Event Detail.
+Return deterministic notification history for Event Detail.
 
-## Request
+## Request schema
 - Method: `GET`
-- URL: `/events/{id}/notification-history`
-- Optional query params:
-  - `scenario=error` (forces HTTP 500)
+- Path: `/events/{id}/notification-history`
+- Path params:
+  - `id` (required string)
+- Query:
+  - `scenario=error` (optional): forces `500`.
 
-## Response Example
+## Response schema (`200`)
 ```json
 {
-  "eventId": "evt-1",
+  "eventId": "string",
+  "history": [
+    {
+      "id": "string",
+      "status": "Scheduled | Sent | Failed | Cancelled",
+      "remindAt": "ISO-8601 string",
+      "channels": ["push | email | sms"],
+      "direction": "past | upcoming"
+    }
+  ]
+}
+```
+
+## Example payload
+```json
+{
+  "eventId": "evt-001",
   "history": [
     {
       "id": "n-1",
@@ -32,9 +50,6 @@ Return deterministic notification activity for S05 Event Detail.
 }
 ```
 
-## Error Scenarios
-- `404` event ID not found.
-- `500` forced mock failure mode.
-
-## Status Coverage
-Fixture statuses include: `Scheduled`, `Sent`, `Failed`, `Cancelled`.
+## Error responses
+- `404` unknown event ID.
+- `500` with `?scenario=error`.

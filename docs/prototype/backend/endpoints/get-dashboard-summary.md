@@ -1,25 +1,34 @@
 # GET /dashboard/summary
 
 ## Purpose
-Return deterministic dashboard summary for S03 Dashboard.
+Return deterministic summary data for S03 Dashboard.
 
-## Request
+## Request schema
 - Method: `GET`
-- URL: `/dashboard/summary`
-- Optional query params:
-  - `scenario=empty` (returns zero counts)
-  - `scenario=error` (forces HTTP 500)
+- Path: `/dashboard/summary`
+- Query:
+  - `scenario=empty` (optional): returns zero counts.
+  - `scenario=error` (optional): forces `500`.
 
-## Response Example
+## Response schema (`200`)
+```json
+{
+  "upcomingCount": "number",
+  "needsReviewCount": "number",
+  "failedCount": "number",
+  "nextEventId": "string?"
+}
+```
+
+## Example payload
 ```json
 {
   "upcomingCount": 2,
   "needsReviewCount": 1,
   "failedCount": 0,
-  "nextEventId": "evt-1"
+  "nextEventId": "evt-001"
 }
 ```
 
-## Notes
-- Fixture-backed and deterministic.
-- No DB and no external integrations.
+## Error responses
+- `500` with `?scenario=error`.

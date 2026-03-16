@@ -1,6 +1,6 @@
 {
   "historyByEventId": {
-    "evt-1": [
+    "evt-001": [
       {
         "id": "n-1",
         "status": "Scheduled",
@@ -30,7 +30,7 @@
         "direction": "past"
       }
     ],
-    "evt-2": [
+    "evt-002": [
       {
         "id": "n-5",
         "status": "Scheduled",

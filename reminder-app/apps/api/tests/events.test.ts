@@ -13,43 +13,53 @@ describe('Mock API endpoints', () => {
 
     expect(response.status).toBe(200);
     expect(response.body.events.length).toBe(2);
-    expect(response.body.events[0].id).toBe('evt-1');
+    expect(response.body.events[0].id).toBe('evt-001');
   });
 
-  it('GET /events/:id returns event details', async () => {
-    const response = await request(app).get('/events/evt-1');
+  it('GET /events/:id success', async () => {
+    const response = await request(app).get('/events/evt-001');
 
     expect(response.status).toBe(200);
-    expect(response.body).toMatchObject({ id: 'evt-1', title: 'Dentist Appointment' });
+    expect(response.body).toMatchObject({ id: 'evt-001', title: 'Dentist Appointment' });
   });
 
-  it('GET /events/:id returns 404 for unknown id', async () => {
+  it('GET /events/:id 404', async () => {
     const response = await request(app).get('/events/missing-id');
 
     expect(response.status).toBe(404);
     expect(response.body).toEqual({ error: 'Not Found', message: 'Event not found.' });
   });
 
-  it('PUT /events/:id/reminder-plan updates plan and returns deterministic success', async () => {
-    const response = await request(app).put('/events/evt-1/reminder-plan').send({
+  it('GET /events/:id?scenario=error returns 500', async () => {
+    const response = await request(app).get('/events/evt-001?scenario=error');
+
+    expect(response.status).toBe(500);
+  });
+
+  it('PUT /events/:id/reminder-plan success', async () => {
+    const response = await request(app).put('/events/evt-001/reminder-plan').send({
       reminderPlan: [{ offset: '2h' }, { offset: '45m' }],
       channels: { push: true, email: true, sms: false }
     });
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual({
-      eventId: 'evt-1',
+      success: true,
+      eventId: 'evt-001',
+      message: 'Reminder plan saved',
+      reminderCount: 2,
+      channels: ['push', 'email'],
       savedAt: '2026-03-15T10:00:00.000Z',
       totalReminders: 2,
       enabledChannels: ['push', 'email']
     });
 
-    const detailResponse = await request(app).get('/events/evt-1');
+    const detailResponse = await request(app).get('/events/evt-001');
     expect(detailResponse.body.reminderPlan).toEqual([{ offset: '2h' }, { offset: '45m' }]);
   });
 
-  it('PUT /events/:id/reminder-plan returns validation error', async () => {
-    const response = await request(app).put('/events/evt-1/reminder-plan').send({
+  it('PUT /events/:id/reminder-plan validation error', async () => {
+    const response = await request(app).put('/events/evt-001/reminder-plan').send({
       reminderPlan: [{ offset: 'tomorrow' }],
       channels: { push: true }
     });
@@ -61,7 +71,15 @@ describe('Mock API endpoints', () => {
     });
   });
 
-  it('GET /dashboard/summary returns deterministic summary', async () => {
+  it('PUT /events/:id/reminder-plan?scenario=error returns 500', async () => {
+    const response = await request(app)
+      .put('/events/evt-001/reminder-plan?scenario=error')
+      .send({ reminderPlan: [{ offset: '1h' }], channels: { push: true } });
+
+    expect(response.status).toBe(500);
+  });
+
+  it('GET /dashboard/summary success', async () => {
     const response = await request(app).get('/dashboard/summary');
 
     expect(response.status).toBe(200);
@@ -69,32 +87,37 @@ describe('Mock API endpoints', () => {
       upcomingCount: 2,
       needsReviewCount: 1,
       failedCount: 0,
-      nextEventId: 'evt-1'
+      nextEventId: 'evt-001'
     });
   });
 
-  it('GET /events/:id/notification-history returns history entries', async () => {
-    const response = await request(app).get('/events/evt-1/notification-history');
+  it('GET /dashboard/summary?scenario=error returns 500', async () => {
+    const response = await request(app).get('/dashboard/summary?scenario=error');
 
-    expect(response.status).toBe(200);
-    expect(response.body.eventId).toBe('evt-1');
-    expect(response.body.history.length).toBeGreaterThan(0);
-    expect(response.body.history[0].status).toBe('Scheduled');
+    expect(response.status).toBe(500);
   });
 
-  it('returns 500 for scenario=error where supported', async () => {
-    const eventsError = await request(app).get('/events?scenario=error');
-    const eventError = await request(app).get('/events/evt-1?scenario=error');
-    const saveError = await request(app)
-      .put('/events/evt-1/reminder-plan?scenario=error')
-      .send({ reminderPlan: [{ offset: '1h' }], channels: { push: true } });
-    const dashboardError = await request(app).get('/dashboard/summary?scenario=error');
-    const historyError = await request(app).get('/events/evt-1/notification-history?scenario=error');
+  it('GET /events/:id/notification-history success', async () => {
+    const response = await request(app).get('/events/evt-001/notification-history');
 
-    expect(eventsError.status).toBe(500);
-    expect(eventError.status).toBe(500);
-    expect(saveError.status).toBe(500);
-    expect(dashboardError.status).toBe(500);
-    expect(historyError.status).toBe(500);
+    expect(response.status).toBe(200);
+    expect(response.body.eventId).toBe('evt-001');
+    expect(response.body.history.length).toBeGreaterThan(0);
+    expect(response.body.history.map((entry: { status: string }) => entry.status)).toEqual(
+      expect.arrayContaining(['Scheduled', 'Sent', 'Failed', 'Cancelled'])
+    );
+  });
+
+  it('GET /events/:id/notification-history 404', async () => {
+    const response = await request(app).get('/events/missing-id/notification-history');
+
+    expect(response.status).toBe(404);
+    expect(response.body).toEqual({ error: 'Not Found', message: 'Event not found.' });
+  });
+
+  it('GET /events/:id/notification-history?scenario=error returns 500', async () => {
+    const response = await request(app).get('/events/evt-001/notification-history?scenario=error');
+
+    expect(response.status).toBe(500);
   });
 });

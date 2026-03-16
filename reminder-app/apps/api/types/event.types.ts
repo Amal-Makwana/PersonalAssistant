@@ -27,7 +27,11 @@ export interface ReminderPlanUpdateRequest {
 }
 
 export interface ReminderPlanUpdateResponse {
+  success: true;
   eventId: string;
+  message: string;
+  reminderCount: number;
+  channels: ReminderChannel[];
   savedAt: string;
   totalReminders: number;
   enabledChannels: ReminderChannel[];

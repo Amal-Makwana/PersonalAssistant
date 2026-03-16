@@ -1,7 +1,7 @@
 {
   "events": [
     {
-      "id": "evt-1",
+      "id": "evt-001",
       "title": "Dentist Appointment",
       "date": "2026-03-20T09:00:00Z",
       "location": "Smile Clinic",
@@ -11,7 +11,7 @@
       "reminderPlan": [{ "offset": "24h" }, { "offset": "3h" }, { "offset": "1h" }]
     },
     {
-      "id": "evt-2",
+      "id": "evt-002",
       "title": "Client Follow-up",
       "date": "2026-03-21T13:30:00Z",
       "status": "needs-review",

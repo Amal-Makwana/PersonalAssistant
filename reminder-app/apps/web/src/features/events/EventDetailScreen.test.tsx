@@ -7,7 +7,7 @@ import { EventDetailScreen } from './EventDetailScreen';
 
 const renderScreen = (
   scenario: 'success' | 'empty' | 'error' | 'permission' | 'validation' = 'success',
-  eventId = 'evt-1'
+  eventId = 'evt-001'
 ) => {
   render(
     <AppProvider initialScenario={scenario}>

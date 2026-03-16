@@ -6,7 +6,7 @@ const routes = [
   ['/onboarding', 'S02 Onboarding'],
   ['/dashboard', 'S03 Dashboard'],
   ['/events', 'S04 Events'],
-  ['/events/evt-1', 'S05 Event Detail'],
+  ['/events/evt-001', 'S05 Event Detail'],
   ['/preferences', 'S06 Preferences'],
   ['/integrations', 'S07 Integrations'],
   ['/diagnostics', 'S08 Diagnostics'],
