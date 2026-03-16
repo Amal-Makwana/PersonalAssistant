@@ -1,19 +1,21 @@
 import { eventsFixture } from '../../mocks/events.mock';
-import { reminderChannelsFixture, reminderPlanOffsetsFixture } from '../../mocks/reminders.mock';
+import { notificationHistoryFixture, reminderChannelsFixture, reminderOffsetPresetsFixture } from '../../mocks/reminders.mock';
 import type {
   DashboardSummary,
   EventItem,
+  NotificationHistoryEntry,
   ReminderChannelConfig,
   ReminderPlanEntry,
   SaveReminderInput,
   SaveReminderResult,
   Scenario
 } from '../../types/models';
-import { calculateReminderPlan } from '../../features/events/utils/reminderPlanCalculator';
+import { calculateReminderPlanFromOffsets, validateReminderOffsetMinutes } from '../../features/events/utils/reminderPlanCalculator';
 import { wait } from './delay';
 
 let eventsStore: EventItem[] = eventsFixture.map((event) => ({
   ...event,
+  reminderOffsetsMinutes: [...event.reminderOffsetsMinutes],
   reminderSettings: { ...event.reminderSettings }
 }));
 
@@ -44,7 +46,7 @@ export class MockEventService {
     if (this.scenario === 'empty') {
       return [];
     }
-    return eventsStore.map((event) => ({ ...event, reminderSettings: { ...event.reminderSettings } }));
+    return eventsStore.map((event) => ({ ...event, reminderOffsetsMinutes: [...event.reminderOffsetsMinutes], reminderSettings: { ...event.reminderSettings } }));
   }
 
   async getDashboardSummary(): Promise<DashboardSummary> {
@@ -66,7 +68,7 @@ export class MockEventService {
       throw new Error('Mock event not found.');
     }
 
-    return { ...event, reminderSettings: { ...event.reminderSettings } };
+    return { ...event, reminderOffsetsMinutes: [...event.reminderOffsetsMinutes], reminderSettings: { ...event.reminderSettings } };
   }
 
   async getReminderPlanPreview(eventId: string): Promise<ReminderPlanEntry[]> {
@@ -84,7 +86,11 @@ export class MockEventService {
       return [];
     }
 
-    return calculateReminderPlan(event.time, reminderPlanOffsetsFixture);
+    const offsets = event.reminderOffsetsMinutes.length
+      ? event.reminderOffsetsMinutes
+      : reminderOffsetPresetsFixture.map((offset) => offset.minutesBefore);
+
+    return calculateReminderPlanFromOffsets(event.time, offsets);
   }
 
   async getReminderChannelPreview(): Promise<ReminderChannelConfig> {
@@ -96,6 +102,17 @@ export class MockEventService {
     return { ...reminderChannelsFixture.default };
   }
 
+  async getNotificationHistoryPreview(): Promise<NotificationHistoryEntry[]> {
+    await wait(175);
+    if (this.scenario === 'error') {
+      throw new Error('Unable to load notification history in mock service.');
+    }
+    if (this.scenario === 'empty') {
+      return [];
+    }
+    return [...notificationHistoryFixture];
+  }
+
   async saveReminderSettings(payload: SaveReminderInput): Promise<SaveReminderResult> {
     await wait(250);
     if (this.scenario === 'error') {
@@ -105,8 +122,8 @@ export class MockEventService {
       throw new Error('Validation failed: choose reminder values greater than 0 minutes.');
     }
 
-    const { primaryMinutesBefore, secondaryMinutesBefore } = payload.reminderSettings;
-    if (primaryMinutesBefore <= 0 || secondaryMinutesBefore <= 0) {
+    const validationError = payload.reminderOffsetsMinutes.map(validateReminderOffsetMinutes).find((value) => Boolean(value));
+    if (validationError || payload.reminderOffsetsMinutes.length === 0) {
       throw new Error('Validation failed: choose reminder values greater than 0 minutes.');
     }
 
@@ -117,12 +134,18 @@ export class MockEventService {
 
     eventsStore[eventIndex] = {
       ...eventsStore[eventIndex],
-      reminderSettings: { ...payload.reminderSettings }
+      reminderOffsetsMinutes: [...payload.reminderOffsetsMinutes].sort((a, b) => b - a)
     };
+
+    const enabledChannels = (Object.keys(payload.channels) as Array<'push' | 'email' | 'sms'>).filter(
+      (key) => payload.channels[key]
+    );
 
     return {
       eventId: payload.eventId,
-      savedAt: new Date().toISOString()
+      savedAt: new Date().toISOString(),
+      totalReminders: payload.reminderOffsetsMinutes.length,
+      enabledChannels
     };
   }
 
@@ -138,6 +161,7 @@ export class MockEventService {
 export const resetMockEventStore = () => {
   eventsStore = eventsFixture.map((event) => ({
     ...event,
+    reminderOffsetsMinutes: [...event.reminderOffsetsMinutes],
     reminderSettings: { ...event.reminderSettings }
   }));
 };

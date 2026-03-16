@@ -15,6 +15,7 @@ export interface EventItem {
   duplicate: boolean;
   syncStatus: SyncStatus;
   reminderSettings: ReminderSettings;
+  reminderOffsetsMinutes: number[];
 }
 
 export interface UserProfile {
@@ -41,12 +42,15 @@ export interface DashboardSummary {
 
 export interface SaveReminderInput {
   eventId: string;
-  reminderSettings: ReminderSettings;
+  reminderOffsetsMinutes: number[];
+  channels: ReminderChannelConfig;
 }
 
 export interface SaveReminderResult {
   eventId: string;
   savedAt: string;
+  totalReminders: number;
+  enabledChannels: Array<'push' | 'email' | 'sms'>;
 }
 
 export interface ReminderPlanOffsetConfig {
@@ -59,10 +63,21 @@ export interface ReminderPlanEntry {
   id: string;
   label: string;
   remindAt: string;
+  offsetMinutes: number;
 }
 
 export interface ReminderChannelConfig {
   push: boolean;
   email: boolean;
   sms: boolean;
+}
+
+export type NotificationStatus = 'Scheduled' | 'Sent' | 'Failed' | 'Cancelled';
+
+export interface NotificationHistoryEntry {
+  id: string;
+  status: NotificationStatus;
+  remindAt: string;
+  channels: Array<'push' | 'email' | 'sms'>;
+  direction: 'past' | 'upcoming';
 }
