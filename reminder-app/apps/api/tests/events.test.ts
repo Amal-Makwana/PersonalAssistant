@@ -1,10 +1,10 @@
 import request from 'supertest';
 import { afterEach, describe, expect, it } from 'vitest';
-import { resetEventsInMemoryState } from '../controllers/events.controller';
+import { resetEventsInMemoryState } from '../controllers/events.controller.js';
 import dashboardFixture from '../fixtures/dashboard.fixture.json';
 import eventsFixture from '../fixtures/events.fixture.json';
 import historyFixture from '../fixtures/notification-history.fixture.json';
-import { app } from '../app';
+import { app } from '../app.js';
 
 afterEach(() => {
   resetEventsInMemoryState();

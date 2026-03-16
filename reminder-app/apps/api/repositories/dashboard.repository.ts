@@ -1,5 +1,5 @@
 import dashboardFixture from '../fixtures/dashboard.fixture.json';
-import type { DashboardSummaryResponse } from '../types/event.types';
+import type { DashboardSummaryResponse } from '../types/event.types.js';
 
 export class DashboardRepository {
   getSummary(scenario?: string): DashboardSummaryResponse {

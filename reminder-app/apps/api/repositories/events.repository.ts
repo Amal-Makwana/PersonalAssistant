@@ -6,7 +6,7 @@ import type {
   NotificationHistoryResponse,
   ReminderPlanUpdateRequest,
   ReminderPlanUpdateResponse
-} from '../types/event.types';
+} from '../types/event.types.js';
 
 const inMemoryReminderPlans = new Map<string, EventRecord['reminderPlan']>();
 
