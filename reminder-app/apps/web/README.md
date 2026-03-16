@@ -4,7 +4,7 @@
 This prototype currently implements the first vertical slice:
 - **S03 Dashboard**
 - **S04 Events List**
-- **S05 Event Detail** with mock reminder plan preview, reminder channels preview, and reminder edit/save flow
+- **S05 Event Detail** with reminder plan preview, editable reminder plan, reminder channels, mock scheduling confirmation, and notification history preview
 
 ## Folder structure
 - `src/features/dashboard` — Dashboard screen + tests
@@ -26,16 +26,18 @@ Open `http://localhost:5173`.
 - `MockEventService` simulates async behavior, errors, permission, empty, and validation states.
 - Mock save/edit is in-memory only (no backend/database).
 
-
-## S05 Reminder previews (mock)
-- **Reminder Plan Preview** derives deterministic reminder timestamps from event date/time using local offset fixtures.
-- **Reminder Channels** shows local mock delivery channel status (push/email/sms) with frontend-only toggles.
-- All behavior is in-memory and scenario-driven (loading/success/empty/error).
+## S05 reminder workflow (mock)
+- **Reminder Plan Preview** derives deterministic reminder timestamps from event date/time using editable `offsetMinutes`.
+- **Editable Reminder Plan** supports preset add/remove and custom offsets with validation.
+- **Reminder Channels** shows/toggles local mock delivery channel status (push/email/sms).
+- **Mock Scheduling Confirmation** shows deterministic success/failure outcomes when saving.
+- **Notification History Preview** renders deterministic fixture entries (`Scheduled`, `Sent`, `Failed`, `Cancelled`).
 
 ## Where mock logic lives
-- Reminder plan calculation: `src/features/events/utils/reminderPlanCalculator.ts`
-- Reminder fixtures: `src/mocks/reminders.mock.ts`
-- Preview data contracts + async simulation: `src/services/mock/mockEventService.ts`
+- Reminder plan utilities: `src/features/events/utils/reminderPlanCalculator.ts`
+- Reminder fixtures/history: `src/mocks/reminders.mock.ts`
+- Event detail feature orchestration: `src/features/events/EventDetailScreen.tsx`
+- Async mock service contracts: `src/services/mock/mockEventService.ts`
 
 ## Scenario triggering
 Use the in-app **Mock Scenario** selector in the left panel:

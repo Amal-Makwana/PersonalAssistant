@@ -1,32 +1,34 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppContext } from '../../contexts/AppContext';
+import { MockEventService } from '../../services/mock/mockEventService';
+import type { EventItem, NotificationHistoryEntry, ReminderChannelConfig, SaveReminderResult } from '../../types/models';
+import { EditableReminderPlan } from './components/EditableReminderPlan';
+import { NotificationHistoryPreview } from './components/NotificationHistoryPreview';
 import { ReminderChannelsPreview } from './components/ReminderChannelsPreview';
 import { ReminderPlanPreview } from './components/ReminderPlanPreview';
-import { MockEventService } from '../../services/mock/mockEventService';
-import type { EventItem, ReminderChannelConfig, ReminderPlanEntry, ReminderSettings } from '../../types/models';
-
-const defaultReminderSettings: ReminderSettings = {
-  primaryMinutesBefore: 60,
-  secondaryMinutesBefore: 15,
-  timezone: 'UTC'
-};
+import { SchedulingConfirmation } from './components/SchedulingConfirmation';
+import { calculateReminderPlanFromOffsets, validateReminderOffsetMinutes } from './utils/reminderPlanCalculator';
 
 export const EventDetailScreen = () => {
   const { eventId = 'unknown' } = useParams();
   const { scenario } = useAppContext();
   const [event, setEvent] = useState<EventItem | null>(null);
-  const [form, setForm] = useState<ReminderSettings>(defaultReminderSettings);
+  const [editableOffsets, setEditableOffsets] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState('');
   const [planLoading, setPlanLoading] = useState(true);
   const [planError, setPlanError] = useState<string | null>(null);
-  const [planEntries, setPlanEntries] = useState<ReminderPlanEntry[]>([]);
   const [channelLoading, setChannelLoading] = useState(true);
   const [channelError, setChannelError] = useState<string | null>(null);
   const [channelConfig, setChannelConfig] = useState<ReminderChannelConfig | null>(null);
+  const [historyLoading, setHistoryLoading] = useState(true);
+  const [historyError, setHistoryError] = useState<string | null>(null);
+  const [historyEntries, setHistoryEntries] = useState<NotificationHistoryEntry[]>([]);
+  const [saveResult, setSaveResult] = useState<SaveReminderResult | null>(null);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   useEffect(() => {
     const service = new MockEventService(scenario);
@@ -37,19 +39,23 @@ export const EventDetailScreen = () => {
     setPlanError(null);
     setChannelLoading(true);
     setChannelError(null);
+    setHistoryLoading(true);
+    setHistoryError(null);
+    setSaveError(null);
+    setSaveResult(null);
 
     service
       .getEventById(eventId)
       .then((data) => {
         setEvent(data);
-        setForm(data.reminderSettings);
+        setEditableOffsets([...data.reminderOffsetsMinutes]);
       })
       .catch((err: Error) => setError(err.message))
       .finally(() => setLoading(false));
 
     service
       .getReminderPlanPreview(eventId)
-      .then((entries) => setPlanEntries(entries))
+      .then(() => undefined)
       .catch((err: Error) => setPlanError(err.message))
       .finally(() => setPlanLoading(false));
 
@@ -58,23 +64,57 @@ export const EventDetailScreen = () => {
       .then((config) => setChannelConfig(config))
       .catch((err: Error) => setChannelError(err.message))
       .finally(() => setChannelLoading(false));
+
+    service
+      .getNotificationHistoryPreview()
+      .then((entries) => setHistoryEntries(entries))
+      .catch((err: Error) => setHistoryError(err.message))
+      .finally(() => setHistoryLoading(false));
   }, [eventId, scenario]);
 
+  const validationError = useMemo(() => {
+    if (editableOffsets.length === 0) {
+      return 'Add at least one reminder offset before saving.';
+    }
+    return editableOffsets.map(validateReminderOffsetMinutes).find((value) => Boolean(value)) ?? null;
+  }, [editableOffsets]);
+
+  const planEntries = useMemo(() => {
+    if (!event) {
+      return [];
+    }
+    return calculateReminderPlanFromOffsets(event.time, editableOffsets);
+  }, [event, editableOffsets]);
+
   const save = async () => {
+    if (!event || !channelConfig) {
+      return;
+    }
+
+    if (validationError) {
+      setSaveError(validationError);
+      return;
+    }
+
     const service = new MockEventService(scenario);
     setSaving(true);
     setError(null);
     setMessage('');
+    setSaveError(null);
+    setSaveResult(null);
+
     try {
       const result = await service.saveReminderSettings({
         eventId,
-        reminderSettings: form
+        reminderOffsetsMinutes: editableOffsets,
+        channels: channelConfig
       });
+      setSaveResult(result);
       setMessage(`Saved mock reminder settings at ${result.savedAt}`);
       const updated = await service.getEventById(eventId);
       setEvent(updated);
-    } catch (saveError) {
-      setError((saveError as Error).message);
+    } catch (saveAttemptError) {
+      setSaveError((saveAttemptError as Error).message);
     } finally {
       setSaving(false);
     }
@@ -82,8 +122,10 @@ export const EventDetailScreen = () => {
 
   const cancel = () => {
     if (event) {
-      setForm(event.reminderSettings);
+      setEditableOffsets([...event.reminderOffsetsMinutes]);
       setMessage('Edits cancelled (frontend-only state reset).');
+      setSaveError(null);
+      setSaveResult(null);
     }
   };
 
@@ -92,13 +134,7 @@ export const EventDetailScreen = () => {
   };
 
   const retry = async () => {
-    const service = new MockEventService(scenario);
-    try {
-      const result = await service.retrySync(eventId);
-      setMessage(`Retry success: ${result.status}`);
-    } catch (retryError) {
-      setError((retryError as Error).message);
-    }
+    await save();
   };
 
   return (
@@ -121,53 +157,29 @@ export const EventDetailScreen = () => {
 
           <ReminderPlanPreview entries={planEntries} error={planError} loading={planLoading} />
 
-          <ReminderChannelsPreview channels={channelConfig} error={channelError} loading={channelLoading} />
+          <EditableReminderPlan eventTime={event.time} offsetsMinutes={editableOffsets} onChange={setEditableOffsets} />
+
+          <ReminderChannelsPreview channels={channelConfig} error={channelError} loading={channelLoading} onChange={setChannelConfig} />
 
           <div className="editorial-card space-y-2">
             <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-600">Actions</h3>
-            <label className="text-sm text-slate-700">
-              Primary reminder (minutes before)
-              <input
-                className="input-soft mt-1"
-                min={1}
-                onChange={(e) => setForm((prev) => ({ ...prev, primaryMinutesBefore: Number(e.target.value) }))}
-                type="number"
-                value={form.primaryMinutesBefore}
-              />
-            </label>
-            <label className="text-sm text-slate-700">
-              Secondary reminder (minutes before)
-              <input
-                className="input-soft mt-1"
-                min={1}
-                onChange={(e) => setForm((prev) => ({ ...prev, secondaryMinutesBefore: Number(e.target.value) }))}
-                type="number"
-                value={form.secondaryMinutesBefore}
-              />
-            </label>
-            <label className="text-sm text-slate-700">
-              Timezone
-              <input
-                className="input-soft mt-1"
-                onChange={(e) => setForm((prev) => ({ ...prev, timezone: e.target.value }))}
-                value={form.timezone}
-              />
-            </label>
+            {validationError && <p className="text-sm text-red-700">{validationError}</p>}
             <div className="flex flex-wrap gap-2">
               <button className="button-primary" onClick={edit} type="button">
                 Edit
               </button>
-              <button className="button-primary" disabled={saving} onClick={save} type="button">
+              <button className="button-primary" disabled={saving || Boolean(validationError)} onClick={save} type="button">
                 {saving ? 'Saving...' : 'Save'}
               </button>
               <button className="button-primary" onClick={cancel} type="button">
                 Cancel
               </button>
-              <button className="button-primary" onClick={retry} type="button">
-                Retry Sync (Mock)
-              </button>
             </div>
           </div>
+
+          <SchedulingConfirmation error={saveError} onRetry={retry} result={saveResult} />
+
+          <NotificationHistoryPreview entries={historyEntries} error={historyError} loading={historyLoading} />
         </div>
       )}
 
