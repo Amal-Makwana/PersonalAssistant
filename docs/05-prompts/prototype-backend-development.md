@@ -14,9 +14,12 @@ Build backend endpoints that support prototype UI behavior with deterministic fi
 6. Do not add persistent storage.
 7. All endpoint responses must be deterministic and fixture-backed.
 
+## Backend Location (Required)
+- Implement backend under `reminder-app/apps/api` (not root-level `apps/api`).
+
 ## Backend Implementation Pattern
 - Layering: `routes -> controllers -> services -> mock repository`.
-- Validate request DTOs at route/controller boundary.
+- Validate request DTOs at controller/service boundary.
 - Use service methods for business rules and deterministic error handling.
 - Use in-memory fixture repository for reads/writes during runtime only.
 

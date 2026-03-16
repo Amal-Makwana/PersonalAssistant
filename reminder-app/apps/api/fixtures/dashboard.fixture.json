@@ -1,0 +1,13 @@
+{
+  "summary": {
+    "upcomingCount": 2,
+    "needsReviewCount": 1,
+    "failedCount": 0,
+    "nextEventId": "evt-1"
+  },
+  "empty": {
+    "upcomingCount": 0,
+    "needsReviewCount": 0,
+    "failedCount": 0
+  }
+}

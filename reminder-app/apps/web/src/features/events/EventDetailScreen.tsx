@@ -66,7 +66,7 @@ export const EventDetailScreen = () => {
       .finally(() => setChannelLoading(false));
 
     service
-      .getNotificationHistoryPreview()
+      .getNotificationHistoryPreview(eventId)
       .then((entries) => setHistoryEntries(entries))
       .catch((err: Error) => setHistoryError(err.message))
       .finally(() => setHistoryLoading(false));

@@ -5,9 +5,11 @@ describe('MockEventService', () => {
   beforeEach(() => {
     resetMockEventStore();
 
+    let reminderPlanState = [{ offset: '24h' }, { offset: '3h' }, { offset: '1h' }];
+
     vi.stubGlobal(
       'fetch',
-      vi.fn(async (input: string | URL | Request) => {
+      vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
         const url = typeof input === 'string' ? input : input instanceof URL ? input.toString() : input.url;
 
         if (url.includes('scenario=error')) {
@@ -17,16 +19,76 @@ describe('MockEventService', () => {
           } as Response;
         }
 
+        if (url.includes('/dashboard/summary')) {
+          return {
+            ok: true,
+            json: async () => ({ upcomingCount: 2, needsReviewCount: 1, failedCount: 0, nextEventId: 'evt-1' })
+          } as Response;
+        }
+
+        if (url.includes('/notification-history')) {
+          return {
+            ok: true,
+            json: async () => ({
+              eventId: 'evt-1',
+              history: [{ id: 'n-1', status: 'Scheduled', remindAt: '2026-03-19T09:00:00Z', channels: ['push'], direction: 'upcoming' }]
+            })
+          } as Response;
+        }
+
+        if (url.includes('/events/evt-1/reminder-plan') && init?.method === 'PUT') {
+          const parsedBody = JSON.parse((init.body as string) ?? '{}') as { reminderPlan?: Array<{ offset: string }> };
+          reminderPlanState = parsedBody.reminderPlan ?? reminderPlanState;
+
+          return {
+            ok: true,
+            json: async () => ({
+              eventId: 'evt-1',
+              savedAt: '2026-03-15T10:00:00.000Z',
+              totalReminders: reminderPlanState.length,
+              enabledChannels: ['push', 'email']
+            })
+          } as Response;
+        }
+
+        if (url.includes('/events/evt-1')) {
+          return {
+            ok: true,
+            json: async () => ({
+              id: 'evt-1',
+              title: 'Dentist Appointment',
+              date: '2026-03-20T09:00:00Z',
+              location: 'Smile Clinic',
+              status: 'scheduled',
+              duplicate: false,
+              syncStatus: 'synced',
+              reminderPlan: reminderPlanState
+            })
+          } as Response;
+        }
+
         return {
           ok: true,
           json: async () => ({
             events: [
               {
-                id: 'evt-001',
-                title: 'Parent Teacher Meeting',
-                date: '2026-05-14T10:00:00Z',
-                location: 'School Hall',
-                reminderPlan: [{ offset: '24h' }, { offset: '1h' }]
+                id: 'evt-1',
+                title: 'Dentist Appointment',
+                date: '2026-03-20T09:00:00Z',
+                location: 'Smile Clinic',
+                status: 'scheduled',
+                duplicate: false,
+                syncStatus: 'synced',
+                reminderPlan: reminderPlanState
+              },
+              {
+                id: 'evt-2',
+                title: 'Client Follow-up',
+                date: '2026-03-21T13:30:00Z',
+                status: 'needs-review',
+                duplicate: true,
+                syncStatus: 'pending',
+                reminderPlan: [{ offset: '24h' }, { offset: '30m' }]
               }
             ]
           })
@@ -40,8 +102,8 @@ describe('MockEventService', () => {
 
     const summary = await service.getDashboardSummary();
 
-    expect(summary.upcomingCount).toBe(1);
-    expect(summary.nextEventId).toBe('evt-001');
+    expect(summary.upcomingCount).toBe(2);
+    expect(summary.nextEventId).toBe('evt-1');
   });
 
   it('throws permission error for detail in permission scenario', async () => {
@@ -56,12 +118,12 @@ describe('MockEventService', () => {
     await service.listEvents();
 
     const result = await service.saveReminderSettings({
-      eventId: 'evt-001',
+      eventId: 'evt-1',
       reminderOffsetsMinutes: [180, 60, 30],
       channels: { push: true, email: true, sms: false }
     });
 
-    const event = await service.getEventById('evt-001');
+    const event = await service.getEventById('evt-1');
     expect(event.reminderOffsetsMinutes).toEqual([180, 60, 30]);
     expect(result.totalReminders).toBe(3);
     expect(result.enabledChannels).toEqual(['push', 'email']);
@@ -91,7 +153,7 @@ describe('MockEventService', () => {
   it('returns notification history preview', async () => {
     const service = new MockEventService('success');
 
-    const history = await service.getNotificationHistoryPreview();
+    const history = await service.getNotificationHistoryPreview('evt-1');
 
     expect(history.length).toBeGreaterThan(0);
     expect(history[0].status).toBe('Scheduled');
@@ -101,7 +163,7 @@ describe('MockEventService', () => {
     const service = new MockEventService('empty');
 
     const plan = await service.getReminderPlanPreview('evt-1');
-    const history = await service.getNotificationHistoryPreview();
+    const history = await service.getNotificationHistoryPreview('evt-1');
 
     expect(plan).toEqual([]);
     expect(history).toEqual([]);
