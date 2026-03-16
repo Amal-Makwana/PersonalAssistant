@@ -5,7 +5,16 @@ Implement UI-only features for the prototype phase.
 Rules:
 1. Do not implement backend services, databases, APIs, auth providers, or external integrations.
 2. Use local fixtures and a mock service layer.
-3. Simulate async loading and error scenarios.
+3. Simulate async loading/error/validation/permission scenarios.
 4. Keep UI contracts aligned with canonical screen inventory S01-S09.
-5. Update prototype README/docs when architecture changes.
+5. Update prototype README/docs when architecture or scope changes.
 6. Follow documentation-first workflow before code changes.
+
+Current baseline to extend from:
+- S03 Dashboard -> S04 Events List -> S05 Event Detail
+- S05 supports mock reminder edit/save flow only
+
+When extending this prototype:
+- Preserve deterministic scenario toggles
+- Avoid backend drift or hidden API dependencies
+- Update docs/prototype-frontend-only and reminder-app README when scope changes

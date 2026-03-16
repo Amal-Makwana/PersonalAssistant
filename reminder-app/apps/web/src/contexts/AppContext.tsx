@@ -8,8 +8,13 @@ interface AppState {
 
 const AppContext = createContext<AppState | null>(null);
 
-export const AppProvider = ({ children }: { children: ReactNode }) => {
-  const [scenario, setScenario] = useState<Scenario>('success');
+interface AppProviderProps {
+  children: ReactNode;
+  initialScenario?: Scenario;
+}
+
+export const AppProvider = ({ children, initialScenario = 'success' }: AppProviderProps) => {
+  const [scenario, setScenario] = useState<Scenario>(initialScenario);
   const value = useMemo(() => ({ scenario, setScenario }), [scenario]);
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };

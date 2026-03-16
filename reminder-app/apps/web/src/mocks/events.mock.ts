@@ -8,7 +8,12 @@ export const eventsFixture: EventItem[] = [
     location: 'Smile Clinic',
     status: 'scheduled',
     duplicate: false,
-    syncStatus: 'synced'
+    syncStatus: 'synced',
+    reminderSettings: {
+      primaryMinutesBefore: 60,
+      secondaryMinutesBefore: 15,
+      timezone: 'UTC'
+    }
   },
   {
     id: 'evt-2',
@@ -16,6 +21,11 @@ export const eventsFixture: EventItem[] = [
     time: '2026-03-21T13:30:00Z',
     status: 'needs-review',
     duplicate: true,
-    syncStatus: 'pending'
+    syncStatus: 'pending',
+    reminderSettings: {
+      primaryMinutesBefore: 120,
+      secondaryMinutesBefore: 30,
+      timezone: 'UTC'
+    }
   }
 ];
