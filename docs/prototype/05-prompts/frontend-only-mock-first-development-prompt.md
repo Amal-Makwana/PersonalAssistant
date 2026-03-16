@@ -21,4 +21,4 @@ When extending this prototype:
 - Avoid backend drift or hidden API dependencies
 - Use `offsetMinutes` as canonical reminder timing state
 - Model save/history contracts as DTO-like frontend types for future migration, but keep all behavior local
-- Update docs/prototype-frontend-only and reminder-app README when scope changes
+- Update docs/prototype and reminder-app README when scope changes
