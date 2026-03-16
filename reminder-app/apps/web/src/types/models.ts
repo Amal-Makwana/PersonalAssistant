@@ -1,5 +1,11 @@
 export type SyncStatus = 'synced' | 'pending' | 'failed';
 
+export interface ReminderSettings {
+  primaryMinutesBefore: number;
+  secondaryMinutesBefore: number;
+  timezone: string;
+}
+
 export interface EventItem {
   id: string;
   title: string;
@@ -8,6 +14,7 @@ export interface EventItem {
   status: 'scheduled' | 'needs-review' | 'failed';
   duplicate: boolean;
   syncStatus: SyncStatus;
+  reminderSettings: ReminderSettings;
 }
 
 export interface UserProfile {
@@ -23,4 +30,21 @@ export interface ActivityLog {
   level: 'info' | 'warning' | 'error';
 }
 
-export type Scenario = 'success' | 'empty' | 'error' | 'permission';
+export type Scenario = 'success' | 'empty' | 'error' | 'permission' | 'validation';
+
+export interface DashboardSummary {
+  upcomingCount: number;
+  needsReviewCount: number;
+  failedCount: number;
+  nextEventId?: string;
+}
+
+export interface SaveReminderInput {
+  eventId: string;
+  reminderSettings: ReminderSettings;
+}
+
+export interface SaveReminderResult {
+  eventId: string;
+  savedAt: string;
+}

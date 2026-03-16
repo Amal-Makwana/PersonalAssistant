@@ -1,7 +1,7 @@
 import { useAppContext } from '../contexts/AppContext';
 import type { Scenario } from '../types/models';
 
-const scenarios: Scenario[] = ['success', 'empty', 'error', 'permission'];
+const scenarios: Scenario[] = ['success', 'empty', 'error', 'permission', 'validation'];
 
 export const ScenarioToggle = () => {
   const { scenario, setScenario } = useAppContext();
