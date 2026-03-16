@@ -1,9 +1,9 @@
 import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import dashboardFixture from '../../../../api/fixtures/dashboard.fixture.json';
-import eventsFixture from '../../../../api/fixtures/events.fixture.json';
-import historyFixture from '../../../../api/fixtures/notification-history.fixture.json';
+import dashboardFixture from '../../../../api/fixtures/dashboard.fixture.js';
+import eventsFixture from '../../../../api/fixtures/events.fixture.js';
+import notificationHistoryFixture from '../../../../api/fixtures/notification-history.fixture.js';
 import { AppProvider } from '../../contexts/AppContext';
 import { DashboardScreen } from '../dashboard/DashboardScreen';
 import { EventDetailScreen } from './EventDetailScreen';
@@ -37,7 +37,7 @@ const mockBackendFetch = ({ forceError = false, notificationError = false }: { f
       }
 
       const eventId = /\/events\/([^/]+)/.exec(url)?.[1] ?? '';
-      const history = historyFixture.historyByEventId[eventId as keyof typeof historyFixture.historyByEventId];
+      const history = notificationHistoryFixture.historyByEventId[eventId as keyof typeof notificationHistoryFixture.historyByEventId];
       if (!history) {
         return jsonResponse({ error: 'Not Found', message: 'Event not found.' }, 404);
       }
@@ -50,7 +50,7 @@ const mockBackendFetch = ({ forceError = false, notificationError = false }: { f
       }
 
       const payload = JSON.parse(String(init.body)) as { reminderPlan: Array<{ offset: string }>; channels: Record<string, boolean> };
-      const valid = payload.reminderPlan.length > 0 && payload.reminderPlan.every((item) => /^\d+h$|^\d+m$/.test(item.offset));
+      const valid = payload.reminderPlan.length > 0 && payload.reminderPlan.every((item: { offset: string }) => /^\d+h$|^\d+m$/.test(item.offset));
       if (!valid) {
         return jsonResponse(
           { error: 'Bad Request', message: 'Validation failed: reminderPlan requires offsets in Nh or Nm format.' },
