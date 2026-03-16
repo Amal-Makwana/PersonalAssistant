@@ -4,10 +4,15 @@
 
 This repository currently includes a **frontend-only mock-first prototype** under `apps/web`.
 
+### Current implemented vertical slice
+- Dashboard (S03): upcoming/status summary + CTA navigation
+- Events List (S04): mock list + filter state + detail navigation
+- Event Detail (S05): mock detail + reminder edit/save simulation
+
 ### Scope of this phase
-- Implement UI flows/components/pages for canonical screens S01-S09.
+- Implement UI flows/components/pages with deterministic mock behavior.
 - Use local fixtures and mock services to simulate app behavior.
-- Validate loading, empty, error, success, validation, and permission states.
+- Validate loading, empty, error, success, permission, and validation states.
 
 ### Deferred by design
 - No backend services
@@ -40,23 +45,19 @@ From `reminder-app/apps/web`:
 - `npm run test`
 - `npm run build`
 
+## Vercel deployment (frontend-only)
+- Project root: `reminder-app/apps/web`
+- Build command: `npm run build`
+- Output directory: `dist`
+- SPA routing uses `vercel.json` rewrite to `index.html` for deep links
+- No secrets/environment variables required for prototype deployment
+
 ## Project structure
 - `apps/web/src/features` — feature/screen modules
 - `apps/web/src/components` — shared UI shell elements
 - `apps/web/src/mocks` — local fixtures
 - `apps/web/src/services/mock` — async mock service contracts
 - `apps/web/src/types` — DTO-like interfaces for future API compatibility
-
-## Mock service layer
-Mock services simulate:
-- loading latency
-- empty responses
-- error scenarios
-- permission restrictions
-- retry behavior
-- in-memory update flows
-
-These service contracts are intentionally shaped to mirror future API DTOs and can be swapped with real adapters in later backend phases.
 
 ## Prototype documentation (parallel set)
 To avoid changing canonical docs, prototype planning/governance docs are stored in:
