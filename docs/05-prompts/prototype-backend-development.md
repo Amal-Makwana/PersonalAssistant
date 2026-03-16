@@ -15,34 +15,44 @@ Build backend endpoints that support prototype UI behavior with deterministic fi
 7. All endpoint responses must be deterministic and fixture-backed.
 
 ## Backend Location (Required)
-- Implement backend under `reminder-app/apps/api` (not root-level `apps/api`).
+- Implement backend under `reminder-app/apps/api`.
 
 ## Backend Implementation Pattern
-- Layering: `routes -> controllers -> services -> mock repository`.
-- Validate request DTOs at controller/service boundary.
-- Use service methods for business rules and deterministic error handling.
-- Use in-memory fixture repository for reads/writes during runtime only.
+- Layering: `routes -> controllers -> services -> repositories -> fixtures/types`.
+- Routes define endpoint registration.
+- Controllers map request/response and HTTP status handling.
+- Services contain scenario toggles (`error`, endpoint-specific `empty` where applicable), validations, and business logic.
+- Repositories provide deterministic fixture reads and optional in-memory runtime updates.
+
+## Implemented Prototype Endpoint Set
+- `GET /events`
+- `GET /events/:id`
+- `PUT /events/:id/reminder-plan`
+- `GET /dashboard/summary`
+- `GET /events/:id/notification-history`
 
 ## API Contract Discipline
 - Keep endpoint contracts documented in `docs/prototype/backend/mock-api-contracts.md`.
 - Keep per-endpoint docs updated under `docs/prototype/backend/endpoints/`.
-- Ensure examples and schemas match implemented behavior exactly.
+- Ensure examples/schemas match implementation exactly.
 
 ## Deterministic Fixture Rules
-- Use stable fixture IDs and timestamps.
-- No random value generation in responses.
-- If latency/error simulation exists, make it explicit and deterministic.
+- Use stable IDs/timestamps (e.g., `evt-001`).
+- No random value generation.
+- No database or external integration dependencies.
+- In-memory updates are allowed only for runtime mock behavior and are resettable in tests.
 
 ## Documentation Maintenance
 When backend prototype behavior changes:
+- Update `docs/prototype/README.md`.
 - Update `docs/prototype/architecture/mock-backend-architecture.md`.
 - Update `docs/prototype/backend/mock-api-contracts.md`.
-- Update impacted endpoint docs in `docs/prototype/backend/endpoints/`.
-- Update `docs/prototype/execution/prototype-roadmap.md` when sequencing changes.
+- Update impacted docs in `docs/prototype/backend/endpoints/`.
+- Update frontend mapping in `docs/prototype/frontend/mock-ui-implementation.md` when integration behavior changes.
 
 ## Output Expectation
 Return:
-1. Files changed
-2. API contracts updated
-3. Fixture and deterministic behavior notes
-4. Validation commands and results
+1. Files changed.
+2. APIs implemented/updated.
+3. Fixture and deterministic behavior notes.
+4. Validation commands and results.

@@ -1,20 +1,34 @@
 # GET /events/{id}
 
 ## Purpose
-Return deterministic details for one event, including reminder plan data.
+Return deterministic full details for a single event (S05 Event Detail).
 
-## Request Structure
+## Request schema
 - Method: `GET`
 - Path: `/events/{id}`
-- Path param:
-  - `id` (required)
+- Path params:
+  - `id` (required string): stable fixture ID such as `evt-001`.
 - Query:
-  - `scenario=error` (optional, forces 500)
+  - `scenario=error` (optional): force `500`.
 
-## Response Example
+## Response schema (`200`)
 ```json
 {
-  "id": "evt-1",
+  "id": "string",
+  "title": "string",
+  "date": "ISO-8601 string",
+  "location": "string?",
+  "status": "scheduled | needs-review | failed",
+  "duplicate": "boolean",
+  "syncStatus": "synced | pending | failed",
+  "reminderPlan": [{ "offset": "Nh | Nm" }]
+}
+```
+
+## Example payload
+```json
+{
+  "id": "evt-001",
   "title": "Dentist Appointment",
   "date": "2026-03-20T09:00:00Z",
   "location": "Smile Clinic",
@@ -25,11 +39,6 @@ Return deterministic details for one event, including reminder plan data.
 }
 ```
 
-## Mock Logic Description
-- Looks up fixture event by ID.
-- Returns immutable deterministic fields.
-- Returns reminder plan updates applied in-memory through reminder-plan save endpoint.
-
-## Error Scenarios
-- `404` event ID not found.
-- `500` forced mock failure mode via `?scenario=error`.
+## Error responses
+- `404` unknown event ID.
+- `500` with `?scenario=error`.
