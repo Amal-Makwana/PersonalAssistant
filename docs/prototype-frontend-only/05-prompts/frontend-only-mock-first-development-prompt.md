@@ -9,10 +9,11 @@ Rules:
 4. Keep UI contracts aligned with canonical screen inventory S01-S09.
 5. Update prototype README/docs when architecture or scope changes.
 6. Follow documentation-first workflow before code changes.
+7. Keep reminder planning/channel previews frontend-only and fixture-driven (no scheduling API calls).
 
 Current baseline to extend from:
 - S03 Dashboard -> S04 Events List -> S05 Event Detail
-- S05 supports mock reminder edit/save flow only
+- S05 supports mock reminder plan preview, reminder channel preview, and reminder edit/save flow
 
 When extending this prototype:
 - Preserve deterministic scenario toggles
