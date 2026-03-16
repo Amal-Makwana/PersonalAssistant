@@ -1,9 +1,9 @@
 import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import dashboardFixture from '../../../../api/fixtures/dashboard.fixture.json';
-import eventsFixture from '../../../../api/fixtures/events.fixture.json';
-import historyFixture from '../../../../api/fixtures/notification-history.fixture.json';
+import dashboardFixture from '../../../../api/fixtures/dashboard.fixture.js';
+import eventsFixture from '../../../../api/fixtures/events.fixture.js';
+import notificationHistoryFixture from '../../../../api/fixtures/notification-history.fixture.js';
 import { AppProvider } from '../../contexts/AppContext';
 import { DashboardScreen } from '../dashboard/DashboardScreen';
 import { EventDetailScreen } from './EventDetailScreen';
@@ -17,7 +17,7 @@ const jsonResponse = (body: unknown, status = 200) =>
     })
   );
 
-const mockBackendFetch = ({ forceError = false, notificationError = false }: { forceError?: boolean; notificationError?: boolean } = {}) => {
+const mockBackendFetch = ({ forceError = false, notificationError = false, emptyEvents = false }: { forceError?: boolean; notificationError?: boolean; emptyEvents?: boolean } = {}) => {
   const fetchMock = vi.fn((input: string | URL, init?: RequestInit) => {
     const url = typeof input === 'string' ? input : input.toString();
 
@@ -37,7 +37,7 @@ const mockBackendFetch = ({ forceError = false, notificationError = false }: { f
       }
 
       const eventId = /\/events\/([^/]+)/.exec(url)?.[1] ?? '';
-      const history = historyFixture.historyByEventId[eventId as keyof typeof historyFixture.historyByEventId];
+      const history = notificationHistoryFixture.historyByEventId[eventId as keyof typeof notificationHistoryFixture.historyByEventId];
       if (!history) {
         return jsonResponse({ error: 'Not Found', message: 'Event not found.' }, 404);
       }
@@ -50,7 +50,7 @@ const mockBackendFetch = ({ forceError = false, notificationError = false }: { f
       }
 
       const payload = JSON.parse(String(init.body)) as { reminderPlan: Array<{ offset: string }>; channels: Record<string, boolean> };
-      const valid = payload.reminderPlan.length > 0 && payload.reminderPlan.every((item) => /^\d+h$|^\d+m$/.test(item.offset));
+      const valid = payload.reminderPlan.length > 0 && payload.reminderPlan.every((item: { offset: string }) => /^\d+h$|^\d+m$/.test(item.offset));
       if (!valid) {
         return jsonResponse(
           { error: 'Bad Request', message: 'Validation failed: reminderPlan requires offsets in Nh or Nm format.' },
@@ -89,6 +89,9 @@ const mockBackendFetch = ({ forceError = false, notificationError = false }: { f
       if (url.includes('scenario=error') || forceError) {
         return jsonResponse({ error: 'Internal Server Error', message: 'Mock error scenario triggered.' }, 500);
       }
+      if (emptyEvents) {
+        return jsonResponse({ events: [] });
+      }
       return jsonResponse(eventsFixture);
     }
 
@@ -125,29 +128,30 @@ describe('Frontend ↔ Mock API integration', () => {
 
     expect(await screen.findByText('Upcoming')).toBeInTheDocument();
     expect(screen.getByText(String(dashboardFixture.summary.upcomingCount))).toBeInTheDocument();
-expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining('/dashboard/summary?'));
+expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining('/dashboard/summary'), undefined);
   });
 
   it('Dashboard renders error state when API fails', async () => {
-    mockBackendFetch();
-    renderWithRoute({ scenario: 'error', route: '/dashboard' });
+    mockBackendFetch({ forceError: true });
+    renderWithRoute({ scenario: 'success', route: '/dashboard' });
 
     expect(await screen.findByText('Mock event service failed.')).toBeInTheDocument();
   });
 
-  it('Events list renders success and empty states from API-aware scenarios', async () => {
+  it('Events list renders success and empty states from API responses', async () => {
     mockBackendFetch();
     renderWithRoute({ scenario: 'success', route: '/events' });
     expect(await screen.findByText('Dentist Appointment')).toBeInTheDocument();
 
     cleanup();
-    renderWithRoute({ scenario: 'empty', route: '/events' });
+    mockBackendFetch({ emptyEvents: true });
+    renderWithRoute({ scenario: 'success', route: '/events' });
     expect(await screen.findByText('No events available for current filters.')).toBeInTheDocument();
   });
 
   it('Events list renders error state when /events fails', async () => {
-    mockBackendFetch();
-    renderWithRoute({ scenario: 'error', route: '/events' });
+    mockBackendFetch({ forceError: true });
+    renderWithRoute({ scenario: 'success', route: '/events' });
 
     expect(await screen.findByText('Mock event service failed.')).toBeInTheDocument();
   });
@@ -163,7 +167,8 @@ expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining('/dashboard/summa
     expect(await screen.findByText('Mock event not found.')).toBeInTheDocument();
 
     cleanup();
-    renderWithRoute({ scenario: 'error', route: '/events/evt-001' });
+    mockBackendFetch({ forceError: true });
+    renderWithRoute({ scenario: 'success', route: '/events/evt-001' });
     expect(await screen.findByText('Unable to load event details in mock service.')).toBeInTheDocument();
   });
 
@@ -179,8 +184,8 @@ expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining('/dashboard/summa
   });
 
   it('Reminder save flow handles server failures', async () => {
-    mockBackendFetch();
-    renderWithRoute({ scenario: 'error', route: '/events/evt-001' });
+    mockBackendFetch({ forceError: true });
+    renderWithRoute({ scenario: 'success', route: '/events/evt-001' });
     expect(await screen.findByText('Unable to load event details in mock service.')).toBeInTheDocument();
   });
 
@@ -203,7 +208,7 @@ expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining('/dashboard/summa
 
     await screen.findByText('Dentist Appointment');
 
-    const eventsCall = fetchMock.mock.calls.find((call) => String(call[0]).includes('/events?'));
+    const eventsCall = fetchMock.mock.calls.find((call) => String(call[0]).includes('/events'));
     expect(eventsCall).toBeDefined();
     expect(eventsFixture.events[0]).toMatchObject({
       id: expect.any(String),

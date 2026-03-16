@@ -50,3 +50,14 @@ The prototype now includes integration coverage for:
 - S06/S07 Reminder save (`PUT /events/:id/reminder-plan`) success + server error, with validation behavior covered in existing detail-flow tests.
 - S08 Notification history (`GET /events/:id/notification-history`) success + error.
 - Contract-shape checks for backend fixture fields consumed by frontend mapping logic.
+
+## Frontend switched from local fixtures to backend API
+- Event-facing frontend flows now call backend endpoints directly through `API_BASE_URL` in `apps/web/src/config/api.ts`.
+- The event service no longer reads local event/dashboard/history fixtures for runtime data.
+- Endpoints used:
+  - `GET /dashboard/summary`
+  - `GET /events`
+  - `GET /events/:id`
+  - `PUT /events/:id/reminder-plan`
+  - `GET /events/:id/notification-history`
+- UI loading/error states are preserved while data is fetched from backend APIs.

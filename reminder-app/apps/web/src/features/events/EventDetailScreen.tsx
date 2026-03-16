@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAppContext } from '../../contexts/AppContext';
 import { MockEventService } from '../../services/mock/mockEventService';
 import type { EventItem, NotificationHistoryEntry, ReminderChannelConfig, SaveReminderResult } from '../../types/models';
 import { EditableReminderPlan } from './components/EditableReminderPlan';
@@ -12,7 +11,6 @@ import { calculateReminderPlanFromOffsets, validateReminderOffsetMinutes } from 
 
 export const EventDetailScreen = () => {
   const { eventId = 'unknown' } = useParams();
-  const { scenario } = useAppContext();
   const [event, setEvent] = useState<EventItem | null>(null);
   const [editableOffsets, setEditableOffsets] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
@@ -31,7 +29,7 @@ export const EventDetailScreen = () => {
   const [saveError, setSaveError] = useState<string | null>(null);
 
   useEffect(() => {
-    const service = new MockEventService(scenario);
+    const service = new MockEventService();
     setLoading(true);
     setError(null);
     setMessage('');
@@ -70,7 +68,7 @@ export const EventDetailScreen = () => {
       .then((entries) => setHistoryEntries(entries))
       .catch((err: Error) => setHistoryError(err.message))
       .finally(() => setHistoryLoading(false));
-  }, [eventId, scenario]);
+  }, [eventId]);
 
   const validationError = useMemo(() => {
     if (editableOffsets.length === 0) {
@@ -96,7 +94,7 @@ export const EventDetailScreen = () => {
       return;
     }
 
-    const service = new MockEventService(scenario);
+    const service = new MockEventService();
     setSaving(true);
     setError(null);
     setMessage('');
@@ -110,7 +108,7 @@ export const EventDetailScreen = () => {
         channels: channelConfig
       });
       setSaveResult(result);
-      setMessage(`Saved mock reminder settings at ${result.savedAt}`);
+      setMessage(`Saved reminder settings at ${result.savedAt}`);
       const updated = await service.getEventById(eventId);
       setEvent(updated);
     } catch (saveAttemptError) {
@@ -123,14 +121,14 @@ export const EventDetailScreen = () => {
   const cancel = () => {
     if (event) {
       setEditableOffsets([...event.reminderOffsetsMinutes]);
-      setMessage('Edits cancelled (frontend-only state reset).');
+      setMessage('Edits cancelled.');
       setSaveError(null);
       setSaveResult(null);
     }
   };
 
   const edit = () => {
-    setMessage('Edit mode active (mock frontend state).');
+    setMessage('Edit mode active.');
   };
 
   const retry = async () => {

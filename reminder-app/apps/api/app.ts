@@ -1,7 +1,7 @@
 import cors from 'cors';
 import express from 'express';
-import { dashboardRouter } from './routes/dashboard.routes';
-import { eventsRouter } from './routes/events.routes';
+import { dashboardRouter } from './routes/dashboard.routes.js';
+import { eventsRouter } from './routes/events.routes.js';
 
 export const app = express();
 

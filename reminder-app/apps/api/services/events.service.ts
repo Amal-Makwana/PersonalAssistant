@@ -1,11 +1,11 @@
-import { EventsRepository } from '../repositories/events.repository';
+import { EventsRepository } from '../repositories/events.repository.js';
 import type {
   EventRecord,
   EventsResponse,
   NotificationHistoryResponse,
   ReminderPlanUpdateRequest,
   ReminderPlanUpdateResponse
-} from '../types/event.types';
+} from '../types/event.types.js';
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 

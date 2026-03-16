@@ -1,17 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAppContext } from '../../contexts/AppContext';
 import { MockEventService } from '../../services/mock/mockEventService';
 import type { DashboardSummary } from '../../types/models';
 
 export const DashboardScreen = () => {
-  const { scenario } = useAppContext();
   const [loading, setLoading] = useState(true);
   const [summary, setSummary] = useState<DashboardSummary | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const service = new MockEventService(scenario);
+    const service = new MockEventService();
     setLoading(true);
     setError(null);
     service
@@ -19,7 +17,7 @@ export const DashboardScreen = () => {
       .then(setSummary)
       .catch((err: Error) => setError(err.message))
       .finally(() => setLoading(false));
-  }, [scenario]);
+  }, []);
 
   return (
     <section>
@@ -29,7 +27,7 @@ export const DashboardScreen = () => {
       {loading && <p className="state-banner border-brand-border-alt bg-sky-50 text-sky-700">Loading dashboard summary...</p>}
       {!loading && error && <p className="state-banner border-red-200 bg-red-50 text-red-700">{error}</p>}
       {!loading && !error && summary && summary.upcomingCount === 0 && (
-        <p className="state-banner border-brand-border-soft bg-slate-50 text-slate-600">No upcoming events in this mock scenario.</p>
+        <p className="state-banner border-brand-border-soft bg-slate-50 text-slate-600">No upcoming events returned from backend API.</p>
       )}
 
       {!loading && !error && summary && summary.upcomingCount > 0 && (

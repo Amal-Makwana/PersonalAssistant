@@ -1,5 +1,4 @@
 import { NavLink, Outlet } from 'react-router-dom';
-import { ScenarioToggle } from './ScenarioToggle';
 
 const routes = [
   ['/', 'S01 Login'],
@@ -18,9 +17,9 @@ export const Layout = () => {
     <div className="min-h-screen bg-brand-canvas">
       <header className="sticky top-0 z-10 border-b border-brand-border-soft bg-white/95 backdrop-blur">
         <div className="mx-auto flex w-full max-w-shell items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-          <h1 className="text-lg font-semibold tracking-tight text-brand-text">Frontend-Only Mock Prototype</h1>
+          <h1 className="text-lg font-semibold tracking-tight text-brand-text">Prototype Frontend</h1>
           <p className="hidden rounded-full border border-brand-border-alt bg-sky-50 px-3 py-1 text-xs font-medium text-sky-700 sm:block">
-            Local data + simulated async states
+            Connected to backend API
           </p>
         </div>
       </header>
@@ -44,14 +43,12 @@ export const Layout = () => {
               </NavLink>
             ))}
           </nav>
-          <ScenarioToggle />
         </aside>
         <main className="space-y-6">
           <section className="editorial-card">
-            <h2 className="section-title">Mock-first assistant experience</h2>
+            <h2 className="section-title">Backend-connected assistant experience</h2>
             <p className="section-description">
-              This phase intentionally runs without backend, database, APIs, or external integrations. Toggle deterministic
-              scenarios to validate loading, empty, permission, error, and success states.
+              This phase calls the backend API for dashboard, events, event detail, reminder save, and notification history flows while preserving frontend loading and error states.
             </p>
           </section>
           <section className="editorial-card">
