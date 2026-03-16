@@ -1,4 +1,4 @@
-import dashboardFixture from '../fixtures/dashboard.fixture.json';
+import dashboardFixture from '../fixtures/dashboard.fixture.js';
 import type { DashboardSummaryResponse } from '../types/event.types.js';
 
 export class DashboardRepository {

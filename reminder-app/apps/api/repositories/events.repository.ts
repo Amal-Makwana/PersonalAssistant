@@ -1,5 +1,5 @@
-import eventsFixture from '../fixtures/events.fixture.json';
-import historyFixture from '../fixtures/notification-history.fixture.json';
+import eventsFixture from '../fixtures/events.fixture.js';
+import notificationHistoryFixture from '../fixtures/notification-history.fixture.js';
 import type {
   EventRecord,
   EventsResponse,
@@ -66,7 +66,7 @@ export class EventsRepository {
       return null;
     }
 
-    const history = historyFixture.historyByEventId[eventId as keyof typeof historyFixture.historyByEventId] ?? [];
+    const history = notificationHistoryFixture.historyByEventId[eventId as keyof typeof notificationHistoryFixture.historyByEventId] ?? [];
     return {
       eventId,
       history: history.map((entry) => ({ ...entry, channels: [...entry.channels] }))
