@@ -11,3 +11,8 @@
 - Implement in this sequence to unblock core list -> detail -> edit flow first.
 - Maintain deterministic fixtures at each stage.
 - Keep all prototype work isolated from canonical product implementation scope.
+
+## Quality Plan Update
+- Integration testing is now an explicit prototype quality gate for frontend↔mock-backend behavior.
+- Contract-shape assertions must be updated when fixture schema or endpoint payloads change.
+- Keep all integration execution local-only and deterministic.

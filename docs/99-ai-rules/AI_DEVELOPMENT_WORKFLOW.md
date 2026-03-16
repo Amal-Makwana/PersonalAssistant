@@ -98,4 +98,5 @@ When work is explicitly marked as prototype system implementation:
 - No persistence layer is allowed.
 - No external integrations are allowed.
 - All prototype APIs must return deterministic fixture data.
+- Prototype API contract changes must update corresponding backend/frontend integration tests and `docs/prototype` documentation in the same change set.
 

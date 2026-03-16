@@ -75,10 +75,10 @@ describe('EventDetailScreen', () => {
   });
 
 
-  it('shows reminder preview error in error scenario', async () => {
+  it('shows event detail API error in error scenario', async () => {
     renderScreen('error');
 
-    expect(await screen.findByText('Unable to load reminder plan preview in mock service.')).toBeInTheDocument();
+    expect(await screen.findByText('Unable to load event details in mock service.')).toBeInTheDocument();
   });
   it('shows empty notification history and plan state in empty scenario', async () => {
     renderScreen('empty');

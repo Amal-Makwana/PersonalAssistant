@@ -35,3 +35,12 @@ Frontend services map to backend contracts in `reminder-app/apps/api`:
 - S03 -> S04 -> S05 -> S06 -> S07
 - S03 -> S08 (history branch)
 - S09 provides deterministic scenario toggles (latency/error mode) for prototype testing.
+
+## Frontend↔API Integration Test Coverage
+The prototype now includes integration coverage for:
+- S03 Dashboard (`GET /dashboard/summary`) success + error.
+- S04 Events List (`GET /events`) success + empty + error.
+- S05 Event Detail (`GET /events/:id`) success + 404 + error.
+- S06/S07 Reminder save (`PUT /events/:id/reminder-plan`) success + server error, with validation behavior covered in existing detail-flow tests.
+- S08 Notification history (`GET /events/:id/notification-history`) success + error.
+- Contract-shape checks for backend fixture fields consumed by frontend mapping logic.
