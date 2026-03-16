@@ -5,6 +5,7 @@ interface ReminderChannelsPreviewProps {
   channels: ReminderChannelConfig | null;
   error: string | null;
   loading: boolean;
+  onChange?: (channels: ReminderChannelConfig) => void;
 }
 
 const channelRows = [
@@ -13,7 +14,7 @@ const channelRows = [
   { key: 'sms', label: 'SMS' }
 ] as const;
 
-export const ReminderChannelsPreview = ({ channels, error, loading }: ReminderChannelsPreviewProps) => {
+export const ReminderChannelsPreview = ({ channels, error, loading, onChange }: ReminderChannelsPreviewProps) => {
   const [localChannels, setLocalChannels] = useState<ReminderChannelConfig | null>(channels);
 
   useEffect(() => {
@@ -41,14 +42,17 @@ export const ReminderChannelsPreview = ({ channels, error, loading }: ReminderCh
                   <input
                     checked={enabled}
                     onChange={() =>
-                      setLocalChannels((prev) =>
-                        prev
-                          ? {
-                              ...prev,
-                              [channel.key]: !prev[channel.key]
-                            }
-                          : prev
-                      )
+                      setLocalChannels((prev) => {
+                        if (!prev) {
+                          return prev;
+                        }
+                        const next = {
+                          ...prev,
+                          [channel.key]: !prev[channel.key]
+                        };
+                        onChange?.(next);
+                        return next;
+                      })
                     }
                     type="checkbox"
                   />{' '}

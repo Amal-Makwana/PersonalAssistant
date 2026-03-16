@@ -9,6 +9,7 @@ export const eventsFixture: EventItem[] = [
     status: 'scheduled',
     duplicate: false,
     syncStatus: 'synced',
+    reminderOffsetsMinutes: [24 * 60, 3 * 60, 60],
     reminderSettings: {
       primaryMinutesBefore: 60,
       secondaryMinutesBefore: 15,
@@ -22,6 +23,7 @@ export const eventsFixture: EventItem[] = [
     status: 'needs-review',
     duplicate: true,
     syncStatus: 'pending',
+    reminderOffsetsMinutes: [24 * 60, 30],
     reminderSettings: {
       primaryMinutesBefore: 120,
       secondaryMinutesBefore: 30,

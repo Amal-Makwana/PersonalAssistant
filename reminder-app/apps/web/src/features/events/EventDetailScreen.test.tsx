@@ -25,29 +25,45 @@ describe('EventDetailScreen', () => {
     resetMockEventStore();
   });
 
-  it('loads event details and reminder previews', async () => {
+  it('loads event details, editable plan, and notification history', async () => {
     renderScreen();
 
     expect(await screen.findByText('Dentist Appointment')).toBeInTheDocument();
     expect(await screen.findByText('Reminder Plan Preview')).toBeInTheDocument();
-    expect(await screen.findByText(/24 hours before/)).toBeInTheDocument();
+    expect(await screen.findByText('Editable Reminder Plan')).toBeInTheDocument();
     expect(await screen.findByText('Reminder Channels')).toBeInTheDocument();
-    expect(await screen.findByText('Push Notifications')).toBeInTheDocument();
+    expect(await screen.findByText('Notification History Preview')).toBeInTheDocument();
+    expect(await screen.findByText(/Scheduled/)).toBeInTheDocument();
   });
 
-  it('saves reminder settings in success scenario', async () => {
+  it('recalculates preview and saves reminder schedule in success scenario', async () => {
     const user = userEvent.setup();
     renderScreen();
 
-    const input = await screen.findByLabelText('Primary reminder (minutes before)');
-    await user.clear(input);
-    await user.type(input, '45');
+    await screen.findByText('Dentist Appointment');
+    await user.click(screen.getByRole('button', { name: '+ 30 minutes before' }));
+
+    expect((await screen.findAllByText(/30 minutes before/)).length).toBeGreaterThan(0);
+
     await user.click(screen.getByRole('button', { name: 'Save' }));
 
-    expect(await screen.findByText(/Saved mock reminder settings at/)).toBeInTheDocument();
+    expect(await screen.findByText('Reminder schedule saved.')).toBeInTheDocument();
+    expect(await screen.findByText(/4 reminders scheduled for this event./)).toBeInTheDocument();
   });
 
-  it('shows validation message in validation scenario', async () => {
+  it('shows validation message for invalid custom offset', async () => {
+    const user = userEvent.setup();
+    renderScreen('success');
+
+    await screen.findByText('Dentist Appointment');
+    await user.clear(screen.getByLabelText('Custom offset (minutes before)'));
+    await user.type(screen.getByLabelText('Custom offset (minutes before)'), '0');
+    await user.click(screen.getByRole('button', { name: 'Add' }));
+
+    expect(await screen.findByText('Reminder offsets must be whole numbers greater than 0.')).toBeInTheDocument();
+  });
+
+  it('shows validation save failure in validation scenario', async () => {
     const user = userEvent.setup();
     renderScreen('validation');
 
@@ -55,17 +71,18 @@ describe('EventDetailScreen', () => {
     await user.click(screen.getByRole('button', { name: 'Save' }));
 
     expect(await screen.findByText('Validation failed: choose reminder values greater than 0 minutes.')).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: 'Retry Save' })).toBeInTheDocument();
   });
 
-  it('shows empty reminder plan state in empty scenario', async () => {
-    renderScreen('empty');
-
-    expect(await screen.findByText('Reminder plan unavailable because event date/time is missing.')).toBeInTheDocument();
-  });
 
   it('shows reminder preview error in error scenario', async () => {
     renderScreen('error');
 
     expect(await screen.findByText('Unable to load event details in mock service.')).toBeInTheDocument();
+  });
+  it('shows empty notification history and plan state in empty scenario', async () => {
+    renderScreen('empty');
+
+    expect(await screen.findByText('No mock notification activity yet.')).toBeInTheDocument();
   });
 });
