@@ -4,7 +4,7 @@
 - Method: `GET`
 - URL: `/events`
 - Optional query params:
-  - `delay=true` (enables 300ms–800ms mock latency)
+  - `delay=true` (adds deterministic mock delay)
   - `scenario=error` (forces HTTP 500)
 
 ## Response
@@ -14,18 +14,21 @@
 {
   "events": [
     {
-      "id": "evt-001",
-      "title": "Parent Teacher Meeting",
-      "date": "2026-05-14T10:00:00Z",
-      "location": "School Hall",
-      "reminderPlan": [{ "offset": "24h" }, { "offset": "1h" }]
+      "id": "evt-1",
+      "title": "Dentist Appointment",
+      "date": "2026-03-20T09:00:00Z",
+      "location": "Smile Clinic",
+      "status": "scheduled",
+      "duplicate": false,
+      "syncStatus": "synced",
+      "reminderPlan": [{ "offset": "24h" }, { "offset": "3h" }, { "offset": "1h" }]
     }
   ]
 }
 ```
 
 ## Mock behaviour
-- Data source: `apps/api/fixtures/events.fixture.json`
+- Data source: `reminder-app/apps/api/fixtures/events.fixture.json`
 - Deterministic payload
 - No database
 - No external integrations

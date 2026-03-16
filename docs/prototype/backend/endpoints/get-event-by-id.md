@@ -8,31 +8,28 @@ Return deterministic details for one event, including reminder plan data.
 - Path: `/events/{id}`
 - Path param:
   - `id` (required)
+- Query:
+  - `scenario=error` (optional, forces 500)
 
 ## Response Example
 ```json
 {
-  "id": "evt_1001",
-  "title": "Quarterly Finance Review",
-  "description": "Review quarterly targets and risk register.",
-  "status": "active",
-  "startAt": "2026-04-15T09:00:00Z",
-  "endAt": "2026-04-15T10:00:00Z",
-  "location": "HQ Room A",
-  "participants": ["alex@example.com", "kim@example.com"],
-  "reminderPlan": {
-    "enabled": true,
-    "offsetMinutes": [1440, 60, 15],
-    "channels": ["in_app", "email"]
-  }
+  "id": "evt-1",
+  "title": "Dentist Appointment",
+  "date": "2026-03-20T09:00:00Z",
+  "location": "Smile Clinic",
+  "status": "scheduled",
+  "duplicate": false,
+  "syncStatus": "synced",
+  "reminderPlan": [{ "offset": "24h" }, { "offset": "3h" }, { "offset": "1h" }]
 }
 ```
 
 ## Mock Logic Description
-- Looks up event fixture by ID.
-- Returns immutable deterministic event detail fields.
-- Returns runtime reminder plan state (in-memory fixture update aware).
+- Looks up fixture event by ID.
+- Returns immutable deterministic fields.
+- Returns reminder plan updates applied in-memory through reminder-plan save endpoint.
 
 ## Error Scenarios
 - `404` event ID not found.
-- `500` forced mock failure mode.
+- `500` forced mock failure mode via `?scenario=error`.
