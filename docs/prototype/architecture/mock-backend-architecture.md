@@ -41,3 +41,8 @@ The backend follows:
 - No DB.
 - No external services.
 - Mock responses only.
+
+## Integration Testing and Contract Consistency
+- Route integration tests validate deterministic responses and scenario paths (`success`, `error`, endpoint-specific `empty`).
+- Frontend integration tests assert UI behavior against backend payload shapes, reducing silent contract drift.
+- API contract changes must be reflected in both backend route tests and frontend integration tests in the same change.

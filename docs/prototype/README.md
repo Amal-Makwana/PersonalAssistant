@@ -27,6 +27,41 @@ Optional frontend API base URL override:
 VITE_API_BASE_URL=http://localhost:3000 npm run dev
 ```
 
+## Integration Test Runs (local-only)
+
+### Backend route integration tests
+```bash
+cd reminder-app/apps/api
+npm test
+```
+
+### Frontend↔API integration tests (plus existing frontend test suite)
+```bash
+cd reminder-app/apps/web
+npm test
+```
+
+### What integration coverage now exists
+- Backend route contract coverage for:
+  - `GET /events`
+  - `GET /events/:id`
+  - `PUT /events/:id/reminder-plan`
+  - `GET /dashboard/summary`
+  - `GET /events/:id/notification-history`
+- Frontend integration coverage for:
+  - Dashboard loading/error behavior from backend response shape
+  - Events list loading/empty/error behavior
+  - Event detail success/404/error behavior
+  - Reminder save success/error behavior
+  - Notification history success/error behavior
+  - Contract-shape assertions to catch payload mismatches
+
+### Intentionally not covered in prototype tests
+- No database integration tests.
+- No external service integration tests.
+- No cloud/deployment environment tests.
+- No heavy end-to-end browser automation.
+
 ## Endpoint Verification Examples
 - `GET http://localhost:3000/events`
 - `GET http://localhost:3000/events/evt-001`

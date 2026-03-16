@@ -166,6 +166,10 @@ export class MockEventService {
       return mapped;
     } catch {
       await wait(200);
+      if (this.scenario === 'error') {
+        throw new Error('Unable to load event details in mock service.');
+      }
+
       const event = eventsStore.find((item) => item.id === eventId);
       if (!event) {
         throw new Error('Mock event not found.');
@@ -212,7 +216,7 @@ export class MockEventService {
     try {
       const response = await fetch(`${API_BASE_URL}/events/${eventId}/notification-history?${query.toString()}`);
       if (!response.ok) {
-        throw new Error('Unable to load notification history in mock service.');
+        throw new Error('notification-history-api-failed');
       }
 
       const payload = (await response.json()) as NotificationHistoryApiResponse;
@@ -221,14 +225,17 @@ export class MockEventService {
       }
 
       return payload.history.map((entry) => ({ ...entry, channels: [...entry.channels] }));
-    } catch {
+    } catch (error) {
       await wait(175);
-      if (this.scenario === 'error') {
+
+      if (this.scenario === 'error' || (error as Error).message === 'notification-history-api-failed') {
         throw new Error('Unable to load notification history in mock service.');
       }
+
       if (this.scenario === 'empty') {
         return [];
       }
+
       return notificationHistoryFixture.map((entry) => ({ ...entry, channels: [...entry.channels] }));
     }
   }

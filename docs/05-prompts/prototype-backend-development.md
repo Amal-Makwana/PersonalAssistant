@@ -56,3 +56,9 @@ Return:
 2. APIs implemented/updated.
 3. Fixture and deterministic behavior notes.
 4. Validation commands and results.
+
+## Integration Test Preservation Rule
+When changing prototype API contracts or fixtures:
+- Update backend route integration tests under `reminder-app/apps/api/tests`.
+- Update frontend integration tests that consume those contracts under `reminder-app/apps/web/src/features`.
+- Do not merge contract changes that are not reflected in prototype docs and tests.
