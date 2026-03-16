@@ -11,6 +11,7 @@ import type {
   SaveReminderResult,
   Scenario
 } from '../../types/models';
+import { API_BASE_URL } from '../../config/api';
 import { wait } from './delay';
 
 interface ApiEvent {
@@ -32,8 +33,6 @@ interface NotificationHistoryApiResponse {
   eventId: string;
   history: NotificationHistoryEntry[];
 }
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3000';
 
 let eventsStore: EventItem[] = eventsFixture.map((event) => ({
   ...event,

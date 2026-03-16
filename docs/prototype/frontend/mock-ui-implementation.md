@@ -19,10 +19,15 @@
 - **Notification History (S08 content on detail flow)** → `GET /events/{id}/notification-history`
 
 ## Frontend Integration Notes
-- Frontend service endpoint base URL: `VITE_API_BASE_URL` (default `http://localhost:3000`).
 - Web app remains deploy-compatible on Vercel as a standalone project rooted at `reminder-app/apps/web`.
-- In deployed environments, set `VITE_API_BASE_URL` to the backend Vercel project URL (rooted at `reminder-app/apps/api`).
 - Deterministic fallback fixtures remain available for local frontend-only runs when backend is not running.
+
+## Frontend API Configuration
+- Frontend API requests use `API_BASE_URL` from `apps/web/src/config/api.ts`.
+- `API_BASE_URL` automatically switches by hostname:
+  - `window.location.hostname === "localhost"` → `http://localhost:3000`
+  - any other hostname → `https://<backend-vercel-url>` (placeholder deployed backend URL)
+- This keeps local development pointed to the local backend while allowing deployed frontend builds to call the deployed backend, without introducing environment variables.
 
 ## Mock Service Layer Mapping
 Frontend services map to backend contracts in `reminder-app/apps/api`:
