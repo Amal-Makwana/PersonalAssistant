@@ -1,9 +1,38 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { MockEventService, resetMockEventStore } from './mockEventService';
 
 describe('MockEventService', () => {
   beforeEach(() => {
     resetMockEventStore();
+
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async (input: string | URL | Request) => {
+        const url = typeof input === 'string' ? input : input instanceof URL ? input.toString() : input.url;
+
+        if (url.includes('scenario=error')) {
+          return {
+            ok: false,
+            json: async () => ({ error: 'Internal Server Error' })
+          } as Response;
+        }
+
+        return {
+          ok: true,
+          json: async () => ({
+            events: [
+              {
+                id: 'evt-001',
+                title: 'Parent Teacher Meeting',
+                date: '2026-05-14T10:00:00Z',
+                location: 'School Hall',
+                reminderPlan: [{ offset: '24h' }, { offset: '1h' }]
+              }
+            ]
+          })
+        } as Response;
+      })
+    );
   });
 
   it('returns summary in success scenario', async () => {
@@ -11,8 +40,8 @@ describe('MockEventService', () => {
 
     const summary = await service.getDashboardSummary();
 
-    expect(summary.upcomingCount).toBe(2);
-    expect(summary.nextEventId).toBe('evt-1');
+    expect(summary.upcomingCount).toBe(1);
+    expect(summary.nextEventId).toBe('evt-001');
   });
 
   it('throws permission error for detail in permission scenario', async () => {
@@ -24,13 +53,15 @@ describe('MockEventService', () => {
   it('saves reminder schedule in success scenario', async () => {
     const service = new MockEventService('success');
 
+    await service.listEvents();
+
     const result = await service.saveReminderSettings({
-      eventId: 'evt-1',
+      eventId: 'evt-001',
       reminderOffsetsMinutes: [180, 60, 30],
       channels: { push: true, email: true, sms: false }
     });
 
-    const event = await service.getEventById('evt-1');
+    const event = await service.getEventById('evt-001');
     expect(event.reminderOffsetsMinutes).toEqual([180, 60, 30]);
     expect(result.totalReminders).toBe(3);
     expect(result.enabledChannels).toEqual(['push', 'email']);

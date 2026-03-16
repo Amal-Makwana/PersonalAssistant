@@ -1,41 +1,36 @@
 # GET /events
 
-## Purpose
-Return a deterministic list of events for dashboard and event list screens.
-
-## Request Structure
+## Request
 - Method: `GET`
-- Path: `/events`
-- Query:
-  - `status` (optional)
-  - `cursor` (optional)
-  - `limit` (optional)
+- URL: `/events`
+- Optional query params:
+  - `delay=true` (enables 300ms–800ms mock latency)
+  - `scenario=error` (forces HTTP 500)
 
-## Response Example
+## Response
+- Status `200`
+
 ```json
 {
-  "items": [
+  "events": [
     {
-      "id": "evt_1001",
-      "title": "Quarterly Finance Review",
-      "status": "active",
-      "startAt": "2026-04-15T09:00:00Z",
-      "location": "HQ Room A"
+      "id": "evt-001",
+      "title": "Parent Teacher Meeting",
+      "date": "2026-05-14T10:00:00Z",
+      "location": "School Hall",
+      "reminderPlan": [{ "offset": "24h" }, { "offset": "1h" }]
     }
-  ],
-  "page": {
-    "nextCursor": "evt_1001",
-    "limit": 20,
-    "total": 1
-  }
+  ]
 }
 ```
 
-## Mock Logic Description
-- Reads event summaries from deterministic fixtures.
-- Applies deterministic filtering and pagination.
-- Returns stable ordering (for example by `startAt` then `id`).
+## Mock behaviour
+- Data source: `apps/api/fixtures/events.fixture.json`
+- Deterministic payload
+- No database
+- No external integrations
+- No persistence
 
-## Error Scenarios
-- `400` invalid query parameter values.
-- `500` forced mock failure mode.
+## Error simulation
+- `GET /events?scenario=error`
+- Response: status `500` + error payload

@@ -13,6 +13,18 @@ import type {
 import { calculateReminderPlanFromOffsets, validateReminderOffsetMinutes } from '../../features/events/utils/reminderPlanCalculator';
 import { wait } from './delay';
 
+interface ApiEvent {
+  id: string;
+  title: string;
+  date: string;
+  location?: string;
+  reminderPlan: Array<{ offset: string }>;
+}
+
+interface EventsApiResponse {
+  events: ApiEvent[];
+}
+
 let eventsStore: EventItem[] = eventsFixture.map((event) => ({
   ...event,
   reminderOffsetsMinutes: [...event.reminderOffsetsMinutes],
@@ -36,9 +48,11 @@ export class MockEventService {
   constructor(private readonly scenario: Scenario = 'success') {}
 
   async listEvents(): Promise<EventItem[]> {
-    await wait();
     if (this.scenario === 'error') {
-      throw new Error('Mock event service failed.');
+      const response = await fetch('http://localhost:3000/events?scenario=error');
+      if (!response.ok) {
+        throw new Error('Mock event service failed.');
+      }
     }
     if (this.scenario === 'permission') {
       throw new Error('Permission denied for events.');
@@ -46,6 +60,44 @@ export class MockEventService {
     if (this.scenario === 'empty') {
       return [];
     }
+
+    try {
+      const response = await fetch('http://localhost:3000/events?delay=true');
+      if (!response.ok) {
+        throw new Error('Failed to fetch events from mock backend API.');
+      }
+
+      const payload = (await response.json()) as EventsApiResponse;
+      const mappedEvents: EventItem[] = payload.events.map((event) => ({
+        id: event.id,
+        title: event.title,
+        time: event.date,
+        location: event.location,
+        status: 'scheduled',
+        duplicate: false,
+        syncStatus: 'synced',
+        reminderSettings: {
+          primaryMinutesBefore: 60,
+          secondaryMinutesBefore: 15,
+          timezone: 'UTC'
+        },
+        reminderOffsetsMinutes: event.reminderPlan.map((plan) => {
+          if (plan.offset.endsWith('h')) {
+            return Number(plan.offset.replace('h', '')) * 60;
+          }
+          return Number(plan.offset.replace('m', ''));
+        })
+      }));
+
+      eventsStore = mappedEvents.map((event) => ({
+        ...event,
+        reminderOffsetsMinutes: [...event.reminderOffsetsMinutes],
+        reminderSettings: { ...event.reminderSettings }
+      }));
+    } catch {
+      await wait();
+    }
+
     return eventsStore.map((event) => ({ ...event, reminderOffsetsMinutes: [...event.reminderOffsetsMinutes], reminderSettings: { ...event.reminderSettings } }));
   }
 
