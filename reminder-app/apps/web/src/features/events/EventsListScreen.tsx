@@ -1,13 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAppContext } from '../../contexts/AppContext';
 import { MockEventService } from '../../services/mock/mockEventService';
 import type { EventItem } from '../../types/models';
 
 type StatusFilter = 'all' | EventItem['status'];
 
 export const EventsListScreen = () => {
-  const { scenario } = useAppContext();
   const [loading, setLoading] = useState(true);
   const [events, setEvents] = useState<EventItem[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -15,7 +13,7 @@ export const EventsListScreen = () => {
   const [duplicatesOnly, setDuplicatesOnly] = useState(false);
 
   useEffect(() => {
-    const service = new MockEventService(scenario);
+    const service = new MockEventService();
     setLoading(true);
     setError(null);
     service
@@ -23,7 +21,7 @@ export const EventsListScreen = () => {
       .then(setEvents)
       .catch((err: Error) => setError(err.message))
       .finally(() => setLoading(false));
-  }, [scenario]);
+  }, []);
 
   const filteredEvents = useMemo(() => {
     return events.filter((event) => {
@@ -40,7 +38,7 @@ export const EventsListScreen = () => {
   return (
     <section>
       <h2 className="section-title">S04 Events List</h2>
-      <p className="section-description mb-5">State handling is deterministic and fully mocked locally.</p>
+      <p className="section-description mb-5">Data is loaded from backend API endpoints.</p>
 
       <div className="mb-4 grid gap-2 md:grid-cols-[220px_1fr]">
         <select
@@ -76,7 +74,7 @@ export const EventsListScreen = () => {
               <p className="font-medium text-brand-text">{event.title}</p>
               <p className="text-sm text-slate-600">Status: {event.status}</p>
               <p className="text-sm text-slate-600">Sync: {event.syncStatus}</p>
-              {event.duplicate && <p className="text-sm text-amber-700">Duplicate detected (mocked).</p>}
+              {event.duplicate && <p className="text-sm text-amber-700">Duplicate detected.</p>}
               <Link className="text-sm font-medium text-sky-700 transition-colors hover:text-brand-sky-600" to={`/events/${event.id}`}>
                 Open detail
               </Link>

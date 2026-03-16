@@ -1,5 +1,9 @@
-const DEPLOYED_BACKEND_URL = 'https://<backend-vercel-url>';
+const trimTrailingSlash = (url: string) => url.replace(/\/$/, '');
 
-const hostname = typeof window !== 'undefined' ? window.location.hostname : 'localhost';
+const configuredBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
-export const API_BASE_URL = hostname === 'localhost' ? 'http://localhost:3000' : DEPLOYED_BACKEND_URL;
+export const API_BASE_URL = configuredBaseUrl
+  ? trimTrailingSlash(configuredBaseUrl)
+  : window.location.hostname === 'localhost'
+    ? 'http://localhost:3000'
+    : '';
