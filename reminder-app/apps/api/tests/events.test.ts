@@ -4,7 +4,7 @@ import { resetEventsInMemoryState } from '../controllers/events.controller';
 import dashboardFixture from '../fixtures/dashboard.fixture.json';
 import eventsFixture from '../fixtures/events.fixture.json';
 import historyFixture from '../fixtures/notification-history.fixture.json';
-import { app } from '../server';
+import { app } from '../app';
 
 afterEach(() => {
   resetEventsInMemoryState();

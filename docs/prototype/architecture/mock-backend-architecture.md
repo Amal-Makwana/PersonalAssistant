@@ -3,6 +3,11 @@
 ## Backend Location
 The prototype mock backend lives in `reminder-app/apps/api`.
 
+## Vercel Project Boundary
+- Backend should be deployed as its own Vercel project with Root Directory `reminder-app/apps/api`.
+- The backend project uses `apps/api/vercel.json` and serverless entrypoint `apps/api/api/index.ts`.
+- This backend deployment is intentionally separate from the frontend Vercel project.
+
 ## Layered Structure
 The backend follows:
 - `routes`: endpoint declarations and URL registration.

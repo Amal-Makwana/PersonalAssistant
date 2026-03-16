@@ -61,8 +61,9 @@ npm run build
 ```
 
 ## Vercel deployment notes
-- Deploy root as `apps/web`
+- Frontend deploy is a dedicated Vercel project with root `apps/web`
 - Build command: `npm run build`
 - Output: `dist`
 - SPA fallback handled via `vercel.json` rewrite to `/index.html`
-- No secrets are required for this frontend-only prototype
+- Set `VITE_API_BASE_URL` to the separate backend Vercel project URL
+- Do not combine frontend and backend into one Vercel project
