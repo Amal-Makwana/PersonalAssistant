@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
-import { EventsService, NotFoundError, ValidationError } from '../services/events.service';
-import type { ReminderPlanUpdateRequest } from '../types/event.types';
+import { EventsService, NotFoundError, ValidationError } from '../services/events.service.js';
+import type { ReminderPlanUpdateRequest } from '../types/event.types.js';
 
 const eventsService = new EventsService();
 
