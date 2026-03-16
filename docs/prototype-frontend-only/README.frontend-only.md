@@ -6,14 +6,14 @@ This folder contains a **parallel documentation track** for the frontend-only mo
 Implemented slice:
 - **S03 Dashboard** -> summary/overview + CTA navigation
 - **S04 Events List** -> list rendering + filter handling + detail navigation
-- **S05 Event Detail** -> detail rendering + mock reminder edit/save flow
+- **S05 Event Detail** -> detail rendering + reminder plan preview + reminder channel preview + mock reminder edit/save flow
 
 This slice is the active implementation baseline for future frontend-only prototype work.
 
 ## Scope constraints (strict)
 - Frontend-only
 - Local-run only
-- Mock fixtures and mock service layer only
+- Mock fixtures, reminder preview calculators, and mock service layer only
 - No backend, DB, API, auth provider, or external integration calls
 
 ## Deferred areas (for later increments)

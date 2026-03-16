@@ -1,11 +1,15 @@
 import { eventsFixture } from '../../mocks/events.mock';
+import { reminderChannelsFixture, reminderPlanOffsetsFixture } from '../../mocks/reminders.mock';
 import type {
   DashboardSummary,
   EventItem,
+  ReminderChannelConfig,
+  ReminderPlanEntry,
   SaveReminderInput,
   SaveReminderResult,
   Scenario
 } from '../../types/models';
+import { calculateReminderPlan } from '../../features/events/utils/reminderPlanCalculator';
 import { wait } from './delay';
 
 let eventsStore: EventItem[] = eventsFixture.map((event) => ({
@@ -63,6 +67,33 @@ export class MockEventService {
     }
 
     return { ...event, reminderSettings: { ...event.reminderSettings } };
+  }
+
+  async getReminderPlanPreview(eventId: string): Promise<ReminderPlanEntry[]> {
+    await wait(200);
+    if (this.scenario === 'error') {
+      throw new Error('Unable to load reminder plan preview in mock service.');
+    }
+
+    const event = eventsStore.find((item) => item.id === eventId);
+    if (!event) {
+      throw new Error('Mock event not found.');
+    }
+
+    if (this.scenario === 'empty') {
+      return [];
+    }
+
+    return calculateReminderPlan(event.time, reminderPlanOffsetsFixture);
+  }
+
+  async getReminderChannelPreview(): Promise<ReminderChannelConfig> {
+    await wait(150);
+    if (this.scenario === 'error') {
+      throw new Error('Unable to load reminder channels in mock service.');
+    }
+
+    return { ...reminderChannelsFixture.default };
   }
 
   async saveReminderSettings(payload: SaveReminderInput): Promise<SaveReminderResult> {

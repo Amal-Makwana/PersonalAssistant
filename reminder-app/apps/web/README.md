@@ -4,7 +4,7 @@
 This prototype currently implements the first vertical slice:
 - **S03 Dashboard**
 - **S04 Events List**
-- **S05 Event Detail** with mock reminder edit/save flow
+- **S05 Event Detail** with mock reminder plan preview, reminder channels preview, and reminder edit/save flow
 
 ## Folder structure
 - `src/features/dashboard` — Dashboard screen + tests
@@ -25,6 +25,17 @@ Open `http://localhost:5173`.
 - All data comes from local fixtures (`src/mocks`).
 - `MockEventService` simulates async behavior, errors, permission, empty, and validation states.
 - Mock save/edit is in-memory only (no backend/database).
+
+
+## S05 Reminder previews (mock)
+- **Reminder Plan Preview** derives deterministic reminder timestamps from event date/time using local offset fixtures.
+- **Reminder Channels** shows local mock delivery channel status (push/email/sms) with frontend-only toggles.
+- All behavior is in-memory and scenario-driven (loading/success/empty/error).
+
+## Where mock logic lives
+- Reminder plan calculation: `src/features/events/utils/reminderPlanCalculator.ts`
+- Reminder fixtures: `src/mocks/reminders.mock.ts`
+- Preview data contracts + async simulation: `src/services/mock/mockEventService.ts`
 
 ## Scenario triggering
 Use the in-app **Mock Scenario** selector in the left panel:

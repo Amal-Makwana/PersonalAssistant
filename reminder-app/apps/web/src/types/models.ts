@@ -48,3 +48,21 @@ export interface SaveReminderResult {
   eventId: string;
   savedAt: string;
 }
+
+export interface ReminderPlanOffsetConfig {
+  id: string;
+  label: string;
+  minutesBefore: number;
+}
+
+export interface ReminderPlanEntry {
+  id: string;
+  label: string;
+  remindAt: string;
+}
+
+export interface ReminderChannelConfig {
+  push: boolean;
+  email: boolean;
+  sms: boolean;
+}
