@@ -4,7 +4,7 @@ import {
   getEventsController,
   getNotificationHistoryController,
   saveReminderPlanController
-} from '../controllers/events.controller';
+} from '../controllers/events.controller.js';
 
 export const eventsRouter = Router();
 

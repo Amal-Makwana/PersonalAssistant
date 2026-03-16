@@ -1,10 +1,10 @@
 import request from 'supertest';
 import { afterEach, describe, expect, it } from 'vitest';
-import { resetEventsInMemoryState } from '../controllers/events.controller';
-import dashboardFixture from '../fixtures/dashboard.fixture.json';
-import eventsFixture from '../fixtures/events.fixture.json';
-import historyFixture from '../fixtures/notification-history.fixture.json';
-import { app } from '../app';
+import { resetEventsInMemoryState } from '../controllers/events.controller.js';
+import dashboardFixture from '../fixtures/dashboard.fixture.js';
+import eventsFixture from '../fixtures/events.fixture.js';
+import notificationHistoryFixture from '../fixtures/notification-history.fixture.js';
+import { app } from '../app.js';
 
 afterEach(() => {
   resetEventsInMemoryState();
@@ -146,7 +146,7 @@ describe('Mock API route integration', () => {
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
         eventId: 'evt-001',
-        history: historyFixture.historyByEventId['evt-001']
+        history: notificationHistoryFixture.historyByEventId['evt-001']
       });
     });
 
