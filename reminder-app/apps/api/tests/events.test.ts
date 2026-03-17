@@ -1,9 +1,5 @@
 import request from 'supertest';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-<<<<<<< codex/sweep-legacy-ids-and-add-tests-bm2d5y
-=======
-import { resetEventsInMemoryState } from '../controllers/events.controller.js';
->>>>>>> main
 import { app } from '../app.js';
 import { resetEventsInMemoryState } from '../controllers/events.controller.js';
 import { query } from '../lib/db.js';
@@ -33,14 +29,6 @@ afterEach(async () => {
 });
 
 beforeEach(() => {
-<<<<<<< codex/sweep-legacy-ids-and-add-tests-bm2d5y
-=======
-  const userId = '11111111-1111-4111-8111-111111111111';
-  const eventOneId = '22222222-2222-4222-8222-222222222222';
-  const eventTwoId = '33333333-3333-4333-8333-333333333333';
-  const sourceMessageId = '44444444-4444-4444-8444-444444444444';
-
->>>>>>> main
   const events = new Map<string, {
     id: string;
     user_id: string;
@@ -198,19 +186,7 @@ beforeEach(() => {
       };
       events.set(id, created);
       return {
-<<<<<<< codex/sweep-legacy-ids-and-add-tests-bm2d5y
         rows: [{ id, title: created.title, description: created.description, event_date: created.event_date, created_at: created.created_at }]
-=======
-        rows: [
-          {
-            id,
-            title: created.title,
-            description: created.description,
-            event_date: created.event_date,
-            created_at: created.created_at
-          }
-        ]
->>>>>>> main
       } as never;
     }
 
@@ -278,11 +254,6 @@ beforeEach(() => {
 });
 
 describe('API route integration (canonical schema aligned)', () => {
-<<<<<<< codex/sweep-legacy-ids-and-add-tests-bm2d5y
-=======
-  const eventOneId = '22222222-2222-4222-8222-222222222222';
-
->>>>>>> main
   it('GET /events returns DB-backed list mapped to frontend contract', async () => {
     const response = await request(app).get('/events');
 
@@ -348,7 +319,6 @@ describe('API route integration (canonical schema aligned)', () => {
     });
   });
 
-<<<<<<< codex/sweep-legacy-ids-and-add-tests-bm2d5y
   it('GET /events/:id/notification-history validates invalid UUID format', async () => {
     const response = await request(app).get('/events/not-a-uuid/notification-history');
 
@@ -358,10 +328,6 @@ describe('API route integration (canonical schema aligned)', () => {
 
   it('GET /events/:id/notification-history returns derived history for a valid UUID', async () => {
     await request(app).put(`/events/${TEST_IDS.eventOne}/reminder-plan`).send({
-=======
-  it('GET /events/:id/notification-history derives history from reminders + delivery_attempts', async () => {
-    await request(app).put(`/events/${eventOneId}/reminder-plan`).send({
->>>>>>> main
       reminderPlan: [{ offset: '1h' }],
       channels: { push: true, email: false, sms: false }
     });
@@ -375,24 +341,15 @@ describe('API route integration (canonical schema aligned)', () => {
     expect(response.body.history[0]).toMatchObject({ status: 'Scheduled' });
   });
 
-<<<<<<< codex/sweep-legacy-ids-and-add-tests-bm2d5y
-  it('GET /dashboard/summary returns DB-backed UUID nextEventId', async () => {
-    const response = await request(app).get('/dashboard/summary');
-=======
   it('GET /dashboard/summary returns DB-backed UUID nextEventId and event detail resolves', async () => {
     const summaryResponse = await request(app).get('/dashboard/summary');
->>>>>>> main
 
     expect(summaryResponse.status).toBe(200);
     expect(summaryResponse.body).toEqual({
       upcomingCount: 2,
       needsReviewCount: 0,
       failedCount: 0,
-<<<<<<< codex/sweep-legacy-ids-and-add-tests-bm2d5y
       nextEventId: TEST_IDS.eventOne
-=======
-      nextEventId: eventOneId
->>>>>>> main
     });
     expect(summaryResponse.body.nextEventId).toMatch(
       /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i

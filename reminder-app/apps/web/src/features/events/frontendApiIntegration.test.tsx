@@ -62,11 +62,7 @@ const mockBackendFetch = ({ forceError = false, notificationError = false, empty
       const channels = (Object.keys(payload.channels) as Array<'push' | 'email' | 'sms'>).filter((key) => payload.channels[key]);
       return jsonResponse({
         success: true,
-<<<<<<< codex/sweep-legacy-ids-and-add-tests-bm2d5y
         eventId: CANONICAL_EVENT_UUIDS.primary,
-=======
-        eventId: '22222222-2222-4222-8222-222222222222',
->>>>>>> main
         message: 'Reminder plan saved',
         reminderCount: payload.reminderPlan.length,
         channels,
@@ -175,11 +171,7 @@ describe('Frontend ↔ Mock API integration', () => {
   it('Event detail renders success, not found, and server error states', async () => {
     mockBackendFetch();
 
-<<<<<<< codex/sweep-legacy-ids-and-add-tests-bm2d5y
     renderWithRoute({ scenario: 'success', route: `/events/${CANONICAL_EVENT_UUIDS.primary}` });
-=======
-    renderWithRoute({ scenario: 'success', route: '/events/22222222-2222-4222-8222-222222222222' });
->>>>>>> main
     expect(await screen.findByText('Dentist Appointment')).toBeInTheDocument();
 
     cleanup();
@@ -188,24 +180,15 @@ describe('Frontend ↔ Mock API integration', () => {
 
     cleanup();
     mockBackendFetch({ forceError: true });
-<<<<<<< codex/sweep-legacy-ids-and-add-tests-bm2d5y
     renderWithRoute({ scenario: 'success', route: `/events/${CANONICAL_EVENT_UUIDS.primary}` });
     expect(await screen.findByText('Mock error scenario triggered.')).toBeInTheDocument();
-=======
-    renderWithRoute({ scenario: 'success', route: '/events/22222222-2222-4222-8222-222222222222' });
-    expect(await screen.findByText('Unable to load event details in mock service.')).toBeInTheDocument();
->>>>>>> main
   });
 
   it('Reminder save flow handles success confirmation', async () => {
     const user = userEvent.setup();
     mockBackendFetch();
 
-<<<<<<< codex/sweep-legacy-ids-and-add-tests-bm2d5y
     renderWithRoute({ scenario: 'success', route: `/events/${CANONICAL_EVENT_UUIDS.primary}` });
-=======
-    renderWithRoute({ scenario: 'success', route: '/events/22222222-2222-4222-8222-222222222222' });
->>>>>>> main
     await screen.findByText('Dentist Appointment');
     await screen.findByText('Reminder Channels');
     await user.click(screen.getByRole('button', { name: 'Save' }));
@@ -214,35 +197,21 @@ describe('Frontend ↔ Mock API integration', () => {
 
   it('Reminder save flow handles server failures', async () => {
     mockBackendFetch({ forceError: true });
-<<<<<<< codex/sweep-legacy-ids-and-add-tests-bm2d5y
     renderWithRoute({ scenario: 'success', route: `/events/${CANONICAL_EVENT_UUIDS.primary}` });
     expect(await screen.findByText('Mock error scenario triggered.')).toBeInTheDocument();
-=======
-    renderWithRoute({ scenario: 'success', route: '/events/22222222-2222-4222-8222-222222222222' });
-    expect(await screen.findByText('Unable to load event details in mock service.')).toBeInTheDocument();
->>>>>>> main
   });
 
   it('Notification history renders success and API error states', async () => {
     mockBackendFetch();
 
-<<<<<<< codex/sweep-legacy-ids-and-add-tests-bm2d5y
     renderWithRoute({ scenario: 'success', route: `/events/${CANONICAL_EVENT_UUIDS.primary}` });
-=======
-    renderWithRoute({ scenario: 'success', route: '/events/22222222-2222-4222-8222-222222222222' });
->>>>>>> main
     expect(await screen.findByText('Notification History Preview')).toBeInTheDocument();
     expect(await screen.findByText(/Scheduled/)).toBeInTheDocument();
 
     cleanup();
     mockBackendFetch({ notificationError: true });
-<<<<<<< codex/sweep-legacy-ids-and-add-tests-bm2d5y
     renderWithRoute({ scenario: 'success', route: `/events/${CANONICAL_EVENT_UUIDS.primary}` });
     expect(await screen.findByText('Mock error scenario triggered.')).toBeInTheDocument();
-=======
-    renderWithRoute({ scenario: 'success', route: '/events/22222222-2222-4222-8222-222222222222' });
-    expect(await screen.findByText('Unable to load notification history in mock service.')).toBeInTheDocument();
->>>>>>> main
   });
 
   it('maintains frontend contract assumptions for backend payload shape', async () => {

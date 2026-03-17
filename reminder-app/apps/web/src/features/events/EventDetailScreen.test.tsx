@@ -19,11 +19,7 @@ const jsonResponse = (body: unknown, status = 200) =>
 
 const renderScreen = (
   scenario: 'success' | 'empty' | 'error' | 'permission' | 'validation' = 'success',
-<<<<<<< codex/sweep-legacy-ids-and-add-tests-bm2d5y
   eventId = CANONICAL_EVENT_UUIDS.primary
-=======
-  eventId = '22222222-2222-4222-8222-222222222222'
->>>>>>> main
 ) => {
   activeScenario = scenario;
 
