@@ -90,8 +90,8 @@ export class SystemRepository {
       `SELECT id::text,
               CONCAT('Message ', provider_message_id, ' classified as ', classification_status) AS message,
               CASE
-                WHEN classification_status = 'FAILED' THEN 'error'
-                WHEN classification_status IN ('REVIEW_REQUIRED', 'NEEDS_REVIEW') THEN 'warning'
+                WHEN classification_status::text = 'FAILED' THEN 'error'
+                WHEN classification_status::text IN ('REVIEW_REQUIRED', 'NEEDS_REVIEW') THEN 'warning'
                 ELSE 'info'
               END::text AS level,
               created_at
