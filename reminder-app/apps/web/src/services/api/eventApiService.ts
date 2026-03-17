@@ -8,7 +8,7 @@ import type {
   SaveReminderInput,
   SaveReminderResult
 } from '../../types/models';
-import { API_BASE_URL } from '../../config/api';
+import { fetchJson } from './apiClient';
 
 interface ApiEvent {
   id: string;
@@ -29,16 +29,6 @@ interface NotificationHistoryApiResponse {
   eventId: string;
   history: NotificationHistoryEntry[];
 }
-
-interface ApiErrorResponse {
-  message?: string;
-}
-
-const defaultReminderChannels: ReminderChannelConfig = {
-  push: true,
-  email: true,
-  sms: false
-};
 
 const mapOffsetToMinutes = (offset: string) => {
   if (offset.endsWith('h')) {
@@ -64,18 +54,6 @@ const mapEvent = (event: ApiEvent): EventItem => ({
   reminderOffsetsMinutes: event.reminderPlan.map((plan) => mapOffsetToMinutes(plan.offset))
 });
 
-const buildUrl = (path: string) => `${API_BASE_URL}${path}`;
-
-const fetchJson = async <T>(path: string, init?: RequestInit): Promise<T> => {
-  const response = await fetch(buildUrl(path), init);
-  if (!response.ok) {
-    const maybeError = (await response.json().catch(() => ({}))) as ApiErrorResponse;
-    throw new Error(maybeError.message ?? `Request failed: ${response.status}`);
-  }
-
-  return (await response.json()) as T;
-};
-
 export class EventApiService {
   async listEvents(): Promise<EventItem[]> {
     const payload = await fetchJson<EventsApiResponse>('/events');
@@ -96,8 +74,8 @@ export class EventApiService {
     return calculateReminderPlanFromOffsets(event.time, event.reminderOffsetsMinutes);
   }
 
-  async getReminderChannelPreview(): Promise<ReminderChannelConfig> {
-    return { ...defaultReminderChannels };
+  async getReminderChannelPreview(eventId: string): Promise<ReminderChannelConfig> {
+    return await fetchJson<ReminderChannelConfig>(`/events/${eventId}/reminder-channels`);
   }
 
   async getNotificationHistoryPreview(eventId: string): Promise<NotificationHistoryEntry[]> {
@@ -123,6 +101,6 @@ export class EventApiService {
   }
 
   async retrySync(eventId: string): Promise<{ eventId: string; status: string }> {
-    return { eventId, status: 'synced' };
+    return await fetchJson<{ eventId: string; status: string }>(`/events/${eventId}/retry-sync`, { method: 'POST' });
   }
 }

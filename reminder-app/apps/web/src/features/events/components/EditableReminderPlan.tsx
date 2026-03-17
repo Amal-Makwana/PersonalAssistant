@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react';
-import { reminderOffsetPresetsFixture } from '../../../mocks/reminders.mock';
 import { formatOffsetLabel, validateReminderOffsetMinutes } from '../utils/reminderPlanCalculator';
 
 interface EditableReminderPlanProps {
@@ -8,12 +7,19 @@ interface EditableReminderPlanProps {
   onChange: (offsetsMinutes: number[]) => void;
 }
 
+const reminderOffsetPresets = [
+  { id: 'offset-24h', label: '24 hours before', minutesBefore: 24 * 60 },
+  { id: 'offset-3h', label: '3 hours before', minutesBefore: 3 * 60 },
+  { id: 'offset-1h', label: '1 hour before', minutesBefore: 60 },
+  { id: 'offset-30m', label: '30 minutes before', minutesBefore: 30 }
+];
+
 export const EditableReminderPlan = ({ eventTime, offsetsMinutes, onChange }: EditableReminderPlanProps) => {
   const [customOffset, setCustomOffset] = useState('');
   const [validationMessage, setValidationMessage] = useState<string | null>(null);
 
   const availablePresets = useMemo(
-    () => reminderOffsetPresetsFixture.filter((preset) => !offsetsMinutes.includes(preset.minutesBefore)),
+    () => reminderOffsetPresets.filter((preset) => !offsetsMinutes.includes(preset.minutesBefore)),
     [offsetsMinutes]
   );
 
@@ -50,12 +56,7 @@ export const EditableReminderPlan = ({ eventTime, offsetsMinutes, onChange }: Ed
 
       <div className="flex flex-wrap gap-2">
         {availablePresets.map((preset) => (
-          <button
-            className="button-primary"
-            key={preset.id}
-            onClick={() => addOffset(preset.minutesBefore)}
-            type="button"
-          >
+          <button className="button-primary" key={preset.id} onClick={() => addOffset(preset.minutesBefore)} type="button">
             + {preset.label}
           </button>
         ))}
@@ -64,13 +65,7 @@ export const EditableReminderPlan = ({ eventTime, offsetsMinutes, onChange }: Ed
       <label className="text-sm text-slate-700">
         Custom offset (minutes before)
         <div className="mt-1 flex gap-2">
-          <input
-            className="input-soft"
-            min={1}
-            onChange={(event) => setCustomOffset(event.target.value)}
-            type="number"
-            value={customOffset}
-          />
+          <input className="input-soft" min={1} onChange={(event) => setCustomOffset(event.target.value)} type="number" value={customOffset} />
           <button
             className="button-primary"
             onClick={() => {

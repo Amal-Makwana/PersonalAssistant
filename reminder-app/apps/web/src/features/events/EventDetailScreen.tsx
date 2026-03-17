@@ -58,7 +58,7 @@ export const EventDetailScreen = () => {
       .finally(() => setPlanLoading(false));
 
     service
-      .getReminderChannelPreview()
+      .getReminderChannelPreview(eventId)
       .then((config) => setChannelConfig(config))
       .catch((err: Error) => setChannelError(err.message))
       .finally(() => setChannelLoading(false));
@@ -150,7 +150,7 @@ export const EventDetailScreen = () => {
             <p className="font-medium text-brand-text">{event.title}</p>
             <p className="text-sm text-slate-600">Date: {new Date(event.time).toLocaleString()}</p>
             <p className="text-sm text-slate-600">Location: {event.location ?? 'Not provided'}</p>
-            <p className="text-sm text-slate-600">Notes: Mock notes unavailable for this event.</p>
+            <p className="text-sm text-slate-600">Notes unavailable for this event.</p>
           </div>
 
           <ReminderPlanPreview entries={planEntries} error={planError} loading={planLoading} />
