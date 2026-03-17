@@ -179,3 +179,18 @@ Return notification activity history for Event Detail (S08 content on S05 flow) 
   ]
 }
 ```
+
+
+---
+
+## Additional Prototype System Endpoints
+
+The following endpoint contracts are documented in dedicated files:
+- `endpoints/get-reminder-channels.md`
+- `endpoints/get-system-diagnostics-activity.md`
+- `endpoints/get-system-integrations-status.md`
+- `endpoints/get-system-profile.md`
+- `endpoints/post-retry-sync.md`
+- `endpoints/put-system-profile.md`
+
+These endpoints support incremental slices for integrations, diagnostics, and system-profile management while preserving canonical documentation location under `docs/02-design/prototype-backend`.
