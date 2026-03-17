@@ -5,6 +5,7 @@ import dashboardFixture from '../../../../api/fixtures/dashboard.fixture.js';
 import eventsFixture from '../../../../api/fixtures/events.fixture.js';
 import notificationHistoryFixture from '../../../../api/fixtures/notification-history.fixture.js';
 import { AppProvider } from '../../contexts/AppContext';
+import { CANONICAL_EVENT_UUIDS } from '../../test/canonicalEventIds';
 import { DashboardScreen } from '../dashboard/DashboardScreen';
 import { EventDetailScreen } from './EventDetailScreen';
 import { EventsListScreen } from './EventsListScreen';
@@ -61,7 +62,7 @@ const mockBackendFetch = ({ forceError = false, notificationError = false, empty
       const channels = (Object.keys(payload.channels) as Array<'push' | 'email' | 'sms'>).filter((key) => payload.channels[key]);
       return jsonResponse({
         success: true,
-        eventId: 'evt-001',
+        eventId: CANONICAL_EVENT_UUIDS.primary,
         message: 'Reminder plan saved',
         reminderCount: payload.reminderPlan.length,
         channels,
@@ -128,14 +129,25 @@ describe('Frontend ↔ Mock API integration', () => {
 
     expect(await screen.findByText('Upcoming')).toBeInTheDocument();
     expect(screen.getByText(String(dashboardFixture.summary.upcomingCount))).toBeInTheDocument();
-expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining('/dashboard/summary'), undefined);
+    expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining('/dashboard/summary'), undefined);
+  });
+
+  it('Dashboard CTA uses nextEventId, navigates to detail, and avoids UUID validation errors', async () => {
+    const user = userEvent.setup();
+    mockBackendFetch();
+    renderWithRoute({ scenario: 'success', route: '/dashboard' });
+
+    await user.click(await screen.findByRole('link', { name: 'Open Next Event Detail' }));
+
+    expect(await screen.findByText('Dentist Appointment')).toBeInTheDocument();
+    expect(screen.queryByText('Validation failed: event ID must be a UUID.')).not.toBeInTheDocument();
   });
 
   it('Dashboard renders error state when API fails', async () => {
     mockBackendFetch({ forceError: true });
     renderWithRoute({ scenario: 'success', route: '/dashboard' });
 
-    expect(await screen.findByText('Mock event service failed.')).toBeInTheDocument();
+    expect(await screen.findByText('Mock error scenario triggered.')).toBeInTheDocument();
   });
 
   it('Events list renders success and empty states from API responses', async () => {
@@ -153,30 +165,30 @@ expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining('/dashboard/summa
     mockBackendFetch({ forceError: true });
     renderWithRoute({ scenario: 'success', route: '/events' });
 
-    expect(await screen.findByText('Mock event service failed.')).toBeInTheDocument();
+    expect(await screen.findByText('Mock error scenario triggered.')).toBeInTheDocument();
   });
 
   it('Event detail renders success, not found, and server error states', async () => {
     mockBackendFetch();
 
-    renderWithRoute({ scenario: 'success', route: '/events/evt-001' });
+    renderWithRoute({ scenario: 'success', route: `/events/${CANONICAL_EVENT_UUIDS.primary}` });
     expect(await screen.findByText('Dentist Appointment')).toBeInTheDocument();
 
     cleanup();
     renderWithRoute({ scenario: 'success', route: '/events/missing-id' });
-    expect(await screen.findByText('Mock event not found.')).toBeInTheDocument();
+    expect(await screen.findByText('Event not found.')).toBeInTheDocument();
 
     cleanup();
     mockBackendFetch({ forceError: true });
-    renderWithRoute({ scenario: 'success', route: '/events/evt-001' });
-    expect(await screen.findByText('Unable to load event details in mock service.')).toBeInTheDocument();
+    renderWithRoute({ scenario: 'success', route: `/events/${CANONICAL_EVENT_UUIDS.primary}` });
+    expect(await screen.findByText('Mock error scenario triggered.')).toBeInTheDocument();
   });
 
   it('Reminder save flow handles success confirmation', async () => {
     const user = userEvent.setup();
     mockBackendFetch();
 
-    renderWithRoute({ scenario: 'success', route: '/events/evt-001' });
+    renderWithRoute({ scenario: 'success', route: `/events/${CANONICAL_EVENT_UUIDS.primary}` });
     await screen.findByText('Dentist Appointment');
     await screen.findByText('Reminder Channels');
     await user.click(screen.getByRole('button', { name: 'Save' }));
@@ -185,21 +197,21 @@ expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining('/dashboard/summa
 
   it('Reminder save flow handles server failures', async () => {
     mockBackendFetch({ forceError: true });
-    renderWithRoute({ scenario: 'success', route: '/events/evt-001' });
-    expect(await screen.findByText('Unable to load event details in mock service.')).toBeInTheDocument();
+    renderWithRoute({ scenario: 'success', route: `/events/${CANONICAL_EVENT_UUIDS.primary}` });
+    expect(await screen.findByText('Mock error scenario triggered.')).toBeInTheDocument();
   });
 
   it('Notification history renders success and API error states', async () => {
     mockBackendFetch();
 
-    renderWithRoute({ scenario: 'success', route: '/events/evt-001' });
+    renderWithRoute({ scenario: 'success', route: `/events/${CANONICAL_EVENT_UUIDS.primary}` });
     expect(await screen.findByText('Notification History Preview')).toBeInTheDocument();
     expect(await screen.findByText(/Scheduled/)).toBeInTheDocument();
 
     cleanup();
     mockBackendFetch({ notificationError: true });
-    renderWithRoute({ scenario: 'success', route: '/events/evt-001' });
-    expect(await screen.findByText('Unable to load notification history in mock service.')).toBeInTheDocument();
+    renderWithRoute({ scenario: 'success', route: `/events/${CANONICAL_EVENT_UUIDS.primary}` });
+    expect(await screen.findByText('Mock error scenario triggered.')).toBeInTheDocument();
   });
 
   it('maintains frontend contract assumptions for backend payload shape', async () => {
