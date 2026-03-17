@@ -1,14 +1,32 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { AppProvider } from '../../contexts/AppContext';
+import { CANONICAL_EVENT_UUIDS } from '../../test/canonicalEventIds';
 import { resetMockEventStore } from '../../services/mock/mockEventService';
 import { EventDetailScreen } from './EventDetailScreen';
 
+let activeScenario: 'success' | 'empty' | 'error' | 'permission' | 'validation' = 'success';
+
+const jsonResponse = (body: unknown, status = 200) =>
+  Promise.resolve(
+    new Response(JSON.stringify(body), {
+      status,
+      headers: { 'Content-Type': 'application/json' }
+    })
+  );
+
 const renderScreen = (
   scenario: 'success' | 'empty' | 'error' | 'permission' | 'validation' = 'success',
+<<<<<<< codex/sweep-legacy-ids-and-add-tests-bm2d5y
+  eventId = CANONICAL_EVENT_UUIDS.primary
+=======
   eventId = '22222222-2222-4222-8222-222222222222'
+>>>>>>> main
 ) => {
+  activeScenario = scenario;
+
   render(
     <AppProvider initialScenario={scenario}>
       <MemoryRouter initialEntries={[`/events/${eventId}`]}>
@@ -23,6 +41,64 @@ const renderScreen = (
 describe('EventDetailScreen', () => {
   beforeEach(() => {
     resetMockEventStore();
+    vi.stubGlobal(
+      'fetch',
+      vi.fn((input: string | URL, init?: RequestInit) => {
+        const url = typeof input === 'string' ? input : input.toString();
+
+        if (url.includes('/notification-history')) {
+          if (activeScenario === 'error') {
+            return jsonResponse({ message: 'Unable to load notification history in mock service.' }, 500);
+          }
+
+          if (activeScenario === 'empty') {
+            return jsonResponse({ eventId: CANONICAL_EVENT_UUIDS.primary, history: [] });
+          }
+
+          return jsonResponse({
+            eventId: CANONICAL_EVENT_UUIDS.primary,
+            history: [{ id: 'n-1', status: 'Scheduled', remindAt: '2026-03-19T09:00:00Z', channels: ['push'], direction: 'upcoming' }]
+          });
+        }
+
+        if (url.includes('/reminder-plan') && init?.method === 'PUT') {
+          if (activeScenario === 'validation') {
+            return jsonResponse({ message: 'Validation failed: choose reminder values greater than 0 minutes.' }, 400);
+          }
+
+          return jsonResponse({
+            eventId: CANONICAL_EVENT_UUIDS.primary,
+            savedAt: '2026-03-15T10:00:00.000Z',
+            totalReminders: 4,
+            enabledChannels: ['push', 'email']
+          });
+        }
+
+        if (url.includes('/events/')) {
+          if (activeScenario === 'error') {
+            return jsonResponse({ message: 'Unable to load event details in mock service.' }, 500);
+          }
+
+          return jsonResponse({
+            id: CANONICAL_EVENT_UUIDS.primary,
+            title: 'Dentist Appointment',
+            date: '2026-03-20T09:00:00Z',
+            location: 'Smile Clinic',
+            status: 'scheduled',
+            duplicate: false,
+            syncStatus: 'synced',
+            reminderPlan: [{ offset: '24h' }, { offset: '3h' }, { offset: '1h' }]
+          });
+        }
+
+        return jsonResponse({});
+      })
+    );
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.restoreAllMocks();
   });
 
   it('loads event details, editable plan, and notification history', async () => {
@@ -74,12 +150,12 @@ describe('EventDetailScreen', () => {
     expect(await screen.findByRole('button', { name: 'Retry Save' })).toBeInTheDocument();
   });
 
-
   it('shows event detail API error in error scenario', async () => {
     renderScreen('error');
 
     expect(await screen.findByText('Unable to load event details in mock service.')).toBeInTheDocument();
   });
+
   it('shows empty notification history and plan state in empty scenario', async () => {
     renderScreen('empty');
 
