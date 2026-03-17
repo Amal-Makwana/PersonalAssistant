@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Pool } from 'pg';
-import type { QueryResultRow } from 'pg';
+import type { PoolClient, QueryResultRow } from 'pg';
 
 const parseEnvFile = (filePath: string) => {
   const content = readFileSync(filePath, 'utf-8');
@@ -57,3 +57,12 @@ const pool = new Pool({ connectionString });
 export const query = <T extends QueryResultRow>(text: string, params?: unknown[]) => pool.query<T>(text, params);
 
 export const closeDbPool = async () => pool.end();
+
+export const withDbClient = async <T>(handler: (client: PoolClient) => Promise<T>) => {
+  const client = await pool.connect();
+  try {
+    return await handler(client);
+  } finally {
+    client.release();
+  }
+};

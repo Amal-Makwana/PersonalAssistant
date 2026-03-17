@@ -40,6 +40,11 @@ export const getEventByIdController = async (req: Request, res: Response) => {
     const data = await eventsService.getEventById(getEventId(req));
     res.status(200).json(data);
   } catch (error) {
+    if (error instanceof ValidationError) {
+      res.status(400).json({ error: 'Bad Request', message: error.message });
+      return;
+    }
+
     if (error instanceof NotFoundError) {
       res.status(404).json({ error: 'Not Found', message: error.message });
       return;
@@ -74,6 +79,11 @@ export const getNotificationHistoryController = async (req: Request, res: Respon
     const data = await eventsService.getNotificationHistory(getEventId(req));
     res.status(200).json(data);
   } catch (error) {
+    if (error instanceof ValidationError) {
+      res.status(400).json({ error: 'Bad Request', message: error.message });
+      return;
+    }
+
     if (error instanceof NotFoundError) {
       res.status(404).json({ error: 'Not Found', message: error.message });
       return;

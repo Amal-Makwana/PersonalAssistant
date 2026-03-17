@@ -37,7 +37,7 @@ Build backend endpoints that support prototype UI behavior with deterministic fi
 - Ensure examples/schemas match implementation exactly.
 
 ## Deterministic Fixture Rules
-- Use stable IDs/timestamps (e.g., `evt-001`).
+- Use UUID-shaped IDs/timestamps aligned to canonical schema examples.
 - No random value generation.
 - No database or external integration dependencies.
 - In-memory updates are allowed only for runtime mock behavior and are resettable in tests.

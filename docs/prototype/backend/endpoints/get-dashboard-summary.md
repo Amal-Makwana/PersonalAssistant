@@ -8,7 +8,7 @@ Return deterministic summary data for S03 Dashboard.
 - Path: `/dashboard/summary`
 - Query:
   - `scenario=empty` (optional): returns zero counts.
-  - `scenario=error` (optional): forces `500`.
+  - `runtime-errors-only` (optional): forces `500`.
 
 ## Response schema (`200`)
 ```json
@@ -26,9 +26,9 @@ Return deterministic summary data for S03 Dashboard.
   "upcomingCount": 2,
   "needsReviewCount": 1,
   "failedCount": 0,
-  "nextEventId": "evt-001"
+  "nextEventId": "22222222-2222-4222-8222-222222222222"
 }
 ```
 
 ## Error responses
-- `500` with `?scenario=error`.
+- `500` with `?runtime-errors-only`.

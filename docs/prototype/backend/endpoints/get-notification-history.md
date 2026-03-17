@@ -9,7 +9,7 @@ Return deterministic notification history for Event Detail.
 - Path params:
   - `id` (required string)
 - Query:
-  - `scenario=error` (optional): forces `500`.
+  - `runtime-errors-only` (optional): forces `500`.
 
 ## Response schema (`200`)
 ```json
@@ -30,7 +30,7 @@ Return deterministic notification history for Event Detail.
 ## Example payload
 ```json
 {
-  "eventId": "evt-001",
+  "eventId": "22222222-2222-4222-8222-222222222222",
   "history": [
     {
       "id": "n-1",
@@ -52,4 +52,4 @@ Return deterministic notification history for Event Detail.
 
 ## Error responses
 - `404` unknown event ID.
-- `500` with `?scenario=error`.
+- `500` with `?runtime-errors-only`.

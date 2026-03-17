@@ -8,7 +8,7 @@ Return deterministic event list payload for Events List.
 - Path: `/events`
 - Query:
   - `delay=true|1` (optional deterministic delay)
-  - `scenario=error` (optional forced 500)
+  - `runtime-errors-only` (optional forced 500)
 
 ## Response schema (`200`)
 ```json
@@ -33,7 +33,7 @@ Return deterministic event list payload for Events List.
 {
   "events": [
     {
-      "id": "evt-001",
+      "id": "22222222-2222-4222-8222-222222222222",
       "title": "Dentist Appointment",
       "date": "2026-03-20T09:00:00Z",
       "location": "Smile Clinic",
@@ -47,7 +47,7 @@ Return deterministic event list payload for Events List.
 ```
 
 ## Error responses
-- `500` with `?scenario=error`.
+- `500` with `?runtime-errors-only`.
 
 ## Mock behavior
 - Source fixture: `reminder-app/apps/api/fixtures/events.fixture.json`

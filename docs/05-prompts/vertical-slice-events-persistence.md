@@ -21,6 +21,7 @@ Requirements:
 9. Insert into `events` table and return created row.
 10. Avoid temporary endpoints; avoid broad refactors.
 11. Update docs to reflect shift from mock-only to real persistence for events.
+12. Use canonical tables (`events`, `reminders`, `delivery_attempts`) and avoid ad-hoc persistence tables.
 
 Database context:
 - Supabase/Postgres

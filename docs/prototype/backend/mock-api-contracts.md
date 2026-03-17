@@ -9,7 +9,6 @@ Return events list payload for Events List (S04), now backed by Supabase/Postgre
 - Path: `/events`
 - Query:
   - `delay` (optional): `true|1` for deterministic simulated delay.
-  - `scenario` (optional): `error` for forced HTTP 500.
 
 ### Response schema (`200`)
 ```json
@@ -34,7 +33,7 @@ Return events list payload for Events List (S04), now backed by Supabase/Postgre
 - Data source is now Postgres `events` table.
 
 ### Error responses
-- `500` when `?scenario=error`.
+- `500` internal server errors (no scenario forcing in canonical runtime mode).
 
 ---
 
@@ -79,15 +78,14 @@ Return event detail for Event Detail (S05) from Postgres-backed event storage.
 - Path: `/events/:id`
 - Path params:
   - `id` (required): event ID from DB-backed list/create flows.
-- Query:
-  - `scenario=error` (optional) for forced HTTP 500.
+- Query: none for runtime canonical mode.
 
 ### Response schema (`200`)
 Same event object schema as list item.
 
 ### Error responses
 - `404` when event ID is unknown.
-- `500` when `?scenario=error`.
+- `500` internal server errors.
 
 ---
 
@@ -114,7 +112,7 @@ Persist reminder plan edits and return save confirmation from DB-backed event su
 ```json
 {
   "success": true,
-  "eventId": "evt-001",
+  "eventId": "22222222-2222-4222-8222-222222222222",
   "message": "Reminder plan saved",
   "reminderCount": 2,
   "channels": ["push", "email"],
@@ -127,7 +125,7 @@ Persist reminder plan edits and return save confirmation from DB-backed event su
 ### Error responses
 - `400` invalid payload.
 - `404` unknown ID.
-- `500` when `?scenario=error`.
+- `500` internal server errors.
 
 ---
 
@@ -138,9 +136,7 @@ Return deterministic Dashboard summary data for S03.
 ### Request schema
 - Method: `GET`
 - Path: `/dashboard/summary`
-- Query:
-  - `scenario=empty` (optional) for zero counts.
-  - `scenario=error` (optional) for forced HTTP 500.
+- Query: none for runtime canonical mode.
 
 ### Response schema (`200`)
 ```json
@@ -153,7 +149,7 @@ Return deterministic Dashboard summary data for S03.
 ```
 
 ### Error responses
-- `500` when `?scenario=error`.
+- `500` internal server errors.
 
 ---
 
@@ -166,8 +162,7 @@ Return notification activity history for Event Detail (S08 content on S05 flow) 
 - Path: `/events/:id/notification-history`
 - Path params:
   - `id` (required): DB-backed event ID.
-- Query:
-  - `scenario=error` (optional) for forced HTTP 500.
+- Query: none for runtime canonical mode.
 
 ### Response schema (`200`)
 ```json
