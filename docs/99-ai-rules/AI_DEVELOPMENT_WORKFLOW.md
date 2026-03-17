@@ -83,20 +83,9 @@ When markdown files in a section change, regenerate that section HTML summary in
 - Do not invent behavior outside documented requirements.
 - If docs are missing/conflicting, report gaps and assumptions before coding.
 
-## 11. Frontend-Only Mock Prototype Exception Scope
-When work is explicitly marked as the frontend-only prototype phase:
-- Keep implementation local to frontend prototype surfaces and documentation.
-- Use local fixtures, mock services, deterministic scenario toggles, and simulated async behavior.
-- Do not add backend services, API routes, databases, OAuth/auth providers, or external integrations.
-- Keep visual execution consistent with the approved brand-inspired system (Inter + selective JetBrains Mono, light slate/sky/teal palette, rounded editorial cards, section-based layouts).
-
-## 12. Prototype Implementation Rules
-When work is explicitly marked as prototype system implementation:
-- Prototype documentation must live under `docs/prototype`.
-- Canonical documentation (`docs/00-product`, `docs/01-ui-ux`, `docs/02-design`, `docs/03-execution-planning`) must not be modified by prototype implementation tasks.
-- Backend responses must be mocked.
-- No persistence layer is allowed.
-- No external integrations are allowed.
-- All prototype APIs must return deterministic fixture data.
-- Prototype API contract changes must update corresponding backend/frontend integration tests and `docs/prototype` documentation in the same change set.
+## 11. Prototype Consolidation and Incremental Delivery Rules
+- Prototype-era guidance is consolidated into canonical documentation; do not create parallel documentation trees.
+- Preserve original MVP scope while documenting incremental implementation progress (mock-first baseline -> progressively real implementation).
+- Deterministic test behavior remains required even as runtime slices become persistence-backed.
+- Authentication may remain intentionally mocked where explicitly documented until integration is prioritized.
 

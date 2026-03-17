@@ -228,3 +228,16 @@ Trace reference: `docs/00-product/traceability-matrix.md`
 1. Should a dedicated endpoint exist for manual event confirmation for low-confidence extraction?
 2. Do we expose reminder delivery attempts directly in V1 API or aggregate status only?
 3. Which fields must be exportable for compliance requests?
+
+## 16. Prototype Baseline Endpoint Mapping (Consolidated)
+Prototype endpoint docs were merged into this canonical API spec. Useful prototype contracts are retained as mappings for incremental implementation context:
+
+- `GET /events` -> canonical `GET /api/v1/events`
+- `GET /events/{id}` -> canonical `GET /api/v1/events/{eventId}`
+- `PUT /events/{id}/reminder-plan` -> modeled via event/reminder mutation path in canonical event detail contracts
+- `GET /events/{id}/reminder-channels` -> represented in canonical event detail payload capability fields
+- `GET /events/{id}/notification-history` -> represented in event detail/history projections
+- `POST /events/{id}/retry-sync` -> canonical retry/remediation behavior in reliability policy and internal trigger contracts
+- `GET /dashboard/summary`, `GET/PUT /system/profile`, `GET /system/integrations/status`, `GET /system/diagnostics/activity` -> retained as operational views to be exposed through canonical `/api/v1` resource structure as slices are promoted
+
+This section preserves prototype knowledge while maintaining canonical API ownership in `docs/02-design`.

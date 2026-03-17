@@ -41,3 +41,12 @@ This document is planning-owned and references Design contracts without redefini
   - Mitigation: require deterministic fixtures and replayable failure tests for gates QG-02 and QG-03.
 - Risk: undocumented scope changes can invalidate quality gate scope.
   - Mitigation: backlog steward enforces traceability updates before gate sign-off.
+
+## Prototype Baseline
+Prototype quality gates emphasized deterministic mock behavior, UI state coverage, and contract-shape consistency.
+
+## Incremental Build Progress
+Current gates extend prototype checks with backend integration, validation/error-path coverage (400/404/500), and route-level consistency checks as endpoints become persistence-backed.
+
+## Current State
+Quality remains release-blocking under canonical execution planning; prototype checks are preserved as historical baseline criteria folded into these gates.

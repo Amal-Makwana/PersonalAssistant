@@ -5,11 +5,11 @@ This folder stores canonical prompts used to generate and maintain repository do
 
 These are documentation-only prompts (not for application code generation).
 
-## Prototype System Phase Note
-- For the active prototype phase, prompts must preserve a mock-first prototype system scope (frontend + mock backend APIs).
-- All prototype data flows and interactions must stay deterministic through fixtures and mock services.
-- Do not introduce real DB, OAuth/auth providers, storage, or external integration requirements in prototype prompts.
-- When prompts include visual direction, align with the personal brand language: Inter primary typography, selective JetBrains Mono in technical/status surfaces, light slate/sky/teal palette, rounded editorial cards, and section-based layouts.
+## Prototype Baseline and Consolidation Note
+- Prototype-era prompt guidance has been consolidated into this canonical prompt library.
+- No parallel `docs/prototype` prompt tree is active.
+- Prompts should preserve stable product scope while allowing incremental implementation (mock-first to backend-connected) to be documented explicitly.
+- For visual direction, align with the personal brand language: Inter primary typography, selective JetBrains Mono in technical/status surfaces, light slate/sky/teal palette, rounded editorial cards, and section-based layouts.
 
 ## Canonical Documentation Phase Order
 1. Product (`docs/00-product`)
@@ -28,12 +28,9 @@ These are documentation-only prompts (not for application code generation).
 - `repository-documentation-audit.md`
 - `prototype-backend-development.md`
 - `vertical-slice-events-persistence.md`
-- `route-level-db-consistency-fix.md`
-<<<<<<< codex/inspect-s05-event-detail-screen-issue
 - `vertical-slice-completion-event-apis-persistence.md`
 - `canonical-schema-alignment-event-apis-persistence.md`
-=======
->>>>>>> main
+- `route-level-db-consistency-fix.md`
 
 ## Prompt-to-Section Mapping
 | Documentation Section | Prompt Source | Primary Outputs |
