@@ -6,7 +6,7 @@ interface NotificationHistoryFixture {
 
 export const notificationHistoryFixture: NotificationHistoryFixture = {
   historyByEventId: {
-    'evt-001': [
+    '22222222-2222-4222-8222-222222222222': [
       {
         id: 'n-1',
         status: 'Scheduled',
@@ -36,7 +36,7 @@ export const notificationHistoryFixture: NotificationHistoryFixture = {
         direction: 'past'
       }
     ],
-    'evt-002': [
+    '33333333-3333-4333-8333-333333333333': [
       {
         id: 'n-5',
         status: 'Scheduled',
