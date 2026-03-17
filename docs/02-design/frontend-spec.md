@@ -120,3 +120,13 @@ Trace: FR-09, FR-10, US-07, US-09
 1. Should users be able to manually confirm low-confidence extracted events from frontend in V1?
 2. Is status history pagination required at launch or post-V1?
 3. Which client analytics schema is required for product telemetry governance?
+
+
+## 22. Incremental Slice Implementation Mode
+Implementation uses one canonical frontend specification with incremental updates applied in-place.
+
+Operating rules:
+- Keep baseline V1 capability definitions in this file.
+- Add slice-status annotations under relevant sections (routing, state, testing, integrations) as slices ship.
+- Preserve stable contracts so mock-first slices can later swap to production integrations without UI contract drift.
+- Do not create parallel frontend-spec variants for prototype vs canonical modes.

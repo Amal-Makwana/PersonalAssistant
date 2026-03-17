@@ -85,18 +85,16 @@ When markdown files in a section change, regenerate that section HTML summary in
 
 ## 11. Frontend-Only Mock Prototype Exception Scope
 When work is explicitly marked as the frontend-only prototype phase:
-- Keep implementation local to frontend prototype surfaces and documentation.
+- Keep implementation local to approved incremental slice surfaces and documentation.
 - Use local fixtures, mock services, deterministic scenario toggles, and simulated async behavior.
 - Do not add backend services, API routes, databases, OAuth/auth providers, or external integrations.
 - Keep visual execution consistent with the approved brand-inspired system (Inter + selective JetBrains Mono, light slate/sky/teal palette, rounded editorial cards, section-based layouts).
 
-## 12. Prototype Implementation Rules
-When work is explicitly marked as prototype system implementation:
-- Prototype documentation must live under `docs/prototype`.
-- Canonical documentation (`docs/00-product`, `docs/01-ui-ux`, `docs/02-design`, `docs/03-execution-planning`) must not be modified by prototype implementation tasks.
-- Backend responses must be mocked.
-- No persistence layer is allowed.
-- No external integrations are allowed.
-- All prototype APIs must return deterministic fixture data.
-- Prototype API contract changes must update corresponding backend/frontend integration tests and `docs/prototype` documentation in the same change set.
+## 12. Incremental Build Documentation Rules
+When work is explicitly marked as incremental/prototype slice implementation:
+- Keep all documentation in canonical section folders under `docs/` (no separate `docs/prototype` tree).
+- Preserve baseline product scope artifacts and apply incremental-slice updates directly in canonical files (no parallel duplicate documentation sets).
+- Backend responses may be mocked for early slices, but contracts must remain compatible with canonical design docs.
+- No external integrations should be introduced unless explicitly approved in product scope and execution planning.
+- Slice API contract changes must update corresponding backend/frontend integration tests and impacted docs in `docs/02-design`, `docs/03-execution-planning`, and `docs/05-prompts` in the same change set.
 

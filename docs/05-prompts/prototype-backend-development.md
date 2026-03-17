@@ -6,7 +6,7 @@ Use this prompt when implementing or extending mock backend APIs for the prototy
 Build backend endpoints that support prototype UI behavior with deterministic fixture-driven responses.
 
 ## Mandatory Constraints
-1. Keep prototype scope isolated under `docs/prototype` for documentation artifacts.
+1. Keep incremental backend documentation within canonical `docs` section folders (no separate prototype tree).
 2. Do not modify canonical product/design/execution documentation for prototype-only backend implementation tasks.
 3. Use mock backend APIs only.
 4. Do not use a database.
@@ -32,8 +32,8 @@ Build backend endpoints that support prototype UI behavior with deterministic fi
 - `GET /events/:id/notification-history`
 
 ## API Contract Discipline
-- Keep endpoint contracts documented in `docs/prototype/backend/mock-api-contracts.md`.
-- Keep per-endpoint docs updated under `docs/prototype/backend/endpoints/`.
+- Keep endpoint contracts documented in `docs/backend/mock-api-contracts.md`.
+- Keep per-endpoint docs updated under `docs/backend/endpoints/`.
 - Ensure examples/schemas match implementation exactly.
 
 ## Deterministic Fixture Rules
@@ -44,11 +44,11 @@ Build backend endpoints that support prototype UI behavior with deterministic fi
 
 ## Documentation Maintenance
 When backend prototype behavior changes:
-- Update `docs/prototype/README.md`.
-- Update `docs/prototype/architecture/mock-backend-architecture.md`.
-- Update `docs/prototype/backend/mock-api-contracts.md`.
-- Update impacted docs in `docs/prototype/backend/endpoints/`.
-- Update frontend mapping in `docs/prototype/frontend/mock-ui-implementation.md` when integration behavior changes.
+- Update `docs/README.md`.
+- Update `docs/architecture/mock-backend-architecture.md`.
+- Update `docs/backend/mock-api-contracts.md`.
+- Update impacted docs in `docs/backend/endpoints/`.
+- Update frontend mapping in `docs/frontend/mock-ui-implementation.md` when integration behavior changes.
 
 ## Output Expectation
 Return:

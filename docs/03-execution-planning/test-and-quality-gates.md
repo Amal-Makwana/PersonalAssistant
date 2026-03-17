@@ -41,3 +41,14 @@ This document is planning-owned and references Design contracts without redefini
   - Mitigation: require deterministic fixtures and replayable failure tests for gates QG-02 and QG-03.
 - Risk: undocumented scope changes can invalidate quality gate scope.
   - Mitigation: backlog steward enforces traceability updates before gate sign-off.
+
+
+## Incremental Slice Quality Coverage
+Current incremental baseline validates state-complete behavior (loading, empty, error, success, permission, validation) for active slices.
+
+Active slice quality requirements:
+- S03 Dashboard: summary render + state handling
+- S04 Events List: list rendering + filtering + navigation affordance
+- S05 Event Detail: reminder plan preview, editable offsets, reminder channels, save confirmation success/failure, and notification history rendering
+
+For mock-first slices, quality gate evidence must also confirm deterministic behavior by scenario and zero unintended external network dependencies.

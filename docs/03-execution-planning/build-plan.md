@@ -52,3 +52,17 @@ Each increment must be demoable, test-gated, traceable to Product requirements, 
 - Assumption: upstream Design contracts are stable during milestone execution windows.
 - Constraint: Execution Planning must not redefine canonical runtime/reliability semantics.
 - Open question: final ownership cadence for traceability updates at milestone close (engineering manager vs program manager).
+
+
+## Incremental Build Overlay
+To preserve full product scope while shipping iteratively, execute each milestone in vertical slices:
+1. Deliver slice behavior with deterministic coverage (mocked where required by dependency readiness).
+2. Stabilize contracts (API/schema/UI states) against canonical design docs.
+3. Replace mock implementations with production integrations behind the same interfaces.
+4. Close each slice by updating traceability and section HTML summaries in this canonical plan set.
+
+Current active sequence:
+- S03 Dashboard
+- S04 Events List
+- S05 Event Detail
+- Expand across S01/S02/S06/S07/S08/S09 once the active slice is stable

@@ -1,6 +1,6 @@
-# Prototype Documentation
+# Documentation Hub (Canonical + Incremental Build)
 
-This folder tracks prototype-only implementation details and contracts.
+This folder tracks the consolidated documentation set, as a single canonical set that includes both target scope and incremental delivery status.
 
 ## Monorepo Locations
 - Frontend app: `reminder-app/apps/web`
