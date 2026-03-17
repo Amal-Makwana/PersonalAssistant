@@ -1,15 +1,11 @@
 import { existsSync, readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { Pool } from 'pg';
 import type { QueryResultRow } from 'pg';
 
-const loadLocalEnv = () => {
-  const localEnvPath = resolve(process.cwd(), '.env.local');
-  if (!existsSync(localEnvPath)) {
-    return;
-  }
-
-  const content = readFileSync(localEnvPath, 'utf-8');
+const parseEnvFile = (filePath: string) => {
+  const content = readFileSync(filePath, 'utf-8');
   for (const rawLine of content.split('\n')) {
     const line = rawLine.trim();
     if (!line || line.startsWith('#')) {
@@ -30,12 +26,30 @@ const loadLocalEnv = () => {
   }
 };
 
+const loadLocalEnv = () => {
+  const moduleDir = dirname(fileURLToPath(import.meta.url));
+  const apiRootFromModule = resolve(moduleDir, '..');
+
+  const candidatePaths = [
+    resolve(process.cwd(), '.env.local'),
+    resolve(process.cwd(), 'apps/api/.env.local'),
+    resolve(apiRootFromModule, '.env.local')
+  ];
+
+  for (const localEnvPath of candidatePaths) {
+    if (existsSync(localEnvPath)) {
+      parseEnvFile(localEnvPath);
+      break;
+    }
+  }
+};
+
 loadLocalEnv();
 
 const connectionString = process.env.DATABASE_URL;
 
 if (!connectionString && process.env.NODE_ENV !== 'test') {
-  console.warn('DATABASE_URL is not set. API DB queries will fail until it is configured.');
+  console.warn('DATABASE_URL is not set. Add it to reminder-app/apps/api/.env.local to enable DB-backed /events.');
 }
 
 const pool = new Pool({ connectionString });
