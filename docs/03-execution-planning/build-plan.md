@@ -52,3 +52,12 @@ Each increment must be demoable, test-gated, traceable to Product requirements, 
 - Assumption: upstream Design contracts are stable during milestone execution windows.
 - Constraint: Execution Planning must not redefine canonical runtime/reliability semantics.
 - Open question: final ownership cadence for traceability updates at milestone close (engineering manager vs program manager).
+
+## Prototype Baseline
+Early execution focused on thin, mock-first slices (dashboard -> events list -> event detail) to validate end-to-end UX and contract shape before full runtime integration.
+
+## Incremental Build Progress
+Execution now promotes slices from mock-first behavior to backend-connected behavior in dependency order, preserving original MVP scope while reducing implementation risk.
+
+## Current State
+Backlog sequencing remains canonical in this file; prototype delivery notes are retained only as migration context and not as a separate planning authority.

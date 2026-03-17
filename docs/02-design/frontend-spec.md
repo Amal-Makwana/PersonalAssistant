@@ -120,3 +120,16 @@ Trace: FR-09, FR-10, US-07, US-09
 1. Should users be able to manually confirm low-confidence extracted events from frontend in V1?
 2. Is status history pagination required at launch or post-V1?
 3. Which client analytics schema is required for product telemetry governance?
+
+## 24. Prototype Baseline and Incremental Progress
+### Original Scope
+Frontend scope remains aligned to MVP capabilities and post-MVP channel guardrails.
+
+### Prototype Baseline
+Initial slices validated S01-S09 user flows with mock-first state transitions and deterministic UX checks.
+
+### Incremental Build Progress
+Event and system flows are progressively backend-connected through API contracts, while authentication UX remains intentionally mocked in S01 pending full auth integration rollout.
+
+### Current State
+Frontend implementation should preserve UX contract stability while replacing mock behavior with canonical API-backed behavior incrementally.

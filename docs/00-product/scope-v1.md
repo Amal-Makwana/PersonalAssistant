@@ -1,6 +1,6 @@
 # Scope Definition for V1 (MVP)
 
-## Scope Intent
+## Original Scope
 V1 focuses on delivering a reliable, trust-building automation loop for inbox-derived events. Scope prioritizes consistency and operational confidence over feature breadth.
 
 ## Original Scope
@@ -20,6 +20,19 @@ V1 focuses on delivering a reliable, trust-building automation loop for inbox-de
 4. Recurring event rule engines.
 5. Team collaboration, shared inbox, or enterprise admin workflows.
 6. Voice assistant features.
+
+## Prototype Baseline
+The early prototype validated UX and workflow sequencing with mock-first behavior, especially for authentication and integration-dependent states. Prototype artifacts also introduced endpoint-level contracts and vertical-slice delivery sequencing used to de-risk implementation.
+
+## Incremental Build Progress
+- Event vertical slice moved from fixture-only behavior to backend-connected Supabase/Postgres persistence.
+- Runtime tables used for event flows now align with canonical schema (`events`, `reminders`, `delivery_attempts`, `calendar_sync_records`).
+- Runtime event identifiers are UUID-based; fixture-style IDs remain non-runtime examples only.
+
+## Current State
+- Product scope remains unchanged from the original MVP boundary.
+- Implementation is incremental: selected slices are backend-connected while auth UX in S01 remains intentionally mocked pending full auth integration prioritization.
+- Canonical product scope and traceability continue to be governed from `docs/00-product`.
 
 ## Boundary Decisions
 - Preference depth is intentionally minimal in V1 to reduce complexity.
