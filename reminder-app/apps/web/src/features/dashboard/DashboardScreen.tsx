@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MockEventService } from '../../services/mock/mockEventService';
+import { EventApiService } from '../../services/api/eventApiService';
 import type { DashboardSummary } from '../../types/models';
 
 export const DashboardScreen = () => {
@@ -9,7 +9,7 @@ export const DashboardScreen = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const service = new MockEventService();
+    const service = new EventApiService();
     setLoading(true);
     setError(null);
     service

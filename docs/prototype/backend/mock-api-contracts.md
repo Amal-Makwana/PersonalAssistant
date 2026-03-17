@@ -1,4 +1,4 @@
-# Mock API Contracts
+# Prototype API Contracts
 
 ## GET /events
 ### Purpose
@@ -72,13 +72,13 @@ Create a new event record in Supabase/Postgres and return the created row.
 
 ## GET /events/:id
 ### Purpose
-Return deterministic event detail for Event Detail (S05).
+Return event detail for Event Detail (S05) from Postgres-backed event storage.
 
 ### Request schema
 - Method: `GET`
 - Path: `/events/:id`
 - Path params:
-  - `id` (required): stable fixture ID (e.g., `evt-001`).
+  - `id` (required): event ID from DB-backed list/create flows.
 - Query:
   - `scenario=error` (optional) for forced HTTP 500.
 
@@ -93,7 +93,7 @@ Same event object schema as list item.
 
 ## PUT /events/:id/reminder-plan
 ### Purpose
-Accept reminder plan edits and return deterministic mock save confirmation.
+Persist reminder plan edits and return save confirmation from DB-backed event support tables.
 
 ### Request schema
 - Method: `PUT`
@@ -159,13 +159,13 @@ Return deterministic Dashboard summary data for S03.
 
 ## GET /events/:id/notification-history
 ### Purpose
-Return deterministic notification activity history for Event Detail (S08 content on S05 flow).
+Return notification activity history for Event Detail (S08 content on S05 flow) from DB-backed event support tables.
 
 ### Request schema
 - Method: `GET`
 - Path: `/events/:id/notification-history`
 - Path params:
-  - `id` (required): stable fixture ID.
+  - `id` (required): DB-backed event ID.
 - Query:
   - `scenario=error` (optional) for forced HTTP 500.
 
