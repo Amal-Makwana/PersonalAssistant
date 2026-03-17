@@ -3,7 +3,6 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { resetEventsInMemoryState } from '../controllers/events.controller.js';
 import { query } from '../lib/db.js';
 import dashboardFixture from '../fixtures/dashboard.fixture.js';
-import eventsFixture from '../fixtures/events.fixture.js';
 import notificationHistoryFixture from '../fixtures/notification-history.fixture.js';
 import { app } from '../app.js';
 
@@ -20,24 +19,59 @@ afterEach(() => {
 });
 
 beforeEach(() => {
-  mockedQuery.mockResolvedValue({
-    rows: [
-      {
-        id: 'evt-db-001',
-        title: 'DB Event One',
-        description: 'Desk 2',
-        event_date: '2026-03-20T09:00:00Z',
-        created_at: '2026-03-19T09:00:00Z'
-      },
-      {
-        id: 'evt-db-002',
-        title: 'DB Event Two',
-        description: null,
-        event_date: '2026-03-21T10:00:00Z',
-        created_at: '2026-03-19T10:00:00Z'
+  mockedQuery.mockImplementation(async (sql: string, params?: unknown[]) => {
+    if (sql.includes('WHERE id = $1')) {
+      const eventId = params?.[0];
+      if (eventId === 'evt-db-001') {
+        return {
+          rows: [
+            {
+              id: 'evt-db-001',
+              title: 'DB Event One',
+              description: 'Desk 2',
+              event_date: '2026-03-20T09:00:00Z',
+              created_at: '2026-03-19T09:00:00Z'
+            }
+          ]
+        } as never;
       }
-    ] as never[]
-  } as never);
+
+      if (eventId === 'evt-001') {
+        return {
+          rows: [
+            {
+              id: 'evt-001',
+              title: 'Fixture-Compatible Event',
+              description: 'Smile Clinic',
+              event_date: '2026-03-20T09:00:00Z',
+              created_at: '2026-03-19T09:00:00Z'
+            }
+          ]
+        } as never;
+      }
+
+      return { rows: [] } as never;
+    }
+
+    return {
+      rows: [
+        {
+          id: 'evt-db-001',
+          title: 'DB Event One',
+          description: 'Desk 2',
+          event_date: '2026-03-20T09:00:00Z',
+          created_at: '2026-03-19T09:00:00Z'
+        },
+        {
+          id: 'evt-db-002',
+          title: 'DB Event Two',
+          description: null,
+          event_date: '2026-03-21T10:00:00Z',
+          created_at: '2026-03-19T10:00:00Z'
+        }
+      ] as never[]
+    } as never;
+  });
 });
 
 describe('Mock API route integration', () => {
@@ -127,10 +161,19 @@ describe('Mock API route integration', () => {
 
   describe('GET /events/:id', () => {
     it('returns event detail payload', async () => {
-      const response = await request(app).get('/events/evt-001');
+      const response = await request(app).get('/events/evt-db-001');
 
       expect(response.status).toBe(200);
-      expect(response.body).toEqual(eventsFixture.events[0]);
+      expect(response.body).toEqual({
+        id: 'evt-db-001',
+        title: 'DB Event One',
+        date: '2026-03-20T09:00:00Z',
+        location: 'Desk 2',
+        status: 'scheduled',
+        duplicate: false,
+        syncStatus: 'pending',
+        reminderPlan: []
+      });
     });
 
     it('returns 404 for missing event', async () => {
@@ -141,7 +184,7 @@ describe('Mock API route integration', () => {
     });
 
     it('returns 500 for scenario error', async () => {
-      const response = await request(app).get('/events/evt-001?scenario=error');
+      const response = await request(app).get('/events/evt-db-001?scenario=error');
 
       expect(response.status).toBe(500);
       expect(response.body).toEqual({
