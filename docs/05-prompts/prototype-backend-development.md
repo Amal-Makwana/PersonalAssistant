@@ -1,30 +1,41 @@
-# Prototype-to-Implementation Backend Development Prompt
+# Incremental Backend Development Prompt (Prototype-to-Canonical)
 
-Use this prompt when extending backend behavior that originated in prototype slices.
+Use this prompt when extending prototype-era slices while preserving canonical documentation and contracts.
 
 ## Objective
-Preserve original product scope while incrementally promoting prototype flows from mock-first behavior to canonical API and persistence-backed behavior.
+Advance features from mock-first behavior to DB-backed behavior incrementally, while keeping canonical docs current.
 
-## Canonical Documentation Rule
-- Update canonical docs only (`docs/00-product`, `docs/01-ui-ux`, `docs/02-design`, `docs/03-execution-planning`, `docs/05-prompts`).
-- Do not create or reintroduce a parallel `docs/prototype` documentation tree.
+## Original Scope
+- Prototype work started as deterministic, fixture-backed behavior for rapid UI validation.
+- Authentication remained intentionally mocked in early slices.
 
-## Incremental Delivery Constraints
-1. Keep auth in S01 mocked unless explicitly in scope for real auth integration.
-2. Route S02-S09 data operations through canonical API contracts.
-3. Preserve explicit validation and error contracts (400/404/500 or canonical equivalents).
-4. Add/update tests whenever endpoint contracts, query logic, or UI states change.
-5. Preserve UUID-based IDs and canonical reminder offset contract (`Nh|Nm` where applicable).
-6. Keep runtime behavior deterministic in tests even when persistence-backed.
+## Prototype Baseline Rules
+1. Preserve deterministic behavior where slices are still mock-backed.
+2. Keep UUID-based IDs and canonical reminder offset contract (`Nh|Nm`).
+3. Enforce explicit validation/error contracts (`400/404/500`) on API changes.
 
-## Consolidated Endpoint Baseline
-Prototype-era endpoint knowledge is now represented in canonical design docs. Treat the following as migration anchors:
-- Events: list/detail/reminder-plan/reminder-channels/retry-sync/history
-- Dashboard summary
-- System profile/preferences/integrations/diagnostics
+## Incremental Build Progress Rules
+1. Route migrated flows through API and persistence layers.
+2. Do not reintroduce fixture-only runtime behavior for migrated non-auth flows.
+3. For each changed endpoint, update canonical endpoint docs in `docs/02-design/api-spec.md`.
+4. Keep route/controller/service/repository layering consistent.
+5. Add/update tests whenever contracts or query logic change.
 
-## Required Output in Responses
-1. Files changed.
-2. APIs implemented/updated.
-3. Validation/error-contract notes.
-4. Test commands and results.
+## Current State Guidance
+- Event and system slices are expected to follow canonical schema and reliability contracts.
+- Auth mock behavior can remain until explicitly migrated.
+- Prompt and documentation updates must ship in the same change set as behavior changes.
+
+## Consolidated Quality Checklist
+1. Start from existing route contracts and frontend service adapters.
+2. Update endpoint docs and examples for every contract change.
+3. Add route/service tests (success + validation + error paths).
+4. Add/update frontend tests for API client usage and visible states.
+5. Keep event detail flow integrity:
+   - Event Information
+   - Reminder Plan Preview
+   - Editable Reminder Plan
+   - Reminder Channels
+   - Actions
+   - Scheduling Confirmation
+   - Notification History Preview

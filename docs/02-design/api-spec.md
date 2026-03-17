@@ -229,15 +229,31 @@ Trace reference: `docs/00-product/traceability-matrix.md`
 2. Do we expose reminder delivery attempts directly in V1 API or aggregate status only?
 3. Which fields must be exportable for compliance requests?
 
-## 16. Prototype Baseline Endpoint Mapping (Consolidated)
-Prototype endpoint docs were merged into this canonical API spec. Useful prototype contracts are retained as mappings for incremental implementation context:
+## 16. Prototype Baseline
+The initial implementation baseline used mock-first endpoint contracts to validate screen and workflow behavior before persistence hardening. This included deterministic response shapes for dashboard, event detail extensions, system profile, diagnostics, and integration status surfaces.
 
-- `GET /events` -> canonical `GET /api/v1/events`
-- `GET /events/{id}` -> canonical `GET /api/v1/events/{eventId}`
-- `PUT /events/{id}/reminder-plan` -> modeled via event/reminder mutation path in canonical event detail contracts
-- `GET /events/{id}/reminder-channels` -> represented in canonical event detail payload capability fields
-- `GET /events/{id}/notification-history` -> represented in event detail/history projections
-- `POST /events/{id}/retry-sync` -> canonical retry/remediation behavior in reliability policy and internal trigger contracts
-- `GET /dashboard/summary`, `GET/PUT /system/profile`, `GET /system/integrations/status`, `GET /system/diagnostics/activity` -> retained as operational views to be exposed through canonical `/api/v1` resource structure as slices are promoted
+## 17. Incremental Build Progress
+Prototype-era endpoint contracts were consolidated into this canonical specification and aligned to `/api/v1` route conventions.
 
-This section preserves prototype knowledge while maintaining canonical API ownership in `docs/02-design`.
+### 17.1 Consolidated Endpoint Contracts (from prototype)
+- **Dashboard summary**: `GET /api/v1/dashboard/summary`
+  - Returns `upcomingCount`, `needsReviewCount`, `failedCount`, and `nextEventId`.
+- **Reminder plan save**: `PUT /api/v1/events/{eventId}/reminder-plan`
+  - Validates UUID, non-empty reminder plan, `Nh|Nm` offsets, and boolean channel flags.
+- **Notification history**: `GET /api/v1/events/{eventId}/notification-history`
+  - Returns history derived from reminders and delivery attempts.
+- **Reminder channels**: `GET /api/v1/events/{eventId}/reminder-channels`
+  - Returns channel enablement flags (MVP-active channels only).
+- **Retry sync**: `POST /api/v1/events/{eventId}/retry-sync`
+  - Triggers replay-safe sync retry flow.
+- **System profile read/update**: `GET /api/v1/system/profile`, `PUT /api/v1/system/profile`
+  - Reads and updates timezone/calendar sync preference state.
+- **Integrations status**: `GET /api/v1/system/integrations/status`
+  - Returns normalized integration health/status shape.
+- **Diagnostics activity**: `GET /api/v1/system/diagnostics/activity`
+  - Returns recent activity list for operational transparency.
+
+## 18. Current State
+- Canonical endpoint documentation authority is this file and related documents under `docs/02-design`.
+- Endpoint behaviors must align with canonical schema, reliability policy, and UUID-based runtime contracts.
+- Mock-first historical behavior is retained only as implementation history; active contracts are captured in canonical design docs.

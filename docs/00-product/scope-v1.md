@@ -3,6 +3,7 @@
 ## Original Scope
 V1 focuses on delivering a reliable, trust-building automation loop for inbox-derived events. Scope prioritizes consistency and operational confidence over feature breadth.
 
+## Original Scope
 ### In Scope (MVP)
 1. Google authentication.
 2. Gmail event ingestion.
@@ -40,6 +41,21 @@ The early prototype validated UX and workflow sequencing with mock-first behavio
 
 ## Release Readiness Conditions
 V1 is considered scope-complete when all mapped MVP requirements (FR-01, FR-02, FR-03, FR-04, FR-05, FR-06, FR-09, FR-10, FR-11) have corresponding implemented stories and accepted criteria validation.
+
+## Prototype Baseline
+- Early prototype flows validated UX using deterministic mock responses.
+- Authentication flow behavior remained intentionally mocked during initial slices.
+- Endpoint and interaction contracts were stabilized before persistence rollout.
+
+## Incremental Build Progress
+- Event runtime flows transitioned from fixture-only behavior to canonical Supabase/Postgres-aligned persistence.
+- Core event runtime tables now align to canonical schema: `events`, `reminders`, and `delivery_attempts` (with `calendar_sync_records` for sync-state mapping where applicable).
+- Runtime API contracts use UUID identifiers; legacy fixture identifiers (for example `evt-001`) are non-runtime examples only.
+
+## Current State
+- Event list/detail and related reminder/sync operations are documented as persistence-backed.
+- Remaining staged areas may still be mock-driven until explicitly migrated in future slices.
+- Product scope intent remains unchanged while implementation maturity increases incrementally.
 
 ## Traceability
 - Requirements baseline: [requirements.md](./requirements.md), Sections 10 and 19.

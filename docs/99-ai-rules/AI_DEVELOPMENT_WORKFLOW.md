@@ -83,9 +83,18 @@ When markdown files in a section change, regenerate that section HTML summary in
 - Do not invent behavior outside documented requirements.
 - If docs are missing/conflicting, report gaps and assumptions before coding.
 
-## 11. Prototype Consolidation and Incremental Delivery Rules
-- Prototype-era guidance is consolidated into canonical documentation; do not create parallel documentation trees.
-- Preserve original MVP scope while documenting incremental implementation progress (mock-first baseline -> progressively real implementation).
-- Deterministic test behavior remains required even as runtime slices become persistence-backed.
-- Authentication may remain intentionally mocked where explicitly documented until integration is prioritized.
+## 11. Incremental Prototype-to-Canonical Exception Scope
+When work is explicitly marked as incremental migration from prototype behavior:
+- Keep documentation updates in canonical sections under `docs/` (no parallel prototype tree).
+- Preserve deterministic behavior only for slices that are still intentionally mock-backed.
+- Prefer canonical schema-aligned, persistence-backed contracts for migrated slices.
+- Keep visual execution consistent with the approved brand-inspired system (Inter + selective JetBrains Mono, light slate/sky/teal palette, rounded editorial cards, section-based layouts).
+
+## 12. Incremental Implementation Rules
+When work is explicitly marked as prototype-system continuation:
+- Update canonical documentation (`docs/00-product`, `docs/01-ui-ux`, `docs/02-design`, `docs/03-execution-planning`, `docs/05-prompts`) in the same change set.
+- Do not create or restore a separate `docs/prototype` documentation tree.
+- Migrated APIs should use persistence and canonical response contracts.
+- Mock behavior may remain only where explicitly documented as staged.
+- API contract changes must update corresponding backend/frontend integration tests and canonical docs in the same change set.
 

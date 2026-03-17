@@ -1,25 +1,33 @@
-# Documentation README
+# Documentation Canonical Structure
 
-## Canonical Documentation Structure
-This repository uses a single canonical documentation set under `docs/`:
+This repository uses a **single canonical documentation tree** under `docs/`.
+
+## Original Scope
+The original V1 documentation scope is organized as:
 - `docs/00-product`
 - `docs/01-ui-ux`
 - `docs/02-design`
 - `docs/03-execution-planning`
 - `docs/05-prompts`
 
-## Consolidation Status
-Prototype-era documentation has been folded into the canonical docs above. The prior `docs/prototype` tree is no longer an active parallel source of truth.
+This preserves the documentation-first progression:
+**Product -> UI/UX -> Design -> Execution Planning -> Prompt Governance**.
 
-## Scope and Delivery Model
-### Original Scope
-The MVP scope remains stable: Google auth, Gmail ingestion, event extraction/persistence, duplicate prevention, reminder scheduling, and Google Calendar sync.
+## Prototype Baseline
+A temporary `docs/prototype` tree was used during the mock-first implementation stage to iterate quickly on frontend and early backend contracts.
 
-### Prototype Baseline
-Early delivery used mock-first slices to validate UX, contracts, and sequencing.
+That parallel tree is now retired. Useful prototype content has been merged back into canonical documents, especially:
+- endpoint behavior and validation notes in `docs/02-design/api-spec.md`
+- incremental implementation guidance in `docs/05-prompts/prototype-backend-development.md`
+- product scope transition notes in `docs/00-product/scope-v1.md`
 
-### Incremental Build Progress
-Implementation is now progressively backend-connected in key vertical slices while preserving compatibility with earlier prototype flows.
+## Incremental Build Progress
+The canonical docs now reflect the implementation journey explicitly:
+1. Mock-first prototype baseline for rapid UX validation.
+2. Incremental transition to DB-backed event and system flows.
+3. Ongoing hardening against canonical schema and reliability contracts.
 
-### Current State
-Use canonical docs only for planning, design, prompt guidance, and implementation traceability.
+## Current State
+- `docs/` is the only active documentation authority.
+- No parallel prototype documentation tree should be reintroduced.
+- New documentation updates must be applied directly to canonical sections.
