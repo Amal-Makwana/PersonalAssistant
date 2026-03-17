@@ -18,16 +18,9 @@ export class ValidationError extends Error {}
 export class EventsService {
   constructor(private readonly eventsRepository = new EventsRepository()) {}
 
-<<<<<<< codex/inspect-s05-event-detail-screen-issue
-  async listEvents(options?: { delay?: boolean }): Promise<EventsResponse> {
-=======
-  async listEvents(options?: { scenario?: string; delay?: boolean }): Promise<EventsResponse> {
-    if (options?.scenario === 'error') {
-      throw new Error('Forced error scenario triggered.');
-    }
+async listEvents(options?: { delay?: boolean }): Promise<EventsResponse> {
 
->>>>>>> main
-    if (options?.delay) {
+  if (options?.delay) {
       await wait(200);
     }
 
