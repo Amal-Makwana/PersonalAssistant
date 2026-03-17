@@ -228,3 +228,32 @@ Trace reference: `docs/00-product/traceability-matrix.md`
 1. Should a dedicated endpoint exist for manual event confirmation for low-confidence extraction?
 2. Do we expose reminder delivery attempts directly in V1 API or aggregate status only?
 3. Which fields must be exportable for compliance requests?
+
+## 16. Prototype Baseline
+The initial implementation baseline used mock-first endpoint contracts to validate screen and workflow behavior before persistence hardening. This included deterministic response shapes for dashboard, event detail extensions, system profile, diagnostics, and integration status surfaces.
+
+## 17. Incremental Build Progress
+Prototype-era endpoint contracts were consolidated into this canonical specification and aligned to `/api/v1` route conventions.
+
+### 17.1 Consolidated Endpoint Contracts (from prototype)
+- **Dashboard summary**: `GET /api/v1/dashboard/summary`
+  - Returns `upcomingCount`, `needsReviewCount`, `failedCount`, and `nextEventId`.
+- **Reminder plan save**: `PUT /api/v1/events/{eventId}/reminder-plan`
+  - Validates UUID, non-empty reminder plan, `Nh|Nm` offsets, and boolean channel flags.
+- **Notification history**: `GET /api/v1/events/{eventId}/notification-history`
+  - Returns history derived from reminders and delivery attempts.
+- **Reminder channels**: `GET /api/v1/events/{eventId}/reminder-channels`
+  - Returns channel enablement flags (MVP-active channels only).
+- **Retry sync**: `POST /api/v1/events/{eventId}/retry-sync`
+  - Triggers replay-safe sync retry flow.
+- **System profile read/update**: `GET /api/v1/system/profile`, `PUT /api/v1/system/profile`
+  - Reads and updates timezone/calendar sync preference state.
+- **Integrations status**: `GET /api/v1/system/integrations/status`
+  - Returns normalized integration health/status shape.
+- **Diagnostics activity**: `GET /api/v1/system/diagnostics/activity`
+  - Returns recent activity list for operational transparency.
+
+## 18. Current State
+- Canonical endpoint documentation authority is this file and related documents under `docs/02-design`.
+- Endpoint behaviors must align with canonical schema, reliability policy, and UUID-based runtime contracts.
+- Mock-first historical behavior is retained only as implementation history; active contracts are captured in canonical design docs.

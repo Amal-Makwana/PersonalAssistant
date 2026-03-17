@@ -1,64 +1,41 @@
-# Prototype Backend Development Prompt
+# Incremental Backend Development Prompt (Prototype-to-Canonical)
 
-Use this prompt when implementing or extending mock backend APIs for the prototype system.
+Use this prompt when extending prototype-era slices while preserving canonical documentation and contracts.
 
 ## Objective
-Build backend endpoints that support prototype UI behavior with deterministic fixture-driven responses.
+Advance features from mock-first behavior to DB-backed behavior incrementally, while keeping canonical docs current.
 
-## Mandatory Constraints
-1. Keep prototype scope isolated under `docs/prototype` for documentation artifacts.
-2. Do not modify canonical product/design/execution documentation for prototype-only backend implementation tasks.
-3. Use mock backend APIs only.
-4. Do not use a database.
-5. Do not use OAuth/auth providers or external APIs.
-6. Do not add persistent storage.
-7. All endpoint responses must be deterministic and fixture-backed.
+## Original Scope
+- Prototype work started as deterministic, fixture-backed behavior for rapid UI validation.
+- Authentication remained intentionally mocked in early slices.
 
-## Backend Location (Required)
-- Implement backend under `reminder-app/apps/api`.
+## Prototype Baseline Rules
+1. Preserve deterministic behavior where slices are still mock-backed.
+2. Keep UUID-based IDs and canonical reminder offset contract (`Nh|Nm`).
+3. Enforce explicit validation/error contracts (`400/404/500`) on API changes.
 
-## Backend Implementation Pattern
-- Layering: `routes -> controllers -> services -> repositories -> fixtures/types`.
-- Routes define endpoint registration.
-- Controllers map request/response and HTTP status handling.
-- Services contain scenario toggles (`error`, endpoint-specific `empty` where applicable), validations, and business logic.
-- Repositories provide deterministic fixture reads and optional in-memory runtime updates.
+## Incremental Build Progress Rules
+1. Route migrated flows through API and persistence layers.
+2. Do not reintroduce fixture-only runtime behavior for migrated non-auth flows.
+3. For each changed endpoint, update canonical endpoint docs in `docs/02-design/api-spec.md`.
+4. Keep route/controller/service/repository layering consistent.
+5. Add/update tests whenever contracts or query logic change.
 
-## Implemented Prototype Endpoint Set
-- `GET /events`
-- `GET /events/:id`
-- `PUT /events/:id/reminder-plan`
-- `GET /dashboard/summary`
-- `GET /events/:id/notification-history`
+## Current State Guidance
+- Event and system slices are expected to follow canonical schema and reliability contracts.
+- Auth mock behavior can remain until explicitly migrated.
+- Prompt and documentation updates must ship in the same change set as behavior changes.
 
-## API Contract Discipline
-- Keep endpoint contracts documented in `docs/prototype/backend/mock-api-contracts.md`.
-- Keep per-endpoint docs updated under `docs/prototype/backend/endpoints/`.
-- Ensure examples/schemas match implementation exactly.
-
-## Deterministic Fixture Rules
-- Use UUID-shaped IDs/timestamps aligned to canonical schema examples.
-- No random value generation.
-- No database or external integration dependencies.
-- In-memory updates are allowed only for runtime mock behavior and are resettable in tests.
-
-## Documentation Maintenance
-When backend prototype behavior changes:
-- Update `docs/prototype/README.md`.
-- Update `docs/prototype/architecture/mock-backend-architecture.md`.
-- Update `docs/prototype/backend/mock-api-contracts.md`.
-- Update impacted docs in `docs/prototype/backend/endpoints/`.
-- Update frontend mapping in `docs/prototype/frontend/mock-ui-implementation.md` when integration behavior changes.
-
-## Output Expectation
-Return:
-1. Files changed.
-2. APIs implemented/updated.
-3. Fixture and deterministic behavior notes.
-4. Validation commands and results.
-
-## Integration Test Preservation Rule
-When changing prototype API contracts or fixtures:
-- Update backend route integration tests under `reminder-app/apps/api/tests`.
-- Update frontend integration tests that consume those contracts under `reminder-app/apps/web/src/features`.
-- Do not merge contract changes that are not reflected in prototype docs and tests.
+## Consolidated Quality Checklist
+1. Start from existing route contracts and frontend service adapters.
+2. Update endpoint docs and examples for every contract change.
+3. Add route/service tests (success + validation + error paths).
+4. Add/update frontend tests for API client usage and visible states.
+5. Keep event detail flow integrity:
+   - Event Information
+   - Reminder Plan Preview
+   - Editable Reminder Plan
+   - Reminder Channels
+   - Actions
+   - Scheduling Confirmation
+   - Notification History Preview

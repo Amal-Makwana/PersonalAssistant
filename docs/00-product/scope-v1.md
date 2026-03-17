@@ -3,7 +3,8 @@
 ## Scope Intent
 V1 focuses on delivering a reliable, trust-building automation loop for inbox-derived events. Scope prioritizes consistency and operational confidence over feature breadth.
 
-## In Scope (MVP)
+## Original Scope
+### In Scope (MVP)
 1. Google authentication.
 2. Gmail event ingestion.
 3. Event extraction.
@@ -12,7 +13,7 @@ V1 focuses on delivering a reliable, trust-building automation loop for inbox-de
 6. Default reminder scheduling.
 7. Google Calendar synchronization.
 
-## Out of Scope (MVP)
+### Out of Scope (MVP)
 1. WhatsApp reminders.
 2. SMS reminders.
 3. Non-Gmail providers.
@@ -28,16 +29,20 @@ V1 focuses on delivering a reliable, trust-building automation loop for inbox-de
 ## Release Readiness Conditions
 V1 is considered scope-complete when all mapped MVP requirements (FR-01, FR-02, FR-03, FR-04, FR-05, FR-06, FR-09, FR-10, FR-11) have corresponding implemented stories and accepted criteria validation.
 
-## Prototype Implementation Status (Current)
-<<<<<<< codex/inspect-s05-event-detail-screen-issue
-- Prototype backend now aligns event runtime flows to canonical Supabase/Postgres schema for events vertical-slice behavior.
-- Canonical runtime tables for event flows: `events`, `reminders`, `delivery_attempts` (plus `calendar_sync_records` for sync-state mapping when available).
-- Event runtime IDs are UUID-based; fixture-style IDs (for example `evt-001`) are not valid for runtime API usage.
-=======
-- Prototype backend has started transition from mock-only behavior to real persistence for the Events vertical slice.
-- `GET /events`, `GET /events/:id`, and `POST /events` are now intended to run against Supabase/Postgres while preserving frontend response compatibility.
-- Remaining prototype endpoints continue to be mock-driven until future slices move them to persistence.
->>>>>>> main
+## Prototype Baseline
+- Early prototype flows validated UX using deterministic mock responses.
+- Authentication flow behavior remained intentionally mocked during initial slices.
+- Endpoint and interaction contracts were stabilized before persistence rollout.
+
+## Incremental Build Progress
+- Event runtime flows transitioned from fixture-only behavior to canonical Supabase/Postgres-aligned persistence.
+- Core event runtime tables now align to canonical schema: `events`, `reminders`, and `delivery_attempts` (with `calendar_sync_records` for sync-state mapping where applicable).
+- Runtime API contracts use UUID identifiers; legacy fixture identifiers (for example `evt-001`) are non-runtime examples only.
+
+## Current State
+- Event list/detail and related reminder/sync operations are documented as persistence-backed.
+- Remaining staged areas may still be mock-driven until explicitly migrated in future slices.
+- Product scope intent remains unchanged while implementation maturity increases incrementally.
 
 ## Traceability
 - Requirements baseline: [requirements.md](./requirements.md), Sections 10 and 19.
