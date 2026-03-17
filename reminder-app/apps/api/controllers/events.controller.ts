@@ -85,6 +85,6 @@ export const getNotificationHistoryController = async (req: Request, res: Respon
   }
 };
 
-export const resetEventsInMemoryState = () => {
-  eventsService.resetInMemoryState();
+export const resetEventsInMemoryState = async () => {
+  await eventsService.resetInMemoryState();
 };
