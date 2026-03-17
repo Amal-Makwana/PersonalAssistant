@@ -10,7 +10,7 @@ export const dashboardFixture: DashboardFixture = {
     upcomingCount: 2,
     needsReviewCount: 1,
     failedCount: 0,
-    nextEventId: 'evt-001'
+    nextEventId: '22222222-2222-4222-8222-222222222222'
   },
   empty: {
     upcomingCount: 0,
