@@ -17,7 +17,11 @@ export class ValidationError extends Error {}
 export class EventsService {
   constructor(private readonly eventsRepository = new EventsRepository()) {}
 
-  async listEvents(options?: { delay?: boolean }): Promise<EventsResponse> {
+  async listEvents(options?: { scenario?: string; delay?: boolean }): Promise<EventsResponse> {
+    if (options?.scenario === 'error') {
+      throw new Error('Forced error scenario triggered.');
+    }
+
     if (options?.delay) {
       await wait(200);
     }
@@ -41,7 +45,11 @@ export class EventsService {
     });
   }
 
-  async getEventById(eventId: string): Promise<EventRecord> {
+  async getEventById(eventId: string, scenario?: string): Promise<EventRecord> {
+    if (scenario === 'error') {
+      throw new Error('Forced error scenario triggered.');
+    }
+
     const event = await this.eventsRepository.getEventById(eventId);
     if (!event) {
       throw new NotFoundError('Event not found.');
@@ -50,7 +58,11 @@ export class EventsService {
     return event;
   }
 
-  async saveReminderPlan(eventId: string, payload: ReminderPlanUpdateRequest): Promise<ReminderPlanUpdateResponse> {
+  async saveReminderPlan(eventId: string, payload: ReminderPlanUpdateRequest, scenario?: string): Promise<ReminderPlanUpdateResponse> {
+    if (scenario === 'error') {
+      throw new Error('Forced error scenario triggered.');
+    }
+
     if (!payload || !Array.isArray(payload.reminderPlan) || !payload.channels || typeof payload.channels !== 'object') {
       throw new ValidationError('Validation failed: reminderPlan array and channels object are required.');
     }
@@ -76,7 +88,11 @@ export class EventsService {
     return saved;
   }
 
-  async getNotificationHistory(eventId: string): Promise<NotificationHistoryResponse> {
+  async getNotificationHistory(eventId: string, scenario?: string): Promise<NotificationHistoryResponse> {
+    if (scenario === 'error') {
+      throw new Error('Forced error scenario triggered.');
+    }
+
     const history = await this.eventsRepository.getNotificationHistory(eventId);
     if (!history) {
       throw new NotFoundError('Event not found.');

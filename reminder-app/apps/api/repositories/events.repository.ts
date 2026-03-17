@@ -48,12 +48,6 @@ const mapDbEventToContract = (row: DbEventRow, reminderPlan: EventRecord['remind
   reminderPlan
 });
 
-
-const isUndefinedTableError = (error: unknown) => {
-  const maybe = error as { code?: string; message?: string };
-  return maybe?.code === '42P01' || maybe?.message?.toLowerCase().includes('does not exist');
-};
-
 const parseOffsetMinutes = (offset: string) => {
   if (offset.endsWith('h')) {
     return Number(offset.slice(0, -1)) * 60;
@@ -63,26 +57,45 @@ const parseOffsetMinutes = (offset: string) => {
 };
 
 export class EventsRepository {
+  private async ensureEventSupportTables() {
+    await query(`
+      CREATE TABLE IF NOT EXISTS event_reminder_plans (
+        id BIGSERIAL PRIMARY KEY,
+        event_id TEXT NOT NULL,
+        offset TEXT NOT NULL,
+        sort_order INTEGER NOT NULL,
+        channels JSONB NOT NULL DEFAULT '{}'::jsonb,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )
+    `);
+
+    await query(`
+      CREATE TABLE IF NOT EXISTS event_notification_history (
+        id TEXT PRIMARY KEY,
+        event_id TEXT NOT NULL,
+        status TEXT NOT NULL,
+        remind_at TIMESTAMPTZ NOT NULL,
+        channels JSONB NOT NULL DEFAULT '[]'::jsonb,
+        direction TEXT NOT NULL,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )
+    `);
+  }
+
   private async getReminderPlansByEventIds(eventIds: string[]) {
     if (!eventIds.length) {
       return new Map<string, EventRecord['reminderPlan']>();
     }
 
-    let result: { rows: DbReminderPlanRow[] };
-    try {
-      result = await query<DbReminderPlanRow>(
-        `SELECT event_id, offset, sort_order
-         FROM event_reminder_plans
-         WHERE event_id = ANY($1::text[])
-         ORDER BY event_id ASC, sort_order ASC`,
-        [eventIds]
-      );
-    } catch (error) {
-      if (isUndefinedTableError(error)) {
-        return new Map<string, EventRecord['reminderPlan']>();
-      }
-      throw error;
-    }
+    await this.ensureEventSupportTables();
+
+    const result = await query<DbReminderPlanRow>(
+      `SELECT event_id, offset, sort_order
+       FROM event_reminder_plans
+       WHERE event_id = ANY($1::text[])
+       ORDER BY event_id ASC, sort_order ASC`,
+      [eventIds]
+    );
 
     const grouped = new Map<string, EventRecord['reminderPlan']>();
     for (const row of result.rows) {
@@ -114,8 +127,7 @@ export class EventsRepository {
       return null;
     }
 
-    const plansByEventId = await this.getReminderPlansByEventIds([eventId]);
-    return cloneEvent(mapDbEventToContract(row, plansByEventId.get(eventId) ?? []));
+    return cloneEvent(mapDbEventToContract(row));
   }
 
   async createEvent(payload: CreateEventInput): Promise<DbEventRow> {
@@ -136,56 +148,34 @@ export class EventsRepository {
       return null;
     }
 
-    try {
-      await query('DELETE FROM event_reminder_plans WHERE event_id = $1', [eventId]);
-    } catch (error) {
-      if (!isUndefinedTableError(error)) {
-        throw error;
-      }
-    }
+    await this.ensureEventSupportTables();
+
+    await query('DELETE FROM event_reminder_plans WHERE event_id = $1', [eventId]);
 
     const normalizedPlan = payload.reminderPlan.map((entry) => ({ ...entry }));
 
     for (const [index, entry] of normalizedPlan.entries()) {
-      try {
-        await query(
-          `INSERT INTO event_reminder_plans (event_id, offset, sort_order, channels)
-           VALUES ($1, $2, $3, $4::jsonb)`,
-          [eventId, entry.offset, index, JSON.stringify(payload.channels)]
-        );
-      } catch (error) {
-        if (!isUndefinedTableError(error)) {
-          throw error;
-        }
-      }
+      await query(
+        `INSERT INTO event_reminder_plans (event_id, offset, sort_order, channels)
+         VALUES ($1, $2, $3, $4::jsonb)`,
+        [eventId, entry.offset, index, JSON.stringify(payload.channels)]
+      );
     }
 
     const channels = (Object.keys(payload.channels) as Array<'push' | 'email' | 'sms'>).filter(
       (channel) => Boolean(payload.channels[channel])
     );
 
-    try {
-      await query('DELETE FROM event_notification_history WHERE event_id = $1', [eventId]);
-    } catch (error) {
-      if (!isUndefinedTableError(error)) {
-        throw error;
-      }
-    }
+    await query('DELETE FROM event_notification_history WHERE event_id = $1', [eventId]);
 
     const eventTime = new Date(event.event_date);
     for (const [index, entry] of normalizedPlan.entries()) {
       const remindAt = new Date(eventTime.getTime() - parseOffsetMinutes(entry.offset) * 60_000).toISOString();
-      try {
-        await query(
-          `INSERT INTO event_notification_history (id, event_id, status, remind_at, channels, direction)
-           VALUES ($1, $2, $3, $4, $5::jsonb, $6)`,
-          [`${eventId}-scheduled-${index}`, eventId, 'Scheduled', remindAt, JSON.stringify(channels), 'upcoming']
-        );
-      } catch (error) {
-        if (!isUndefinedTableError(error)) {
-          throw error;
-        }
-      }
+      await query(
+        `INSERT INTO event_notification_history (id, event_id, status, remind_at, channels, direction)
+         VALUES ($1, $2, $3, $4, $5::jsonb, $6)`,
+        [`${eventId}-scheduled-${index}`, eventId, 'Scheduled', remindAt, JSON.stringify(channels), 'upcoming']
+      );
     }
 
     return {
@@ -206,31 +196,26 @@ export class EventsRepository {
       return null;
     }
 
-    try {
-      const historyResult = await query<DbNotificationHistoryRow>(
-        `SELECT id, event_id, status, remind_at, channels, direction
-         FROM event_notification_history
-         WHERE event_id = $1
-         ORDER BY remind_at DESC`,
-        [eventId]
-      );
+    await this.ensureEventSupportTables();
 
-      return {
-        eventId,
-        history: historyResult.rows.map((row) => ({
-          id: row.id,
-          status: row.status,
-          remindAt: row.remind_at,
-          channels: row.channels,
-          direction: row.direction
-        }))
-      };
-    } catch (error) {
-      if (isUndefinedTableError(error)) {
-        return { eventId, history: [] };
-      }
-      throw error;
-    }
+    const historyResult = await query<DbNotificationHistoryRow>(
+      `SELECT id, event_id, status, remind_at, channels, direction
+       FROM event_notification_history
+       WHERE event_id = $1
+       ORDER BY remind_at DESC`,
+      [eventId]
+    );
+
+    return {
+      eventId,
+      history: historyResult.rows.map((row) => ({
+        id: row.id,
+        status: row.status,
+        remindAt: row.remind_at,
+        channels: row.channels,
+        direction: row.direction
+      }))
+    };
   }
 
   async resetInMemoryState() {
