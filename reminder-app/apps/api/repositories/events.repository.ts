@@ -105,7 +105,7 @@ const mapReminderChannel = (channel: string): ReminderChannel => {
 export class EventsRepository {
   private async listReminderPlansByEventIds(eventIds: string[]) {
     if (!eventIds.length) {
-      return new Map<string, EventRecord['reminderPlan']>();
+      return new Map<string, DbReminderPlanRow[]>();
     }
 
     const result = await query<DbReminderPlanRow>(
@@ -262,7 +262,7 @@ export class EventsRepository {
         const enabledChannels = (Object.keys(payload.channels) as ReminderChannel[]).filter(
           (channel) => Boolean(payload.channels[channel])
         );
-        const channels = enabledChannels.length ? enabledChannels : ['push'];
+        const channels: ReminderChannel[] = enabledChannels.length ? enabledChannels : ['push'];
 
         let reminderCount = 0;
 
@@ -298,6 +298,49 @@ export class EventsRepository {
         throw error;
       }
     });
+  }
+
+
+  async getReminderChannels(eventId: string): Promise<{ push: boolean; email: boolean; sms: boolean } | null> {
+    const result = await query<{ channel: string }>(
+      `SELECT DISTINCT channel::text AS channel
+       FROM reminders
+       WHERE event_id = $1::uuid`,
+      [eventId]
+    );
+
+    if (!result.rows.length) {
+      const exists = await query<{ id: string }>('SELECT id FROM events WHERE id = $1::uuid AND deleted_at IS NULL LIMIT 1', [eventId]);
+      if (!exists.rows[0]) {
+        return null;
+      }
+
+      return { push: true, email: true, sms: false };
+    }
+
+    const channels = new Set(result.rows.map((row) => row.channel));
+    return {
+      push: channels.has('push'),
+      email: channels.has('email'),
+      sms: channels.has('sms')
+    };
+  }
+
+  async retrySync(eventId: string): Promise<{ eventId: string; status: string } | null> {
+    const exists = await query<{ id: string }>('SELECT id FROM events WHERE id = $1::uuid AND deleted_at IS NULL LIMIT 1', [eventId]);
+    if (!exists.rows[0]) {
+      return null;
+    }
+
+    await query(
+      `INSERT INTO calendar_sync_records (event_id, provider_event_id, sync_status, updated_at, created_at)
+       VALUES ($1::uuid, CONCAT('retry-', $1::text), 'SYNCED', NOW(), NOW())
+       ON CONFLICT (event_id)
+       DO UPDATE SET sync_status = 'SYNCED', updated_at = NOW()`,
+      [eventId]
+    );
+
+    return { eventId, status: 'synced' };
   }
 
   async getNotificationHistory(eventId: string): Promise<NotificationHistoryResponse | null> {
@@ -364,7 +407,4 @@ export class EventsRepository {
     };
   }
 
-  async resetInMemoryState() {
-    await Promise.resolve();
-  }
 }

@@ -1,20 +1,22 @@
-# Prototype Slice Extension Prompt (S03 -> S04 -> S05)
+# Prototype Slice Extension Prompt (Backend-Connected)
 
-Task future AI contributors to extend only the current frontend-only slice while preserving mock-first behavior.
+Extend the current slice while preserving backend-connected behavior and governance quality gates.
 
 Checklist:
-1. Start from Dashboard, Events List, and Event Detail contracts.
-2. Keep all state local and deterministic by scenario.
-3. Add tests for reminder offset calculation, editable reminder plan interactions, validation behavior, save success/failure confirmation, notification history preview rendering, and integration paths.
-4. Update prototype docs and README when scope evolves.
-5. Ensure Vite build and test commands pass locally.
-6. Do not introduce backend/API/DB/external integrations.
-7. Preserve the Event Detail order:
+1. Start from existing route contracts and frontend service adapters.
+2. For each changed endpoint, update endpoint markdown docs.
+3. Add route/service tests for API behavior (success + validation + error paths).
+4. Add/update frontend tests for API client usage and user-visible states.
+5. Run full checks:
+   - `apps/api`: tests + TypeScript check
+   - `apps/web`: tests + production build
+6. Keep event detail structure and flows intact:
    - Event Information
    - Reminder Plan Preview
    - Editable Reminder Plan
    - Reminder Channels
    - Actions
-   - Mock Scheduling Confirmation
+   - Scheduling Confirmation
    - Notification History Preview
-8. Keep scheduling confirmation and history behavior mock-only (fixtures + deterministic async simulation).
+7. Do not reintroduce scenario-toggle runtime behavior.
+8. Authentication remains mocked unless explicitly in scope.

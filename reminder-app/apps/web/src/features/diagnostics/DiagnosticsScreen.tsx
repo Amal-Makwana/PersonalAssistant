@@ -1,29 +1,28 @@
 import { useEffect, useState } from 'react';
-import { useAppContext } from '../../contexts/AppContext';
-import { MockDiagnosticsService } from '../../services/mock/mockDiagnosticsService';
+import { SystemApiService } from '../../services/api/systemApiService';
 import type { ActivityLog } from '../../types/models';
 
+const systemApiService = new SystemApiService();
+
 export const DiagnosticsScreen = () => {
-  const { scenario } = useAppContext();
   const [loading, setLoading] = useState(true);
   const [activity, setActivity] = useState<ActivityLog[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const service = new MockDiagnosticsService(scenario);
     setLoading(true);
     setError(null);
-    service
+    systemApiService
       .getActivity()
       .then(setActivity)
-      .catch((err: Error) => setError(err.message))
+      .catch((serviceError) => setError((serviceError as Error).message))
       .finally(() => setLoading(false));
-  }, [scenario]);
+  }, []);
 
   return (
     <section>
       <h2 className="section-title">S08 Activity & Diagnostics</h2>
-      <p className="section-description mb-5">Machine-like diagnostics surfaces use selective monospaced typography.</p>
+      <p className="section-description mb-5">Recent ingestion and processing events.</p>
       {loading && <p className="state-banner border-brand-border-alt bg-sky-50 text-sky-700">Loading activity...</p>}
       {!loading && error && <p className="state-banner border-red-200 bg-red-50 text-red-700">{error}</p>}
       {!loading && !error && activity.length === 0 && (
