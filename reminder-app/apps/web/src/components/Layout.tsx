@@ -5,7 +5,7 @@ const routes = [
   ['/onboarding', 'S02 Onboarding'],
   ['/dashboard', 'S03 Dashboard'],
   ['/events', 'S04 Events'],
-  ['/events', 'S05 Event Detail'],
+  ['/events', 'S05 Event Detail (select from list)'],
   ['/preferences', 'S06 Preferences'],
   ['/integrations', 'S07 Integrations'],
   ['/diagnostics', 'S08 Diagnostics'],
@@ -29,7 +29,7 @@ export const Layout = () => {
           <nav className="space-y-1.5">
             {routes.map(([to, label]) => (
               <NavLink
-                key={to}
+                key={`${to}-${label}`}
                 to={to}
                 className={({ isActive }) =>
                   `block rounded-lg px-3 py-2 text-sm transition duration-base ${
