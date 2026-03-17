@@ -1,34 +1,17 @@
 # GET /dashboard/summary
 
 ## Purpose
-Return deterministic summary data for S03 Dashboard.
+Return DB-backed dashboard aggregate counts and next event ID.
 
-## Request schema
-- Method: `GET`
-- Path: `/dashboard/summary`
-- Query:
-  - `scenario=empty` (optional): returns zero counts.
-  - `runtime-errors-only` (optional): forces `500`.
-
-## Response schema (`200`)
+## Response (`200`)
 ```json
 {
-  "upcomingCount": "number",
-  "needsReviewCount": "number",
-  "failedCount": "number",
-  "nextEventId": "string?"
-}
-```
-
-## Example payload
-```json
-{
-  "upcomingCount": 2,
-  "needsReviewCount": 1,
+  "upcomingCount": 1,
+  "needsReviewCount": 0,
   "failedCount": 0,
-  "nextEventId": "22222222-2222-4222-8222-222222222222"
+  "nextEventId": "uuid"
 }
 ```
 
-## Error responses
-- `500` with `?runtime-errors-only`.
+## Runtime behavior
+- Aggregates and next event are calculated from `events` table.

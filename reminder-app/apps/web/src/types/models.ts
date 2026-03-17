@@ -31,7 +31,6 @@ export interface ActivityLog {
   level: 'info' | 'warning' | 'error';
 }
 
-export type Scenario = 'success' | 'empty' | 'error' | 'permission' | 'validation';
 
 export interface DashboardSummary {
   upcomingCount: number;

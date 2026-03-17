@@ -43,11 +43,7 @@ export class EventsService {
     });
   }
 
-  async getEventById(eventId: string, scenario?: string): Promise<EventRecord> {
-    if (scenario === 'error') {
-      throw new Error('Forced error scenario triggered.');
-    }
-
+  async getEventById(eventId: string): Promise<EventRecord> {
     if (!isUuid(eventId)) {
       throw new ValidationError('Validation failed: event ID must be a UUID.');
     }
@@ -62,13 +58,8 @@ export class EventsService {
 
   async saveReminderPlan(
     eventId: string,
-    payload: ReminderPlanUpdateRequest,
-    scenario?: string
+    payload: ReminderPlanUpdateRequest
   ): Promise<ReminderPlanUpdateResponse> {
-    if (scenario === 'error') {
-      throw new Error('Forced error scenario triggered.');
-    }
-
     if (!isUuid(eventId)) {
       throw new ValidationError('Validation failed: event ID must be a UUID.');
     }
@@ -98,11 +89,34 @@ export class EventsService {
     return saved;
   }
 
-  async getNotificationHistory(eventId: string, scenario?: string): Promise<NotificationHistoryResponse> {
-    if (scenario === 'error') {
-      throw new Error('Forced error scenario triggered.');
+
+  async getReminderChannels(eventId: string): Promise<{ push: boolean; email: boolean; sms: boolean }> {
+    if (!isUuid(eventId)) {
+      throw new ValidationError('Validation failed: event ID must be a UUID.');
     }
 
+    const channels = await this.eventsRepository.getReminderChannels(eventId);
+    if (!channels) {
+      throw new NotFoundError('Event not found.');
+    }
+
+    return channels;
+  }
+
+  async retrySync(eventId: string): Promise<{ eventId: string; status: string }> {
+    if (!isUuid(eventId)) {
+      throw new ValidationError('Validation failed: event ID must be a UUID.');
+    }
+
+    const result = await this.eventsRepository.retrySync(eventId);
+    if (!result) {
+      throw new NotFoundError('Event not found.');
+    }
+
+    return result;
+  }
+
+  async getNotificationHistory(eventId: string): Promise<NotificationHistoryResponse> {
     if (!isUuid(eventId)) {
       throw new ValidationError('Validation failed: event ID must be a UUID.');
     }
@@ -115,7 +129,4 @@ export class EventsService {
     return history;
   }
 
-  async resetInMemoryState() {
-    await this.eventsRepository.resetInMemoryState();
-  }
 }

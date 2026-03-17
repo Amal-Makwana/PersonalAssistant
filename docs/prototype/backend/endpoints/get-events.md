@@ -1,21 +1,20 @@
 # GET /events
 
 ## Purpose
-Return deterministic event list payload for Events List.
+Return DB-backed event list payload for Events List.
 
 ## Request schema
 - Method: `GET`
 - Path: `/events`
 - Query:
-  - `delay=true|1` (optional deterministic delay)
-  - `runtime-errors-only` (optional forced 500)
+  - `delay=true|1` (optional deterministic delay simulation)
 
 ## Response schema (`200`)
 ```json
 {
   "events": [
     {
-      "id": "string",
+      "id": "uuid",
       "title": "string",
       "date": "ISO-8601 string",
       "location": "string?",
@@ -28,28 +27,9 @@ Return deterministic event list payload for Events List.
 }
 ```
 
-## Example payload
-```json
-{
-  "events": [
-    {
-      "id": "22222222-2222-4222-8222-222222222222",
-      "title": "Dentist Appointment",
-      "date": "2026-03-20T09:00:00Z",
-      "location": "Smile Clinic",
-      "status": "scheduled",
-      "duplicate": false,
-      "syncStatus": "synced",
-      "reminderPlan": [{ "offset": "24h" }, { "offset": "3h" }, { "offset": "1h" }]
-    }
-  ]
-}
-```
-
 ## Error responses
-- `500` with `?runtime-errors-only`.
+- `500` internal errors.
 
-## Mock behavior
-- Source fixture: `reminder-app/apps/api/fixtures/events.fixture.json`
-- No database.
-- No external integrations.
+## Runtime behavior
+- Source of truth: DB (`events`, `reminders`, `calendar_sync_records`).
+- No fixture-based runtime responses.

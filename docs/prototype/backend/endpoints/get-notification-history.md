@@ -1,20 +1,15 @@
 # GET /events/{id}/notification-history
 
 ## Purpose
-Return deterministic notification history for Event Detail.
+Return derived notification history from reminders and delivery attempts.
 
-## Request schema
-- Method: `GET`
-- Path: `/events/{id}/notification-history`
-- Path params:
-  - `id` (required string)
-- Query:
-  - `runtime-errors-only` (optional): forces `500`.
+## Validation
+- `id` must be UUID.
 
-## Response schema (`200`)
+## Response (`200`)
 ```json
 {
-  "eventId": "string",
+  "eventId": "uuid",
   "history": [
     {
       "id": "string",
@@ -27,29 +22,7 @@ Return deterministic notification history for Event Detail.
 }
 ```
 
-## Example payload
-```json
-{
-  "eventId": "22222222-2222-4222-8222-222222222222",
-  "history": [
-    {
-      "id": "n-1",
-      "status": "Scheduled",
-      "remindAt": "2026-03-19T09:00:00Z",
-      "channels": ["push", "email"],
-      "direction": "upcoming"
-    },
-    {
-      "id": "n-3",
-      "status": "Failed",
-      "remindAt": "2026-03-19T08:30:00Z",
-      "channels": ["email"],
-      "direction": "past"
-    }
-  ]
-}
-```
-
 ## Error responses
-- `404` unknown event ID.
-- `500` with `?runtime-errors-only`.
+- `400` invalid UUID.
+- `404` event not found.
+- `500` internal error.
