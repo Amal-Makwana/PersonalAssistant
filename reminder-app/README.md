@@ -2,25 +2,25 @@
 
 ## Prototype Phase
 
-This repository includes a mock-first prototype with:
+This repository now includes a **hybrid prototype**:
 - frontend app under `apps/web`
 - backend API under `apps/api`
 
 ### Current implemented vertical slice
-- Dashboard (S03): upcoming/status summary + CTA navigation
-- Events List (S04): mock list + filter state + detail navigation
+- Dashboard (S03): mock summary + CTA navigation
+- Events List (S04): backend-backed GET `/events` (Supabase/Postgres) + detail navigation
 - Event Detail (S05): mock detail + reminder edit/save simulation
+- Events Persistence Slice: POST `/events` -> DB insert -> created event response
 
 ### Scope of this phase
-- Implement UI flows/components/pages with deterministic mock behavior.
-- Use local fixtures and mock services to simulate app behavior.
-- Validate loading, empty, error, success, permission, and validation states.
+- Keep UI flows/components/pages deterministic and safe for rapid iteration.
+- Move Events list/create into real persistence using Supabase/Postgres.
+- Continue using mock fixtures for non-persistence backend flows during prototype.
 
 ### Deferred by design
-- No databases
-- No production backend persistence/infrastructure
-- No external authentication providers
-- No external integrations/cloud dependencies
+- Full production backend architecture beyond current routes/controllers/services/repositories pattern
+- External authentication providers
+- External integrations/cloud dependencies beyond Supabase/Postgres for events persistence
 
 ## Frontend stack
 - React + TypeScript
@@ -67,6 +67,7 @@ From `reminder-app/apps/web`:
 - Output directory: none
 - Runtime entrypoint: `api/index.ts` (Express app exported as serverless handler)
 - Routing note: all incoming paths rewrite to the serverless entry so `/events` and `/dashboard/*` remain stable.
+- Local env file: `apps/api/.env.local` (must define `DATABASE_URL`)
 
 ### Shared-repo setup requirement
 - Create **two separate Vercel projects** and link both to this same Git repository.

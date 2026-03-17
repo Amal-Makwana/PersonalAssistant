@@ -1,30 +1,74 @@
 import request from 'supertest';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { resetEventsInMemoryState } from '../controllers/events.controller.js';
+import { query } from '../lib/db.js';
 import dashboardFixture from '../fixtures/dashboard.fixture.js';
 import eventsFixture from '../fixtures/events.fixture.js';
 import notificationHistoryFixture from '../fixtures/notification-history.fixture.js';
 import { app } from '../app.js';
 
+vi.mock('../lib/db.js', () => ({
+  query: vi.fn(),
+  closeDbPool: vi.fn()
+}));
+
+const mockedQuery = vi.mocked(query);
+
 afterEach(() => {
   resetEventsInMemoryState();
+  vi.clearAllMocks();
+});
+
+beforeEach(() => {
+  mockedQuery.mockResolvedValue({
+    rows: [
+      {
+        id: 'evt-db-001',
+        title: 'DB Event One',
+        description: 'Desk 2',
+        event_date: '2026-03-20T09:00:00Z',
+        created_at: '2026-03-19T09:00:00Z'
+      },
+      {
+        id: 'evt-db-002',
+        title: 'DB Event Two',
+        description: null,
+        event_date: '2026-03-21T10:00:00Z',
+        created_at: '2026-03-19T10:00:00Z'
+      }
+    ] as never[]
+  } as never);
 });
 
 describe('Mock API route integration', () => {
   describe('GET /events', () => {
-    it('returns events list from fixture contract', async () => {
+    it('returns events list from DB mapped to existing frontend contract', async () => {
       const response = await request(app).get('/events');
 
       expect(response.status).toBe(200);
-      expect(response.body).toEqual(eventsFixture);
-    });
-
-    it('returns empty list when scenario=empty is requested', async () => {
-      const response = await request(app).get('/events?scenario=empty');
-
-      expect(response.status).toBe(200);
-      expect(response.body).toEqual(eventsFixture);
-      expect(response.body.events).toHaveLength(2);
+      expect(response.body).toEqual({
+        events: [
+          {
+            id: 'evt-db-001',
+            title: 'DB Event One',
+            date: '2026-03-20T09:00:00Z',
+            location: 'Desk 2',
+            status: 'scheduled',
+            duplicate: false,
+            syncStatus: 'pending',
+            reminderPlan: []
+          },
+          {
+            id: 'evt-db-002',
+            title: 'DB Event Two',
+            date: '2026-03-21T10:00:00Z',
+            status: 'scheduled',
+            duplicate: false,
+            syncStatus: 'pending',
+            reminderPlan: []
+          }
+        ]
+      });
     });
 
     it('returns 500 when scenario=error is requested', async () => {
@@ -34,6 +78,49 @@ describe('Mock API route integration', () => {
       expect(response.body).toEqual({
         error: 'Internal Server Error',
         message: 'Mock error scenario triggered.'
+      });
+    });
+  });
+
+  describe('POST /events', () => {
+    it('creates an event in DB and returns created row', async () => {
+      mockedQuery.mockResolvedValueOnce({
+        rows: [
+          {
+            id: 'evt-created-001',
+            title: 'Created Event',
+            description: 'Description',
+            event_date: '2026-04-01T12:00:00Z',
+            created_at: '2026-03-15T10:00:00Z'
+          }
+        ] as never[]
+      } as never);
+
+      const response = await request(app).post('/events').send({
+        title: 'Created Event',
+        description: 'Description',
+        event_date: '2026-04-01T12:00:00Z'
+      });
+
+      expect(response.status).toBe(201);
+      expect(response.body).toEqual({
+        id: 'evt-created-001',
+        title: 'Created Event',
+        description: 'Description',
+        event_date: '2026-04-01T12:00:00Z',
+        created_at: '2026-03-15T10:00:00Z'
+      });
+    });
+
+    it('validates required create payload fields', async () => {
+      const response = await request(app).post('/events').send({
+        title: 'Missing fields'
+      });
+
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({
+        error: 'Bad Request',
+        message: 'Validation failed: title, description, and event_date are required.'
       });
     });
   });

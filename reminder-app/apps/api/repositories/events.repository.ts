@@ -1,6 +1,8 @@
+import { query } from '../lib/db.js';
 import eventsFixture from '../fixtures/events.fixture.js';
 import notificationHistoryFixture from '../fixtures/notification-history.fixture.js';
 import type {
+  CreateEventInput,
   EventRecord,
   EventsResponse,
   NotificationHistoryResponse,
@@ -15,13 +17,33 @@ const cloneEvent = (event: EventRecord): EventRecord => ({
   reminderPlan: event.reminderPlan.map((item) => ({ ...item }))
 });
 
+interface DbEventRow {
+  id: string;
+  title: string;
+  description: string | null;
+  event_date: string;
+  created_at: string;
+}
+
+const mapDbEventToContract = (row: DbEventRow): EventRecord => ({
+  id: row.id,
+  title: row.title,
+  date: row.event_date,
+  location: row.description ?? undefined,
+  status: 'scheduled',
+  duplicate: false,
+  syncStatus: 'pending',
+  reminderPlan: inMemoryReminderPlans.get(row.id) ?? []
+});
+
 export class EventsRepository {
-  getAllEvents(): EventsResponse {
+  async getAllEvents(): Promise<EventsResponse> {
+    const result = await query<DbEventRow>(
+      'SELECT id, title, description, event_date, created_at FROM events ORDER BY event_date ASC'
+    );
+
     return {
-      events: eventsFixture.events.map((event) => {
-        const overrides = inMemoryReminderPlans.get(event.id);
-        return cloneEvent({ ...event, reminderPlan: overrides ?? event.reminderPlan } as EventRecord);
-      })
+      events: result.rows.map((row) => cloneEvent(mapDbEventToContract(row)))
     };
   }
 
@@ -33,6 +55,17 @@ export class EventsRepository {
 
     const overrides = inMemoryReminderPlans.get(event.id);
     return cloneEvent({ ...event, reminderPlan: overrides ?? event.reminderPlan } as EventRecord);
+  }
+
+  async createEvent(payload: CreateEventInput): Promise<DbEventRow> {
+    const result = await query<DbEventRow>(
+      `INSERT INTO events (title, description, event_date)
+       VALUES ($1, $2, $3)
+       RETURNING id, title, description, event_date, created_at`,
+      [payload.title, payload.description, payload.event_date]
+    );
+
+    return result.rows[0];
   }
 
   saveReminderPlan(eventId: string, payload: ReminderPlanUpdateRequest): ReminderPlanUpdateResponse | null {
