@@ -27,6 +27,7 @@ These are documentation-only prompts (not for application code generation).
 - `critical-persona-review.md`
 - `repository-documentation-audit.md`
 - `prototype-backend-development.md`
+- `vertical-slice-events-persistence.md`
 
 ## Prompt-to-Section Mapping
 | Documentation Section | Prompt Source | Primary Outputs |

@@ -1,8 +1,10 @@
 import { EventsRepository } from '../repositories/events.repository.js';
 import type {
+  CreateEventInput,
   EventRecord,
   EventsResponse,
   NotificationHistoryResponse,
+  PersistedEventRecord,
   ReminderPlanUpdateRequest,
   ReminderPlanUpdateResponse
 } from '../types/event.types.js';
@@ -25,6 +27,22 @@ export class EventsService {
     }
 
     return this.eventsRepository.getAllEvents();
+  }
+
+  async createEvent(payload: Partial<CreateEventInput>): Promise<PersistedEventRecord> {
+    if (!payload.title || !payload.description || !payload.event_date) {
+      throw new ValidationError('Validation failed: title, description, and event_date are required.');
+    }
+
+    if (Number.isNaN(Date.parse(payload.event_date))) {
+      throw new ValidationError('Validation failed: event_date must be a valid ISO datetime string.');
+    }
+
+    return this.eventsRepository.createEvent({
+      title: payload.title,
+      description: payload.description,
+      event_date: payload.event_date
+    });
   }
 
   async getEventById(eventId: string, scenario?: string): Promise<EventRecord> {
