@@ -21,6 +21,20 @@ export interface EventsResponse {
   events: EventRecord[];
 }
 
+export interface CreateEventInput {
+  title: string;
+  description: string;
+  event_date: string;
+}
+
+export interface PersistedEventRecord {
+  id: string;
+  title: string;
+  description: string | null;
+  event_date: string;
+  created_at: string;
+}
+
 export interface ReminderPlanUpdateRequest {
   reminderPlan: ReminderOffset[];
   channels: Partial<Record<ReminderChannel, boolean>>;

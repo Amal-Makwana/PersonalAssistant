@@ -5,6 +5,7 @@ import type { ReminderPlanUpdateRequest } from '../types/event.types.js';
 const eventsService = new EventsService();
 
 const getScenario = (req: Request) => (typeof req.query.scenario === 'string' ? req.query.scenario : undefined);
+const getEventId = (req: Request) => (typeof req.params.id === 'string' ? req.params.id : '');
 
 export const getEventsController = async (req: Request, res: Response) => {
   try {
@@ -22,9 +23,23 @@ export const getEventsController = async (req: Request, res: Response) => {
   }
 };
 
+export const createEventController = async (req: Request, res: Response) => {
+  try {
+    const data = await eventsService.createEvent(req.body);
+    res.status(201).json(data);
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      res.status(400).json({ error: 'Bad Request', message: error.message });
+      return;
+    }
+
+    res.status(500).json({ error: 'Internal Server Error', message: (error as Error).message });
+  }
+};
+
 export const getEventByIdController = async (req: Request, res: Response) => {
   try {
-    const data = await eventsService.getEventById(req.params.id, getScenario(req));
+    const data = await eventsService.getEventById(getEventId(req), getScenario(req));
     res.status(200).json(data);
   } catch (error) {
     if (error instanceof NotFoundError) {
@@ -39,7 +54,7 @@ export const getEventByIdController = async (req: Request, res: Response) => {
 export const saveReminderPlanController = async (req: Request, res: Response) => {
   try {
     const payload = req.body as ReminderPlanUpdateRequest;
-    const data = await eventsService.saveReminderPlan(req.params.id, payload, getScenario(req));
+    const data = await eventsService.saveReminderPlan(getEventId(req), payload, getScenario(req));
     res.status(200).json(data);
   } catch (error) {
     if (error instanceof ValidationError) {
@@ -58,7 +73,7 @@ export const saveReminderPlanController = async (req: Request, res: Response) =>
 
 export const getNotificationHistoryController = async (req: Request, res: Response) => {
   try {
-    const data = await eventsService.getNotificationHistory(req.params.id, getScenario(req));
+    const data = await eventsService.getNotificationHistory(getEventId(req), getScenario(req));
     res.status(200).json(data);
   } catch (error) {
     if (error instanceof NotFoundError) {
