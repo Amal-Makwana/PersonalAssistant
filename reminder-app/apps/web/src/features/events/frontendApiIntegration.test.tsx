@@ -61,7 +61,7 @@ const mockBackendFetch = ({ forceError = false, notificationError = false, empty
       const channels = (Object.keys(payload.channels) as Array<'push' | 'email' | 'sms'>).filter((key) => payload.channels[key]);
       return jsonResponse({
         success: true,
-        eventId: 'evt-001',
+        eventId: '22222222-2222-4222-8222-222222222222',
         message: 'Reminder plan saved',
         reminderCount: payload.reminderPlan.length,
         channels,
@@ -159,7 +159,7 @@ expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining('/dashboard/summa
   it('Event detail renders success, not found, and server error states', async () => {
     mockBackendFetch();
 
-    renderWithRoute({ scenario: 'success', route: '/events/evt-001' });
+    renderWithRoute({ scenario: 'success', route: '/events/22222222-2222-4222-8222-222222222222' });
     expect(await screen.findByText('Dentist Appointment')).toBeInTheDocument();
 
     cleanup();
@@ -168,7 +168,7 @@ expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining('/dashboard/summa
 
     cleanup();
     mockBackendFetch({ forceError: true });
-    renderWithRoute({ scenario: 'success', route: '/events/evt-001' });
+    renderWithRoute({ scenario: 'success', route: '/events/22222222-2222-4222-8222-222222222222' });
     expect(await screen.findByText('Unable to load event details in mock service.')).toBeInTheDocument();
   });
 
@@ -176,7 +176,7 @@ expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining('/dashboard/summa
     const user = userEvent.setup();
     mockBackendFetch();
 
-    renderWithRoute({ scenario: 'success', route: '/events/evt-001' });
+    renderWithRoute({ scenario: 'success', route: '/events/22222222-2222-4222-8222-222222222222' });
     await screen.findByText('Dentist Appointment');
     await screen.findByText('Reminder Channels');
     await user.click(screen.getByRole('button', { name: 'Save' }));
@@ -185,20 +185,20 @@ expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining('/dashboard/summa
 
   it('Reminder save flow handles server failures', async () => {
     mockBackendFetch({ forceError: true });
-    renderWithRoute({ scenario: 'success', route: '/events/evt-001' });
+    renderWithRoute({ scenario: 'success', route: '/events/22222222-2222-4222-8222-222222222222' });
     expect(await screen.findByText('Unable to load event details in mock service.')).toBeInTheDocument();
   });
 
   it('Notification history renders success and API error states', async () => {
     mockBackendFetch();
 
-    renderWithRoute({ scenario: 'success', route: '/events/evt-001' });
+    renderWithRoute({ scenario: 'success', route: '/events/22222222-2222-4222-8222-222222222222' });
     expect(await screen.findByText('Notification History Preview')).toBeInTheDocument();
     expect(await screen.findByText(/Scheduled/)).toBeInTheDocument();
 
     cleanup();
     mockBackendFetch({ notificationError: true });
-    renderWithRoute({ scenario: 'success', route: '/events/evt-001' });
+    renderWithRoute({ scenario: 'success', route: '/events/22222222-2222-4222-8222-222222222222' });
     expect(await screen.findByText('Unable to load notification history in mock service.')).toBeInTheDocument();
   });
 
