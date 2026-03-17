@@ -127,8 +127,7 @@ export class EventsRepository {
       return null;
     }
 
-    const plansByEventId = await this.getReminderPlansByEventIds([eventId]);
-    return cloneEvent(mapDbEventToContract(row, plansByEventId.get(eventId) ?? []));
+    return cloneEvent(mapDbEventToContract(row));
   }
 
   async createEvent(payload: CreateEventInput): Promise<DbEventRow> {

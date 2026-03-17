@@ -30,7 +30,7 @@ V1 is considered scope-complete when all mapped MVP requirements (FR-01, FR-02, 
 
 ## Prototype Implementation Status (Current)
 - Prototype backend has started transition from mock-only behavior to real persistence for the Events vertical slice.
-- `GET /events` and `POST /events` are now intended to run against Supabase/Postgres while preserving frontend response compatibility.
+- `GET /events`, `GET /events/:id`, and `POST /events` are now intended to run against Supabase/Postgres while preserving frontend response compatibility.
 - Remaining prototype endpoints continue to be mock-driven until future slices move them to persistence.
 
 ## Traceability
