@@ -28,6 +28,7 @@ These are documentation-only prompts (not for application code generation).
 - `repository-documentation-audit.md`
 - `prototype-backend-development.md`
 - `vertical-slice-events-persistence.md`
+- `route-level-db-consistency-fix.md`
 
 ## Prompt-to-Section Mapping
 | Documentation Section | Prompt Source | Primary Outputs |

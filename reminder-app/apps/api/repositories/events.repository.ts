@@ -47,14 +47,18 @@ export class EventsRepository {
     };
   }
 
-  getEventById(eventId: string): EventRecord | null {
-    const event = eventsFixture.events.find((item) => item.id === eventId);
-    if (!event) {
+  async getEventById(eventId: string): Promise<EventRecord | null> {
+    const result = await query<DbEventRow>(
+      'SELECT id, title, description, event_date, created_at FROM events WHERE id = $1 LIMIT 1',
+      [eventId]
+    );
+
+    const row = result.rows[0];
+    if (!row) {
       return null;
     }
 
-    const overrides = inMemoryReminderPlans.get(event.id);
-    return cloneEvent({ ...event, reminderPlan: overrides ?? event.reminderPlan } as EventRecord);
+    return cloneEvent(mapDbEventToContract(row));
   }
 
   async createEvent(payload: CreateEventInput): Promise<DbEventRow> {

@@ -50,7 +50,7 @@ export class EventsService {
       throw new Error('Mock error scenario triggered.');
     }
 
-    const event = this.eventsRepository.getEventById(eventId);
+    const event = await this.eventsRepository.getEventById(eventId);
     if (!event) {
       throw new NotFoundError('Event not found.');
     }
