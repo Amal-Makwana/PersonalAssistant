@@ -4,13 +4,11 @@ import type { ReminderPlanUpdateRequest } from '../types/event.types.js';
 
 const eventsService = new EventsService();
 
-const getScenario = (req: Request) => (typeof req.query.scenario === 'string' ? req.query.scenario : undefined);
 const getEventId = (req: Request) => (typeof req.params.id === 'string' ? req.params.id : '');
 
 export const getEventsController = async (req: Request, res: Response) => {
   try {
     const data = await eventsService.listEvents({
-      scenario: getScenario(req),
       delay: req.query.delay === 'true' || req.query.delay === '1'
     });
 
@@ -39,7 +37,7 @@ export const createEventController = async (req: Request, res: Response) => {
 
 export const getEventByIdController = async (req: Request, res: Response) => {
   try {
-    const data = await eventsService.getEventById(getEventId(req), getScenario(req));
+    const data = await eventsService.getEventById(getEventId(req));
     res.status(200).json(data);
   } catch (error) {
     if (error instanceof NotFoundError) {
@@ -54,7 +52,7 @@ export const getEventByIdController = async (req: Request, res: Response) => {
 export const saveReminderPlanController = async (req: Request, res: Response) => {
   try {
     const payload = req.body as ReminderPlanUpdateRequest;
-    const data = await eventsService.saveReminderPlan(getEventId(req), payload, getScenario(req));
+    const data = await eventsService.saveReminderPlan(getEventId(req), payload);
     res.status(200).json(data);
   } catch (error) {
     if (error instanceof ValidationError) {
@@ -73,7 +71,7 @@ export const saveReminderPlanController = async (req: Request, res: Response) =>
 
 export const getNotificationHistoryController = async (req: Request, res: Response) => {
   try {
-    const data = await eventsService.getNotificationHistory(getEventId(req), getScenario(req));
+    const data = await eventsService.getNotificationHistory(getEventId(req));
     res.status(200).json(data);
   } catch (error) {
     if (error instanceof NotFoundError) {
