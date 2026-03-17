@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MockEventService } from '../../services/mock/mockEventService';
+import { EventApiService } from '../../services/api/eventApiService';
 import type { EventItem } from '../../types/models';
 
 type StatusFilter = 'all' | EventItem['status'];
@@ -13,7 +13,7 @@ export const EventsListScreen = () => {
   const [duplicatesOnly, setDuplicatesOnly] = useState(false);
 
   useEffect(() => {
-    const service = new MockEventService();
+    const service = new EventApiService();
     setLoading(true);
     setError(null);
     service

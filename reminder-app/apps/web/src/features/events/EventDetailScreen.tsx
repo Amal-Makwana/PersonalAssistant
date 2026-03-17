@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { MockEventService } from '../../services/mock/mockEventService';
+import { EventApiService } from '../../services/api/eventApiService';
 import type { EventItem, NotificationHistoryEntry, ReminderChannelConfig, SaveReminderResult } from '../../types/models';
 import { EditableReminderPlan } from './components/EditableReminderPlan';
 import { NotificationHistoryPreview } from './components/NotificationHistoryPreview';
@@ -29,7 +29,7 @@ export const EventDetailScreen = () => {
   const [saveError, setSaveError] = useState<string | null>(null);
 
   useEffect(() => {
-    const service = new MockEventService();
+    const service = new EventApiService();
     setLoading(true);
     setError(null);
     setMessage('');
@@ -94,7 +94,7 @@ export const EventDetailScreen = () => {
       return;
     }
 
-    const service = new MockEventService();
+    const service = new EventApiService();
     setSaving(true);
     setError(null);
     setMessage('');
