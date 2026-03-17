@@ -20,7 +20,7 @@ export const NotificationHistoryPreview = ({ entries, error, loading }: Notifica
       <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-600">Notification History Preview</h3>
       {loading && <p className="text-sm text-slate-500">Loading notification history...</p>}
       {!loading && error && <p className="text-sm text-red-700">{error}</p>}
-      {!loading && !error && entries.length === 0 && <p className="text-sm text-slate-500">No mock notification activity yet.</p>}
+      {!loading && !error && entries.length === 0 && <p className="text-sm text-slate-500">No notification activity yet.</p>}
       {!loading && !error && entries.length > 0 && (
         <ul className="space-y-1">
           {entries.map((entry) => (

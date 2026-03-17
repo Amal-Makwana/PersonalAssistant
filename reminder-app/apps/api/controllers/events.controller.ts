@@ -74,6 +74,45 @@ export const saveReminderPlanController = async (req: Request, res: Response) =>
   }
 };
 
+
+export const getReminderChannelsController = async (req: Request, res: Response) => {
+  try {
+    const data = await eventsService.getReminderChannels(getEventId(req));
+    res.status(200).json(data);
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      res.status(400).json({ error: 'Bad Request', message: error.message });
+      return;
+    }
+
+    if (error instanceof NotFoundError) {
+      res.status(404).json({ error: 'Not Found', message: error.message });
+      return;
+    }
+
+    res.status(500).json({ error: 'Internal Server Error', message: (error as Error).message });
+  }
+};
+
+export const retrySyncController = async (req: Request, res: Response) => {
+  try {
+    const data = await eventsService.retrySync(getEventId(req));
+    res.status(200).json(data);
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      res.status(400).json({ error: 'Bad Request', message: error.message });
+      return;
+    }
+
+    if (error instanceof NotFoundError) {
+      res.status(404).json({ error: 'Not Found', message: error.message });
+      return;
+    }
+
+    res.status(500).json({ error: 'Internal Server Error', message: (error as Error).message });
+  }
+};
+
 export const getNotificationHistoryController = async (req: Request, res: Response) => {
   try {
     const data = await eventsService.getNotificationHistory(getEventId(req));
@@ -93,6 +132,3 @@ export const getNotificationHistoryController = async (req: Request, res: Respon
   }
 };
 
-export const resetEventsInMemoryState = async () => {
-  await eventsService.resetInMemoryState();
-};
