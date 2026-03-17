@@ -9,7 +9,7 @@ Accept reminder-plan edits from Event Detail and return deterministic mock save 
 - Path params:
   - `id` (required string)
 - Query:
-  - `scenario=error` (optional): force `500`
+  - `runtime-errors-only` (optional): force `500`
 - Body:
 ```json
 {
@@ -41,7 +41,7 @@ Validation:
 ```json
 {
   "success": true,
-  "eventId": "evt-001",
+  "eventId": "22222222-2222-4222-8222-222222222222",
   "message": "Reminder plan saved",
   "reminderCount": 2,
   "channels": ["push", "email"],
@@ -54,4 +54,4 @@ Validation:
 ## Error responses
 - `400` invalid payload.
 - `404` unknown event ID.
-- `500` with `?scenario=error`.
+- `500` with `?runtime-errors-only`.

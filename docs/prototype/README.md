@@ -97,32 +97,22 @@ npm test
 
 ## Endpoint Verification Examples
 - `GET http://localhost:3000/events`
-- `GET http://localhost:3000/events/evt-001`
-- `PUT http://localhost:3000/events/evt-001/reminder-plan`
+- `GET http://localhost:3000/events/22222222-2222-4222-8222-222222222222`
+- `PUT http://localhost:3000/events/22222222-2222-4222-8222-222222222222/reminder-plan`
 - `GET http://localhost:3000/dashboard/summary`
-- `GET http://localhost:3000/events/evt-001/notification-history`
+- `GET http://localhost:3000/events/22222222-2222-4222-8222-222222222222/notification-history`
 
 ```bash
 curl "http://localhost:3000/events"
-curl "http://localhost:3000/events/evt-001"
+curl "http://localhost:3000/events/22222222-2222-4222-8222-222222222222"
 curl "http://localhost:3000/dashboard/summary"
-curl "http://localhost:3000/events/evt-001/notification-history"
-curl -X PUT "http://localhost:3000/events/evt-001/reminder-plan" \
+curl "http://localhost:3000/events/22222222-2222-4222-8222-222222222222/notification-history"
+curl -X PUT "http://localhost:3000/events/22222222-2222-4222-8222-222222222222/reminder-plan" \
   -H "Content-Type: application/json" \
   -d '{"reminderPlan":[{"offset":"2h"},{"offset":"45m"}],"channels":{"push":true,"email":true,"sms":false}}'
 ```
 
-Error simulation:
-```bash
-curl "http://localhost:3000/events/evt-001?scenario=error"
-curl -X PUT "http://localhost:3000/events/evt-001/reminder-plan?scenario=error" \
-  -H "Content-Type: application/json" \
-  -d '{"reminderPlan":[{"offset":"1h"}],"channels":{"push":true}}'
-curl "http://localhost:3000/dashboard/summary?scenario=error"
-curl "http://localhost:3000/events/evt-001/notification-history?scenario=error"
-```
-
 ## Prototype Rules (Updated)
-- Events vertical slice now supports real persistence (`GET /events`, `POST /events`) via Supabase/Postgres.
-- Non-events prototype endpoints remain mock/fixture-driven.
-- Backend remains local-run compatible and deployable as Vercel serverless.
+- Event runtime flows are aligned to canonical schema tables (`events`, `reminders`, `delivery_attempts`).
+- Runtime API IDs are UUID-based.
+- Avoid fixture-style IDs in endpoint verification examples.

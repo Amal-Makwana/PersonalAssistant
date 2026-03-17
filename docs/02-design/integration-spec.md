@@ -84,3 +84,11 @@ Trace: FR-09, FR-10, US-09
 ## 9. Open Questions
 1. Should calendar reconcile runs be periodic in MVP or operator-triggered only?
 2. What alert thresholds should page on-call for rising terminal sync failures?
+
+## 10. Canonical Event API Persistence Alignment
+- Source of truth is Supabase/Postgres canonical schema.
+- Event list/detail contract is derived from `events` with reminder-plan projection derived from `reminders` relative to event base time (`event_date` fallback `start_at`).
+- Reminder save writes to `reminders` only (no ad-hoc reminder tables).
+- Notification history is derived from `reminders` joined with `delivery_attempts`.
+- Runtime IDs in API flows are UUIDs from canonical tables.
+

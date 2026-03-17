@@ -7,9 +7,9 @@ Return deterministic full details for a single event (S05 Event Detail).
 - Method: `GET`
 - Path: `/events/{id}`
 - Path params:
-  - `id` (required string): stable fixture ID such as `evt-001`.
+  - `id` (required string): stable fixture ID such as `22222222-2222-4222-8222-222222222222`.
 - Query:
-  - `scenario=error` (optional): force `500`.
+  - `runtime-errors-only` (optional): force `500`.
 
 ## Response schema (`200`)
 ```json
@@ -28,7 +28,7 @@ Return deterministic full details for a single event (S05 Event Detail).
 ## Example payload
 ```json
 {
-  "id": "evt-001",
+  "id": "22222222-2222-4222-8222-222222222222",
   "title": "Dentist Appointment",
   "date": "2026-03-20T09:00:00Z",
   "location": "Smile Clinic",
@@ -41,4 +41,4 @@ Return deterministic full details for a single event (S05 Event Detail).
 
 ## Error responses
 - `404` unknown event ID.
-- `500` with `?scenario=error`.
+- `500` with `?runtime-errors-only`.
