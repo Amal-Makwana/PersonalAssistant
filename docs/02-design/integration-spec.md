@@ -21,6 +21,13 @@ Define integration contracts, trigger points, retry/timeout behavior, and observ
 - Worker -> Postgres: persistence, dedupe checks, sync state updates
 - Scheduler -> worker: retry processing and stuck-job repair
 
+
+### Prototype Event API Persistence (Current Vertical Slice)
+- System of record for event API flows is Supabase/Postgres.
+- Persisted routes: `POST /events`, `GET /events`, `GET /events/:id`, `PUT /events/:id/reminder-plan`, `GET /events/:id/notification-history`.
+- Persistence model: `events` table plus event support tables for reminder plans and notification history.
+- Contract guardrail: backend keeps frontend response shapes stable while storage is fully DB-backed.
+
 ## 4. External Integrations
 ### Google OAuth
 - **Purpose:** authentication + delegated consent

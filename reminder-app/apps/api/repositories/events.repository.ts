@@ -1,16 +1,13 @@
 import { query } from '../lib/db.js';
-import eventsFixture from '../fixtures/events.fixture.js';
-import notificationHistoryFixture from '../fixtures/notification-history.fixture.js';
 import type {
   CreateEventInput,
   EventRecord,
   EventsResponse,
+  NotificationHistoryEntry,
   NotificationHistoryResponse,
   ReminderPlanUpdateRequest,
   ReminderPlanUpdateResponse
 } from '../types/event.types.js';
-
-const inMemoryReminderPlans = new Map<string, EventRecord['reminderPlan']>();
 
 const cloneEvent = (event: EventRecord): EventRecord => ({
   ...event,
@@ -25,7 +22,22 @@ interface DbEventRow {
   created_at: string;
 }
 
-const mapDbEventToContract = (row: DbEventRow): EventRecord => ({
+interface DbReminderPlanRow {
+  event_id: string;
+  offset: string;
+  sort_order: number;
+}
+
+interface DbNotificationHistoryRow {
+  id: string;
+  event_id: string;
+  status: NotificationHistoryEntry['status'];
+  remind_at: string;
+  channels: string[];
+  direction: NotificationHistoryEntry['direction'];
+}
+
+const mapDbEventToContract = (row: DbEventRow, reminderPlan: EventRecord['reminderPlan']): EventRecord => ({
   id: row.id,
   title: row.title,
   date: row.event_date,
@@ -33,28 +45,90 @@ const mapDbEventToContract = (row: DbEventRow): EventRecord => ({
   status: 'scheduled',
   duplicate: false,
   syncStatus: 'pending',
-  reminderPlan: inMemoryReminderPlans.get(row.id) ?? []
+  reminderPlan
 });
 
+const parseOffsetMinutes = (offset: string) => {
+  if (offset.endsWith('h')) {
+    return Number(offset.slice(0, -1)) * 60;
+  }
+
+  return Number(offset.slice(0, -1));
+};
+
 export class EventsRepository {
-  async getAllEvents(): Promise<EventsResponse> {
-    const result = await query<DbEventRow>(
-      'SELECT id, title, description, event_date, created_at FROM events ORDER BY event_date ASC'
+  private async ensureEventSupportTables() {
+    await query(`
+      CREATE TABLE IF NOT EXISTS event_reminder_plans (
+        id BIGSERIAL PRIMARY KEY,
+        event_id TEXT NOT NULL,
+        offset TEXT NOT NULL,
+        sort_order INTEGER NOT NULL,
+        channels JSONB NOT NULL DEFAULT '{}'::jsonb,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )
+    `);
+
+    await query(`
+      CREATE TABLE IF NOT EXISTS event_notification_history (
+        id TEXT PRIMARY KEY,
+        event_id TEXT NOT NULL,
+        status TEXT NOT NULL,
+        remind_at TIMESTAMPTZ NOT NULL,
+        channels JSONB NOT NULL DEFAULT '[]'::jsonb,
+        direction TEXT NOT NULL,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )
+    `);
+  }
+
+  private async getReminderPlansByEventIds(eventIds: string[]) {
+    if (!eventIds.length) {
+      return new Map<string, EventRecord['reminderPlan']>();
+    }
+
+    await this.ensureEventSupportTables();
+
+    const result = await query<DbReminderPlanRow>(
+      `SELECT event_id, offset, sort_order
+       FROM event_reminder_plans
+       WHERE event_id = ANY($1::text[])
+       ORDER BY event_id ASC, sort_order ASC`,
+      [eventIds]
     );
 
+    const grouped = new Map<string, EventRecord['reminderPlan']>();
+    for (const row of result.rows) {
+      const existing = grouped.get(row.event_id) ?? [];
+      existing.push({ offset: row.offset });
+      grouped.set(row.event_id, existing);
+    }
+
+    return grouped;
+  }
+
+  async getAllEvents(): Promise<EventsResponse> {
+    const result = await query<DbEventRow>('SELECT id, title, description, event_date, created_at FROM events ORDER BY event_date ASC');
+    const plansByEventId = await this.getReminderPlansByEventIds(result.rows.map((row) => row.id));
+
     return {
-      events: result.rows.map((row) => cloneEvent(mapDbEventToContract(row)))
+      events: result.rows.map((row) => cloneEvent(mapDbEventToContract(row, plansByEventId.get(row.id) ?? [])))
     };
   }
 
-  getEventById(eventId: string): EventRecord | null {
-    const event = eventsFixture.events.find((item) => item.id === eventId);
-    if (!event) {
+  async getEventById(eventId: string): Promise<EventRecord | null> {
+    const result = await query<DbEventRow>(
+      'SELECT id, title, description, event_date, created_at FROM events WHERE id = $1 LIMIT 1',
+      [eventId]
+    );
+
+    const row = result.rows[0];
+    if (!row) {
       return null;
     }
 
-    const overrides = inMemoryReminderPlans.get(event.id);
-    return cloneEvent({ ...event, reminderPlan: overrides ?? event.reminderPlan } as EventRecord);
+    const plansByEventId = await this.getReminderPlansByEventIds([eventId]);
+    return cloneEvent(mapDbEventToContract(row, plansByEventId.get(eventId) ?? []));
   }
 
   async createEvent(payload: CreateEventInput): Promise<DbEventRow> {
@@ -68,18 +142,42 @@ export class EventsRepository {
     return result.rows[0];
   }
 
-  saveReminderPlan(eventId: string, payload: ReminderPlanUpdateRequest): ReminderPlanUpdateResponse | null {
-    const event = eventsFixture.events.find((item) => item.id === eventId);
+  async saveReminderPlan(eventId: string, payload: ReminderPlanUpdateRequest): Promise<ReminderPlanUpdateResponse | null> {
+    const eventLookup = await query<{ id: string; event_date: string }>('SELECT id, event_date FROM events WHERE id = $1 LIMIT 1', [eventId]);
+    const event = eventLookup.rows[0];
     if (!event) {
       return null;
     }
 
+    await this.ensureEventSupportTables();
+
+    await query('DELETE FROM event_reminder_plans WHERE event_id = $1', [eventId]);
+
     const normalizedPlan = payload.reminderPlan.map((entry) => ({ ...entry }));
-    inMemoryReminderPlans.set(eventId, normalizedPlan);
+
+    for (const [index, entry] of normalizedPlan.entries()) {
+      await query(
+        `INSERT INTO event_reminder_plans (event_id, offset, sort_order, channels)
+         VALUES ($1, $2, $3, $4::jsonb)`,
+        [eventId, entry.offset, index, JSON.stringify(payload.channels)]
+      );
+    }
 
     const channels = (Object.keys(payload.channels) as Array<'push' | 'email' | 'sms'>).filter(
       (channel) => Boolean(payload.channels[channel])
     );
+
+    await query('DELETE FROM event_notification_history WHERE event_id = $1', [eventId]);
+
+    const eventTime = new Date(event.event_date);
+    for (const [index, entry] of normalizedPlan.entries()) {
+      const remindAt = new Date(eventTime.getTime() - parseOffsetMinutes(entry.offset) * 60_000).toISOString();
+      await query(
+        `INSERT INTO event_notification_history (id, event_id, status, remind_at, channels, direction)
+         VALUES ($1, $2, $3, $4, $5::jsonb, $6)`,
+        [`${eventId}-scheduled-${index}`, eventId, 'Scheduled', remindAt, JSON.stringify(channels), 'upcoming']
+      );
+    }
 
     return {
       success: true,
@@ -87,26 +185,42 @@ export class EventsRepository {
       message: 'Reminder plan saved',
       reminderCount: normalizedPlan.length,
       channels,
-      savedAt: '2026-03-15T10:00:00.000Z',
+      savedAt: new Date().toISOString(),
       totalReminders: normalizedPlan.length,
       enabledChannels: channels
     };
   }
 
-  getNotificationHistory(eventId: string): NotificationHistoryResponse | null {
-    const eventExists = eventsFixture.events.some((event) => event.id === eventId);
-    if (!eventExists) {
+  async getNotificationHistory(eventId: string): Promise<NotificationHistoryResponse | null> {
+    const eventLookup = await query<{ id: string }>('SELECT id FROM events WHERE id = $1 LIMIT 1', [eventId]);
+    if (!eventLookup.rows[0]) {
       return null;
     }
 
-    const history = notificationHistoryFixture.historyByEventId[eventId as keyof typeof notificationHistoryFixture.historyByEventId] ?? [];
+    await this.ensureEventSupportTables();
+
+    const historyResult = await query<DbNotificationHistoryRow>(
+      `SELECT id, event_id, status, remind_at, channels, direction
+       FROM event_notification_history
+       WHERE event_id = $1
+       ORDER BY remind_at DESC`,
+      [eventId]
+    );
+
     return {
       eventId,
-      history: history.map((entry) => ({ ...entry, channels: [...entry.channels] }))
+      history: historyResult.rows.map((row) => ({
+        id: row.id,
+        status: row.status,
+        remindAt: row.remind_at,
+        channels: row.channels,
+        direction: row.direction
+      }))
     };
   }
 
-  resetInMemoryState() {
-    inMemoryReminderPlans.clear();
+  async resetInMemoryState() {
+    await query('DELETE FROM event_reminder_plans').catch(() => undefined);
+    await query('DELETE FROM event_notification_history').catch(() => undefined);
   }
 }

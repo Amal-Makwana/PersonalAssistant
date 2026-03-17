@@ -19,7 +19,7 @@ export class EventsService {
 
   async listEvents(options?: { scenario?: string; delay?: boolean }): Promise<EventsResponse> {
     if (options?.scenario === 'error') {
-      throw new Error('Mock error scenario triggered.');
+      throw new Error('Forced error scenario triggered.');
     }
 
     if (options?.delay) {
@@ -47,10 +47,10 @@ export class EventsService {
 
   async getEventById(eventId: string, scenario?: string): Promise<EventRecord> {
     if (scenario === 'error') {
-      throw new Error('Mock error scenario triggered.');
+      throw new Error('Forced error scenario triggered.');
     }
 
-    const event = this.eventsRepository.getEventById(eventId);
+    const event = await this.eventsRepository.getEventById(eventId);
     if (!event) {
       throw new NotFoundError('Event not found.');
     }
@@ -60,7 +60,7 @@ export class EventsService {
 
   async saveReminderPlan(eventId: string, payload: ReminderPlanUpdateRequest, scenario?: string): Promise<ReminderPlanUpdateResponse> {
     if (scenario === 'error') {
-      throw new Error('Mock error scenario triggered.');
+      throw new Error('Forced error scenario triggered.');
     }
 
     if (!payload || !Array.isArray(payload.reminderPlan) || !payload.channels || typeof payload.channels !== 'object') {
@@ -80,7 +80,7 @@ export class EventsService {
       throw new ValidationError('Validation failed: channels values must be booleans.');
     }
 
-    const saved = this.eventsRepository.saveReminderPlan(eventId, payload);
+    const saved = await this.eventsRepository.saveReminderPlan(eventId, payload);
     if (!saved) {
       throw new NotFoundError('Event not found.');
     }
@@ -90,10 +90,10 @@ export class EventsService {
 
   async getNotificationHistory(eventId: string, scenario?: string): Promise<NotificationHistoryResponse> {
     if (scenario === 'error') {
-      throw new Error('Mock error scenario triggered.');
+      throw new Error('Forced error scenario triggered.');
     }
 
-    const history = this.eventsRepository.getNotificationHistory(eventId);
+    const history = await this.eventsRepository.getNotificationHistory(eventId);
     if (!history) {
       throw new NotFoundError('Event not found.');
     }
@@ -101,7 +101,7 @@ export class EventsService {
     return history;
   }
 
-  resetInMemoryState() {
-    this.eventsRepository.resetInMemoryState();
+  async resetInMemoryState() {
+    await this.eventsRepository.resetInMemoryState();
   }
 }
