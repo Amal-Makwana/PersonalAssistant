@@ -4,7 +4,7 @@ This folder tracks prototype-only implementation details and contracts.
 
 ## Monorepo Locations
 - Frontend app: `reminder-app/apps/web`
-- Mock backend app: `reminder-app/apps/api`
+- Backend app: `reminder-app/apps/api` (events list/create now use real Supabase/Postgres persistence)
 
 ## Vercel Deployment Model (Two Projects, One Repo)
 
@@ -90,7 +90,7 @@ npm test
   - Contract-shape assertions to catch payload mismatches
 
 ### Intentionally not covered in prototype tests
-- No database integration tests.
+- No end-to-end database integration tests against shared cloud instances.
 - No external service integration tests.
 - No cloud/deployment environment tests.
 - No heavy end-to-end browser automation.
@@ -122,8 +122,7 @@ curl "http://localhost:3000/dashboard/summary?scenario=error"
 curl "http://localhost:3000/events/evt-001/notification-history?scenario=error"
 ```
 
-## Prototype Rules (Preserved)
-- No database.
-- No external integrations.
-- Mock deterministic fixture responses only.
-- Backend is local-run only.
+## Prototype Rules (Updated)
+- Events vertical slice now supports real persistence (`GET /events`, `POST /events`) via Supabase/Postgres.
+- Non-events prototype endpoints remain mock/fixture-driven.
+- Backend remains local-run compatible and deployable as Vercel serverless.

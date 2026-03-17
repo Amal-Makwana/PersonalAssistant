@@ -2,7 +2,7 @@
 
 ## GET /events
 ### Purpose
-Return deterministic event list payload for Events List (S04).
+Return events list payload for Events List (S04), now backed by Supabase/Postgres.
 
 ### Request schema
 - Method: `GET`
@@ -29,26 +29,44 @@ Return deterministic event list payload for Events List (S04).
 }
 ```
 
-### Example payload
+### Notes
+- Contract shape is preserved for frontend compatibility.
+- Data source is now Postgres `events` table.
+
+### Error responses
+- `500` when `?scenario=error`.
+
+---
+
+## POST /events
+### Purpose
+Create a new event record in Supabase/Postgres and return the created row.
+
+### Request schema
+- Method: `POST`
+- Path: `/events`
+- Body:
 ```json
 {
-  "events": [
-    {
-      "id": "evt-001",
-      "title": "Dentist Appointment",
-      "date": "2026-03-20T09:00:00Z",
-      "location": "Smile Clinic",
-      "status": "scheduled",
-      "duplicate": false,
-      "syncStatus": "synced",
-      "reminderPlan": [{ "offset": "24h" }, { "offset": "3h" }, { "offset": "1h" }]
-    }
-  ]
+  "title": "string",
+  "description": "string",
+  "event_date": "ISO-8601 string"
+}
+```
+
+### Response schema (`201`)
+```json
+{
+  "id": "string",
+  "title": "string",
+  "description": "string|null",
+  "event_date": "ISO-8601 string",
+  "created_at": "ISO-8601 string"
 }
 ```
 
 ### Error responses
-- `500` when `?scenario=error`.
+- `400` when required fields are missing or `event_date` is invalid.
 
 ---
 
@@ -67,22 +85,8 @@ Return deterministic event detail for Event Detail (S05).
 ### Response schema (`200`)
 Same event object schema as list item.
 
-### Example payload
-```json
-{
-  "id": "evt-001",
-  "title": "Dentist Appointment",
-  "date": "2026-03-20T09:00:00Z",
-  "location": "Smile Clinic",
-  "status": "scheduled",
-  "duplicate": false,
-  "syncStatus": "synced",
-  "reminderPlan": [{ "offset": "24h" }, { "offset": "3h" }, { "offset": "1h" }]
-}
-```
-
 ### Error responses
-- `404` unknown ID.
+- `404` when event ID is unknown.
 - `500` when `?scenario=error`.
 
 ---
@@ -98,29 +102,15 @@ Accept reminder plan edits and return deterministic mock save confirmation.
 ```json
 {
   "reminderPlan": [{ "offset": "2h" }, { "offset": "45m" }],
-  "channels": { "push": true, "email": true, "sms": false }
+  "channels": {
+    "push": true,
+    "email": true,
+    "sms": false
+  }
 }
 ```
-Validation rules:
-- `reminderPlan` must be non-empty.
-- Each `offset` must match `Nh` or `Nm`.
-- `channels` must be an object with boolean values.
 
 ### Response schema (`200`)
-```json
-{
-  "success": "true",
-  "eventId": "string",
-  "message": "string",
-  "reminderCount": "number",
-  "channels": ["push | email | sms"],
-  "savedAt": "ISO-8601 string",
-  "totalReminders": "number",
-  "enabledChannels": ["push | email | sms"]
-}
-```
-
-### Example payload
 ```json
 {
   "success": true,
@@ -162,16 +152,6 @@ Return deterministic Dashboard summary data for S03.
 }
 ```
 
-### Example payload
-```json
-{
-  "upcomingCount": 2,
-  "needsReviewCount": 1,
-  "failedCount": 0,
-  "nextEventId": "evt-001"
-}
-```
-
 ### Error responses
 - `500` when `?scenario=error`.
 
@@ -204,23 +184,3 @@ Return deterministic notification activity history for Event Detail (S08 content
   ]
 }
 ```
-
-### Example payload
-```json
-{
-  "eventId": "evt-001",
-  "history": [
-    {
-      "id": "n-1",
-      "status": "Scheduled",
-      "remindAt": "2026-03-19T09:00:00Z",
-      "channels": ["push", "email"],
-      "direction": "upcoming"
-    }
-  ]
-}
-```
-
-### Error responses
-- `404` unknown ID.
-- `500` when `?scenario=error`.
