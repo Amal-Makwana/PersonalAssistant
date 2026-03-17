@@ -207,6 +207,10 @@
       <div class="callout">
         <strong>Release readiness condition:</strong> MVP release gates require reliable end-to-end execution from ingestion through calendar sync, with duplicates prevented and expected reminders generated.
       </div>
+
+      <div class="callout">
+        <strong>Prototype persistence status:</strong> the Events vertical slice now treats <code>GET /events</code>, <code>GET /events/:id</code>, and <code>POST /events</code> as DB-backed while preserving the frontend response contract.
+      </div>
     </section>
 
     <section class="card" id="personas">

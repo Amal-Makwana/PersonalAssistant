@@ -1,6 +1,12 @@
 import request from 'supertest';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { resetEventsInMemoryState } from '../controllers/events.controller.js';
+<<<<<<< codex/inspect-s05-event-detail-screen-issue
+=======
+import { query } from '../lib/db.js';
+import dashboardFixture from '../fixtures/dashboard.fixture.js';
+import notificationHistoryFixture from '../fixtures/notification-history.fixture.js';
+>>>>>>> main
 import { app } from '../app.js';
 import { query } from '../lib/db.js';
 
@@ -22,6 +28,7 @@ afterEach(async () => {
 });
 
 beforeEach(() => {
+<<<<<<< codex/inspect-s05-event-detail-screen-issue
   const userId = '11111111-1111-4111-8111-111111111111';
   const eventOneId = '22222222-2222-4222-8222-222222222222';
   const eventTwoId = '33333333-3333-4333-8333-333333333333';
@@ -185,6 +192,81 @@ beforeEach(() => {
       events.set(id, created);
       return {
         rows: [
+=======
+  mockedQuery.mockImplementation(async (sql: string, params?: unknown[]) => {
+    if (sql.includes('WHERE id = $1')) {
+      const eventId = params?.[0];
+      if (eventId === 'evt-db-001') {
+        return {
+          rows: [
+            {
+              id: 'evt-db-001',
+              title: 'DB Event One',
+              description: 'Desk 2',
+              event_date: '2026-03-20T09:00:00Z',
+              created_at: '2026-03-19T09:00:00Z'
+            }
+          ]
+        } as never;
+      }
+
+      if (eventId === 'evt-001') {
+        return {
+          rows: [
+            {
+              id: 'evt-001',
+              title: 'Fixture-Compatible Event',
+              description: 'Smile Clinic',
+              event_date: '2026-03-20T09:00:00Z',
+              created_at: '2026-03-19T09:00:00Z'
+            }
+          ]
+        } as never;
+      }
+
+      return { rows: [] } as never;
+    }
+
+    return {
+      rows: [
+        {
+          id: 'evt-db-001',
+          title: 'DB Event One',
+          description: 'Desk 2',
+          event_date: '2026-03-20T09:00:00Z',
+          created_at: '2026-03-19T09:00:00Z'
+        },
+        {
+          id: 'evt-db-002',
+          title: 'DB Event Two',
+          description: null,
+          event_date: '2026-03-21T10:00:00Z',
+          created_at: '2026-03-19T10:00:00Z'
+        }
+      ] as never[]
+    } as never;
+  });
+});
+
+describe('Mock API route integration', () => {
+  describe('GET /events', () => {
+    it('returns events list from DB mapped to existing frontend contract', async () => {
+      const response = await request(app).get('/events');
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual({
+        events: [
+          {
+            id: 'evt-db-001',
+            title: 'DB Event One',
+            date: '2026-03-20T09:00:00Z',
+            location: 'Desk 2',
+            status: 'scheduled',
+            duplicate: false,
+            syncStatus: 'pending',
+            reminderPlan: []
+          },
+>>>>>>> main
           {
             id,
             title: created.title,
@@ -222,6 +304,7 @@ beforeEach(() => {
         scheduled_for: String(params?.[3]),
         status: 'PENDING'
       });
+<<<<<<< codex/inspect-s05-event-detail-screen-issue
       return { rows: [] } as never;
     }
 
@@ -262,11 +345,44 @@ beforeEach(() => {
     }
 
     throw new Error(`Unhandled SQL in test mock: ${sql}`);
+=======
+    });
+
+    it('returns 500 when scenario=error is requested', async () => {
+      const response = await request(app).get('/events?scenario=error');
+
+      expect(response.status).toBe(500);
+      expect(response.body).toEqual({
+        error: 'Internal Server Error',
+        message: 'Forced error scenario triggered.'
+      });
+    });
+>>>>>>> main
   });
 });
 
+<<<<<<< codex/inspect-s05-event-detail-screen-issue
 describe('API route integration (canonical schema aligned)', () => {
   const eventOneId = '22222222-2222-4222-8222-222222222222';
+=======
+  describe('POST /events', () => {
+    it('creates an event in DB and returns created row', async () => {
+      const response = await request(app).post('/events').send({
+        title: 'Created Event',
+        description: 'Description',
+        event_date: '2026-04-01T12:00:00Z'
+      });
+
+      expect(response.status).toBe(201);
+      expect(response.body).toEqual({
+        id: 'evt-created-001',
+        title: 'Created Event',
+        description: 'Description',
+        event_date: '2026-04-01T12:00:00Z',
+        created_at: '2026-03-15T10:00:00Z'
+      });
+    });
+>>>>>>> main
 
   it('GET /events returns DB-backed list mapped to frontend contract', async () => {
     const response = await request(app).get('/events');
@@ -280,6 +396,7 @@ describe('API route integration (canonical schema aligned)', () => {
     });
   });
 
+<<<<<<< codex/inspect-s05-event-detail-screen-issue
   it('POST /events creates an event in DB schema and returns created row', async () => {
     const response = await request(app).post('/events').send({
       title: 'Created Event',
@@ -327,6 +444,93 @@ describe('API route integration (canonical schema aligned)', () => {
     await request(app).put(`/events/${eventOneId}/reminder-plan`).send({
       reminderPlan: [{ offset: '1h' }],
       channels: { push: true, email: false, sms: false }
+=======
+  describe('GET /events/:id', () => {
+    it('returns event detail payload', async () => {
+      const response = await request(app).get('/events/evt-db-001');
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual({
+        id: 'evt-db-001',
+        title: 'DB Event One',
+        date: '2026-03-20T09:00:00Z',
+        location: 'Desk 2',
+        status: 'scheduled',
+        duplicate: false,
+        syncStatus: 'pending',
+        reminderPlan: []
+      });
+    });
+
+    it('returns 404 for missing event', async () => {
+      const response = await request(app).get('/events/missing-id');
+
+      expect(response.status).toBe(404);
+      expect(response.body).toEqual({ error: 'Not Found', message: 'Event not found.' });
+    });
+
+    it('returns 500 for scenario error', async () => {
+      const response = await request(app).get('/events/evt-db-001?scenario=error');
+
+      expect(response.status).toBe(500);
+      expect(response.body).toEqual({
+        error: 'Internal Server Error',
+        message: 'Mock error scenario triggered.'
+      });
+    });
+  });
+
+  describe('PUT /events/:id/reminder-plan', () => {
+    it('saves reminder plan in DB-backed tables and returns response', async () => {
+      const response = await request(app).put('/events/evt-db-001/reminder-plan').send({
+        reminderPlan: [{ offset: '2h' }, { offset: '45m' }],
+        channels: { push: true, email: true, sms: false }
+      });
+
+      expect(response.status).toBe(200);
+      expect(response.body).toMatchObject({
+        success: true,
+        eventId: 'evt-db-001',
+        message: 'Reminder plan saved',
+        reminderCount: 2,
+        channels: ['push', 'email'],
+        totalReminders: 2,
+        enabledChannels: ['push', 'email']
+      });
+      expect(typeof response.body.savedAt).toBe('string');
+
+      const detailResponse = await request(app).get('/events/evt-db-001');
+      expect(detailResponse.body.reminderPlan).toEqual([{ offset: '2h' }, { offset: '45m' }]);
+    });
+
+    it('returns 404 for missing event on save', async () => {
+      const response = await request(app).put('/events/missing-id/reminder-plan').send({
+        reminderPlan: [{ offset: '1h' }],
+        channels: { push: true }
+      });
+
+      expect(response.status).toBe(404);
+      expect(response.body).toEqual({ error: 'Not Found', message: 'Event not found.' });
+    });
+  });
+
+  describe('GET /events/:id/notification-history', () => {
+    it('returns DB-backed notification history generated by reminder save', async () => {
+      await request(app).put('/events/evt-db-001/reminder-plan').send({
+        reminderPlan: [{ offset: '1h' }],
+        channels: { push: true, email: false, sms: false }
+      });
+
+      const response = await request(app).get('/events/evt-db-001/notification-history');
+      expect(response.status).toBe(200);
+      expect(response.body.eventId).toBe('evt-db-001');
+      expect(response.body.history).toHaveLength(1);
+      expect(response.body.history[0]).toMatchObject({
+        status: 'Scheduled',
+        channels: ['push'],
+        direction: 'upcoming'
+      });
+>>>>>>> main
     });
 
     const response = await request(app).get(`/events/${eventOneId}/notification-history`);
@@ -340,6 +544,7 @@ describe('API route integration (canonical schema aligned)', () => {
     });
   });
 
+<<<<<<< codex/inspect-s05-event-detail-screen-issue
   it('GET /dashboard/summary returns DB-backed UUID nextEventId', async () => {
     const response = await request(app).get('/dashboard/summary');
 
@@ -349,6 +554,14 @@ describe('API route integration (canonical schema aligned)', () => {
       needsReviewCount: 0,
       failedCount: 0,
       nextEventId: eventOneId
+=======
+  describe('GET /dashboard/summary', () => {
+    it('returns dashboard summary fixture shape', async () => {
+      const response = await request(app).get('/dashboard/summary');
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(dashboardFixture.summary);
+>>>>>>> main
     });
   });
 });

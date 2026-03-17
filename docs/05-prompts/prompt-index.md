@@ -29,8 +29,11 @@ These are documentation-only prompts (not for application code generation).
 - `prototype-backend-development.md`
 - `vertical-slice-events-persistence.md`
 - `route-level-db-consistency-fix.md`
+<<<<<<< codex/inspect-s05-event-detail-screen-issue
 - `vertical-slice-completion-event-apis-persistence.md`
 - `canonical-schema-alignment-event-apis-persistence.md`
+=======
+>>>>>>> main
 
 ## Prompt-to-Section Mapping
 | Documentation Section | Prompt Source | Primary Outputs |

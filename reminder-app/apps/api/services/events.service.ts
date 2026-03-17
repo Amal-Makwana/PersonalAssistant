@@ -18,7 +18,15 @@ export class ValidationError extends Error {}
 export class EventsService {
   constructor(private readonly eventsRepository = new EventsRepository()) {}
 
+<<<<<<< codex/inspect-s05-event-detail-screen-issue
   async listEvents(options?: { delay?: boolean }): Promise<EventsResponse> {
+=======
+  async listEvents(options?: { scenario?: string; delay?: boolean }): Promise<EventsResponse> {
+    if (options?.scenario === 'error') {
+      throw new Error('Forced error scenario triggered.');
+    }
+
+>>>>>>> main
     if (options?.delay) {
       await wait(200);
     }
@@ -42,9 +50,15 @@ export class EventsService {
     });
   }
 
+<<<<<<< codex/inspect-s05-event-detail-screen-issue
   async getEventById(eventId: string): Promise<EventRecord> {
     if (!isUuid(eventId)) {
       throw new ValidationError('Validation failed: event ID must be a UUID.');
+=======
+  async getEventById(eventId: string, scenario?: string): Promise<EventRecord> {
+    if (scenario === 'error') {
+      throw new Error('Forced error scenario triggered.');
+>>>>>>> main
     }
 
     const event = await this.eventsRepository.getEventById(eventId);
@@ -55,9 +69,15 @@ export class EventsService {
     return event;
   }
 
+<<<<<<< codex/inspect-s05-event-detail-screen-issue
   async saveReminderPlan(eventId: string, payload: ReminderPlanUpdateRequest): Promise<ReminderPlanUpdateResponse> {
     if (!isUuid(eventId)) {
       throw new ValidationError('Validation failed: event ID must be a UUID.');
+=======
+  async saveReminderPlan(eventId: string, payload: ReminderPlanUpdateRequest, scenario?: string): Promise<ReminderPlanUpdateResponse> {
+    if (scenario === 'error') {
+      throw new Error('Forced error scenario triggered.');
+>>>>>>> main
     }
 
     if (!payload || !Array.isArray(payload.reminderPlan) || !payload.channels || typeof payload.channels !== 'object') {
@@ -85,9 +105,15 @@ export class EventsService {
     return saved;
   }
 
+<<<<<<< codex/inspect-s05-event-detail-screen-issue
   async getNotificationHistory(eventId: string): Promise<NotificationHistoryResponse> {
     if (!isUuid(eventId)) {
       throw new ValidationError('Validation failed: event ID must be a UUID.');
+=======
+  async getNotificationHistory(eventId: string, scenario?: string): Promise<NotificationHistoryResponse> {
+    if (scenario === 'error') {
+      throw new Error('Forced error scenario triggered.');
+>>>>>>> main
     }
 
     const history = await this.eventsRepository.getNotificationHistory(eventId);
